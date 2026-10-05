@@ -1,0 +1,1805 @@
+{
+  "config": {
+    "base_ckpt": "checkpoints/base_encoder.pt",
+    "seeds": [
+      42,
+      43,
+      44
+    ],
+    "n_train_per_class": 600,
+    "n_test_per_class": 200,
+    "labels": [
+      "pronoun",
+      "sentiment",
+      "relation",
+      "person",
+      "neutral"
+    ],
+    "M0": 0.6,
+    "probe": "零初始化单层逻辑回归 AdamW lr=0.05 wd=1e-4 200ep bs64",
+    "train_data": "原始分布（4 卡 build_dataset + 中性池），未接触对抗集",
+    "adv_path": "experiments/adversarial_routing/adversarial.jsonl",
+    "n_adv": 225,
+    "n_known_answer": 15
+  },
+  "seeds": {
+    "42": {
+      "real": {
+        "orig_test": {
+          "route_acc": 0.986,
+          "route_bg_fp": 0.0,
+          "route_macro": 0.986,
+          "n": 1000,
+          "classes_present": [
+            "pronoun",
+            "sentiment",
+            "relation",
+            "person",
+            "neutral"
+          ],
+          "per_class_recall": {
+            "pronoun": 0.99,
+            "sentiment": 0.965,
+            "relation": 0.975,
+            "person": 1.0,
+            "neutral": 1.0
+          },
+          "pred_dist": {
+            "pronoun": 0.201,
+            "sentiment": 0.199,
+            "relation": 0.199,
+            "person": 0.2,
+            "neutral": 0.201
+          },
+          "confusion_true_by_pred": {
+            "pronoun": {
+              "pronoun": 198,
+              "sentiment": 2
+            },
+            "sentiment": {
+              "pronoun": 2,
+              "sentiment": 193,
+              "relation": 4,
+              "neutral": 1
+            },
+            "relation": {
+              "pronoun": 1,
+              "sentiment": 4,
+              "relation": 195
+            },
+            "person": {
+              "person": 200
+            },
+            "neutral": {
+              "neutral": 200
+            }
+          }
+        },
+        "adv": {
+          "route_acc": 0.12,
+          "route_bg_fp": 1.0,
+          "route_macro": 0.15,
+          "n": 225,
+          "classes_present": [
+            "sentiment",
+            "neutral"
+          ],
+          "per_class_recall": {
+            "sentiment": 0.3,
+            "neutral": 0.0
+          },
+          "pred_dist": {
+            "pronoun": 0.23555555555555555,
+            "sentiment": 0.3111111111111111,
+            "relation": 0.41333333333333333,
+            "person": 0.04,
+            "neutral": 0.0
+          },
+          "confusion_true_by_pred": {
+            "sentiment": {
+              "pronoun": 35,
+              "sentiment": 27,
+              "relation": 28
+            },
+            "neutral": {
+              "pronoun": 18,
+              "sentiment": 43,
+              "relation": 65,
+              "person": 9
+            }
+          }
+        }
+      },
+      "adv_per_category": {
+        "c1": {
+          "n": 45,
+          "surface_card": "pronoun",
+          "true_label": "sentiment",
+          "route_acc": 0.1111111111111111,
+          "pred_dist": {
+            "pronoun": 0.5333333333333333,
+            "sentiment": 0.1111111111111111,
+            "relation": 0.35555555555555557,
+            "person": 0.0,
+            "neutral": 0.0
+          },
+          "pred_as_surface_A": 0.5333333333333333
+        },
+        "c2": {
+          "n": 45,
+          "surface_card": "relation",
+          "true_label": "neutral",
+          "route_acc": 0.0,
+          "pred_dist": {
+            "pronoun": 0.022222222222222223,
+            "sentiment": 0.15555555555555556,
+            "relation": 0.8222222222222222,
+            "person": 0.0,
+            "neutral": 0.0
+          },
+          "pred_as_surface_A": 0.8222222222222222
+        },
+        "c3": {
+          "n": 45,
+          "surface_card": "person",
+          "true_label": "neutral",
+          "route_acc": 0.0,
+          "pred_dist": {
+            "pronoun": 0.2,
+            "sentiment": 0.4,
+            "relation": 0.2222222222222222,
+            "person": 0.17777777777777778,
+            "neutral": 0.0
+          },
+          "pred_as_surface_A": 0.17777777777777778
+        },
+        "c4": {
+          "n": 45,
+          "surface_card": "negation",
+          "true_label": "sentiment",
+          "route_acc": 0.4888888888888889,
+          "pred_dist": {
+            "pronoun": 0.24444444444444444,
+            "sentiment": 0.4888888888888889,
+            "relation": 0.26666666666666666,
+            "person": 0.0,
+            "neutral": 0.0
+          },
+          "pred_as_surface_A": null,
+          "note": "surface_card=negation 不在 E4 五类标签空间，无法「预测成 A」"
+        },
+        "c5": {
+          "n": 45,
+          "surface_card": "sentiment",
+          "true_label": "neutral",
+          "route_acc": 0.0,
+          "pred_dist": {
+            "pronoun": 0.17777777777777778,
+            "sentiment": 0.4,
+            "relation": 0.4,
+            "person": 0.022222222222222223,
+            "neutral": 0.0
+          },
+          "pred_as_surface_A": 0.4
+        }
+      },
+      "adv_surface_A_rate": 0.48333333333333334,
+      "adv_surface_A_counts": {
+        "n_valid_a": 180,
+        "n_pred_a": 87
+      },
+      "known_answer": {
+        "metrics": {
+          "route_acc": 0.2,
+          "route_bg_fp": 1.0,
+          "route_macro": 0.25,
+          "n": 15,
+          "classes_present": [
+            "sentiment",
+            "neutral"
+          ],
+          "per_class_recall": {
+            "sentiment": 0.5,
+            "neutral": 0.0
+          },
+          "pred_dist": {
+            "pronoun": 0.3333333333333333,
+            "sentiment": 0.26666666666666666,
+            "relation": 0.3333333333333333,
+            "person": 0.06666666666666667,
+            "neutral": 0.0
+          },
+          "confusion_true_by_pred": {
+            "sentiment": {
+              "pronoun": 2,
+              "sentiment": 3,
+              "relation": 1
+            },
+            "neutral": {
+              "pronoun": 3,
+              "sentiment": 1,
+              "relation": 4,
+              "person": 1
+            }
+          }
+        },
+        "per_item": [
+          {
+            "id": "c1-01",
+            "category": "c1",
+            "true_label": "sentiment",
+            "pred": "relation",
+            "ok": false
+          },
+          {
+            "id": "c1-02",
+            "category": "c1",
+            "true_label": "sentiment",
+            "pred": "pronoun",
+            "ok": false
+          },
+          {
+            "id": "c1-03",
+            "category": "c1",
+            "true_label": "sentiment",
+            "pred": "pronoun",
+            "ok": false
+          },
+          {
+            "id": "c2-01",
+            "category": "c2",
+            "true_label": "neutral",
+            "pred": "relation",
+            "ok": false
+          },
+          {
+            "id": "c2-02",
+            "category": "c2",
+            "true_label": "neutral",
+            "pred": "relation",
+            "ok": false
+          },
+          {
+            "id": "c2-03",
+            "category": "c2",
+            "true_label": "neutral",
+            "pred": "relation",
+            "ok": false
+          },
+          {
+            "id": "c3-01",
+            "category": "c3",
+            "true_label": "neutral",
+            "pred": "pronoun",
+            "ok": false
+          },
+          {
+            "id": "c3-02",
+            "category": "c3",
+            "true_label": "neutral",
+            "pred": "person",
+            "ok": false
+          },
+          {
+            "id": "c3-03",
+            "category": "c3",
+            "true_label": "neutral",
+            "pred": "pronoun",
+            "ok": false
+          },
+          {
+            "id": "c4-01",
+            "category": "c4",
+            "true_label": "sentiment",
+            "pred": "sentiment",
+            "ok": true
+          },
+          {
+            "id": "c4-02",
+            "category": "c4",
+            "true_label": "sentiment",
+            "pred": "sentiment",
+            "ok": true
+          },
+          {
+            "id": "c4-03",
+            "category": "c4",
+            "true_label": "sentiment",
+            "pred": "sentiment",
+            "ok": true
+          },
+          {
+            "id": "c5-01",
+            "category": "c5",
+            "true_label": "neutral",
+            "pred": "relation",
+            "ok": false
+          },
+          {
+            "id": "c5-02",
+            "category": "c5",
+            "true_label": "neutral",
+            "pred": "pronoun",
+            "ok": false
+          },
+          {
+            "id": "c5-03",
+            "category": "c5",
+            "true_label": "neutral",
+            "pred": "sentiment",
+            "ok": false
+          }
+        ]
+      },
+      "control_shuffled_label": {
+        "orig_test": {
+          "route_acc": 0.077,
+          "route_bg_fp": 0.995,
+          "route_macro": 0.077,
+          "n": 1000,
+          "classes_present": [
+            "pronoun",
+            "sentiment",
+            "relation",
+            "person",
+            "neutral"
+          ],
+          "per_class_recall": {
+            "pronoun": 0.155,
+            "sentiment": 0.05,
+            "relation": 0.065,
+            "person": 0.11,
+            "neutral": 0.005
+          },
+          "pred_dist": {
+            "pronoun": 0.229,
+            "sentiment": 0.185,
+            "relation": 0.12,
+            "person": 0.391,
+            "neutral": 0.075
+          },
+          "confusion_true_by_pred": {
+            "pronoun": {
+              "pronoun": 31,
+              "sentiment": 15,
+              "relation": 21,
+              "person": 110,
+              "neutral": 23
+            },
+            "sentiment": {
+              "pronoun": 50,
+              "sentiment": 10,
+              "relation": 34,
+              "person": 93,
+              "neutral": 13
+            },
+            "relation": {
+              "pronoun": 50,
+              "relation": 13,
+              "person": 135,
+              "neutral": 2
+            },
+            "person": {
+              "pronoun": 29,
+              "sentiment": 63,
+              "relation": 50,
+              "person": 22,
+              "neutral": 36
+            },
+            "neutral": {
+              "pronoun": 69,
+              "sentiment": 97,
+              "relation": 2,
+              "person": 31,
+              "neutral": 1
+            }
+          }
+        },
+        "adv": {
+          "route_acc": 0.07555555555555556,
+          "route_bg_fp": 0.9037037037037037,
+          "route_macro": 0.07037037037037037,
+          "n": 225,
+          "classes_present": [
+            "sentiment",
+            "neutral"
+          ],
+          "per_class_recall": {
+            "sentiment": 0.044444444444444446,
+            "neutral": 0.0962962962962963
+          },
+          "pred_dist": {
+            "pronoun": 0.32,
+            "sentiment": 0.04888888888888889,
+            "relation": 0.1288888888888889,
+            "person": 0.4,
+            "neutral": 0.10222222222222223
+          },
+          "confusion_true_by_pred": {
+            "sentiment": {
+              "pronoun": 33,
+              "sentiment": 4,
+              "relation": 4,
+              "person": 39,
+              "neutral": 10
+            },
+            "neutral": {
+              "pronoun": 39,
+              "sentiment": 7,
+              "relation": 25,
+              "person": 51,
+              "neutral": 13
+            }
+          }
+        }
+      },
+      "control_random_feature": {
+        "orig_test": {
+          "route_acc": 0.185,
+          "route_bg_fp": 0.84,
+          "route_macro": 0.185,
+          "n": 1000,
+          "classes_present": [
+            "pronoun",
+            "sentiment",
+            "relation",
+            "person",
+            "neutral"
+          ],
+          "per_class_recall": {
+            "pronoun": 0.175,
+            "sentiment": 0.195,
+            "relation": 0.225,
+            "person": 0.17,
+            "neutral": 0.16
+          },
+          "pred_dist": {
+            "pronoun": 0.206,
+            "sentiment": 0.202,
+            "relation": 0.235,
+            "person": 0.19,
+            "neutral": 0.167
+          },
+          "confusion_true_by_pred": {
+            "pronoun": {
+              "pronoun": 35,
+              "sentiment": 41,
+              "relation": 38,
+              "person": 40,
+              "neutral": 46
+            },
+            "sentiment": {
+              "pronoun": 52,
+              "sentiment": 39,
+              "relation": 45,
+              "person": 28,
+              "neutral": 36
+            },
+            "relation": {
+              "pronoun": 32,
+              "sentiment": 46,
+              "relation": 45,
+              "person": 49,
+              "neutral": 28
+            },
+            "person": {
+              "pronoun": 49,
+              "sentiment": 33,
+              "relation": 59,
+              "person": 34,
+              "neutral": 25
+            },
+            "neutral": {
+              "pronoun": 38,
+              "sentiment": 43,
+              "relation": 48,
+              "person": 39,
+              "neutral": 32
+            }
+          }
+        },
+        "adv": {
+          "route_acc": 0.21333333333333335,
+          "route_bg_fp": 0.7851851851851852,
+          "route_macro": 0.21296296296296297,
+          "n": 225,
+          "classes_present": [
+            "sentiment",
+            "neutral"
+          ],
+          "per_class_recall": {
+            "sentiment": 0.2111111111111111,
+            "neutral": 0.21481481481481482
+          },
+          "pred_dist": {
+            "pronoun": 0.22666666666666666,
+            "sentiment": 0.2,
+            "relation": 0.24444444444444444,
+            "person": 0.14222222222222222,
+            "neutral": 0.18666666666666668
+          },
+          "confusion_true_by_pred": {
+            "sentiment": {
+              "pronoun": 25,
+              "sentiment": 19,
+              "relation": 18,
+              "person": 15,
+              "neutral": 13
+            },
+            "neutral": {
+              "pronoun": 26,
+              "sentiment": 26,
+              "relation": 37,
+              "person": 17,
+              "neutral": 29
+            }
+          }
+        }
+      }
+    },
+    "43": {
+      "real": {
+        "orig_test": {
+          "route_acc": 0.99,
+          "route_bg_fp": 0.0,
+          "route_macro": 0.99,
+          "n": 1000,
+          "classes_present": [
+            "pronoun",
+            "sentiment",
+            "relation",
+            "person",
+            "neutral"
+          ],
+          "per_class_recall": {
+            "pronoun": 0.99,
+            "sentiment": 0.98,
+            "relation": 0.98,
+            "person": 1.0,
+            "neutral": 1.0
+          },
+          "pred_dist": {
+            "pronoun": 0.202,
+            "sentiment": 0.199,
+            "relation": 0.197,
+            "person": 0.2,
+            "neutral": 0.202
+          },
+          "confusion_true_by_pred": {
+            "pronoun": {
+              "pronoun": 198,
+              "sentiment": 1,
+              "neutral": 1
+            },
+            "sentiment": {
+              "pronoun": 2,
+              "sentiment": 196,
+              "relation": 1,
+              "neutral": 1
+            },
+            "relation": {
+              "pronoun": 2,
+              "sentiment": 2,
+              "relation": 196
+            },
+            "person": {
+              "person": 200
+            },
+            "neutral": {
+              "neutral": 200
+            }
+          }
+        },
+        "adv": {
+          "route_acc": 0.09333333333333334,
+          "route_bg_fp": 1.0,
+          "route_macro": 0.11666666666666667,
+          "n": 225,
+          "classes_present": [
+            "sentiment",
+            "neutral"
+          ],
+          "per_class_recall": {
+            "sentiment": 0.23333333333333334,
+            "neutral": 0.0
+          },
+          "pred_dist": {
+            "pronoun": 0.28444444444444444,
+            "sentiment": 0.2577777777777778,
+            "relation": 0.44,
+            "person": 0.017777777777777778,
+            "neutral": 0.0
+          },
+          "confusion_true_by_pred": {
+            "sentiment": {
+              "pronoun": 43,
+              "sentiment": 21,
+              "relation": 26
+            },
+            "neutral": {
+              "pronoun": 21,
+              "sentiment": 37,
+              "relation": 73,
+              "person": 4
+            }
+          }
+        }
+      },
+      "adv_per_category": {
+        "c1": {
+          "n": 45,
+          "surface_card": "pronoun",
+          "true_label": "sentiment",
+          "route_acc": 0.0,
+          "pred_dist": {
+            "pronoun": 0.5333333333333333,
+            "sentiment": 0.0,
+            "relation": 0.4666666666666667,
+            "person": 0.0,
+            "neutral": 0.0
+          },
+          "pred_as_surface_A": 0.5333333333333333
+        },
+        "c2": {
+          "n": 45,
+          "surface_card": "relation",
+          "true_label": "neutral",
+          "route_acc": 0.0,
+          "pred_dist": {
+            "pronoun": 0.022222222222222223,
+            "sentiment": 0.1111111111111111,
+            "relation": 0.8666666666666667,
+            "person": 0.0,
+            "neutral": 0.0
+          },
+          "pred_as_surface_A": 0.8666666666666667
+        },
+        "c3": {
+          "n": 45,
+          "surface_card": "person",
+          "true_label": "neutral",
+          "route_acc": 0.0,
+          "pred_dist": {
+            "pronoun": 0.3333333333333333,
+            "sentiment": 0.3111111111111111,
+            "relation": 0.26666666666666666,
+            "person": 0.08888888888888889,
+            "neutral": 0.0
+          },
+          "pred_as_surface_A": 0.08888888888888889
+        },
+        "c4": {
+          "n": 45,
+          "surface_card": "negation",
+          "true_label": "sentiment",
+          "route_acc": 0.4666666666666667,
+          "pred_dist": {
+            "pronoun": 0.4222222222222222,
+            "sentiment": 0.4666666666666667,
+            "relation": 0.1111111111111111,
+            "person": 0.0,
+            "neutral": 0.0
+          },
+          "pred_as_surface_A": null,
+          "note": "surface_card=negation 不在 E4 五类标签空间，无法「预测成 A」"
+        },
+        "c5": {
+          "n": 45,
+          "surface_card": "sentiment",
+          "true_label": "neutral",
+          "route_acc": 0.0,
+          "pred_dist": {
+            "pronoun": 0.1111111111111111,
+            "sentiment": 0.4,
+            "relation": 0.4888888888888889,
+            "person": 0.0,
+            "neutral": 0.0
+          },
+          "pred_as_surface_A": 0.4
+        }
+      },
+      "adv_surface_A_rate": 0.4722222222222222,
+      "adv_surface_A_counts": {
+        "n_valid_a": 180,
+        "n_pred_a": 85
+      },
+      "known_answer": {
+        "metrics": {
+          "route_acc": 0.13333333333333333,
+          "route_bg_fp": 1.0,
+          "route_macro": 0.16666666666666666,
+          "n": 15,
+          "classes_present": [
+            "sentiment",
+            "neutral"
+          ],
+          "per_class_recall": {
+            "sentiment": 0.3333333333333333,
+            "neutral": 0.0
+          },
+          "pred_dist": {
+            "pronoun": 0.3333333333333333,
+            "sentiment": 0.26666666666666666,
+            "relation": 0.4,
+            "person": 0.0,
+            "neutral": 0.0
+          },
+          "confusion_true_by_pred": {
+            "sentiment": {
+              "pronoun": 2,
+              "sentiment": 2,
+              "relation": 2
+            },
+            "neutral": {
+              "pronoun": 3,
+              "sentiment": 2,
+              "relation": 4
+            }
+          }
+        },
+        "per_item": [
+          {
+            "id": "c1-01",
+            "category": "c1",
+            "true_label": "sentiment",
+            "pred": "relation",
+            "ok": false
+          },
+          {
+            "id": "c1-02",
+            "category": "c1",
+            "true_label": "sentiment",
+            "pred": "pronoun",
+            "ok": false
+          },
+          {
+            "id": "c1-03",
+            "category": "c1",
+            "true_label": "sentiment",
+            "pred": "pronoun",
+            "ok": false
+          },
+          {
+            "id": "c2-01",
+            "category": "c2",
+            "true_label": "neutral",
+            "pred": "relation",
+            "ok": false
+          },
+          {
+            "id": "c2-02",
+            "category": "c2",
+            "true_label": "neutral",
+            "pred": "relation",
+            "ok": false
+          },
+          {
+            "id": "c2-03",
+            "category": "c2",
+            "true_label": "neutral",
+            "pred": "relation",
+            "ok": false
+          },
+          {
+            "id": "c3-01",
+            "category": "c3",
+            "true_label": "neutral",
+            "pred": "pronoun",
+            "ok": false
+          },
+          {
+            "id": "c3-02",
+            "category": "c3",
+            "true_label": "neutral",
+            "pred": "pronoun",
+            "ok": false
+          },
+          {
+            "id": "c3-03",
+            "category": "c3",
+            "true_label": "neutral",
+            "pred": "pronoun",
+            "ok": false
+          },
+          {
+            "id": "c4-01",
+            "category": "c4",
+            "true_label": "sentiment",
+            "pred": "relation",
+            "ok": false
+          },
+          {
+            "id": "c4-02",
+            "category": "c4",
+            "true_label": "sentiment",
+            "pred": "sentiment",
+            "ok": true
+          },
+          {
+            "id": "c4-03",
+            "category": "c4",
+            "true_label": "sentiment",
+            "pred": "sentiment",
+            "ok": true
+          },
+          {
+            "id": "c5-01",
+            "category": "c5",
+            "true_label": "neutral",
+            "pred": "relation",
+            "ok": false
+          },
+          {
+            "id": "c5-02",
+            "category": "c5",
+            "true_label": "neutral",
+            "pred": "sentiment",
+            "ok": false
+          },
+          {
+            "id": "c5-03",
+            "category": "c5",
+            "true_label": "neutral",
+            "pred": "sentiment",
+            "ok": false
+          }
+        ]
+      },
+      "control_shuffled_label": {
+        "orig_test": {
+          "route_acc": 0.185,
+          "route_bg_fp": 0.935,
+          "route_macro": 0.185,
+          "n": 1000,
+          "classes_present": [
+            "pronoun",
+            "sentiment",
+            "relation",
+            "person",
+            "neutral"
+          ],
+          "per_class_recall": {
+            "pronoun": 0.625,
+            "sentiment": 0.17,
+            "relation": 0.065,
+            "person": 0.0,
+            "neutral": 0.065
+          },
+          "pred_dist": {
+            "pronoun": 0.396,
+            "sentiment": 0.101,
+            "relation": 0.307,
+            "person": 0.084,
+            "neutral": 0.112
+          },
+          "confusion_true_by_pred": {
+            "pronoun": {
+              "pronoun": 125,
+              "sentiment": 2,
+              "relation": 41,
+              "person": 27,
+              "neutral": 5
+            },
+            "sentiment": {
+              "pronoun": 70,
+              "sentiment": 34,
+              "relation": 20,
+              "person": 26,
+              "neutral": 50
+            },
+            "relation": {
+              "pronoun": 67,
+              "sentiment": 60,
+              "relation": 13,
+              "person": 22,
+              "neutral": 38
+            },
+            "person": {
+              "pronoun": 11,
+              "sentiment": 1,
+              "relation": 182,
+              "neutral": 6
+            },
+            "neutral": {
+              "pronoun": 123,
+              "sentiment": 4,
+              "relation": 51,
+              "person": 9,
+              "neutral": 13
+            }
+          }
+        },
+        "adv": {
+          "route_acc": 0.3466666666666667,
+          "route_bg_fp": 0.6592592592592592,
+          "route_macro": 0.34814814814814815,
+          "n": 225,
+          "classes_present": [
+            "sentiment",
+            "neutral"
+          ],
+          "per_class_recall": {
+            "sentiment": 0.35555555555555557,
+            "neutral": 0.34074074074074073
+          },
+          "pred_dist": {
+            "pronoun": 0.2577777777777778,
+            "sentiment": 0.3333333333333333,
+            "relation": 0.09333333333333334,
+            "person": 0.09333333333333334,
+            "neutral": 0.2222222222222222
+          },
+          "confusion_true_by_pred": {
+            "sentiment": {
+              "pronoun": 40,
+              "sentiment": 32,
+              "person": 14,
+              "neutral": 4
+            },
+            "neutral": {
+              "pronoun": 18,
+              "sentiment": 43,
+              "relation": 21,
+              "person": 7,
+              "neutral": 46
+            }
+          }
+        }
+      },
+      "control_random_feature": {
+        "orig_test": {
+          "route_acc": 0.193,
+          "route_bg_fp": 0.825,
+          "route_macro": 0.193,
+          "n": 1000,
+          "classes_present": [
+            "pronoun",
+            "sentiment",
+            "relation",
+            "person",
+            "neutral"
+          ],
+          "per_class_recall": {
+            "pronoun": 0.255,
+            "sentiment": 0.155,
+            "relation": 0.255,
+            "person": 0.125,
+            "neutral": 0.175
+          },
+          "pred_dist": {
+            "pronoun": 0.256,
+            "sentiment": 0.17,
+            "relation": 0.227,
+            "person": 0.152,
+            "neutral": 0.195
+          },
+          "confusion_true_by_pred": {
+            "pronoun": {
+              "pronoun": 51,
+              "sentiment": 36,
+              "relation": 44,
+              "person": 30,
+              "neutral": 39
+            },
+            "sentiment": {
+              "pronoun": 50,
+              "sentiment": 31,
+              "relation": 47,
+              "person": 37,
+              "neutral": 35
+            },
+            "relation": {
+              "pronoun": 46,
+              "sentiment": 32,
+              "relation": 51,
+              "person": 33,
+              "neutral": 38
+            },
+            "person": {
+              "pronoun": 53,
+              "sentiment": 38,
+              "relation": 36,
+              "person": 25,
+              "neutral": 48
+            },
+            "neutral": {
+              "pronoun": 56,
+              "sentiment": 33,
+              "relation": 49,
+              "person": 27,
+              "neutral": 35
+            }
+          }
+        },
+        "adv": {
+          "route_acc": 0.2311111111111111,
+          "route_bg_fp": 0.7333333333333333,
+          "route_macro": 0.2222222222222222,
+          "n": 225,
+          "classes_present": [
+            "sentiment",
+            "neutral"
+          ],
+          "per_class_recall": {
+            "sentiment": 0.17777777777777778,
+            "neutral": 0.26666666666666666
+          },
+          "pred_dist": {
+            "pronoun": 0.24444444444444444,
+            "sentiment": 0.17333333333333334,
+            "relation": 0.2311111111111111,
+            "person": 0.12,
+            "neutral": 0.2311111111111111
+          },
+          "confusion_true_by_pred": {
+            "sentiment": {
+              "pronoun": 27,
+              "sentiment": 16,
+              "relation": 25,
+              "person": 6,
+              "neutral": 16
+            },
+            "neutral": {
+              "pronoun": 28,
+              "sentiment": 23,
+              "relation": 27,
+              "person": 21,
+              "neutral": 36
+            }
+          }
+        }
+      }
+    },
+    "44": {
+      "real": {
+        "orig_test": {
+          "route_acc": 0.989,
+          "route_bg_fp": 0.0,
+          "route_macro": 0.9890000000000001,
+          "n": 1000,
+          "classes_present": [
+            "pronoun",
+            "sentiment",
+            "relation",
+            "person",
+            "neutral"
+          ],
+          "per_class_recall": {
+            "pronoun": 0.995,
+            "sentiment": 0.955,
+            "relation": 0.995,
+            "person": 1.0,
+            "neutral": 1.0
+          },
+          "pred_dist": {
+            "pronoun": 0.204,
+            "sentiment": 0.193,
+            "relation": 0.203,
+            "person": 0.2,
+            "neutral": 0.2
+          },
+          "confusion_true_by_pred": {
+            "pronoun": {
+              "pronoun": 199,
+              "sentiment": 1
+            },
+            "sentiment": {
+              "pronoun": 5,
+              "sentiment": 191,
+              "relation": 4
+            },
+            "relation": {
+              "sentiment": 1,
+              "relation": 199
+            },
+            "person": {
+              "person": 200
+            },
+            "neutral": {
+              "neutral": 200
+            }
+          }
+        },
+        "adv": {
+          "route_acc": 0.06222222222222222,
+          "route_bg_fp": 1.0,
+          "route_macro": 0.07777777777777778,
+          "n": 225,
+          "classes_present": [
+            "sentiment",
+            "neutral"
+          ],
+          "per_class_recall": {
+            "sentiment": 0.15555555555555556,
+            "neutral": 0.0
+          },
+          "pred_dist": {
+            "pronoun": 0.2577777777777778,
+            "sentiment": 0.2577777777777778,
+            "relation": 0.48,
+            "person": 0.0044444444444444444,
+            "neutral": 0.0
+          },
+          "confusion_true_by_pred": {
+            "sentiment": {
+              "pronoun": 40,
+              "sentiment": 14,
+              "relation": 36
+            },
+            "neutral": {
+              "pronoun": 18,
+              "sentiment": 44,
+              "relation": 72,
+              "person": 1
+            }
+          }
+        }
+      },
+      "adv_per_category": {
+        "c1": {
+          "n": 45,
+          "surface_card": "pronoun",
+          "true_label": "sentiment",
+          "route_acc": 0.022222222222222223,
+          "pred_dist": {
+            "pronoun": 0.6444444444444445,
+            "sentiment": 0.022222222222222223,
+            "relation": 0.3333333333333333,
+            "person": 0.0,
+            "neutral": 0.0
+          },
+          "pred_as_surface_A": 0.6444444444444445
+        },
+        "c2": {
+          "n": 45,
+          "surface_card": "relation",
+          "true_label": "neutral",
+          "route_acc": 0.0,
+          "pred_dist": {
+            "pronoun": 0.0,
+            "sentiment": 0.2,
+            "relation": 0.8,
+            "person": 0.0,
+            "neutral": 0.0
+          },
+          "pred_as_surface_A": 0.8
+        },
+        "c3": {
+          "n": 45,
+          "surface_card": "person",
+          "true_label": "neutral",
+          "route_acc": 0.0,
+          "pred_dist": {
+            "pronoun": 0.26666666666666666,
+            "sentiment": 0.4444444444444444,
+            "relation": 0.26666666666666666,
+            "person": 0.022222222222222223,
+            "neutral": 0.0
+          },
+          "pred_as_surface_A": 0.022222222222222223
+        },
+        "c4": {
+          "n": 45,
+          "surface_card": "negation",
+          "true_label": "sentiment",
+          "route_acc": 0.28888888888888886,
+          "pred_dist": {
+            "pronoun": 0.24444444444444444,
+            "sentiment": 0.28888888888888886,
+            "relation": 0.4666666666666667,
+            "person": 0.0,
+            "neutral": 0.0
+          },
+          "pred_as_surface_A": null,
+          "note": "surface_card=negation 不在 E4 五类标签空间，无法「预测成 A」"
+        },
+        "c5": {
+          "n": 45,
+          "surface_card": "sentiment",
+          "true_label": "neutral",
+          "route_acc": 0.0,
+          "pred_dist": {
+            "pronoun": 0.13333333333333333,
+            "sentiment": 0.3333333333333333,
+            "relation": 0.5333333333333333,
+            "person": 0.0,
+            "neutral": 0.0
+          },
+          "pred_as_surface_A": 0.3333333333333333
+        }
+      },
+      "adv_surface_A_rate": 0.45,
+      "adv_surface_A_counts": {
+        "n_valid_a": 180,
+        "n_pred_a": 81
+      },
+      "known_answer": {
+        "metrics": {
+          "route_acc": 0.13333333333333333,
+          "route_bg_fp": 1.0,
+          "route_macro": 0.16666666666666666,
+          "n": 15,
+          "classes_present": [
+            "sentiment",
+            "neutral"
+          ],
+          "per_class_recall": {
+            "sentiment": 0.3333333333333333,
+            "neutral": 0.0
+          },
+          "pred_dist": {
+            "pronoun": 0.26666666666666666,
+            "sentiment": 0.3333333333333333,
+            "relation": 0.4,
+            "person": 0.0,
+            "neutral": 0.0
+          },
+          "confusion_true_by_pred": {
+            "sentiment": {
+              "pronoun": 2,
+              "sentiment": 2,
+              "relation": 2
+            },
+            "neutral": {
+              "pronoun": 2,
+              "sentiment": 3,
+              "relation": 4
+            }
+          }
+        },
+        "per_item": [
+          {
+            "id": "c1-01",
+            "category": "c1",
+            "true_label": "sentiment",
+            "pred": "relation",
+            "ok": false
+          },
+          {
+            "id": "c1-02",
+            "category": "c1",
+            "true_label": "sentiment",
+            "pred": "pronoun",
+            "ok": false
+          },
+          {
+            "id": "c1-03",
+            "category": "c1",
+            "true_label": "sentiment",
+            "pred": "pronoun",
+            "ok": false
+          },
+          {
+            "id": "c2-01",
+            "category": "c2",
+            "true_label": "neutral",
+            "pred": "relation",
+            "ok": false
+          },
+          {
+            "id": "c2-02",
+            "category": "c2",
+            "true_label": "neutral",
+            "pred": "relation",
+            "ok": false
+          },
+          {
+            "id": "c2-03",
+            "category": "c2",
+            "true_label": "neutral",
+            "pred": "relation",
+            "ok": false
+          },
+          {
+            "id": "c3-01",
+            "category": "c3",
+            "true_label": "neutral",
+            "pred": "sentiment",
+            "ok": false
+          },
+          {
+            "id": "c3-02",
+            "category": "c3",
+            "true_label": "neutral",
+            "pred": "pronoun",
+            "ok": false
+          },
+          {
+            "id": "c3-03",
+            "category": "c3",
+            "true_label": "neutral",
+            "pred": "pronoun",
+            "ok": false
+          },
+          {
+            "id": "c4-01",
+            "category": "c4",
+            "true_label": "sentiment",
+            "pred": "relation",
+            "ok": false
+          },
+          {
+            "id": "c4-02",
+            "category": "c4",
+            "true_label": "sentiment",
+            "pred": "sentiment",
+            "ok": true
+          },
+          {
+            "id": "c4-03",
+            "category": "c4",
+            "true_label": "sentiment",
+            "pred": "sentiment",
+            "ok": true
+          },
+          {
+            "id": "c5-01",
+            "category": "c5",
+            "true_label": "neutral",
+            "pred": "relation",
+            "ok": false
+          },
+          {
+            "id": "c5-02",
+            "category": "c5",
+            "true_label": "neutral",
+            "pred": "sentiment",
+            "ok": false
+          },
+          {
+            "id": "c5-03",
+            "category": "c5",
+            "true_label": "neutral",
+            "pred": "sentiment",
+            "ok": false
+          }
+        ]
+      },
+      "control_shuffled_label": {
+        "orig_test": {
+          "route_acc": 0.231,
+          "route_bg_fp": 0.99,
+          "route_macro": 0.231,
+          "n": 1000,
+          "classes_present": [
+            "pronoun",
+            "sentiment",
+            "relation",
+            "person",
+            "neutral"
+          ],
+          "per_class_recall": {
+            "pronoun": 0.545,
+            "sentiment": 0.21,
+            "relation": 0.39,
+            "person": 0.0,
+            "neutral": 0.01
+          },
+          "pred_dist": {
+            "pronoun": 0.402,
+            "sentiment": 0.204,
+            "relation": 0.196,
+            "person": 0.163,
+            "neutral": 0.035
+          },
+          "confusion_true_by_pred": {
+            "pronoun": {
+              "pronoun": 109,
+              "sentiment": 60,
+              "relation": 18,
+              "person": 10,
+              "neutral": 3
+            },
+            "sentiment": {
+              "pronoun": 61,
+              "sentiment": 42,
+              "relation": 48,
+              "person": 33,
+              "neutral": 16
+            },
+            "relation": {
+              "pronoun": 35,
+              "sentiment": 40,
+              "relation": 78,
+              "person": 33,
+              "neutral": 14
+            },
+            "person": {
+              "pronoun": 110,
+              "sentiment": 49,
+              "relation": 41
+            },
+            "neutral": {
+              "pronoun": 87,
+              "sentiment": 13,
+              "relation": 11,
+              "person": 87,
+              "neutral": 2
+            }
+          }
+        },
+        "adv": {
+          "route_acc": 0.09777777777777778,
+          "route_bg_fp": 0.9407407407407408,
+          "route_macro": 0.10740740740740741,
+          "n": 225,
+          "classes_present": [
+            "sentiment",
+            "neutral"
+          ],
+          "per_class_recall": {
+            "sentiment": 0.15555555555555556,
+            "neutral": 0.05925925925925926
+          },
+          "pred_dist": {
+            "pronoun": 0.3244444444444444,
+            "sentiment": 0.19555555555555557,
+            "relation": 0.21777777777777776,
+            "person": 0.18666666666666668,
+            "neutral": 0.07555555555555556
+          },
+          "confusion_true_by_pred": {
+            "sentiment": {
+              "pronoun": 14,
+              "sentiment": 14,
+              "relation": 24,
+              "person": 29,
+              "neutral": 9
+            },
+            "neutral": {
+              "pronoun": 59,
+              "sentiment": 30,
+              "relation": 25,
+              "person": 13,
+              "neutral": 8
+            }
+          }
+        }
+      },
+      "control_random_feature": {
+        "orig_test": {
+          "route_acc": 0.2,
+          "route_bg_fp": 0.8,
+          "route_macro": 0.2,
+          "n": 1000,
+          "classes_present": [
+            "pronoun",
+            "sentiment",
+            "relation",
+            "person",
+            "neutral"
+          ],
+          "per_class_recall": {
+            "pronoun": 0.27,
+            "sentiment": 0.235,
+            "relation": 0.125,
+            "person": 0.17,
+            "neutral": 0.2
+          },
+          "pred_dist": {
+            "pronoun": 0.248,
+            "sentiment": 0.235,
+            "relation": 0.146,
+            "person": 0.167,
+            "neutral": 0.204
+          },
+          "confusion_true_by_pred": {
+            "pronoun": {
+              "pronoun": 54,
+              "sentiment": 49,
+              "relation": 28,
+              "person": 27,
+              "neutral": 42
+            },
+            "sentiment": {
+              "pronoun": 39,
+              "sentiment": 47,
+              "relation": 33,
+              "person": 34,
+              "neutral": 47
+            },
+            "relation": {
+              "pronoun": 49,
+              "sentiment": 49,
+              "relation": 25,
+              "person": 37,
+              "neutral": 40
+            },
+            "person": {
+              "pronoun": 58,
+              "sentiment": 41,
+              "relation": 32,
+              "person": 34,
+              "neutral": 35
+            },
+            "neutral": {
+              "pronoun": 48,
+              "sentiment": 49,
+              "relation": 28,
+              "person": 35,
+              "neutral": 40
+            }
+          }
+        },
+        "adv": {
+          "route_acc": 0.2311111111111111,
+          "route_bg_fp": 0.762962962962963,
+          "route_macro": 0.22962962962962963,
+          "n": 225,
+          "classes_present": [
+            "sentiment",
+            "neutral"
+          ],
+          "per_class_recall": {
+            "sentiment": 0.2222222222222222,
+            "neutral": 0.23703703703703705
+          },
+          "pred_dist": {
+            "pronoun": 0.24,
+            "sentiment": 0.24888888888888888,
+            "relation": 0.09333333333333334,
+            "person": 0.1688888888888889,
+            "neutral": 0.24888888888888888
+          },
+          "confusion_true_by_pred": {
+            "sentiment": {
+              "pronoun": 20,
+              "sentiment": 20,
+              "relation": 10,
+              "person": 16,
+              "neutral": 24
+            },
+            "neutral": {
+              "pronoun": 34,
+              "sentiment": 36,
+              "relation": 11,
+              "person": 22,
+              "neutral": 32
+            }
+          }
+        }
+      }
+    }
+  },
+  "aggregate": {
+    "P0_orig_acc": {
+      "mean": 0.9883333333333333,
+      "range": 0.0040000000000000036,
+      "values": [
+        0.986,
+        0.99,
+        0.989
+      ]
+    },
+    "adv_acc": {
+      "mean": 0.09185185185185185,
+      "range": 0.057777777777777775,
+      "values": [
+        0.12,
+        0.09333333333333334,
+        0.06222222222222222
+      ]
+    },
+    "orig_bg_fp": {
+      "mean": 0.0,
+      "range": 0.0,
+      "values": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "adv_bg_fp": {
+      "mean": 1.0,
+      "range": 0.0,
+      "values": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "orig_macro": {
+      "mean": 0.9883333333333333,
+      "range": 0.0040000000000000036,
+      "values": [
+        0.986,
+        0.99,
+        0.9890000000000001
+      ]
+    },
+    "adv_macro": {
+      "mean": 0.11481481481481481,
+      "range": 0.07222222222222222,
+      "values": [
+        0.15,
+        0.11666666666666667,
+        0.07777777777777778
+      ]
+    },
+    "adv_surface_A_rate": {
+      "mean": 0.4685185185185185,
+      "range": 0.033333333333333326,
+      "values": [
+        0.48333333333333334,
+        0.4722222222222222,
+        0.45
+      ]
+    },
+    "known_answer_acc": {
+      "mean": 0.15555555555555556,
+      "range": 0.06666666666666668,
+      "values": [
+        0.2,
+        0.13333333333333333,
+        0.13333333333333333
+      ]
+    },
+    "ctrl_shuffle_orig_acc": {
+      "mean": 0.16433333333333333,
+      "range": 0.15400000000000003,
+      "values": [
+        0.077,
+        0.185,
+        0.231
+      ]
+    },
+    "ctrl_shuffle_adv_acc": {
+      "mean": 0.17333333333333334,
+      "range": 0.27111111111111114,
+      "values": [
+        0.07555555555555556,
+        0.3466666666666667,
+        0.09777777777777778
+      ]
+    },
+    "ctrl_randfeat_orig_acc": {
+      "mean": 0.19266666666666668,
+      "range": 0.015000000000000013,
+      "values": [
+        0.185,
+        0.193,
+        0.2
+      ]
+    },
+    "ctrl_randfeat_adv_acc": {
+      "mean": 0.22518518518518515,
+      "range": 0.017777777777777753,
+      "values": [
+        0.21333333333333335,
+        0.2311111111111111,
+        0.2311111111111111
+      ]
+    }
+  },
+  "verdict": {
+    "P0": 0.9883333333333333,
+    "adv": 0.09185185185185185,
+    "M0": 0.6,
+    "drop_pt": 89.64814814814814,
+    "within_M0_5pt": false,
+    "judged": "路由主要靠语体捷径",
+    "rule": "README §4：adv<P0-20pt 或 |adv-M0|<=5pt ⇒ 捷径；adv>=P0-10pt ⇒ 有真本事；否则证据不足"
+  },
+  "known_answer_cross_seed": {
+    "c1-01": {
+      "preds": [
+        "relation",
+        "relation",
+        "relation"
+      ],
+      "stable": true
+    },
+    "c1-02": {
+      "preds": [
+        "pronoun",
+        "pronoun",
+        "pronoun"
+      ],
+      "stable": true
+    },
+    "c1-03": {
+      "preds": [
+        "pronoun",
+        "pronoun",
+        "pronoun"
+      ],
+      "stable": true
+    },
+    "c2-01": {
+      "preds": [
+        "relation",
+        "relation",
+        "relation"
+      ],
+      "stable": true
+    },
+    "c2-02": {
+      "preds": [
+        "relation",
+        "relation",
+        "relation"
+      ],
+      "stable": true
+    },
+    "c2-03": {
+      "preds": [
+        "relation",
+        "relation",
+        "relation"
+      ],
+      "stable": true
+    },
+    "c3-01": {
+      "preds": [
+        "pronoun",
+        "pronoun",
+        "sentiment"
+      ],
+      "stable": false
+    },
+    "c3-02": {
+      "preds": [
+        "person",
+        "pronoun",
+        "pronoun"
+      ],
+      "stable": false
+    },
+    "c3-03": {
+      "preds": [
+        "pronoun",
+        "pronoun",
+        "pronoun"
+      ],
+      "stable": true
+    },
+    "c4-01": {
+      "preds": [
+        "sentiment",
+        "relation",
+        "relation"
+      ],
+      "stable": false
+    },
+    "c4-02": {
+      "preds": [
+        "sentiment",
+        "sentiment",
+        "sentiment"
+      ],
+      "stable": true
+    },
+    "c4-03": {
+      "preds": [
+        "sentiment",
+        "sentiment",
+        "sentiment"
+      ],
+      "stable": true
+    },
+    "c5-01": {
+      "preds": [
+        "relation",
+        "relation",
+        "relation"
+      ],
+      "stable": true
+    },
+    "c5-02": {
+      "preds": [
+        "pronoun",
+        "sentiment",
+        "sentiment"
+      ],
+      "stable": false
+    },
+    "c5-03": {
+      "preds": [
+        "sentiment",
+        "sentiment",
+        "sentiment"
+      ],
+      "stable": true
+    }
+  }
+}

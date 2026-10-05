@@ -1,0 +1,168 @@
+{
+ "counts": {
+  "negation": 60,
+  "control": 57,
+  "control_plain": 44,
+  "stress": 10,
+  "sanity": 12
+ },
+ "blocks": {
+  "negation": {
+   "name": "negation",
+   "n": 60,
+   "majority": [
+    "悲伤",
+    50.0
+   ],
+   "base": 40.0,
+   "comp": 78.33333333333333,
+   "comp_nocheck": 78.33333333333333,
+   "comp_regex": 78.33333333333333,
+   "recall": 96.66666666666667,
+   "recall_strict": 90.0,
+   "cond": 79.3103448275862,
+   "cond_base": 39.6551724137931,
+   "e2e_norecall": 50.0,
+   "base_pol": 58.333333333333336,
+   "comp_pol": 96.66666666666667,
+   "flip_pos": 3.3333333333333335,
+   "base_pos": 41.666666666666664
+  },
+  "control": {
+   "name": "control",
+   "n": 57,
+   "majority": [
+    "积极",
+    49.12280701754386
+   ],
+   "base": 64.91228070175438,
+   "comp": 64.91228070175438,
+   "comp_nocheck": 63.1578947368421,
+   "comp_regex": 64.91228070175438,
+   "recall": 98.24561403508773,
+   "recall_strict": 92.98245614035088,
+   "cond": 64.28571428571429,
+   "cond_base": 64.28571428571429,
+   "e2e_norecall": 100.0,
+   "base_pol": 75.43859649122807,
+   "comp_pol": 75.43859649122807,
+   "flip_pos": 35.08771929824562,
+   "base_pos": 35.08771929824562
+  },
+  "stress": {
+   "name": "stress",
+   "n": 10,
+   "majority": [
+    "积极",
+    100.0
+   ],
+   "base": 20.0,
+   "comp": 10.0,
+   "comp_nocheck": 10.0,
+   "comp_regex": 10.0,
+   "recall": 90.0,
+   "recall_strict": 90.0,
+   "cond": 11.11111111111111,
+   "cond_base": 22.22222222222222,
+   "e2e_norecall": 0.0,
+   "base_pol": 20.0,
+   "comp_pol": 10.0,
+   "flip_pos": 10.0,
+   "base_pos": 20.0
+  },
+  "control_plain": {
+   "name": "control_plain",
+   "n": 44,
+   "majority": [
+    "积极",
+    45.45454545454545
+   ],
+   "base": 63.63636363636363,
+   "comp": 63.63636363636363,
+   "comp_nocheck": 61.36363636363637,
+   "comp_regex": 63.63636363636363,
+   "recall": 97.72727272727273,
+   "recall_strict": 90.9090909090909,
+   "cond": 62.7906976744186,
+   "cond_base": 62.7906976744186,
+   "e2e_norecall": 100.0,
+   "base_pol": 77.27272727272727,
+   "comp_pol": 77.27272727272727,
+   "flip_pos": 36.36363636363637,
+   "base_pos": 36.36363636363637
+  },
+  "control_neg": {
+   "name": "control_neg",
+   "n": 13,
+   "majority": [
+    "积极",
+    61.53846153846154
+   ],
+   "base": 69.23076923076923,
+   "comp": 69.23076923076923,
+   "comp_nocheck": 69.23076923076923,
+   "comp_regex": 69.23076923076923,
+   "recall": 100.0,
+   "recall_strict": 100.0,
+   "cond": 69.23076923076923,
+   "cond_base": 69.23076923076923,
+   "e2e_norecall": NaN,
+   "base_pol": 69.23076923076923,
+   "comp_pol": 69.23076923076923,
+   "flip_pos": 30.76923076923077,
+   "base_pos": 30.76923076923077
+  },
+  "sanity": {
+   "name": "sanity",
+   "n": 12,
+   "majority": [
+    "悲伤",
+    33.333333333333336
+   ],
+   "base": 41.666666666666664,
+   "comp": 50.0,
+   "comp_nocheck": 50.0,
+   "comp_regex": 50.0,
+   "recall": 83.33333333333333,
+   "recall_strict": 66.66666666666667,
+   "cond": 50.0,
+   "cond_base": 40.0,
+   "e2e_norecall": 50.0,
+   "base_pol": 58.333333333333336,
+   "comp_pol": 66.66666666666667,
+   "flip_pos": 16.666666666666668,
+   "base_pos": 25.0
+  }
+ },
+ "verdict": {
+  "smoke": "有空间",
+  "P1": false,
+  "P2": true,
+  "P3": true,
+  "delta": 38.33333333333333,
+  "ctrl_delta": 0.0
+ },
+ "decomp": {
+  "错题总数": 13,
+  "极性已对、桶错（悲伤↔愤怒）": 11,
+  "仍判积极": 2,
+  "  其中召回失败": 0,
+  "  其中无可用否定标记": 0,
+  "  其中锚点文本未含情绪词": 2,
+  "组合把基线对的改错": 0,
+  "基线错、组合改对": 23,
+  "仍判积极明细": {
+   "召回失败": [],
+   "无可用否定标记": [],
+   "锚点文本未含情绪词": [
+    "neg_sad_20",
+    "neg_angry_05"
+   ]
+  }
+ },
+ "cards": {
+  "base": "experiments/compose_ops/artifacts/base_encoder.pt",
+  "sentiment": "experiments/compose_ops/artifacts/cards/sentiment.pt",
+  "negation": "experiments/compose_ops/artifacts/cards/negation.pt"
+ }
+}

@@ -8,8 +8,9 @@
 
 从真实对话日志中挖掘角色标识与归属声明。
 """
-import glob
 import random
+
+from dtseek.tasks.corpus import resolve_corpus_files
 
 SPEAKER_MAP = [
     # 类别 1: 用户/客户
@@ -97,7 +98,7 @@ def build_ownership_dataset(target_samples: int = 10000, max_seq_len: int = 64,
     导致模型对无归属句同样 100% 误报。v2 把背景配额提到 30%，并显式对齐三类别。
     """
     rng = random.Random(seed)
-    corpora_files = sorted(glob.glob("/home/vesita/coding/my/nanoSeek/data/chinese/*dialogue.txt"))
+    corpora_files = resolve_corpus_files()
 
     n_bg = int(target_samples * bg_ratio)
     n_real = target_samples - n_bg

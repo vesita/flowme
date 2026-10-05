@@ -107,6 +107,9 @@ def build_card_decoder(ck: dict, device="cpu"):
     from dtseek.tasks.plugin import TaskSpec
 
     spec = TaskSpec.from_snapshot(ck["spec"])
+    # 快照里缺的推理行为字段（INHERITABLE_KEYS：max_len / segment_policy /
+    # identity_labels / annotate_all）由 from_snapshot 按注册表当前声明继承并打印提示；
+    # 快照**写了**但值不同的漂移由 check_ckpt_specs 拦（engine.attach 会先跑它）。
     dec = RobustARSliceDecoder(hidden_dim=ck["hidden_dim"],
                                num_classes=spec.num_classes,
                                **ck["decoder_kwargs"]).to(device)

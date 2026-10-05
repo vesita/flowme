@@ -20,9 +20,10 @@ v3 因此新增 SYMBOLIC_QUOTE_TEMPLATES 桶，同时覆盖：
 
 注意：`“` `”` `：` 都是**合法输入**，绝不能进任何「背景纯度」禁词表。
 """
-import glob
 import random
 import re
+
+from dtseek.tasks.corpus import resolve_corpus_files
 
 PRONOUN_MAP = [
     (1, ["我们", "咱们", "鄙人", "在下", "我", "俺", "咱"]),
@@ -175,7 +176,7 @@ def build_rich_ar_dataset(target_samples: int = 15000, max_seq_len: int = 64,
     print(f"  代词数据集配额：真实句 {n_real} | 合成句 {n_syn} | "
           f"符号句 {n_sym} | 背景句 {n_bg}")
 
-    corpus_files = sorted(glob.glob("/home/vesita/coding/my/nanoSeek/data/chinese/*dialogue.txt"))
+    corpus_files = resolve_corpus_files()
 
     # 三个桶各自独立填配额，绝不因为某个桶满了就 break —— v1 的 bug 就在这里
     bucket_multi, bucket_single, bucket_zero = [], [], []

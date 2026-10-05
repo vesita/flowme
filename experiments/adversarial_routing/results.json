@@ -1,0 +1,472 @@
+{
+  "meta": {
+    "seeds": [
+      42,
+      43,
+      44
+    ],
+    "device": "cuda",
+    "n_adv": 225,
+    "label_dist": {
+      "sentiment": 90,
+      "neutral": 135
+    },
+    "majority_adv": 0.6,
+    "majority_orig5": 0.2,
+    "dup_with_e4_data": [],
+    "wall_seconds": 61.7,
+    "data_and_probe_seconds": 56.7
+  },
+  "replication_e4": {
+    "acc4": {
+      "per_seed": [
+        0.98625,
+        0.98375,
+        0.985
+      ],
+      "mean": 0.985,
+      "std": 0.0010206207261596358
+    },
+    "acc5": {
+      "per_seed": [
+        0.986,
+        0.99,
+        0.989
+      ],
+      "mean": 0.9883333333333333,
+      "std": 0.0016996731711975965
+    },
+    "e4_reference_acc4_mean": 0.985,
+    "e4_reference_acc5_mean": 0.9873
+  },
+  "known_answer": {
+    "acc": 0.15555555555555556,
+    "per_seed": [
+      0.2,
+      0.13333333333333333,
+      0.13333333333333333
+    ],
+    "detail": [
+      {
+        "id": "c1-01",
+        "text": "我今天真的特别高兴，谢谢你一直陪着我。",
+        "true": "sentiment",
+        "pred": "relation"
+      },
+      {
+        "id": "c1-02",
+        "text": "我们都很担心你，你却笑着说一切正常。",
+        "true": "sentiment",
+        "pred": "pronoun"
+      },
+      {
+        "id": "c1-03",
+        "text": "你猜我为什么这么开心？因为我终于升职了！",
+        "true": "sentiment",
+        "pred": "pronoun"
+      },
+      {
+        "id": "c2-01",
+        "text": "守株待兔和画蛇添足这两个词要一起记。",
+        "true": "neutral",
+        "pred": "relation"
+      },
+      {
+        "id": "c2-02",
+        "text": "老师让我们区分掩耳盗铃和刻舟求剑。",
+        "true": "neutral",
+        "pred": "relation"
+      },
+      {
+        "id": "c2-03",
+        "text": "请在亡羊补牢和对牛弹琴下面画横线。",
+        "true": "neutral",
+        "pred": "relation"
+      },
+      {
+        "id": "c3-01",
+        "text": "张伟今天早上七点到了公司。",
+        "true": "neutral",
+        "pred": "pronoun"
+      },
+      {
+        "id": "c3-02",
+        "text": "王芳在超市买了两斤苹果。",
+        "true": "neutral",
+        "pred": "person"
+      },
+      {
+        "id": "c3-03",
+        "text": "李军已经搬去南京定居了。",
+        "true": "neutral",
+        "pred": "pronoun"
+      },
+      {
+        "id": "c4-01",
+        "text": "这个办法不算复杂，做完之后大家都很满意。",
+        "true": "sentiment",
+        "pred": "sentiment"
+      },
+      {
+        "id": "c4-02",
+        "text": "这结果不算差，评委们相当满意。",
+        "true": "sentiment",
+        "pred": "sentiment"
+      },
+      {
+        "id": "c4-03",
+        "text": "他从不夸人，这次却对结果十分满意。",
+        "true": "sentiment",
+        "pred": "sentiment"
+      },
+      {
+        "id": "c5-01",
+        "text": "老师在黑板上写了「高兴」两个字。",
+        "true": "neutral",
+        "pred": "relation"
+      },
+      {
+        "id": "c5-02",
+        "text": "他高不高兴都一样，会议照常进行。",
+        "true": "neutral",
+        "pred": "pronoun"
+      },
+      {
+        "id": "c5-03",
+        "text": "会议记录里「难过」这个词被划掉了。",
+        "true": "neutral",
+        "pred": "sentiment"
+      }
+    ]
+  },
+  "original_test": {
+    "route_acc": {
+      "per_seed": [
+        0.986,
+        0.99,
+        0.989
+      ],
+      "mean": 0.9883333333333333,
+      "std": 0.0016996731711975965
+    },
+    "route_bg_fp": {
+      "per_seed": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "mean": 0.0,
+      "std": 0.0
+    },
+    "route_macro": {
+      "per_seed": [
+        0.986,
+        0.99,
+        0.989
+      ],
+      "mean": 0.9883333333333333,
+      "std": 0.001699673171197611
+    }
+  },
+  "adversarial": {
+    "route_acc": {
+      "per_seed": [
+        0.12,
+        0.093333,
+        0.062222
+      ],
+      "mean": 0.09185185185185185,
+      "std": 0.023610929556309966
+    },
+    "route_bg_fp": {
+      "per_seed": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "mean": 1.0,
+      "std": 0.0
+    },
+    "route_macro": {
+      "per_seed": [
+        0.15,
+        0.116667,
+        0.077778
+      ],
+      "mean": 0.11481481481481481,
+      "std": 0.029513661945387456
+    },
+    "acc4_on_sentiment_subset": {
+      "per_seed": [
+        0.322222,
+        0.211111,
+        0.188889
+      ],
+      "mean": 0.24074074074074073,
+      "std": 0.05832598425193935
+    },
+    "per_category": {
+      "c1": {
+        "acc": {
+          "per_seed": [
+            0.111111,
+            0.0,
+            0.022222
+          ],
+          "mean": 0.044444444444444446,
+          "std": 0.04800548665487304
+        },
+        "trap_rate": {
+          "per_seed": [
+            0.533333,
+            0.533333,
+            0.644444
+          ],
+          "mean": 0.5703703703703704,
+          "std": 0.05237828008789243
+        },
+        "pred_dist_3seed_sum": {
+          "pronoun": 77,
+          "relation": 52,
+          "sentiment": 6
+        }
+      },
+      "c2": {
+        "acc": {
+          "per_seed": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "trap_rate": {
+          "per_seed": [
+            0.822222,
+            0.866667,
+            0.8
+          ],
+          "mean": 0.8296296296296296,
+          "std": 0.02771598064276994
+        },
+        "pred_dist_3seed_sum": {
+          "pronoun": 2,
+          "relation": 112,
+          "sentiment": 21
+        }
+      },
+      "c3": {
+        "acc": {
+          "per_seed": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "trap_rate": {
+          "per_seed": [
+            0.177778,
+            0.088889,
+            0.022222
+          ],
+          "mean": 0.09629629629629628,
+          "std": 0.06372092790401945
+        },
+        "pred_dist_3seed_sum": {
+          "person": 13,
+          "pronoun": 36,
+          "relation": 34,
+          "sentiment": 52
+        }
+      },
+      "c4": {
+        "acc": {
+          "per_seed": [
+            0.488889,
+            0.466667,
+            0.288889
+          ],
+          "mean": 0.4148148148148148,
+          "std": 0.0895040442488487
+        },
+        "trap_rate": null,
+        "pred_dist_3seed_sum": {
+          "pronoun": 41,
+          "relation": 38,
+          "sentiment": 56
+        }
+      },
+      "c5": {
+        "acc": {
+          "per_seed": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "trap_rate": {
+          "per_seed": [
+            0.4,
+            0.4,
+            0.333333
+          ],
+          "mean": 0.37777777777777777,
+          "std": 0.03142696805273547
+        },
+        "pred_dist_3seed_sum": {
+          "person": 1,
+          "pronoun": 19,
+          "relation": 64,
+          "sentiment": 51
+        }
+      }
+    },
+    "pred_dist_seed42": {
+      "pronoun": 53,
+      "sentiment": 70,
+      "relation": 93,
+      "person": 9
+    }
+  },
+  "controls": {
+    "shuffled_label": {
+      "orig": {
+        "per_seed": [
+          0.187,
+          0.171,
+          0.38
+        ],
+        "mean": 0.246,
+        "std": 0.09497719024411423
+      },
+      "adv": {
+        "per_seed": [
+          0.115556,
+          0.106667,
+          0.013333
+        ],
+        "mean": 0.07851851851851852,
+        "std": 0.04623551565726588
+      }
+    },
+    "random_feature": {
+      "orig": {
+        "per_seed": [
+          0.19,
+          0.2,
+          0.189
+        ],
+        "mean": 0.19299999999999998,
+        "std": 0.004966554808583784
+      },
+      "adv": {
+        "per_seed": [
+          0.231111,
+          0.2,
+          0.248889
+        ],
+        "mean": 0.22666666666666666,
+        "std": 0.020204713625164225
+      }
+    }
+  },
+  "surface_stats": {
+    "train_by_class_seed42": {
+      "pronoun": {
+        "n": 200,
+        "pronoun_mean": 2.04,
+        "frac_emotion": 0.04,
+        "frac_negation": 0.35,
+        "frac_name": 0.0,
+        "idiom_mean": 0.065
+      },
+      "sentiment": {
+        "n": 200,
+        "pronoun_mean": 0.1,
+        "frac_emotion": 1.0,
+        "frac_negation": 0.255,
+        "frac_name": 0.0,
+        "idiom_mean": 0.02
+      },
+      "relation": {
+        "n": 200,
+        "pronoun_mean": 0.9,
+        "frac_emotion": 0.045,
+        "frac_negation": 0.465,
+        "frac_name": 0.0,
+        "idiom_mean": 0.0
+      },
+      "person": {
+        "n": 200,
+        "pronoun_mean": 1.75,
+        "frac_emotion": 0.085,
+        "frac_negation": 0.215,
+        "frac_name": 0.49,
+        "idiom_mean": 0.0
+      },
+      "neutral": {
+        "n": 200,
+        "pronoun_mean": 0.0,
+        "frac_emotion": 0.0,
+        "frac_negation": 0.0,
+        "frac_name": 0.0,
+        "idiom_mean": 0.0
+      }
+    },
+    "adv_by_category": {
+      "c1": {
+        "n": 45,
+        "pronoun_mean": 3.33,
+        "frac_emotion": 1.0,
+        "frac_negation": 0.0,
+        "frac_name": 0.0,
+        "idiom_mean": 0.0
+      },
+      "c2": {
+        "n": 45,
+        "pronoun_mean": 0.47,
+        "frac_emotion": 0.022,
+        "frac_negation": 0.289,
+        "frac_name": 0.0,
+        "idiom_mean": 1.733
+      },
+      "c3": {
+        "n": 45,
+        "pronoun_mean": 0.0,
+        "frac_emotion": 0.0,
+        "frac_negation": 0.0,
+        "frac_name": 1.0,
+        "idiom_mean": 0.0
+      },
+      "c4": {
+        "n": 45,
+        "pronoun_mean": 0.44,
+        "frac_emotion": 1.0,
+        "frac_negation": 1.0,
+        "frac_name": 0.0,
+        "idiom_mean": 0.0
+      },
+      "c5": {
+        "n": 45,
+        "pronoun_mean": 0.31,
+        "frac_emotion": 1.0,
+        "frac_negation": 0.133,
+        "frac_name": 0.0,
+        "idiom_mean": 0.0
+      }
+    }
+  },
+  "verdict": {
+    "P0_original_acc": 0.988333,
+    "adv_acc": 0.091852,
+    "majority_adv": 0.6,
+    "known_answer_acc": 0.155556,
+    "drop_pt": 89.65,
+    "decision": "路由主要靠语体捷径"
+  }
+}

@@ -1,0 +1,1281 @@
+{
+ "cases": [
+  {
+   "id": "neg_sad_01",
+   "set": "negation",
+   "text": "没有很开心，大家早点休息。",
+   "cue": "开心",
+   "cue_start": 3,
+   "cue_end": 4,
+   "label": "悲伤",
+   "sanity": true
+  },
+  {
+   "id": "neg_sad_02",
+   "set": "negation",
+   "text": "开心不起来，先不聊了。",
+   "cue": "开心",
+   "cue_start": 0,
+   "cue_end": 1,
+   "label": "悲伤",
+   "sanity": false
+  },
+  {
+   "id": "neg_sad_03",
+   "set": "negation",
+   "text": "谈不上高兴，事情还没办完。",
+   "cue": "高兴",
+   "cue_start": 3,
+   "cue_end": 4,
+   "label": "悲伤",
+   "sanity": true
+  },
+  {
+   "id": "neg_sad_04",
+   "set": "negation",
+   "text": "这结果让我没有很高兴。",
+   "cue": "高兴",
+   "cue_start": 8,
+   "cue_end": 9,
+   "label": "悲伤",
+   "sanity": false
+  },
+  {
+   "id": "neg_sad_05",
+   "set": "negation",
+   "text": "没有什么可高兴的。",
+   "cue": "高兴",
+   "cue_start": 5,
+   "cue_end": 6,
+   "label": "悲伤",
+   "sanity": false
+  },
+  {
+   "id": "neg_sad_06",
+   "set": "negation",
+   "text": "还不至于高兴，问题没解决。",
+   "cue": "高兴",
+   "cue_start": 4,
+   "cue_end": 5,
+   "label": "悲伤",
+   "sanity": false
+  },
+  {
+   "id": "neg_sad_07",
+   "set": "negation",
+   "text": "不觉得有多开心。",
+   "cue": "开心",
+   "cue_start": 5,
+   "cue_end": 6,
+   "label": "悲伤",
+   "sanity": false
+  },
+  {
+   "id": "neg_sad_08",
+   "set": "negation",
+   "text": "没感到十分快乐。",
+   "cue": "快乐",
+   "cue_start": 5,
+   "cue_end": 6,
+   "label": "悲伤",
+   "sanity": false
+  },
+  {
+   "id": "neg_sad_09",
+   "set": "negation",
+   "text": "也谈不上多快乐。",
+   "cue": "快乐",
+   "cue_start": 5,
+   "cue_end": 6,
+   "label": "悲伤",
+   "sanity": false
+  },
+  {
+   "id": "neg_sad_10",
+   "set": "negation",
+   "text": "没觉得痛快。",
+   "cue": "痛快",
+   "cue_start": 3,
+   "cue_end": 4,
+   "label": "悲伤",
+   "sanity": true
+  },
+  {
+   "id": "neg_sad_11",
+   "set": "negation",
+   "text": "并不觉得轻松。",
+   "cue": "轻松",
+   "cue_start": 4,
+   "cue_end": 5,
+   "label": "悲伤",
+   "sanity": false
+  },
+  {
+   "id": "neg_sad_12",
+   "set": "negation",
+   "text": "没那么舒服。",
+   "cue": "舒服",
+   "cue_start": 3,
+   "cue_end": 4,
+   "label": "悲伤",
+   "sanity": false
+  },
+  {
+   "id": "neg_sad_13",
+   "set": "negation",
+   "text": "谈不上愉快。",
+   "cue": "愉快",
+   "cue_start": 3,
+   "cue_end": 4,
+   "label": "悲伤",
+   "sanity": false
+  },
+  {
+   "id": "neg_sad_14",
+   "set": "negation",
+   "text": "没觉得多幸福。",
+   "cue": "幸福",
+   "cue_start": 4,
+   "cue_end": 5,
+   "label": "悲伤",
+   "sanity": false
+  },
+  {
+   "id": "neg_sad_15",
+   "set": "negation",
+   "text": "没感到多舒心。",
+   "cue": "舒心",
+   "cue_start": 4,
+   "cue_end": 5,
+   "label": "悲伤",
+   "sanity": false
+  },
+  {
+   "id": "neg_sad_16",
+   "set": "negation",
+   "text": "没有特别兴奋。",
+   "cue": "兴奋",
+   "cue_start": 4,
+   "cue_end": 5,
+   "label": "悲伤",
+   "sanity": false
+  },
+  {
+   "id": "neg_sad_17",
+   "set": "negation",
+   "text": "也不觉得激动。",
+   "cue": "激动",
+   "cue_start": 4,
+   "cue_end": 5,
+   "label": "悲伤",
+   "sanity": false
+  },
+  {
+   "id": "neg_sad_18",
+   "set": "negation",
+   "text": "谈不上多喜悦。",
+   "cue": "喜悦",
+   "cue_start": 4,
+   "cue_end": 5,
+   "label": "悲伤",
+   "sanity": false
+  },
+  {
+   "id": "neg_sad_19",
+   "set": "negation",
+   "text": "没那么惬意。",
+   "cue": "惬意",
+   "cue_start": 3,
+   "cue_end": 4,
+   "label": "悲伤",
+   "sanity": false
+  },
+  {
+   "id": "neg_sad_20",
+   "set": "negation",
+   "text": "也没有多欢喜。",
+   "cue": "欢喜",
+   "cue_start": 4,
+   "cue_end": 5,
+   "label": "悲伤",
+   "sanity": false
+  },
+  {
+   "id": "neg_sad_21",
+   "set": "negation",
+   "text": "也高兴不起来。",
+   "cue": "高兴",
+   "cue_start": 1,
+   "cue_end": 2,
+   "label": "悲伤",
+   "sanity": false
+  },
+  {
+   "id": "neg_sad_22",
+   "set": "negation",
+   "text": "未见得有多开心。",
+   "cue": "开心",
+   "cue_start": 5,
+   "cue_end": 6,
+   "label": "悲伤",
+   "sanity": false
+  },
+  {
+   "id": "neg_sad_23",
+   "set": "negation",
+   "text": "没觉得特别开心。",
+   "cue": "开心",
+   "cue_start": 5,
+   "cue_end": 6,
+   "label": "悲伤",
+   "sanity": false
+  },
+  {
+   "id": "neg_sad_24",
+   "set": "negation",
+   "text": "这事没什么好高兴的。",
+   "cue": "高兴",
+   "cue_start": 6,
+   "cue_end": 7,
+   "label": "悲伤",
+   "sanity": false
+  },
+  {
+   "id": "neg_sad_25",
+   "set": "negation",
+   "text": "一点都快乐不起来。",
+   "cue": "快乐",
+   "cue_start": 3,
+   "cue_end": 4,
+   "label": "悲伤",
+   "sanity": false
+  },
+  {
+   "id": "neg_sad_26",
+   "set": "negation",
+   "text": "没感到多少喜悦。",
+   "cue": "喜悦",
+   "cue_start": 5,
+   "cue_end": 6,
+   "label": "悲伤",
+   "sanity": false
+  },
+  {
+   "id": "neg_sad_27",
+   "set": "negation",
+   "text": "算不上多痛快。",
+   "cue": "痛快",
+   "cue_start": 4,
+   "cue_end": 5,
+   "label": "悲伤",
+   "sanity": false
+  },
+  {
+   "id": "neg_sad_28",
+   "set": "negation",
+   "text": "并没有觉得轻松。",
+   "cue": "轻松",
+   "cue_start": 5,
+   "cue_end": 6,
+   "label": "悲伤",
+   "sanity": false
+  },
+  {
+   "id": "neg_sad_29",
+   "set": "negation",
+   "text": "没觉得有多舒服。",
+   "cue": "舒服",
+   "cue_start": 5,
+   "cue_end": 6,
+   "label": "悲伤",
+   "sanity": false
+  },
+  {
+   "id": "neg_sad_30",
+   "set": "negation",
+   "text": "谈不上有多舒心。",
+   "cue": "舒心",
+   "cue_start": 5,
+   "cue_end": 6,
+   "label": "悲伤",
+   "sanity": false
+  },
+  {
+   "id": "neg_angry_01",
+   "set": "negation",
+   "text": "并不觉得满意。",
+   "cue": "满意",
+   "cue_start": 4,
+   "cue_end": 5,
+   "label": "愤怒",
+   "sanity": true
+  },
+  {
+   "id": "neg_angry_02",
+   "set": "negation",
+   "text": "没觉得有多满意。",
+   "cue": "满意",
+   "cue_start": 5,
+   "cue_end": 6,
+   "label": "愤怒",
+   "sanity": false
+  },
+  {
+   "id": "neg_angry_03",
+   "set": "negation",
+   "text": "提不上满意，勉强能用。",
+   "cue": "满意",
+   "cue_start": 3,
+   "cue_end": 4,
+   "label": "愤怒",
+   "sanity": false
+  },
+  {
+   "id": "neg_angry_04",
+   "set": "negation",
+   "text": "我不是很满意这次的安排。",
+   "cue": "满意",
+   "cue_start": 4,
+   "cue_end": 5,
+   "label": "愤怒",
+   "sanity": false
+  },
+  {
+   "id": "neg_angry_05",
+   "set": "negation",
+   "text": "算不上喜欢这个配色。",
+   "cue": "喜欢",
+   "cue_start": 3,
+   "cue_end": 4,
+   "label": "愤怒",
+   "sanity": true
+  },
+  {
+   "id": "neg_angry_06",
+   "set": "negation",
+   "text": "谈不上多喜欢。",
+   "cue": "喜欢",
+   "cue_start": 4,
+   "cue_end": 5,
+   "label": "愤怒",
+   "sanity": false
+  },
+  {
+   "id": "neg_angry_07",
+   "set": "negation",
+   "text": "没那么喜欢。",
+   "cue": "喜欢",
+   "cue_start": 3,
+   "cue_end": 4,
+   "label": "愤怒",
+   "sanity": false
+  },
+  {
+   "id": "neg_angry_08",
+   "set": "negation",
+   "text": "并不怎么认可这种做法。",
+   "cue": "认可",
+   "cue_start": 4,
+   "cue_end": 5,
+   "label": "愤怒",
+   "sanity": true
+  },
+  {
+   "id": "neg_angry_09",
+   "set": "negation",
+   "text": "谈不上赞同。",
+   "cue": "赞同",
+   "cue_start": 3,
+   "cue_end": 4,
+   "label": "愤怒",
+   "sanity": false
+  },
+  {
+   "id": "neg_angry_10",
+   "set": "negation",
+   "text": "也不怎么欣赏。",
+   "cue": "欣赏",
+   "cue_start": 4,
+   "cue_end": 5,
+   "label": "愤怒",
+   "sanity": false
+  },
+  {
+   "id": "neg_angry_11",
+   "set": "negation",
+   "text": "没觉得有多认可。",
+   "cue": "认可",
+   "cue_start": 5,
+   "cue_end": 6,
+   "label": "愤怒",
+   "sanity": false
+  },
+  {
+   "id": "neg_angry_12",
+   "set": "negation",
+   "text": "不觉得有多赞成。",
+   "cue": "赞成",
+   "cue_start": 5,
+   "cue_end": 6,
+   "label": "愤怒",
+   "sanity": false
+  },
+  {
+   "id": "neg_angry_13",
+   "set": "negation",
+   "text": "并没有多赞成。",
+   "cue": "赞成",
+   "cue_start": 4,
+   "cue_end": 5,
+   "label": "愤怒",
+   "sanity": false
+  },
+  {
+   "id": "neg_angry_14",
+   "set": "negation",
+   "text": "谈不上喜欢。",
+   "cue": "喜欢",
+   "cue_start": 3,
+   "cue_end": 4,
+   "label": "愤怒",
+   "sanity": false
+  },
+  {
+   "id": "neg_angry_15",
+   "set": "negation",
+   "text": "不觉得有多满意。",
+   "cue": "满意",
+   "cue_start": 5,
+   "cue_end": 6,
+   "label": "愤怒",
+   "sanity": false
+  },
+  {
+   "id": "neg_angry_16",
+   "set": "negation",
+   "text": "没感到多满意。",
+   "cue": "满意",
+   "cue_start": 4,
+   "cue_end": 5,
+   "label": "愤怒",
+   "sanity": false
+  },
+  {
+   "id": "neg_angry_17",
+   "set": "negation",
+   "text": "也不觉得满意。",
+   "cue": "满意",
+   "cue_start": 4,
+   "cue_end": 5,
+   "label": "愤怒",
+   "sanity": false
+  },
+  {
+   "id": "neg_angry_18",
+   "set": "negation",
+   "text": "并不赞成这个方案。",
+   "cue": "赞成",
+   "cue_start": 2,
+   "cue_end": 3,
+   "label": "愤怒",
+   "sanity": false
+  },
+  {
+   "id": "neg_angry_19",
+   "set": "negation",
+   "text": "也算不上多认可。",
+   "cue": "认可",
+   "cue_start": 5,
+   "cue_end": 6,
+   "label": "愤怒",
+   "sanity": false
+  },
+  {
+   "id": "neg_angry_20",
+   "set": "negation",
+   "text": "没觉得多满意。",
+   "cue": "满意",
+   "cue_start": 4,
+   "cue_end": 5,
+   "label": "愤怒",
+   "sanity": false
+  },
+  {
+   "id": "neg_angry_21",
+   "set": "negation",
+   "text": "谈不上多赞成。",
+   "cue": "赞成",
+   "cue_start": 4,
+   "cue_end": 5,
+   "label": "愤怒",
+   "sanity": false
+  },
+  {
+   "id": "neg_angry_22",
+   "set": "negation",
+   "text": "没觉得有多欣赏。",
+   "cue": "欣赏",
+   "cue_start": 5,
+   "cue_end": 6,
+   "label": "愤怒",
+   "sanity": false
+  },
+  {
+   "id": "neg_angry_23",
+   "set": "negation",
+   "text": "并未觉得满意。",
+   "cue": "满意",
+   "cue_start": 4,
+   "cue_end": 5,
+   "label": "愤怒",
+   "sanity": false
+  },
+  {
+   "id": "neg_angry_24",
+   "set": "negation",
+   "text": "没感到多喜欢。",
+   "cue": "喜欢",
+   "cue_start": 4,
+   "cue_end": 5,
+   "label": "愤怒",
+   "sanity": false
+  },
+  {
+   "id": "neg_angry_25",
+   "set": "negation",
+   "text": "也谈不上喜欢。",
+   "cue": "喜欢",
+   "cue_start": 4,
+   "cue_end": 5,
+   "label": "愤怒",
+   "sanity": false
+  },
+  {
+   "id": "neg_angry_26",
+   "set": "negation",
+   "text": "没有多喜欢。",
+   "cue": "喜欢",
+   "cue_start": 3,
+   "cue_end": 4,
+   "label": "愤怒",
+   "sanity": false
+  },
+  {
+   "id": "neg_angry_27",
+   "set": "negation",
+   "text": "提不上多认可。",
+   "cue": "认可",
+   "cue_start": 4,
+   "cue_end": 5,
+   "label": "愤怒",
+   "sanity": false
+  },
+  {
+   "id": "neg_angry_28",
+   "set": "negation",
+   "text": "没觉得多欣赏。",
+   "cue": "欣赏",
+   "cue_start": 4,
+   "cue_end": 5,
+   "label": "愤怒",
+   "sanity": false
+  },
+  {
+   "id": "neg_angry_29",
+   "set": "negation",
+   "text": "并不怎么赞同这个结论。",
+   "cue": "赞同",
+   "cue_start": 4,
+   "cue_end": 5,
+   "label": "愤怒",
+   "sanity": false
+  },
+  {
+   "id": "neg_angry_30",
+   "set": "negation",
+   "text": "没觉得多赞成。",
+   "cue": "赞成",
+   "cue_start": 4,
+   "cue_end": 5,
+   "label": "愤怒",
+   "sanity": false
+  },
+  {
+   "id": "ctrl_plain_01",
+   "set": "control",
+   "text": "我很喜欢这个颜色。",
+   "cue": "喜欢",
+   "cue_start": 2,
+   "cue_end": 3,
+   "label": "积极",
+   "sanity": true
+  },
+  {
+   "id": "ctrl_plain_02",
+   "set": "control",
+   "text": "这个方案太棒了。",
+   "cue": "太棒了",
+   "cue_start": 4,
+   "cue_end": 6,
+   "label": "积极",
+   "sanity": false
+  },
+  {
+   "id": "ctrl_plain_03",
+   "set": "control",
+   "text": "今天特别开心。",
+   "cue": "开心",
+   "cue_start": 4,
+   "cue_end": 5,
+   "label": "积极",
+   "sanity": true
+  },
+  {
+   "id": "ctrl_plain_04",
+   "set": "control",
+   "text": "他表现得非常出色。",
+   "cue": "出色",
+   "cue_start": 6,
+   "cue_end": 7,
+   "label": "积极",
+   "sanity": false
+  },
+  {
+   "id": "ctrl_plain_05",
+   "set": "control",
+   "text": "这部电影真棒。",
+   "cue": "真棒",
+   "cue_start": 4,
+   "cue_end": 5,
+   "label": "积极",
+   "sanity": false
+  },
+  {
+   "id": "ctrl_plain_06",
+   "set": "control",
+   "text": "我对结果非常满意。",
+   "cue": "满意",
+   "cue_start": 6,
+   "cue_end": 7,
+   "label": "积极",
+   "sanity": false
+  },
+  {
+   "id": "ctrl_plain_07",
+   "set": "control",
+   "text": "周末过得很愉快。",
+   "cue": "愉快",
+   "cue_start": 5,
+   "cue_end": 6,
+   "label": "积极",
+   "sanity": false
+  },
+  {
+   "id": "ctrl_plain_08",
+   "set": "control",
+   "text": "这里的服务让人舒服。",
+   "cue": "舒服",
+   "cue_start": 7,
+   "cue_end": 8,
+   "label": "积极",
+   "sanity": false
+  },
+  {
+   "id": "ctrl_plain_09",
+   "set": "control",
+   "text": "我挺欣赏他的才华。",
+   "cue": "欣赏",
+   "cue_start": 2,
+   "cue_end": 3,
+   "label": "积极",
+   "sanity": false
+  },
+  {
+   "id": "ctrl_plain_10",
+   "set": "control",
+   "text": "这个主意真好。",
+   "cue": "真好",
+   "cue_start": 4,
+   "cue_end": 5,
+   "label": "积极",
+   "sanity": false
+  },
+  {
+   "id": "ctrl_plain_11",
+   "set": "control",
+   "text": "大家都认可这个方案。",
+   "cue": "认可",
+   "cue_start": 3,
+   "cue_end": 4,
+   "label": "积极",
+   "sanity": false
+  },
+  {
+   "id": "ctrl_plain_12",
+   "set": "control",
+   "text": "我非常高兴能来。",
+   "cue": "高兴",
+   "cue_start": 3,
+   "cue_end": 4,
+   "label": "积极",
+   "sanity": true
+  },
+  {
+   "id": "ctrl_plain_13",
+   "set": "control",
+   "text": "这份工作让我满足。",
+   "cue": "满足",
+   "cue_start": 6,
+   "cue_end": 7,
+   "label": "积极",
+   "sanity": false
+  },
+  {
+   "id": "ctrl_plain_14",
+   "set": "control",
+   "text": "天气不错，适合出门。",
+   "cue": "不错",
+   "cue_start": 2,
+   "cue_end": 3,
+   "label": "积极",
+   "sanity": false
+  },
+  {
+   "id": "ctrl_plain_15",
+   "set": "control",
+   "text": "他干得漂亮，大家都服气。",
+   "cue": "干得漂亮",
+   "cue_start": 1,
+   "cue_end": 4,
+   "label": "积极",
+   "sanity": false
+  },
+  {
+   "id": "ctrl_plain_16",
+   "set": "control",
+   "text": "我对这次演出很满意。",
+   "cue": "满意",
+   "cue_start": 7,
+   "cue_end": 8,
+   "label": "积极",
+   "sanity": false
+  },
+  {
+   "id": "ctrl_plain_17",
+   "set": "control",
+   "text": "心情轻松了不少。",
+   "cue": "轻松",
+   "cue_start": 2,
+   "cue_end": 3,
+   "label": "积极",
+   "sanity": false
+  },
+  {
+   "id": "ctrl_plain_18",
+   "set": "control",
+   "text": "这个结果令人愉快。",
+   "cue": "愉快",
+   "cue_start": 6,
+   "cue_end": 7,
+   "label": "积极",
+   "sanity": false
+  },
+  {
+   "id": "ctrl_plain_19",
+   "set": "control",
+   "text": "我赞成你的看法。",
+   "cue": "赞成",
+   "cue_start": 1,
+   "cue_end": 2,
+   "label": "积极",
+   "sanity": false
+  },
+  {
+   "id": "ctrl_plain_20",
+   "set": "control",
+   "text": "孩子笑得很开心。",
+   "cue": "开心",
+   "cue_start": 5,
+   "cue_end": 6,
+   "label": "积极",
+   "sanity": false
+  },
+  {
+   "id": "ctrl_plain_21",
+   "set": "control",
+   "text": "这件事太离谱了。",
+   "cue": "离谱",
+   "cue_start": 4,
+   "cue_end": 5,
+   "label": "愤怒",
+   "sanity": true
+  },
+  {
+   "id": "ctrl_plain_22",
+   "set": "control",
+   "text": "我对这种敷衍很生气。",
+   "cue": "生气",
+   "cue_start": 7,
+   "cue_end": 8,
+   "label": "愤怒",
+   "sanity": false
+  },
+  {
+   "id": "ctrl_plain_23",
+   "set": "control",
+   "text": "他的态度让人恼火。",
+   "cue": "恼火",
+   "cue_start": 6,
+   "cue_end": 7,
+   "label": "愤怒",
+   "sanity": false
+  },
+  {
+   "id": "ctrl_plain_24",
+   "set": "control",
+   "text": "这个产品真是垃圾。",
+   "cue": "垃圾",
+   "cue_start": 6,
+   "cue_end": 7,
+   "label": "愤怒",
+   "sanity": false
+  },
+  {
+   "id": "ctrl_plain_25",
+   "set": "control",
+   "text": "我受够了这种拖延。",
+   "cue": "受够了",
+   "cue_start": 1,
+   "cue_end": 3,
+   "label": "愤怒",
+   "sanity": false
+  },
+  {
+   "id": "ctrl_plain_26",
+   "set": "control",
+   "text": "这活儿干得真差劲。",
+   "cue": "差劲",
+   "cue_start": 6,
+   "cue_end": 7,
+   "label": "愤怒",
+   "sanity": false
+  },
+  {
+   "id": "ctrl_plain_27",
+   "set": "control",
+   "text": "我很反感这种做法。",
+   "cue": "反感",
+   "cue_start": 2,
+   "cue_end": 3,
+   "label": "愤怒",
+   "sanity": false
+  },
+  {
+   "id": "ctrl_plain_28",
+   "set": "control",
+   "text": "简直莫名其妙。",
+   "cue": "莫名其妙",
+   "cue_start": 2,
+   "cue_end": 5,
+   "label": "愤怒",
+   "sanity": false
+  },
+  {
+   "id": "ctrl_plain_29",
+   "set": "control",
+   "text": "这家店太坑人了。",
+   "cue": "坑人",
+   "cue_start": 4,
+   "cue_end": 5,
+   "label": "愤怒",
+   "sanity": false
+  },
+  {
+   "id": "ctrl_plain_30",
+   "set": "control",
+   "text": "我很不耐烦。",
+   "cue": "不耐烦",
+   "cue_start": 2,
+   "cue_end": 4,
+   "label": "愤怒",
+   "sanity": false
+  },
+  {
+   "id": "ctrl_plain_31",
+   "set": "control",
+   "text": "这种敷衍让人无语。",
+   "cue": "无语",
+   "cue_start": 6,
+   "cue_end": 7,
+   "label": "愤怒",
+   "sanity": false
+  },
+  {
+   "id": "ctrl_plain_32",
+   "set": "control",
+   "text": "他的话让我火大。",
+   "cue": "火大",
+   "cue_start": 5,
+   "cue_end": 6,
+   "label": "愤怒",
+   "sanity": false
+  },
+  {
+   "id": "ctrl_plain_33",
+   "set": "control",
+   "text": "我觉得很难过。",
+   "cue": "难过",
+   "cue_start": 4,
+   "cue_end": 5,
+   "label": "悲伤",
+   "sanity": true
+  },
+  {
+   "id": "ctrl_plain_34",
+   "set": "control",
+   "text": "这次考试让我很失望。",
+   "cue": "失望",
+   "cue_start": 7,
+   "cue_end": 8,
+   "label": "悲伤",
+   "sanity": false
+  },
+  {
+   "id": "ctrl_plain_35",
+   "set": "control",
+   "text": "他心里很委屈。",
+   "cue": "委屈",
+   "cue_start": 4,
+   "cue_end": 5,
+   "label": "悲伤",
+   "sanity": false
+  },
+  {
+   "id": "ctrl_plain_36",
+   "set": "control",
+   "text": "最近有点低落。",
+   "cue": "低落",
+   "cue_start": 4,
+   "cue_end": 5,
+   "label": "悲伤",
+   "sanity": false
+  },
+  {
+   "id": "ctrl_plain_37",
+   "set": "control",
+   "text": "我感到很沮丧。",
+   "cue": "沮丧",
+   "cue_start": 4,
+   "cue_end": 5,
+   "label": "悲伤",
+   "sanity": false
+  },
+  {
+   "id": "ctrl_plain_38",
+   "set": "control",
+   "text": "这件事让我很伤心。",
+   "cue": "伤心",
+   "cue_start": 6,
+   "cue_end": 7,
+   "label": "悲伤",
+   "sanity": false
+  },
+  {
+   "id": "ctrl_plain_39",
+   "set": "control",
+   "text": "他看起来很孤单。",
+   "cue": "孤单",
+   "cue_start": 5,
+   "cue_end": 6,
+   "label": "悲伤",
+   "sanity": false
+  },
+  {
+   "id": "ctrl_plain_40",
+   "set": "control",
+   "text": "这几天疲惫不堪。",
+   "cue": "疲惫",
+   "cue_start": 3,
+   "cue_end": 4,
+   "label": "悲伤",
+   "sanity": false
+  },
+  {
+   "id": "ctrl_plain_41",
+   "set": "control",
+   "text": "想起这件事就心酸。",
+   "cue": "心酸",
+   "cue_start": 6,
+   "cue_end": 7,
+   "label": "悲伤",
+   "sanity": false
+  },
+  {
+   "id": "ctrl_plain_42",
+   "set": "control",
+   "text": "我有点担心明天的会议。",
+   "cue": "担心",
+   "cue_start": 3,
+   "cue_end": 4,
+   "label": "悲伤",
+   "sanity": false
+  },
+  {
+   "id": "ctrl_plain_43",
+   "set": "control",
+   "text": "这个消息让我很绝望。",
+   "cue": "绝望",
+   "cue_start": 7,
+   "cue_end": 8,
+   "label": "悲伤",
+   "sanity": false
+  },
+  {
+   "id": "ctrl_plain_44",
+   "set": "control",
+   "text": "心里堵得慌。",
+   "cue": "堵得慌",
+   "cue_start": 2,
+   "cue_end": 4,
+   "label": "悲伤",
+   "sanity": false
+  },
+  {
+   "id": "ctrl_neg_01",
+   "set": "control",
+   "text": "他不来了，但我很开心。",
+   "cue": "开心",
+   "cue_start": 8,
+   "cue_end": 9,
+   "label": "积极",
+   "sanity": false
+  },
+  {
+   "id": "ctrl_neg_02",
+   "set": "control",
+   "text": "我不在乎这些细节，反正我很满意。",
+   "cue": "满意",
+   "cue_start": 13,
+   "cue_end": 14,
+   "label": "积极",
+   "sanity": false
+  },
+  {
+   "id": "ctrl_neg_03",
+   "set": "control",
+   "text": "这个方案不难，我很喜欢。",
+   "cue": "喜欢",
+   "cue_start": 9,
+   "cue_end": 10,
+   "label": "积极",
+   "sanity": false
+  },
+  {
+   "id": "ctrl_neg_04",
+   "set": "control",
+   "text": "别着急，我很满意这个结果。",
+   "cue": "满意",
+   "cue_start": 6,
+   "cue_end": 7,
+   "label": "积极",
+   "sanity": false
+  },
+  {
+   "id": "ctrl_neg_05",
+   "set": "control",
+   "text": "未免太好了，我很满意。",
+   "cue": "满意",
+   "cue_start": 8,
+   "cue_end": 9,
+   "label": "积极",
+   "sanity": false
+  },
+  {
+   "id": "ctrl_neg_06",
+   "set": "control",
+   "text": "他没来，我们照样很开心。",
+   "cue": "开心",
+   "cue_start": 9,
+   "cue_end": 10,
+   "label": "积极",
+   "sanity": false
+  },
+  {
+   "id": "ctrl_neg_07",
+   "set": "control",
+   "text": "我不确定明天的安排，不过我很满意。",
+   "cue": "满意",
+   "cue_start": 14,
+   "cue_end": 15,
+   "label": "积极",
+   "sanity": false
+  },
+  {
+   "id": "ctrl_neg_08",
+   "set": "control",
+   "text": "这道题不难，答案真棒。",
+   "cue": "真棒",
+   "cue_start": 8,
+   "cue_end": 9,
+   "label": "积极",
+   "sanity": false
+  },
+  {
+   "id": "ctrl_neg_09",
+   "set": "control",
+   "text": "我不管别人怎么想，反正我很生气。",
+   "cue": "生气",
+   "cue_start": 13,
+   "cue_end": 14,
+   "label": "愤怒",
+   "sanity": false
+  },
+  {
+   "id": "ctrl_neg_10",
+   "set": "control",
+   "text": "这件事没有回旋余地，真让人恼火。",
+   "cue": "恼火",
+   "cue_start": 13,
+   "cue_end": 14,
+   "label": "愤怒",
+   "sanity": false
+  },
+  {
+   "id": "ctrl_neg_11",
+   "set": "control",
+   "text": "别说了，我很难过。",
+   "cue": "难过",
+   "cue_start": 6,
+   "cue_end": 7,
+   "label": "悲伤",
+   "sanity": false
+  },
+  {
+   "id": "ctrl_neg_12",
+   "set": "control",
+   "text": "他没有道歉，我非常失望。",
+   "cue": "失望",
+   "cue_start": 9,
+   "cue_end": 10,
+   "label": "悲伤",
+   "sanity": false
+  },
+  {
+   "id": "ctrl_neg_13",
+   "set": "control",
+   "text": "我不怪你，只是有点伤心。",
+   "cue": "伤心",
+   "cue_start": 9,
+   "cue_end": 10,
+   "label": "悲伤",
+   "sanity": false
+  },
+  {
+   "id": "stress_01",
+   "set": "stress",
+   "text": "不愧是让人开心的一天。",
+   "cue": "开心",
+   "cue_start": 5,
+   "cue_end": 6,
+   "label": "积极",
+   "sanity": false
+  },
+  {
+   "id": "stress_02",
+   "set": "stress",
+   "text": "这点困难不算什么，我很开心。",
+   "cue": "开心",
+   "cue_start": 11,
+   "cue_end": 12,
+   "label": "积极",
+   "sanity": false
+  },
+  {
+   "id": "stress_03",
+   "set": "stress",
+   "text": "不是吧，这也太高兴了。",
+   "cue": "高兴",
+   "cue_start": 7,
+   "cue_end": 8,
+   "label": "积极",
+   "sanity": false
+  },
+  {
+   "id": "stress_04",
+   "set": "stress",
+   "text": "别提我多高兴了。",
+   "cue": "高兴",
+   "cue_start": 4,
+   "cue_end": 5,
+   "label": "积极",
+   "sanity": true
+  },
+  {
+   "id": "stress_05",
+   "set": "stress",
+   "text": "我没别的意思，就是很高兴。",
+   "cue": "高兴",
+   "cue_start": 10,
+   "cue_end": 11,
+   "label": "积极",
+   "sanity": false
+  },
+  {
+   "id": "stress_06",
+   "set": "stress",
+   "text": "不要紧，我很开心。",
+   "cue": "开心",
+   "cue_start": 6,
+   "cue_end": 7,
+   "label": "积极",
+   "sanity": false
+  },
+  {
+   "id": "stress_07",
+   "set": "stress",
+   "text": "未必不好，我很满意。",
+   "cue": "满意",
+   "cue_start": 7,
+   "cue_end": 8,
+   "label": "积极",
+   "sanity": false
+  },
+  {
+   "id": "stress_08",
+   "set": "stress",
+   "text": "没什么可抱怨的，我很满意。",
+   "cue": "满意",
+   "cue_start": 10,
+   "cue_end": 11,
+   "label": "积极",
+   "sanity": false
+  },
+  {
+   "id": "stress_09",
+   "set": "stress",
+   "text": "这点小事不足为奇，我很满意。",
+   "cue": "满意",
+   "cue_start": 11,
+   "cue_end": 12,
+   "label": "积极",
+   "sanity": false
+  },
+  {
+   "id": "stress_10",
+   "set": "stress",
+   "text": "不是我说，这电影真不错。",
+   "cue": "不错",
+   "cue_start": 9,
+   "cue_end": 10,
+   "label": "积极",
+   "sanity": false
+  }
+ ],
+ "counts": {
+  "negation": 60,
+  "control": 57,
+  "control_plain": 44,
+  "stress": 10,
+  "sanity": 12
+ }
+}

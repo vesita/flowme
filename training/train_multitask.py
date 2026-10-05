@@ -52,6 +52,7 @@ def train_multitask(num_epochs: int = 16, batch_size: int = 64,
                     tasks: list[str] | None = None,
                     steps_per_epoch: int | None = None,
                     freeze_base: bool = False,
+                    freeze_after_warmup: int | None = None,
                     init_from: str | None = None,
                     seed: int = 42,
                     ckpt_path: str = "checkpoints/multitask_v2_dtseek.pt",
@@ -67,6 +68,9 @@ def train_multitask(num_epochs: int = 16, batch_size: int = 64,
             都跟着少训。要训够就显式给一个值（迭代器耗尽会自动重开）。
         freeze_base: 冻结共享基座，只训各任务头。基座一旦冻结，各任务头**彼此完全独立**
             （唯一的耦合通道就是基座），互相干扰随之消失；同时基座转 eval 关掉 dropout。
+        freeze_after_warmup: 联合热身 W 个 epoch 后冻结基座。前 W 个 epoch 基座与任务头
+            共同参与训练；第 W 个 epoch 结束后冻结基座（eval + requires_grad=False），
+            重建优化器与调度器（仅包含任务头参数），继续完成剩余 epoch。None 表示不启用（保持原行为）。
         init_from: 从某个 ckpt 热启动：加载 doc_encoder 与同名任务头。冻结基座时几乎总要
             配它 —— 从随机基座冻结等于让任务头去读噪声。
         seed: 全局随机种子。加了它训练才可复现 —— 否则重构前后无法比对。
@@ -141,30 +145,53 @@ def train_multitask(num_epochs: int = 16, batch_size: int = 64,
               f"，续训任务头 {resumed}")
 
     head_params = [p for d in decoders.values() for p in d.parameters()]
+    currently_frozen = freeze_base
     if freeze_base:
         for p in doc_encoder.parameters():
             p.requires_grad_(False)
         doc_encoder.eval()          # 冻结后关掉 dropout，前向变成确定性函数
         print(f"  ❄️ 基座已冻结（{sum(p.numel() for p in doc_encoder.parameters()):,} 参数），"
-              f"只训 {sum(p.numel() for p in head_params):,} 个头参数")
+              f"只训 {sum(p.numel() for p in head_params):,} 个头参数 | lr_head={lr_head}")
         groups = [{"params": head_params, "lr": lr_head}]
     else:
+        warmup_hint = f"（前 {freeze_after_warmup} epoch 联合热身，之后冻结基座）" if freeze_after_warmup else "（全程联合）"
+        print(f"  🔥 基座参与训练 {warmup_hint}（{sum(p.numel() for p in doc_encoder.parameters()):,} 参数），"
+              f"头参数 {sum(p.numel() for p in head_params):,} | lr_base={lr_base}, lr_head={lr_head}")
         groups = [{"params": doc_encoder.parameters(), "lr": lr_base},
                   {"params": head_params, "lr": lr_head}]
     optimizer = torch.optim.AdamW(groups, weight_decay=1e-4)
     # 余弦退火：基座与任务头同步衰减
-    total_steps = num_epochs * min(len(x) for x in loaders.values())
-    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=max(1, total_steps))
+    if steps_per_epoch is None:
+        steps_per_epoch = min(len(x) for x in loaders.values())
+    total_steps = num_epochs * steps_per_epoch
+    warmup_steps = (freeze_after_warmup or 0) * steps_per_epoch
+    scheduler_t_max = warmup_steps if (freeze_after_warmup and freeze_after_warmup < num_epochs) else total_steps
+    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=max(1, scheduler_t_max))
 
     # 4. 交替训练
     print("[3/4] 开始多任务交替联合训练 ...")
     iters = {name: iter(x) for name, x in loaders.items()}
-    if steps_per_epoch is None:
-        steps_per_epoch = min(len(x) for x in loaders.values())
     print(f"  每 epoch {steps_per_epoch} 步 × {num_epochs} epoch")
 
     for epoch in range(1, num_epochs + 1):
-        if not freeze_base:
+        # 阶段切换：在进入 epoch 之前检查是否需要冻结基座
+        if not currently_frozen and freeze_after_warmup is not None and epoch > freeze_after_warmup:
+            for p in doc_encoder.parameters():
+                p.requires_grad_(False)
+            doc_encoder.eval()
+            currently_frozen = True
+            # 重建 optimizer 与 scheduler 只含任务头
+            optimizer = torch.optim.AdamW([{"params": head_params, "lr": lr_head}], weight_decay=1e-4)
+            remaining_steps = (num_epochs - freeze_after_warmup) * steps_per_epoch
+            scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=max(1, remaining_steps))
+            print(f"\n  ❄️ === 阶段切换 [Epoch {epoch}/{num_epochs}] === 联合热身 {freeze_after_warmup} epoch 结束，"
+                  f"基座已转 eval 并冻结梯度。重建优化器只训任务头（lr_head={lr_head}, 剩余步数={remaining_steps}）\n")
+
+        stage_str = "❄️ 任务头独训(基座冻结)" if currently_frozen else "🔥 联合训练(基座可训)"
+        current_lrs = [f"{g.get('lr', 0.0):.2e}" for g in optimizer.param_groups]
+        print(f"Epoch {epoch:2d}/{num_epochs} | [{stage_str}] | lr={current_lrs}")
+
+        if not currently_frozen:
             doc_encoder.train()
         for d in decoders.values():
             d.train()
@@ -183,7 +210,7 @@ def train_multitask(num_epochs: int = 16, batch_size: int = 64,
 
                 inp = batch["input_ids"].to(device)
                 mask = batch["attention_mask"].to(device)
-                if freeze_base:
+                if currently_frozen:
                     with torch.no_grad():
                         doc_memory = doc_encoder(inp, attention_mask=mask)
                 else:
@@ -194,12 +221,12 @@ def train_multitask(num_epochs: int = 16, batch_size: int = 64,
 
             batch_loss.backward()
             torch.nn.utils.clip_grad_norm_(
-                head_params if freeze_base else list(doc_encoder.parameters()) + head_params, 1.0)
+                head_params if currently_frozen else list(doc_encoder.parameters()) + head_params, 1.0)
             optimizer.step()
             scheduler.step()
 
         msg = "  ".join(f"{n}={running[n]/steps_per_epoch:.3f}" for n in raw)
-        print(f"Epoch {epoch:2d}/{num_epochs} | loss: {msg}")
+        print(f"Epoch {epoch:2d}/{num_epochs} 完成 | loss: {msg}")
 
     # 5. 逐任务可判对错验证
     print("[4/4] 逐任务验证（可判对错指标）...")
@@ -207,7 +234,7 @@ def train_multitask(num_epochs: int = 16, batch_size: int = 64,
     for name in raw:
         metrics = evaluate_task(doc_encoder, decoders[name], val_loaders[name],
                                 device, cards[name].spec)
-        if freeze_base:
+        if currently_frozen:
             doc_encoder.eval()          # evaluate_task 末尾会 train()，冻结时不该恢复
         report[name] = metrics
         extra = ""
@@ -232,7 +259,8 @@ def train_multitask(num_epochs: int = 16, batch_size: int = 64,
         "task_specs": {name: card.spec.to_snapshot() for name, card in cards.items()},
         "train_args": {"num_epochs": num_epochs, "batch_size": batch_size, "seed": seed,
                        "lr_base": lr_base, "lr_head": lr_head, "task_samples": resolved,
-                       "freeze_base": freeze_base, "init_from": init_from},
+                       "freeze_base": freeze_base, "freeze_after_warmup": freeze_after_warmup,
+                       "init_from": init_from},
     }, ckpt_path)
 
     with open(metrics_path, "w", encoding="utf-8") as f:
@@ -257,8 +285,12 @@ def main(argv: list[str] | None = None) -> int:
                         help="逐任务样本量覆盖，可重复。例：--task-samples sentiment=32000")
     parser.add_argument("--freeze-base", action="store_true",
                         help="冻结共享基座只训任务头；配合 --init-from 使用")
+    parser.add_argument("--freeze-after-warmup", type=int, default=None, metavar="W",
+                        help="热身 W 个 epoch 后冻结基座，转为只训任务头（两阶段训练）")
     parser.add_argument("--init-from", default=None, help="从该 ckpt 热启动基座与同名任务头")
     parser.add_argument("--lr-head", type=float, default=None, help="任务头学习率（默认 1e-3）")
+    parser.add_argument("--lr-base", type=float, default=None,
+                        help="共享基座学习率（默认 3e-4）。增量加卡时调小可减少对已收敛表征的改写")
     parser.add_argument("--ckpt", default="checkpoints/multitask_v2_dtseek.pt")
     parser.add_argument("--metrics", default="checkpoints/multitask_v2_metrics.json")
     args = parser.parse_args(argv)
@@ -276,8 +308,10 @@ def main(argv: list[str] | None = None) -> int:
         seed=args.seed,
         steps_per_epoch=args.steps_per_epoch,
         freeze_base=args.freeze_base,
+        freeze_after_warmup=args.freeze_after_warmup,
         init_from=args.init_from,
         **({"lr_head": args.lr_head} if args.lr_head else {}),
+        **({"lr_base": args.lr_base} if args.lr_base else {}),
         samples_per_task=args.samples_per_task,
         task_samples=overrides or None,
         tasks=args.tasks,

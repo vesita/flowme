@@ -24,7 +24,7 @@
 from __future__ import annotations
 
 import re
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from importlib.metadata import entry_points
 from typing import Protocol, runtime_checkable
 
@@ -227,16 +227,26 @@ class TaskSpec:
             "max_len": self.max_len,
             "emission": self.emission,
             "segment_policy": self.segment_policy,
+            # 这两个字段决定"跑出来的是什么指标"（身份指标是否产生、超长样本是否炸），
+            # 不序列化 = 重建的 spec 悄悄变回默认 False，身份指标整块消失且不报错。
+            "identity_labels": self.identity_labels,
+            "annotate_all": self.annotate_all,
         }
 
     @staticmethod
-    def from_snapshot(snap: dict) -> TaskSpec:
+    def from_snapshot(snap: dict, *, code_spec: TaskSpec | None = None) -> TaskSpec:
+        """从 ckpt 快照重建 spec。
+
+        `INHERITABLE_KEYS` 里**缺**的字段按 `code_spec`（缺省查注册表）当前声明继承，
+        并打印继承了什么；字段**在但值不同**由 `check_ckpt_specs` 报 `TaskSpecMismatch`。
+        缺字段 ≠ 值不同（dev-notes/10 §3）。
+        """
         ver = snap.get("version")
         if ver != CKPT_SPEC_VERSION:
             raise ValueError(
                 f"ckpt 里的任务快照版本是 {ver!r}，本代码只认识 {CKPT_SPEC_VERSION}。"
                 " 请用当前 training/train_multitask.py 重新训练。")
-        return TaskSpec(
+        spec = TaskSpec(
             name=snap["name"],
             label=snap["label"],
             classes=tuple(TaskClass(name=c["name"], label=c.get("label", ""),
@@ -246,7 +256,10 @@ class TaskSpec:
             max_len=snap.get("max_len", 64),
             emission=snap["emission"],
             segment_policy=snap.get("segment_policy", "sentence"),
+            identity_labels=snap.get("identity_labels", False),
+            annotate_all=snap.get("annotate_all", False),
         )
+        return _inherit_missing_fields(spec, snap, code_spec)
 
 
 @runtime_checkable
@@ -349,6 +362,30 @@ def probe_units_of(card: TaskCard) -> list[ProbeUnit]:
 INHERITABLE_KEYS = ("max_len", "segment_policy", "identity_labels", "annotate_all")
 
 
+def _inherit_missing_fields(spec: TaskSpec, snap: dict, code_spec: TaskSpec | None) -> TaskSpec:
+    """快照里缺的 `INHERITABLE_KEYS` 按代码当前声明继承，**并把继承了什么打印出来**。
+
+    静默继承等于把"旧 ckpt 没写这个字段"变成一次没人知道的口径变更；
+    打印出来才对得上 dev-notes/10 §3 的那句：缺字段 = 继承 + 提示。
+    注册表里也没有这张卡时（第三方卡没装），保持快照默认值 —— 同样要说一声。
+    """
+    missing = [k for k in INHERITABLE_KEYS if k not in snap]
+    if not missing:
+        return spec
+    name = snap.get("name", spec.name)
+    if code_spec is None:
+        card = all_tasks().get(name)
+        code_spec = card.spec if card is not None else None
+    if code_spec is None:
+        print(f"[ckpt 快照] 任务 {name!r} 缺字段 {missing}，且不在当前注册表里，无法继承 —— "
+              "按快照默认值走。")
+        return spec
+    repl = {k: getattr(code_spec, k) for k in missing}
+    print(f"[ckpt 快照] 任务 {name!r} 缺字段 {list(missing)}，按代码当前值继承："
+          + "，".join(f"{k}={v!r}" for k, v in repl.items()))
+    return replace(spec, **repl)
+
+
 def check_ckpt_specs(snapshots: dict[str, dict], cards: dict[str, TaskCard]) -> list[str]:
     """加载 ckpt 前的一致性门禁（fail-closed）。返回"从代码继承"的字段说明，供上层提示。
 
@@ -370,14 +407,14 @@ def check_ckpt_specs(snapshots: dict[str, dict], cards: dict[str, TaskCard]) -> 
         if card is None:
             problems.append(f"ckpt 里的任务 {name!r} 在当前注册表中不存在")
             continue
+        cur = card.spec
         try:
-            ckpt_spec = TaskSpec.from_snapshot(snap)
+            ckpt_spec = TaskSpec.from_snapshot(snap, code_spec=cur)
         except (ValueError, KeyError, TypeError) as exc:
             # 快照本身坏了（版本不符 / 字段缺失 / 声明非法）也归到同一类错误，
             # 让"加载即报错"只有一个出口，而不是漏出底层构造异常。
             problems.append(f"任务 {name!r} 的 ckpt 快照无法解析：{exc}")
             continue
-        cur = card.spec
         for key in INHERITABLE_KEYS:
             if key not in snap:
                 inherited.append(f"{name}.{key} 快照里没有该字段，按代码当前值 {getattr(cur, key)!r} 继承")
@@ -388,14 +425,14 @@ def check_ckpt_specs(snapshots: dict[str, dict], cards: dict[str, TaskCard]) -> 
             problems.append(f"任务 {name!r} max_steps 不一致：ckpt={ckpt_spec.max_steps} vs 代码={cur.max_steps}")
         if ckpt_spec.emission != cur.emission:
             problems.append(f"任务 {name!r} emission 不一致：ckpt={ckpt_spec.emission} vs 代码={cur.emission}")
-        if "max_len" in snap and ckpt_spec.max_len != cur.max_len:
-            problems.append(f"任务 {name!r} max_len 不一致：ckpt={ckpt_spec.max_len} vs 代码={cur.max_len}")
-        if "segment_policy" in snap and ckpt_spec.segment_policy != cur.segment_policy:
-            # 这条最阴：旧 ckpt 快照没有这个字段会默认成 sentence，
-            # 于是人物追踪在推理时被按句切开、id 每句从 1 重来 —— 实测整句一致率
-            # 从 16.2% 掉到 0.8%。写了但写错，必须报错。
-            problems.append(
-                f"任务 {name!r} segment_policy 不一致：ckpt={ckpt_spec.segment_policy} vs 代码={cur.segment_policy}")
+        # 字段**写了**就必须与代码一致；缺的已经在上面按继承处理。
+        # segment_policy 这条最阴：旧 ckpt 快照没有这个字段会默认成 sentence，
+        # 于是人物追踪在推理时被按句切开、id 每句从 1 重来 —— 实测整句一致率
+        # 从 16.2% 掉到 0.8%。identity_labels 同理：写 False 会让整块身份指标消失。
+        for key in INHERITABLE_KEYS:
+            if key in snap and getattr(ckpt_spec, key) != getattr(cur, key):
+                problems.append(
+                    f"任务 {name!r} {key} 不一致：ckpt={getattr(ckpt_spec, key)} vs 代码={getattr(cur, key)}")
     if problems:
         raise TaskSpecMismatch("ckpt 与当前任务声明对不上：\n  - " + "\n  - ".join(problems))
     return inherited

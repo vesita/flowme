@@ -25,11 +25,11 @@
 """
 from __future__ import annotations
 
-import glob
 import random
 import re
 
 from dtseek.tasks.builtin.relation.lexicon import ANTONYM_PAIRS, SYNONYM_PAIRS
+from dtseek.tasks.corpus import CORPUS_GLOB, resolve_corpus_files
 
 # 类别 id 约定：0 背景，1 近义词对，2 反义词对
 NONE, SYNONYM, ANTONYM = 0, 1, 2
@@ -208,34 +208,139 @@ def audit_templates() -> dict:
     return report
 
 
-CORPUS_GLOB = "/home/vesita/coding/my/nanoSeek/data/chinese/*dialogue.txt"
 ROLE_PREFIX = re.compile(r"^(用户|模型|系统|提问|回答|User|Assistant)[:：]\s*")
 SENT_SPLIT = re.compile(r"[。！？\n；;]+")
+_CJK_RE = re.compile(r"[\u4e00-\u9fff]")
+_CODE_SYMBOLS = frozenset("{}[]<>;$#\\`|~^=+_*/")
+_ENGLISH_WORDS_RE = re.compile(r"[a-zA-Z]{2,}")
+
+
+def check_neutral_sentence_style(s: str) -> list[str]:
+    """校验中性背景句的语体合规性，返回所有违规项描述（若合规返回空列表）。
+
+    fail-closed 语体门禁：
+      1. 中文汉字比例必须 >= 70%（确保语体是中文对话/自然文本，而非英文或符号串）
+      2. ASCII 字符比例不得 > 15%（拦截英文残留与西文标点堆砌）
+      3. 不得包含代码符号（{}[]<>;$#\\`|~^=+_*/）
+      4. 不得包含长度 >= 2 的英文单词（如 return, function, output 等代码词汇）
+    """
+    problems = []
+    length = len(s)
+    if length == 0:
+        return ["句子为空"]
+    cjk_ratio = len(_CJK_RE.findall(s)) / length
+    if cjk_ratio < 0.70:
+        problems.append(f"中文汉字占比过低 ({cjk_ratio * 100:.1f}% < 70%)")
+    ascii_ratio = sum(1 for c in s if c.isascii()) / length
+    if ascii_ratio > 0.15:
+        problems.append(f"ASCII 字符占比过高 ({ascii_ratio * 100:.1f}% > 15%)")
+    code_hits = sorted({c for c in s if c in _CODE_SYMBOLS})
+    if code_hits:
+        problems.append(f"含代码符号: {''.join(code_hits)}")
+    en_matches = sorted(set(_ENGLISH_WORDS_RE.findall(s)))
+    if en_matches:
+        problems.append(f"含英文单词: {en_matches}")
+    return problems
+
+
+def _validate_background_sentences():
+    """预置手写背景句池的语体 fail-closed 校验（参考 _validate_carriers 风格一次报全部问题）。"""
+    bad = []
+    for s in BACKGROUND_SENTENCES:
+        probs = check_neutral_sentence_style(s)
+        if probs:
+            bad.append((s, probs))
+    if bad:
+        detail = "\n".join(f"    '{s}': {'; '.join(probs)}" for s, probs in bad)
+        raise ValueError(f"手写背景句池存在语体违规：\n{detail}")
 
 
 def _mine_neutral(corpus_glob: str, n: int, max_len: int = 64,
                   max_lines: int | None = None) -> list[str]:
-    """从真实语料里挖中性句（不含任何词表词）当背景。
+    """从真实语料里轮转挖掘符合中文自然语体且不含词表词的中性句当背景。
 
-    为什么不能只用那 20 条手写背景句：实测在 12 条普通中性句上误报 8%，
-    而验证集报 0.0% —— 因为背景池只有 20 句，bg_fp 根本没被测出来。
-    背景必须来自真实分布的文本，验证才有意义。
+    两个关键修复：
+      1. 跨文件均匀轮转（Round-Robin）：不再把字典序第一个文件读满，
+         而是对所有语料文件轮流推进，每个文件每轮采一条合格句，实现语料分布均匀；
+      2. 语体 fail-closed 门禁与统计：每条中性句必须通过 check_neutral_sentence_style
+         （中文汉字 >= 70%、ASCII <= 15%、无代码符号、无英文单词）；
+         过滤过程中统计并汇报拦截原因分布，拦截全量杂质，杜绝英文代码污染背景池。
     """
+    from contextlib import ExitStack
+
+    files = resolve_corpus_files(corpus_glob)
+    if not files:
+        raise FileNotFoundError(f"未找到语料文件: {corpus_glob}")
+
     pool: list[str] = []
+    seen: set[str] = set()
     lines = 0
-    for path in sorted(glob.glob(corpus_glob)):
-        with open(path, encoding="utf-8", errors="ignore") as fp:
-            for line in fp:
-                lines += 1
-                if max_lines is not None and lines > max_lines:
-                    return pool
-                text = ROLE_PREFIX.sub("", line.strip())
-                for s in SENT_SPLIT.split(text):
-                    s = s.strip()
-                    if 4 <= len(s) <= max_len and not lexicon_words_in(s):
+
+    rejections: dict[str, int] = {
+        "length_or_lexicon": 0,
+        "low_cjk": 0,
+        "high_ascii": 0,
+        "code_symbols": 0,
+        "english_words": 0,
+    }
+    per_file_mined: list[int] = [0] * len(files)
+    active_indices = list(range(len(files)))
+
+    with ExitStack() as stack:
+        file_handles = [
+            stack.enter_context(open(f, encoding="utf-8", errors="ignore"))
+            for f in files
+        ]
+        while len(pool) < n and active_indices:
+            next_active = []
+            for f_idx in active_indices:
+                fh = file_handles[f_idx]
+                found = False
+                while True:
+                    line = fh.readline()
+                    if not line:
+                        break
+                    lines += 1
+                    if max_lines is not None and lines > max_lines:
+                        return pool
+                    text = ROLE_PREFIX.sub("", line.strip())
+                    for s in SENT_SPLIT.split(text):
+                        s = s.strip()
+                        if not (4 <= len(s) <= max_len):
+                            rejections["length_or_lexicon"] += 1
+                            continue
+                        if lexicon_words_in(s):
+                            rejections["length_or_lexicon"] += 1
+                            continue
+                        # 语体风格逐项检查与归因统计
+                        probs = check_neutral_sentence_style(s)
+                        if probs:
+                            if any("中文汉字占比过低" in p for p in probs):
+                                rejections["low_cjk"] += 1
+                            if any("ASCII 字符占比过高" in p for p in probs):
+                                rejections["high_ascii"] += 1
+                            if any("含代码符号" in p for p in probs):
+                                rejections["code_symbols"] += 1
+                            if any("含英文单词" in p for p in probs):
+                                rejections["english_words"] += 1
+                            continue
+                        if s in seen:
+                            continue
+                        seen.add(s)
                         pool.append(s)
-                        if len(pool) >= n:
-                            return pool
+                        per_file_mined[f_idx] += 1
+                        found = True
+                        break
+                    if found or len(pool) >= n:
+                        break
+                if line and len(pool) < n:
+                    next_active.append(f_idx)
+            active_indices = next_active
+
+    contributing_files = sum(1 for cnt in per_file_mined if cnt > 0)
+    print(f"  语料中性句挖掘完成：目标 {n} 条，实际采得 {len(pool)} 条（覆盖 {contributing_files}/{len(files)} 个文件）")
+    print(f"  语体门禁过滤统计：低中文 {rejections['low_cjk']} | 高ASCII {rejections['high_ascii']} | "
+          f"代码符号 {rejections['code_symbols']} | 英文单词 {rejections['english_words']}")
     return pool
 
 
@@ -304,6 +409,8 @@ def build_relation_dataset(target_samples: int = 9000, per_pair_floor: int = 8,
             print(f"      帧撞出未标注词对 {bad}: {frame}")
         for s, bad in audit["background"][:5]:
             print(f"      背景句撞出未标注词对 {bad}: {s}")
+
+    _validate_background_sentences()
 
     rng = random.Random(seed)
     target_per_class = max(target_samples // 3, 1)

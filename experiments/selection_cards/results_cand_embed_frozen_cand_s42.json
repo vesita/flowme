@@ -1,0 +1,111 @@
+{
+ "parity": null,
+ "cfg": {
+  "mode": "frozen",
+  "cand": "on",
+  "seed": 42,
+  "epochs": 12,
+  "steps_per_epoch": 150,
+  "n_steps": 1800,
+  "batch_size": 64,
+  "lr_head": 0.001,
+  "lr_base": null,
+  "samples": 6000,
+  "data_seed": 20240927,
+  "eval_seed": 4242,
+  "eval_samples": 1500,
+  "base": "checkpoints/base_encoder.pt"
+ },
+ "params": {
+  "decoder": 630535,
+  "cand_emb": 640,
+  "encoder": 1688460,
+  "trainable": 631175
+ },
+ "cost": {
+  "train_sec": 39.05,
+  "n_steps": 1800,
+  "sec_per_step": 0.0217,
+  "peak_mem_mb": 151.5
+ },
+ "loss_curve": [
+  12.2622,
+  11.6945,
+  11.5045,
+  11.328,
+  11.1782,
+  10.9538,
+  10.7515,
+  10.4758,
+  10.2565,
+  10.0532,
+  9.8975,
+  9.8658
+ ],
+ "train_metrics": {
+  "cls_acc": 0.38230819387089765,
+  "span_hit": 0.06063899152358183,
+  "bg_fp": 0.4380475594493116,
+  "exact_match": 0.11333333333333333,
+  "slice_precision": 0.038325887608746764,
+  "slice_recall": 0.035427081069332754,
+  "n_cls": 4601,
+  "n_bg": 799,
+  "anchor_exact": 0.05911758313410128,
+  "cls_and_span": 0.035427081069332754
+ },
+ "val_metrics": {
+  "cls_acc": 0.18637274549098196,
+  "span_hit": 0.036072144288577156,
+  "bg_fp": 0.7623762376237624,
+  "exact_match": 0.051666666666666666,
+  "slice_precision": 0.014893617021276596,
+  "slice_recall": 0.014028056112224449,
+  "n_cls": 499,
+  "n_bg": 101,
+  "anchor_exact": 0.036072144288577156,
+  "cls_and_span": 0.014028056112224449
+ },
+ "eval_metrics": {
+  "cls_acc": 0.20941176470588235,
+  "span_hit": 0.02431372549019608,
+  "bg_fp": 0.6933333333333334,
+  "exact_match": 0.05466666666666667,
+  "slice_precision": 0.011423550087873463,
+  "slice_recall": 0.01019607843137255,
+  "n_cls": 1275,
+  "n_bg": 225,
+  "anchor_exact": 0.022745098039215685,
+  "cls_and_span": 0.01019607843137255
+ },
+ "eval_detail": {
+  "cls_acc_by_answer_pos": {
+   "1": 0.2523,
+   "2": 0.1513,
+   "3": 0.1766,
+   "4": 0.2566
+  },
+  "pred_class_dist": {
+   "0": 362,
+   "1": 327,
+   "2": 220,
+   "3": 249,
+   "4": 342
+  }
+ },
+ "train_detail": {
+  "cls_acc_by_answer_pos": {
+   "1": 0.4935,
+   "2": 0.2605,
+   "3": 0.3309,
+   "4": 0.4395
+  },
+  "pred_class_dist": {
+   "0": 1147,
+   "1": 1298,
+   "2": 749,
+   "3": 956,
+   "4": 1250
+  }
+ }
+}

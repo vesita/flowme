@@ -262,3 +262,46 @@ def test_present_but_different_inference_field_still_rejected():
     with pytest.raises(TaskSpecMismatch) as ei:
         check_ckpt_specs(snaps, tasks)
     assert "segment_policy" in str(ei.value) and "max_len" in str(ei.value)
+
+
+# ---- 身份字段的快照往返（identity_labels / annotate_all） ------------------
+
+def test_snapshot_roundtrip_keeps_identity_fields(capsys):
+    """① 往返后两个字段不变：序列化漏掉它们 = 重建的 spec 悄悄变回默认 False。"""
+    for name in ("person", "pronoun"):
+        spec = all_tasks()[name].spec
+        snap = json.loads(json.dumps(spec.to_snapshot()))
+        assert snap["identity_labels"] is spec.identity_labels
+        assert snap["annotate_all"] is spec.annotate_all
+        back = TaskSpec.from_snapshot(snap)
+        assert back == spec
+        assert back.identity_labels == spec.identity_labels
+        assert back.annotate_all == spec.annotate_all
+    assert "缺字段" not in capsys.readouterr().out       # 完整快照不该有继承提示
+
+
+def test_legacy_snapshot_without_identity_fields_is_inherited_with_hint(capsys):
+    """③ 旧 ckpt 没有这两个字段：按代码当前声明继承 + 打印提示，不报错（dev-notes/10 §3）。"""
+    tasks = all_tasks()
+    snap = tasks["person"].spec.to_snapshot()
+    snap.pop("identity_labels")
+    snap.pop("annotate_all")
+
+    back = TaskSpec.from_snapshot(snap)
+    out = capsys.readouterr().out
+    assert back.identity_labels is True and back.annotate_all is True
+    assert "缺字段" in out and "identity_labels" in out and "annotate_all" in out
+
+    notes = check_ckpt_specs({"person": snap}, tasks)      # 不抛即通过
+    assert any("identity_labels" in n for n in notes)
+    assert any("annotate_all" in n for n in notes)
+
+
+@pytest.mark.parametrize("key", ["identity_labels", "annotate_all"])
+def test_present_but_different_identity_field_still_rejected(key):
+    """④ 值不同 = 真的口径漂移，必须报错（缺字段才继承，写了但写错不继承）。"""
+    tasks = all_tasks()
+    snaps = {n: tasks[n].spec.to_snapshot() for n in tasks}
+    snaps["person"][key] = not snaps["person"][key]
+    with pytest.raises(TaskSpecMismatch, match=f"{key} 不一致"):
+        check_ckpt_specs(snaps, tasks)

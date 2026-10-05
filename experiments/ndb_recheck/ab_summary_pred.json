@@ -1,0 +1,116 @@
+{
+  "seeds": [
+    42,
+    43
+  ],
+  "card": "person",
+  "ndb_read": "pred",
+  "per_metric": {
+    "repeat_mention_acc": {
+      "deltas": [
+        0.4806675031985041,
+        0.43127798457139777
+      ],
+      "mean": 0.4559727438849509,
+      "range": 0.04938951862710633
+    },
+    "cluster_f1": {
+      "deltas": [
+        0.45548963060307796,
+        0.3886910301751773
+      ],
+      "mean": 0.42209033038912763,
+      "range": 0.06679860042790065
+    },
+    "exact_match": {
+      "deltas": [
+        0.0,
+        0.006666666666666654
+      ],
+      "mean": 0.003333333333333327,
+      "range": 0.006666666666666654
+    },
+    "first_mention_acc": {
+      "deltas": [
+        0.1226248170940526,
+        0.11367120567292799
+      ],
+      "mean": 0.11814801138349029,
+      "range": 0.008953611421124608
+    },
+    "id_acc": {
+      "deltas": [
+        0.2456855637547104,
+        0.20719229066639422
+      ],
+      "mean": 0.2264389272105523,
+      "range": 0.03849327308831618
+    },
+    "span_hit": {
+      "deltas": [
+        0.0,
+        0.0
+      ],
+      "mean": 0.0,
+      "range": 0.0
+    },
+    "bg_fp": {
+      "deltas": [
+        0.0,
+        0.0
+      ],
+      "mean": 0.0,
+      "range": 0.0
+    }
+  },
+  "cost": {
+    "base": {
+      "n_head_params": 631306.0,
+      "n_ndb_params": 0.0,
+      "sec_per_step": 0.10870086283791655,
+      "peak_mem_mb": 867.66943359375,
+      "table_gb": 0.0
+    },
+    "ndb": {
+      "n_head_params": 631306.0,
+      "n_ndb_params": 264.0,
+      "sec_per_step": 0.12326875040124985,
+      "peak_mem_mb": 899.32861328125,
+      "table_gb": 0.0263671875
+    }
+  },
+  "ndb_stats": {
+    "42": {
+      "n_written": 432718,
+      "table_gb": 0.00164794921875,
+      "batch": 4,
+      "last_gate": 0.7433928847312927,
+      "last_covered": 0.75,
+      "alpha": [
+        0.5238995552062988,
+        0.47610044479370117
+      ],
+      "write_gate_bias": 0.9630093574523926,
+      "read_gate_bias": -1.9506609439849854,
+      "retrieval_top1_hit": NaN,
+      "retrieval_covered": NaN,
+      "n_retrieval": 0
+    },
+    "43": {
+      "n_written": 432544,
+      "table_gb": 0.00164794921875,
+      "batch": 4,
+      "last_gate": 0.4844033122062683,
+      "last_covered": 0.5,
+      "alpha": [
+        0.5234443545341492,
+        0.4765557050704956
+      ],
+      "write_gate_bias": 1.0071324110031128,
+      "read_gate_bias": -1.978445291519165,
+      "retrieval_top1_hit": NaN,
+      "retrieval_covered": NaN,
+      "n_retrieval": 0
+    }
+  }
+}

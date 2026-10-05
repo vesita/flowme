@@ -62,12 +62,13 @@
 """
 from __future__ import annotations
 
-import glob
 import random
 import re
 from collections import Counter
 from collections.abc import Callable
 from dataclasses import dataclass
+
+from dtseek.tasks.corpus import CORPUS_GLOB, resolve_corpus_files
 
 # ── 名字库 ────────────────────────────────────────────────────────────────
 # 常见中文全名，无生僻字；性别可由名字库本身判定（用于性别一致的代词约束）。
@@ -154,7 +155,6 @@ for _s in _PERSON_VOCAB:
 
 
 # ── 语料 ──────────────────────────────────────────────────────────────────
-CORPUS_GLOB = "/home/vesita/coding/my/nanoSeek/data/chinese/*dialogue.txt"
 _ROLE_PREFIX = re.compile(r"^(用户|模型|系统|提问|回答|User|Assistant)[:：]\s*")
 #: 切句时**保留**终止标点 —— 否则背景句全都没有句号，模型会用「有没有句号」当捷径
 _SENT_SPLIT = re.compile(r"[^。！？\n；;]+[。！？]?")
@@ -1025,7 +1025,7 @@ def _mine_background(corpus_glob: str, n: int, max_len: int,
     pool: list[str] = []
     seen: set[str] = set()
     lines = 0
-    for path in sorted(glob.glob(corpus_glob)):
+    for path in resolve_corpus_files(corpus_glob):
         with open(path, encoding="utf-8", errors="ignore") as fp:
             for line in fp:
                 lines += 1

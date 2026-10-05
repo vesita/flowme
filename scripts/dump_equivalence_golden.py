@@ -15,6 +15,7 @@
 import hashlib
 import json
 import sys
+import time
 from pathlib import Path
 
 import torch
@@ -92,13 +93,36 @@ def step_loss(encoder, decoder, dataset, tokenizer, spec) -> float:
     return float(loss)
 
 
-def main(out_path: Path | None = None):
+DEFAULT_NOTE = "任务卡插件化重构的等价性基线：不得改动下面任何一项。"
+
+
+def merged_note(out_path: Path, reason: str | None) -> str:
+    """保留已有 note，并把本次变更原因**追加**上去。
+
+    为什么不能硬编码：重生成会把上一次写下的归因说明直接冲掉，
+    于是「为什么变了」在文件里消失，只剩一串新 hash。
+    """
+    base = ""
+    if out_path.exists():
+        try:
+            base = json.loads(out_path.read_text(encoding="utf-8")).get("note", "") or ""
+        except (OSError, json.JSONDecodeError):
+            base = ""
+    if not base:
+        base = DEFAULT_NOTE
+    if not reason:
+        return base
+    line = f"{time.strftime('%Y-%m-%d')}：{reason}"
+    return base if line in base else f"{base} {line}"
+
+
+def main(out_path: Path | None = None, note_reason: str | None = None):
     cards = resolve_tasks(["pronoun", "sentiment", "ownership"])
     tokenizer = NanoCharTokenizer()
     encoder, decoders = build_stack(cards, 1234)
 
     golden = {
-        "note": "任务卡插件化重构的等价性基线：不得改动下面任何一项",
+        "note": merged_note(out_path or OUT, note_reason),
         "hidden_dim": HIDDEN,
         "max_steps": 4,
         "task_specs": {n: list(c.spec.class_names) for n, c in cards.items()},
@@ -135,4 +159,8 @@ if __name__ == "__main__":
 
     ap = argparse.ArgumentParser(description="记录多任务栈的等价性黄金值")
     ap.add_argument("--out", type=Path, default=None, help="输出路径；默认覆盖 tests/golden/")
-    main(ap.parse_args().out)
+    ap.add_argument("--note", default=None,
+                    help="本次重生成的原因；会以「日期：原因」追加到已有 note 末尾。"
+                         "不传则原样保留已有 note，绝不清空。")
+    args = ap.parse_args()
+    main(args.out, args.note)

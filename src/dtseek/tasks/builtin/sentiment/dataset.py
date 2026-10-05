@@ -26,9 +26,10 @@ v3 三条修复：
      使"高兴→积极"与"不高兴→消极"同时可学。
 ────────────────────────────────────────────────────────────────────────
 """
-import glob
 import random
 import re
+
+from dtseek.tasks.corpus import resolve_corpus_files
 
 # ---------------------------------------------------------------------------
 # 情绪词典 v3（~200 词）
@@ -311,7 +312,7 @@ def _mine_real_capped(buckets, target_per_class: int, max_seq_len: int,
     不加封顶时高频词（"难受" 1300+ 条）会淹没低频词（几十条甚至 0 条），
     这正是 v2 词级准确率只有 43.7% 的直接原因。
     """
-    files = sorted(glob.glob("/home/vesita/coding/my/nanoSeek/data/chinese/*dialogue.txt"))
+    files = resolve_corpus_files()
     word_count = {c: {} for c in (1, 2, 3)}
 
     def _full():

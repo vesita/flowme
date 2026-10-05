@@ -1,0 +1,942 @@
+{
+  "person": {
+    "task": "person",
+    "classes": 8,
+    "total_decoder_params": 631306,
+    "num_2d_matrices": 20,
+    "util_min": 0.6877076029777527,
+    "util_max": 0.999817967414856,
+    "util_mean": 0.8849449813365936,
+    "n_below_30": 0,
+    "n_above_70": 18,
+    "n_mid_30_70": 2,
+    "pct_above_70": 0.9,
+    "rows": [
+      {
+        "name": "start_ptr.weight",
+        "shape": [
+          128,
+          128
+        ],
+        "params": 16384,
+        "erank": 88.02657318115234,
+        "util": 0.6877076029777527,
+        "compress": 0.7270531805014449
+      },
+      {
+        "name": "end_ptr.weight",
+        "shape": [
+          128,
+          128
+        ],
+        "params": 16384,
+        "erank": 88.32222747802734,
+        "util": 0.6900174021720886,
+        "compress": 0.7246194058672468
+      },
+      {
+        "name": "feedback_proj.3.weight",
+        "shape": [
+          128,
+          128
+        ],
+        "params": 16384,
+        "erank": 100.07356262207031,
+        "util": 0.7818247079849243,
+        "compress": 0.6395295452975648
+      },
+      {
+        "name": "decoder.layers.1.multihead_attn.out_proj.weight",
+        "shape": [
+          128,
+          128
+        ],
+        "params": 16384,
+        "erank": 102.30307006835938,
+        "util": 0.7992427349090576,
+        "compress": 0.62559217389307
+      },
+      {
+        "name": "decoder.layers.0.self_attn.out_proj.weight",
+        "shape": [
+          128,
+          128
+        ],
+        "params": 16384,
+        "erank": 102.50312805175781,
+        "util": 0.8008056879043579,
+        "compress": 0.6243711896058812
+      },
+      {
+        "name": "decoder.layers.0.multihead_attn.out_proj.weight",
+        "shape": [
+          128,
+          128
+        ],
+        "params": 16384,
+        "erank": 102.7542724609375,
+        "util": 0.8027677536010742,
+        "compress": 0.6228451476246877
+      },
+      {
+        "name": "decoder.layers.1.self_attn.out_proj.weight",
+        "shape": [
+          128,
+          128
+        ],
+        "params": 16384,
+        "erank": 103.16627502441406,
+        "util": 0.8059865236282349,
+        "compress": 0.6203577669626489
+      },
+      {
+        "name": "feedback_proj.0.weight",
+        "shape": [
+          128,
+          384
+        ],
+        "params": 49152,
+        "erank": 113.63301086425781,
+        "util": 0.8877578973770142,
+        "compress": 0.8448249260479279
+      },
+      {
+        "name": "decoder.layers.1.linear2.weight",
+        "shape": [
+          128,
+          512
+        ],
+        "params": 65536,
+        "erank": 116.67916870117188,
+        "util": 0.9115560054779053,
+        "compress": 0.8776202396698387
+      },
+      {
+        "name": "decoder.layers.0.linear2.weight",
+        "shape": [
+          128,
+          512
+        ],
+        "params": 65536,
+        "erank": 118.56973266601562,
+        "util": 0.9263260364532471,
+        "compress": 0.8636268101273186
+      },
+      {
+        "name": "decoder.layers.1.linear1.weight",
+        "shape": [
+          512,
+          128
+        ],
+        "params": 65536,
+        "erank": 121.45124053955078,
+        "util": 0.9488378167152405,
+        "compress": 0.8431367151548632
+      },
+      {
+        "name": "decoder.layers.1.multihead_attn.in_proj_weight",
+        "shape": [
+          384,
+          128
+        ],
+        "params": 49152,
+        "erank": 121.56195831298828,
+        "util": 0.949702799320221,
+        "compress": 0.789720742675325
+      },
+      {
+        "name": "decoder.layers.0.multihead_attn.in_proj_weight",
+        "shape": [
+          384,
+          128
+        ],
+        "params": 49152,
+        "erank": 121.58010864257812,
+        "util": 0.9498445987701416,
+        "compress": 0.7896028476353918
+      },
+      {
+        "name": "decoder.layers.0.self_attn.in_proj_weight",
+        "shape": [
+          384,
+          128
+        ],
+        "params": 49152,
+        "erank": 121.69808197021484,
+        "util": 0.9507662653923035,
+        "compress": 0.788837411780209
+      },
+      {
+        "name": "cls_head.weight",
+        "shape": [
+          8,
+          128
+        ],
+        "params": 1024,
+        "erank": 7.608117580413818,
+        "util": 0.9510146975517273,
+        "compress": 0.9896550211171086
+      },
+      {
+        "name": "decoder.layers.0.linear1.weight",
+        "shape": [
+          512,
+          128
+        ],
+        "params": 65536,
+        "erank": 122.00079345703125,
+        "util": 0.9531311988830566,
+        "compress": 0.8393388034485639
+      },
+      {
+        "name": "decoder.layers.1.self_attn.in_proj_weight",
+        "shape": [
+          384,
+          128
+        ],
+        "params": 49152,
+        "erank": 122.03378295898438,
+        "util": 0.9533889293670654,
+        "compress": 0.7866674102225091
+      },
+      {
+        "name": "action_head.weight",
+        "shape": [
+          2,
+          128
+        ],
+        "params": 256,
+        "erank": 1.9124500751495361,
+        "util": 0.9562250375747681,
+        "compress": 1.0296900268503968
+      },
+      {
+        "name": "cls_embedding.weight",
+        "shape": [
+          8,
+          128
+        ],
+        "params": 1024,
+        "erank": 7.9374237060546875,
+        "util": 0.9921779632568359,
+        "compress": 0.9485964266922563
+      },
+      {
+        "name": "pos_proj.weight",
+        "shape": [
+          128,
+          2
+        ],
+        "params": 256,
+        "erank": 1.999635934829712,
+        "util": 0.999817967414856,
+        "compress": 0.9847946493312384
+      }
+    ]
+  },
+  "pronoun": {
+    "task": "pronoun",
+    "classes": 4,
+    "total_decoder_params": 630278,
+    "num_2d_matrices": 20,
+    "util_min": 0.7475885152816772,
+    "util_max": 0.9970619082450867,
+    "util_mean": 0.8950117141008377,
+    "n_below_30": 0,
+    "n_above_70": 20,
+    "n_mid_30_70": 0,
+    "pct_above_70": 1.0,
+    "rows": [
+      {
+        "name": "end_ptr.weight",
+        "shape": [
+          128,
+          128
+        ],
+        "params": 16384,
+        "erank": 95.69132995605469,
+        "util": 0.7475885152816772,
+        "compress": 0.6688171230287151
+      },
+      {
+        "name": "start_ptr.weight",
+        "shape": [
+          128,
+          128
+        ],
+        "params": 16384,
+        "erank": 96.59298706054688,
+        "util": 0.7546327114105225,
+        "compress": 0.6625739812755063
+      },
+      {
+        "name": "decoder.layers.1.multihead_attn.out_proj.weight",
+        "shape": [
+          128,
+          128
+        ],
+        "params": 16384,
+        "erank": 100.59634399414062,
+        "util": 0.7859089374542236,
+        "compress": 0.6362060235879723
+      },
+      {
+        "name": "decoder.layers.0.multihead_attn.out_proj.weight",
+        "shape": [
+          128,
+          128
+        ],
+        "params": 16384,
+        "erank": 100.87075805664062,
+        "util": 0.7880527973175049,
+        "compress": 0.6344752555945196
+      },
+      {
+        "name": "feedback_proj.3.weight",
+        "shape": [
+          128,
+          128
+        ],
+        "params": 16384,
+        "erank": 101.34391021728516,
+        "util": 0.7917492985725403,
+        "compress": 0.6315130318415936
+      },
+      {
+        "name": "decoder.layers.0.self_attn.out_proj.weight",
+        "shape": [
+          128,
+          128
+        ],
+        "params": 16384,
+        "erank": 103.02406311035156,
+        "util": 0.8048754930496216,
+        "compress": 0.6212140937544665
+      },
+      {
+        "name": "decoder.layers.1.self_attn.out_proj.weight",
+        "shape": [
+          128,
+          128
+        ],
+        "params": 16384,
+        "erank": 103.35249328613281,
+        "util": 0.8074413537979126,
+        "compress": 0.6192400199075518
+      },
+      {
+        "name": "feedback_proj.0.weight",
+        "shape": [
+          128,
+          384
+        ],
+        "params": 49152,
+        "erank": 117.65829467773438,
+        "util": 0.9192054271697998,
+        "compress": 0.8159220755573896
+      },
+      {
+        "name": "decoder.layers.1.linear2.weight",
+        "shape": [
+          128,
+          512
+        ],
+        "params": 65536,
+        "erank": 118.70114135742188,
+        "util": 0.9273526668548584,
+        "compress": 0.8626707277536836
+      },
+      {
+        "name": "decoder.layers.0.linear2.weight",
+        "shape": [
+          128,
+          512
+        ],
+        "params": 65536,
+        "erank": 119.4436264038086,
+        "util": 0.9331533312797546,
+        "compress": 0.8573081970385894
+      },
+      {
+        "name": "decoder.layers.1.multihead_attn.in_proj_weight",
+        "shape": [
+          384,
+          128
+        ],
+        "params": 49152,
+        "erank": 120.5286865234375,
+        "util": 0.9416303634643555,
+        "compress": 0.7964908833660296
+      },
+      {
+        "name": "decoder.layers.0.multihead_attn.in_proj_weight",
+        "shape": [
+          384,
+          128
+        ],
+        "params": 49152,
+        "erank": 121.10004425048828,
+        "util": 0.9460940957069397,
+        "compress": 0.7927329886141881
+      },
+      {
+        "name": "decoder.layers.1.self_attn.in_proj_weight",
+        "shape": [
+          384,
+          128
+        ],
+        "params": 49152,
+        "erank": 121.76814270019531,
+        "util": 0.9513136148452759,
+        "compress": 0.7883835449175002
+      },
+      {
+        "name": "decoder.layers.0.self_attn.in_proj_weight",
+        "shape": [
+          384,
+          128
+        ],
+        "params": 49152,
+        "erank": 122.09722900390625,
+        "util": 0.9538846015930176,
+        "compress": 0.7862586299720912
+      },
+      {
+        "name": "decoder.layers.1.linear1.weight",
+        "shape": [
+          512,
+          128
+        ],
+        "params": 65536,
+        "erank": 122.15348052978516,
+        "util": 0.9543240666389465,
+        "compress": 0.8382896627741312
+      },
+      {
+        "name": "decoder.layers.0.linear1.weight",
+        "shape": [
+          512,
+          128
+        ],
+        "params": 65536,
+        "erank": 122.3775863647461,
+        "util": 0.9560748934745789,
+        "compress": 0.8367545319516031
+      },
+      {
+        "name": "cls_head.weight",
+        "shape": [
+          4,
+          128
+        ],
+        "params": 512,
+        "erank": 3.869255542755127,
+        "util": 0.9673138856887817,
+        "compress": 1.0024636098410715
+      },
+      {
+        "name": "action_head.weight",
+        "shape": [
+          2,
+          128
+        ],
+        "params": 256,
+        "erank": 1.9524753093719482,
+        "util": 0.9762376546859741,
+        "compress": 1.0085816500615368
+      },
+      {
+        "name": "cls_embedding.weight",
+        "shape": [
+          4,
+          128
+        ],
+        "params": 512,
+        "erank": 3.9853546619415283,
+        "util": 0.9963386654853821,
+        "compress": 0.9732604015970479
+      },
+      {
+        "name": "pos_proj.weight",
+        "shape": [
+          128,
+          2
+        ],
+        "params": 256,
+        "erank": 1.9941238164901733,
+        "util": 0.9970619082450867,
+        "compress": 0.987516799582075
+      }
+    ]
+  },
+  "relation": {
+    "task": "relation",
+    "classes": 3,
+    "total_decoder_params": 630021,
+    "num_2d_matrices": 20,
+    "util_min": 0.7439442276954651,
+    "util_max": 0.9970462918281555,
+    "util_mean": 0.8934778104225793,
+    "n_below_30": 0,
+    "n_above_70": 20,
+    "n_mid_30_70": 0,
+    "pct_above_70": 1.0,
+    "rows": [
+      {
+        "name": "start_ptr.weight",
+        "shape": [
+          128,
+          128
+        ],
+        "params": 16384,
+        "erank": 95.22486114501953,
+        "util": 0.7439442276954651,
+        "compress": 0.6720933927384082
+      },
+      {
+        "name": "end_ptr.weight",
+        "shape": [
+          128,
+          128
+        ],
+        "params": 16384,
+        "erank": 95.49983215332031,
+        "util": 0.7460924386978149,
+        "compress": 0.6701582459040465
+      },
+      {
+        "name": "decoder.layers.1.multihead_attn.out_proj.weight",
+        "shape": [
+          128,
+          128
+        ],
+        "params": 16384,
+        "erank": 100.18509674072266,
+        "util": 0.7826960682868958,
+        "compress": 0.6388175694996924
+      },
+      {
+        "name": "feedback_proj.3.weight",
+        "shape": [
+          128,
+          128
+        ],
+        "params": 16384,
+        "erank": 100.45853424072266,
+        "util": 0.7848322987556458,
+        "compress": 0.6370787756731618
+      },
+      {
+        "name": "decoder.layers.0.multihead_attn.out_proj.weight",
+        "shape": [
+          128,
+          128
+        ],
+        "params": 16384,
+        "erank": 100.940673828125,
+        "util": 0.7885990142822266,
+        "compress": 0.6340357912507588
+      },
+      {
+        "name": "decoder.layers.0.self_attn.out_proj.weight",
+        "shape": [
+          128,
+          128
+        ],
+        "params": 16384,
+        "erank": 102.57881927490234,
+        "util": 0.8013970255851746,
+        "compress": 0.6239104763770535
+      },
+      {
+        "name": "decoder.layers.1.self_attn.out_proj.weight",
+        "shape": [
+          128,
+          128
+        ],
+        "params": 16384,
+        "erank": 103.01610565185547,
+        "util": 0.8048133254051208,
+        "compress": 0.6212620793130056
+      },
+      {
+        "name": "feedback_proj.0.weight",
+        "shape": [
+          128,
+          384
+        ],
+        "params": 49152,
+        "erank": 115.66588592529297,
+        "util": 0.9036397337913513,
+        "compress": 0.829976783837588
+      },
+      {
+        "name": "decoder.layers.1.linear2.weight",
+        "shape": [
+          128,
+          512
+        ],
+        "params": 65536,
+        "erank": 120.40811157226562,
+        "util": 0.9406883716583252,
+        "compress": 0.850441043073268
+      },
+      {
+        "name": "decoder.layers.0.linear2.weight",
+        "shape": [
+          128,
+          512
+        ],
+        "params": 65536,
+        "erank": 120.43584442138672,
+        "util": 0.9409050345420837,
+        "compress": 0.8502452113983439
+      },
+      {
+        "name": "decoder.layers.1.multihead_attn.in_proj_weight",
+        "shape": [
+          384,
+          128
+        ],
+        "params": 49152,
+        "erank": 120.79069519042969,
+        "util": 0.9436773061752319,
+        "compress": 0.7947632046380186
+      },
+      {
+        "name": "decoder.layers.0.multihead_attn.in_proj_weight",
+        "shape": [
+          384,
+          128
+        ],
+        "params": 49152,
+        "erank": 121.0578384399414,
+        "util": 0.9457643628120422,
+        "compress": 0.7930093683906889
+      },
+      {
+        "name": "decoder.layers.0.self_attn.in_proj_weight",
+        "shape": [
+          384,
+          128
+        ],
+        "params": 49152,
+        "erank": 121.90321350097656,
+        "util": 0.9523688554763794,
+        "compress": 0.7875100027550213
+      },
+      {
+        "name": "decoder.layers.1.self_attn.in_proj_weight",
+        "shape": [
+          384,
+          128
+        ],
+        "params": 49152,
+        "erank": 122.01289367675781,
+        "util": 0.9532257318496704,
+        "compress": 0.7868020920340405
+      },
+      {
+        "name": "action_head.weight",
+        "shape": [
+          2,
+          128
+        ],
+        "params": 256,
+        "erank": 1.9118340015411377,
+        "util": 0.9559170007705688,
+        "compress": 1.0300218364373495
+      },
+      {
+        "name": "decoder.layers.0.linear1.weight",
+        "shape": [
+          512,
+          128
+        ],
+        "params": 65536,
+        "erank": 122.86833953857422,
+        "util": 0.9599089026451111,
+        "compress": 0.8334124184029668
+      },
+      {
+        "name": "decoder.layers.1.linear1.weight",
+        "shape": [
+          512,
+          128
+        ],
+        "params": 65536,
+        "erank": 122.95706939697266,
+        "util": 0.9606021046638489,
+        "compress": 0.8328110006379283
+      },
+      {
+        "name": "cls_head.weight",
+        "shape": [
+          3,
+          128
+        ],
+        "params": 384,
+        "erank": 2.9047954082489014,
+        "util": 0.9682651360829672,
+        "compress": 1.0091236379675839
+      },
+      {
+        "name": "cls_embedding.weight",
+        "shape": [
+          3,
+          128
+        ],
+        "params": 384,
+        "erank": 2.9855189323425293,
+        "util": 0.9951729774475098,
+        "compress": 0.9818385936757997
+      },
+      {
+        "name": "pos_proj.weight",
+        "shape": [
+          128,
+          2
+        ],
+        "params": 256,
+        "erank": 1.994092583656311,
+        "util": 0.9970462918281555,
+        "compress": 0.9875322667416194
+      }
+    ]
+  },
+  "sentiment": {
+    "task": "sentiment",
+    "classes": 4,
+    "total_decoder_params": 630278,
+    "num_2d_matrices": 20,
+    "util_min": 0.7788275480270386,
+    "util_max": 0.9998741149902344,
+    "util_mean": 0.8962443143129348,
+    "n_below_30": 0,
+    "n_above_70": 20,
+    "n_mid_30_70": 0,
+    "pct_above_70": 1.0,
+    "rows": [
+      {
+        "name": "start_ptr.weight",
+        "shape": [
+          128,
+          128
+        ],
+        "params": 16384,
+        "erank": 99.68992614746094,
+        "util": 0.7788275480270386,
+        "compress": 0.6419906451262835
+      },
+      {
+        "name": "feedback_proj.3.weight",
+        "shape": [
+          128,
+          128
+        ],
+        "params": 16384,
+        "erank": 100.27986907958984,
+        "util": 0.7834364771842957,
+        "compress": 0.6382138368091074
+      },
+      {
+        "name": "decoder.layers.1.multihead_attn.out_proj.weight",
+        "shape": [
+          128,
+          128
+        ],
+        "params": 16384,
+        "erank": 100.38531494140625,
+        "util": 0.7842602729797363,
+        "compress": 0.6375434498298488
+      },
+      {
+        "name": "end_ptr.weight",
+        "shape": [
+          128,
+          128
+        ],
+        "params": 16384,
+        "erank": 100.53026580810547,
+        "util": 0.785392701625824,
+        "compress": 0.6366241995436946
+      },
+      {
+        "name": "decoder.layers.0.multihead_attn.out_proj.weight",
+        "shape": [
+          128,
+          128
+        ],
+        "params": 16384,
+        "erank": 100.82714080810547,
+        "util": 0.787712037563324,
+        "compress": 0.6347497259870237
+      },
+      {
+        "name": "decoder.layers.0.self_attn.out_proj.weight",
+        "shape": [
+          128,
+          128
+        ],
+        "params": 16384,
+        "erank": 102.0406723022461,
+        "util": 0.7971927523612976,
+        "compress": 0.6272008852551557
+      },
+      {
+        "name": "decoder.layers.1.self_attn.out_proj.weight",
+        "shape": [
+          128,
+          128
+        ],
+        "params": 16384,
+        "erank": 102.64344787597656,
+        "util": 0.8019019365310669,
+        "compress": 0.623517636287226
+      },
+      {
+        "name": "feedback_proj.0.weight",
+        "shape": [
+          128,
+          384
+        ],
+        "params": 49152,
+        "erank": 115.83240509033203,
+        "util": 0.904940664768219,
+        "compress": 0.8287836199648474
+      },
+      {
+        "name": "decoder.layers.0.linear2.weight",
+        "shape": [
+          128,
+          512
+        ],
+        "params": 65536,
+        "erank": 118.54016876220703,
+        "util": 0.9260950684547424,
+        "compress": 0.863842198549722
+      },
+      {
+        "name": "decoder.layers.1.linear2.weight",
+        "shape": [
+          128,
+          512
+        ],
+        "params": 65536,
+        "erank": 119.61267852783203,
+        "util": 0.9344740509986877,
+        "compress": 0.856096538095442
+      },
+      {
+        "name": "decoder.layers.1.multihead_attn.in_proj_weight",
+        "shape": [
+          384,
+          128
+        ],
+        "params": 49152,
+        "erank": 120.2851333618164,
+        "util": 0.9397276043891907,
+        "compress": 0.7981036169385374
+      },
+      {
+        "name": "decoder.layers.0.multihead_attn.in_proj_weight",
+        "shape": [
+          384,
+          128
+        ],
+        "params": 49152,
+        "erank": 120.36058044433594,
+        "util": 0.9403170347213745,
+        "compress": 0.7976033319679597
+      },
+      {
+        "name": "cls_head.weight",
+        "shape": [
+          4,
+          128
+        ],
+        "params": 512,
+        "erank": 3.796694278717041,
+        "util": 0.9491735696792603,
+        "compress": 1.0216223888583882
+      },
+      {
+        "name": "decoder.layers.0.self_attn.in_proj_weight",
+        "shape": [
+          384,
+          128
+        ],
+        "params": 49152,
+        "erank": 121.53106689453125,
+        "util": 0.9494614601135254,
+        "compress": 0.7899214781296376
+      },
+      {
+        "name": "decoder.layers.1.self_attn.in_proj_weight",
+        "shape": [
+          384,
+          128
+        ],
+        "params": 49152,
+        "erank": 121.96670532226562,
+        "util": 0.9528648853302002,
+        "compress": 0.7871000511684292
+      },
+      {
+        "name": "decoder.layers.0.linear1.weight",
+        "shape": [
+          512,
+          128
+        ],
+        "params": 65536,
+        "erank": 122.68135070800781,
+        "util": 0.958448052406311,
+        "compress": 0.8346826914525975
+      },
+      {
+        "name": "decoder.layers.1.linear1.weight",
+        "shape": [
+          512,
+          128
+        ],
+        "params": 65536,
+        "erank": 122.8812255859375,
+        "util": 0.9600095748901367,
+        "compress": 0.8333250218796535
+      },
+      {
+        "name": "cls_embedding.weight",
+        "shape": [
+          4,
+          128
+        ],
+        "params": 512,
+        "erank": 3.978342294692993,
+        "util": 0.9945855736732483,
+        "compress": 0.9749759049044329
+      },
+      {
+        "name": "pos_proj.weight",
+        "shape": [
+          128,
+          2
+        ],
+        "params": 256,
+        "erank": 1.9923818111419678,
+        "util": 0.9961909055709839,
+        "compress": 0.9883802181982734
+      },
+      {
+        "name": "action_head.weight",
+        "shape": [
+          2,
+          128
+        ],
+        "params": 256,
+        "erank": 1.9997482299804688,
+        "util": 0.9998741149902344,
+        "compress": 0.9847393485378919
+      }
+    ]
+  }
+}

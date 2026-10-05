@@ -9,13 +9,26 @@
 """
 from __future__ import annotations
 
+import math
+
 import torch
 import torch.nn.functional as F
 from torch.utils.data import Dataset
 
-from dtseek.tasks.plugin import TaskSpec
+from dtseek.tasks.plugin import TaskSpec, all_tasks
 
 RESET = "\033[0m"
+
+#: 身份槽任务（`identity_labels=True`）必须出现且必须是实数的指标。
+IDENTITY_METRICS = ("id_acc", "first_mention_acc", "repeat_mention_acc", "cluster_f1")
+
+
+class IdentityMetricsUnavailable(RuntimeError):
+    """`identity_labels=True` 的任务拿不到身份指标（缺失或 NaN）。
+
+    静默的 NaN 比报错贵得多：面板上一列空白没人会怀疑，而它意味着
+    「同一个人物的多次提及有没有落到同一个 id」这件事根本没测。
+    """
 
 
 class GenericTaskDataset(Dataset):
@@ -325,7 +338,35 @@ def evaluate_task(doc_encoder, decoder, loader, device, spec: TaskSpec, ndb=None
             "pair_odd": odd_n / max(1, step_n),
             "n_pair": pair_tot,
         })
+    _assert_identity_metrics(report, spec)
     return report
+
+
+def _assert_identity_metrics(report: dict, spec: TaskSpec) -> None:
+    """fail-closed：身份指标要么是实数，要么响亮地炸（唯一实现点，不在测试里）。
+
+    两种触发条件：
+      1. 评估用的 spec 说 `identity_labels=False`，而注册表里同名的卡说 True ——
+         这正是「快照重建丢字段」的症状：整块身份指标连键都不会产生；
+      2. spec 说 True，但报告里缺键或值是 NaN —— 指标实现坏了。
+
+    不触发的情况：`n_measurable=0` 时各项是 0.0（真算出来的小样本结果，不是空值）。
+    """
+    if not spec.identity_labels:
+        card = all_tasks().get(spec.name)
+        if card is not None and card.spec.identity_labels:
+            raise IdentityMetricsUnavailable(
+                f"任务 {spec.name!r} 在注册表里声明 identity_labels=True，但本次评估用的 spec 是 False "
+                f"——身份指标（{'/'.join(IDENTITY_METRICS)}）会被静默丢掉。"
+                " 多半是 ckpt 快照重建时丢了该字段：检查 TaskSpec.to_snapshot/from_snapshot 是否序列化了它。")
+        return
+    missing = [k for k in IDENTITY_METRICS if k not in report]
+    nan = [k for k in IDENTITY_METRICS
+           if isinstance(report.get(k), float) and math.isnan(report[k])]
+    if missing or nan:
+        raise IdentityMetricsUnavailable(
+            f"任务 {spec.name!r} 声明 identity_labels=True，但身份指标拿不到有效数字："
+            f"缺失={missing} 为 NaN={nan}（报告键：{sorted(report)}）")
 
 
 @torch.no_grad()

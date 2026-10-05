@@ -1,0 +1,4581 @@
+[
+ {
+  "id": "neg_sad_01",
+  "set": "negation",
+  "text": "没有很开心，大家早点休息。",
+  "cue": "开心",
+  "label": "悲伤",
+  "sanity": true,
+  "recall": true,
+  "recall_strict": true,
+  "base": "悲伤",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "悲伤",
+    "start": 3,
+    "end": 4,
+    "score": 0.5824
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 0,
+    "end": 1,
+    "score": 0.998
+   }
+  ],
+  "kept": [
+   0
+  ],
+  "flipped": []
+ },
+ {
+  "id": "neg_sad_02",
+  "set": "negation",
+  "text": "开心不起来，先不聊了。",
+  "cue": "开心",
+  "label": "悲伤",
+  "sanity": false,
+  "recall": false,
+  "recall_strict": false,
+  "base": "悲伤",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 2,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "悲伤",
+    "start": 7,
+    "end": 8,
+    "score": 0.7482
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 2,
+    "end": 2,
+    "score": 0.9933
+   },
+   {
+    "label": "否定",
+    "start": 7,
+    "end": 7,
+    "score": 1.0
+   }
+  ],
+  "kept": [
+   7
+  ],
+  "flipped": []
+ },
+ {
+  "id": "neg_sad_03",
+  "set": "negation",
+  "text": "谈不上高兴，事情还没办完。",
+  "cue": "高兴",
+  "label": "悲伤",
+  "sanity": true,
+  "recall": false,
+  "recall_strict": false,
+  "base": "愤怒",
+  "comp": "愤怒",
+  "comp_nocheck": "愤怒",
+  "comp_regex": "愤怒",
+  "n_sent": 1,
+  "n_neg": 2,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "愤怒",
+    "start": 9,
+    "end": 11,
+    "score": 0.5291
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 1,
+    "end": 1,
+    "score": 0.9966
+   },
+   {
+    "label": "否定",
+    "start": 9,
+    "end": 9,
+    "score": 1.0
+   }
+  ],
+  "kept": [
+   9
+  ],
+  "flipped": []
+ },
+ {
+  "id": "neg_sad_04",
+  "set": "negation",
+  "text": "这结果让我没有很高兴。",
+  "cue": "高兴",
+  "label": "悲伤",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "悲伤",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "悲伤",
+    "start": 5,
+    "end": 9,
+    "score": 0.7221
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 5,
+    "end": 6,
+    "score": 0.9995
+   }
+  ],
+  "kept": [
+   5
+  ],
+  "flipped": []
+ },
+ {
+  "id": "neg_sad_05",
+  "set": "negation",
+  "text": "没有什么可高兴的。",
+  "cue": "高兴",
+  "label": "悲伤",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "愤怒",
+  "comp": "愤怒",
+  "comp_nocheck": "愤怒",
+  "comp_regex": "愤怒",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "愤怒",
+    "start": 5,
+    "end": 6,
+    "score": 0.5407
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 0,
+    "end": 1,
+    "score": 0.9985
+   }
+  ],
+  "kept": [
+   0
+  ],
+  "flipped": []
+ },
+ {
+  "id": "neg_sad_06",
+  "set": "negation",
+  "text": "还不至于高兴，问题没解决。",
+  "cue": "高兴",
+  "label": "悲伤",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "愤怒",
+  "comp": "愤怒",
+  "comp_nocheck": "愤怒",
+  "comp_regex": "愤怒",
+  "n_sent": 1,
+  "n_neg": 2,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "愤怒",
+    "start": 4,
+    "end": 5,
+    "score": 0.5685
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 1,
+    "end": 1,
+    "score": 0.9952
+   },
+   {
+    "label": "否定",
+    "start": 9,
+    "end": 9,
+    "score": 1.0
+   }
+  ],
+  "kept": [
+   1
+  ],
+  "flipped": []
+ },
+ {
+  "id": "neg_sad_07",
+  "set": "negation",
+  "text": "不觉得有多开心。",
+  "cue": "开心",
+  "label": "悲伤",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "悲伤",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "悲伤",
+    "start": 5,
+    "end": 6,
+    "score": 0.6101
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 0,
+    "end": 0,
+    "score": 0.9939
+   }
+  ],
+  "kept": [
+   0
+  ],
+  "flipped": []
+ },
+ {
+  "id": "neg_sad_08",
+  "set": "negation",
+  "text": "没感到十分快乐。",
+  "cue": "快乐",
+  "label": "悲伤",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "悲伤",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "悲伤",
+    "start": 5,
+    "end": 6,
+    "score": 0.7813
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 0,
+    "end": 0,
+    "score": 0.9989
+   }
+  ],
+  "kept": [
+   0
+  ],
+  "flipped": []
+ },
+ {
+  "id": "neg_sad_09",
+  "set": "negation",
+  "text": "也谈不上多快乐。",
+  "cue": "快乐",
+  "label": "悲伤",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "积极",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "积极",
+    "start": 2,
+    "end": 6,
+    "score": 0.6249
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 2,
+    "end": 2,
+    "score": 0.9993
+   }
+  ],
+  "kept": [
+   2
+  ],
+  "flipped": [
+   [
+    2,
+    6,
+    "悲伤"
+   ]
+  ]
+ },
+ {
+  "id": "neg_sad_10",
+  "set": "negation",
+  "text": "没觉得痛快。",
+  "cue": "痛快",
+  "label": "悲伤",
+  "sanity": true,
+  "recall": true,
+  "recall_strict": true,
+  "base": "悲伤",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "悲伤",
+    "start": 0,
+    "end": 4,
+    "score": 0.6832
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 0,
+    "end": 0,
+    "score": 0.9988
+   }
+  ],
+  "kept": [
+   0
+  ],
+  "flipped": []
+ },
+ {
+  "id": "neg_sad_11",
+  "set": "negation",
+  "text": "并不觉得轻松。",
+  "cue": "轻松",
+  "label": "悲伤",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "愤怒",
+  "comp": "愤怒",
+  "comp_nocheck": "愤怒",
+  "comp_regex": "愤怒",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "愤怒",
+    "start": 4,
+    "end": 5,
+    "score": 0.3524
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 1,
+    "end": 1,
+    "score": 0.999
+   }
+  ],
+  "kept": [
+   1
+  ],
+  "flipped": []
+ },
+ {
+  "id": "neg_sad_12",
+  "set": "negation",
+  "text": "没那么舒服。",
+  "cue": "舒服",
+  "label": "悲伤",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "悲伤",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "悲伤",
+    "start": 3,
+    "end": 4,
+    "score": 0.6085
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 0,
+    "end": 0,
+    "score": 0.9979
+   }
+  ],
+  "kept": [
+   0
+  ],
+  "flipped": []
+ },
+ {
+  "id": "neg_sad_13",
+  "set": "negation",
+  "text": "谈不上愉快。",
+  "cue": "愉快",
+  "label": "悲伤",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "悲伤",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "悲伤",
+    "start": 1,
+    "end": 4,
+    "score": 0.5197
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 1,
+    "end": 1,
+    "score": 0.9993
+   }
+  ],
+  "kept": [
+   1
+  ],
+  "flipped": []
+ },
+ {
+  "id": "neg_sad_14",
+  "set": "negation",
+  "text": "没觉得多幸福。",
+  "cue": "幸福",
+  "label": "悲伤",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "积极",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "积极",
+    "start": 4,
+    "end": 5,
+    "score": 0.9363
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 0,
+    "end": 0,
+    "score": 0.9975
+   }
+  ],
+  "kept": [
+   0
+  ],
+  "flipped": [
+   [
+    4,
+    5,
+    "悲伤"
+   ]
+  ]
+ },
+ {
+  "id": "neg_sad_15",
+  "set": "negation",
+  "text": "没感到多舒心。",
+  "cue": "舒心",
+  "label": "悲伤",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "悲伤",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "悲伤",
+    "start": 4,
+    "end": 5,
+    "score": 0.7864
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 0,
+    "end": 0,
+    "score": 0.9983
+   }
+  ],
+  "kept": [
+   0
+  ],
+  "flipped": []
+ },
+ {
+  "id": "neg_sad_16",
+  "set": "negation",
+  "text": "没有特别兴奋。",
+  "cue": "兴奋",
+  "label": "悲伤",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "悲伤",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 2,
+  "n_kept": 2,
+  "sent": [
+   {
+    "label": "悲伤",
+    "start": 4,
+    "end": 5,
+    "score": 0.4593
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 0,
+    "end": 1,
+    "score": 0.9991
+   },
+   {
+    "label": "否定",
+    "start": 3,
+    "end": 3,
+    "score": 0.9999
+   }
+  ],
+  "kept": [
+   0,
+   3
+  ],
+  "flipped": []
+ },
+ {
+  "id": "neg_sad_17",
+  "set": "negation",
+  "text": "也不觉得激动。",
+  "cue": "激动",
+  "label": "悲伤",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": false,
+  "base": "愤怒",
+  "comp": "愤怒",
+  "comp_nocheck": "愤怒",
+  "comp_regex": "愤怒",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "愤怒",
+    "start": 3,
+    "end": 4,
+    "score": 0.6723
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 1,
+    "end": 1,
+    "score": 0.9989
+   }
+  ],
+  "kept": [
+   1
+  ],
+  "flipped": []
+ },
+ {
+  "id": "neg_sad_18",
+  "set": "negation",
+  "text": "谈不上多喜悦。",
+  "cue": "喜悦",
+  "label": "悲伤",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": false,
+  "base": "愤怒",
+  "comp": "愤怒",
+  "comp_nocheck": "愤怒",
+  "comp_regex": "愤怒",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "愤怒",
+    "start": 1,
+    "end": 4,
+    "score": 0.6862
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 1,
+    "end": 1,
+    "score": 0.9997
+   }
+  ],
+  "kept": [
+   1
+  ],
+  "flipped": []
+ },
+ {
+  "id": "neg_sad_19",
+  "set": "negation",
+  "text": "没那么惬意。",
+  "cue": "惬意",
+  "label": "悲伤",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "悲伤",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "悲伤",
+    "start": 3,
+    "end": 4,
+    "score": 0.6125
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 0,
+    "end": 0,
+    "score": 0.9989
+   }
+  ],
+  "kept": [
+   0
+  ],
+  "flipped": []
+ },
+ {
+  "id": "neg_sad_20",
+  "set": "negation",
+  "text": "也没有多欢喜。",
+  "cue": "欢喜",
+  "label": "悲伤",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": false,
+  "base": "积极",
+  "comp": "积极",
+  "comp_nocheck": "积极",
+  "comp_regex": "积极",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "积极",
+    "start": 5,
+    "end": 5,
+    "score": 0.8395
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 1,
+    "end": 2,
+    "score": 0.9986
+   }
+  ],
+  "kept": [
+   1
+  ],
+  "flipped": []
+ },
+ {
+  "id": "neg_sad_21",
+  "set": "negation",
+  "text": "也高兴不起来。",
+  "cue": "高兴",
+  "label": "悲伤",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "悲伤",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "悲伤",
+    "start": 1,
+    "end": 2,
+    "score": 0.633
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 3,
+    "end": 3,
+    "score": 0.9997
+   }
+  ],
+  "kept": [
+   3
+  ],
+  "flipped": []
+ },
+ {
+  "id": "neg_sad_22",
+  "set": "negation",
+  "text": "未见得有多开心。",
+  "cue": "开心",
+  "label": "悲伤",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "悲伤",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "悲伤",
+    "start": 5,
+    "end": 6,
+    "score": 0.5409
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 0,
+    "end": 0,
+    "score": 0.9957
+   }
+  ],
+  "kept": [
+   0
+  ],
+  "flipped": []
+ },
+ {
+  "id": "neg_sad_23",
+  "set": "negation",
+  "text": "没觉得特别开心。",
+  "cue": "开心",
+  "label": "悲伤",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "悲伤",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "悲伤",
+    "start": 5,
+    "end": 6,
+    "score": 0.6567
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 0,
+    "end": 4,
+    "score": 0.9995
+   }
+  ],
+  "kept": [
+   0
+  ],
+  "flipped": []
+ },
+ {
+  "id": "neg_sad_24",
+  "set": "negation",
+  "text": "这事没什么好高兴的。",
+  "cue": "高兴",
+  "label": "悲伤",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "愤怒",
+  "comp": "愤怒",
+  "comp_nocheck": "愤怒",
+  "comp_regex": "愤怒",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "愤怒",
+    "start": 6,
+    "end": 7,
+    "score": 0.4644
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 2,
+    "end": 2,
+    "score": 0.999
+   }
+  ],
+  "kept": [
+   2
+  ],
+  "flipped": []
+ },
+ {
+  "id": "neg_sad_25",
+  "set": "negation",
+  "text": "一点都快乐不起来。",
+  "cue": "快乐",
+  "label": "悲伤",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "悲伤",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "悲伤",
+    "start": 3,
+    "end": 4,
+    "score": 0.8109
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 5,
+    "end": 5,
+    "score": 0.9973
+   }
+  ],
+  "kept": [
+   5
+  ],
+  "flipped": []
+ },
+ {
+  "id": "neg_sad_26",
+  "set": "negation",
+  "text": "没感到多少喜悦。",
+  "cue": "喜悦",
+  "label": "悲伤",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "积极",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "积极",
+    "start": 5,
+    "end": 6,
+    "score": 0.484
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 0,
+    "end": 0,
+    "score": 0.9982
+   }
+  ],
+  "kept": [
+   0
+  ],
+  "flipped": [
+   [
+    5,
+    6,
+    "悲伤"
+   ]
+  ]
+ },
+ {
+  "id": "neg_sad_27",
+  "set": "negation",
+  "text": "算不上多痛快。",
+  "cue": "痛快",
+  "label": "悲伤",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "悲伤",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "悲伤",
+    "start": 4,
+    "end": 5,
+    "score": 0.4613
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 1,
+    "end": 1,
+    "score": 0.9993
+   }
+  ],
+  "kept": [
+   1
+  ],
+  "flipped": []
+ },
+ {
+  "id": "neg_sad_28",
+  "set": "negation",
+  "text": "并没有觉得轻松。",
+  "cue": "轻松",
+  "label": "悲伤",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "积极",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "积极",
+    "start": 5,
+    "end": 6,
+    "score": 0.9013
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 1,
+    "end": 2,
+    "score": 0.999
+   }
+  ],
+  "kept": [
+   1
+  ],
+  "flipped": [
+   [
+    5,
+    6,
+    "悲伤"
+   ]
+  ]
+ },
+ {
+  "id": "neg_sad_29",
+  "set": "negation",
+  "text": "没觉得有多舒服。",
+  "cue": "舒服",
+  "label": "悲伤",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "积极",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "积极",
+    "start": 5,
+    "end": 6,
+    "score": 0.9102
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 0,
+    "end": 3,
+    "score": 0.9971
+   }
+  ],
+  "kept": [
+   0
+  ],
+  "flipped": [
+   [
+    5,
+    6,
+    "悲伤"
+   ]
+  ]
+ },
+ {
+  "id": "neg_sad_30",
+  "set": "negation",
+  "text": "谈不上有多舒心。",
+  "cue": "舒心",
+  "label": "悲伤",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "悲伤",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "悲伤",
+    "start": 5,
+    "end": 6,
+    "score": 0.5789
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 1,
+    "end": 1,
+    "score": 0.9978
+   }
+  ],
+  "kept": [
+   1
+  ],
+  "flipped": []
+ },
+ {
+  "id": "neg_angry_01",
+  "set": "negation",
+  "text": "并不觉得满意。",
+  "cue": "满意",
+  "label": "愤怒",
+  "sanity": true,
+  "recall": true,
+  "recall_strict": true,
+  "base": "积极",
+  "comp": "愤怒",
+  "comp_nocheck": "愤怒",
+  "comp_regex": "愤怒",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "积极",
+    "start": 4,
+    "end": 5,
+    "score": 0.5144
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 1,
+    "end": 1,
+    "score": 0.9992
+   }
+  ],
+  "kept": [
+   1
+  ],
+  "flipped": [
+   [
+    4,
+    5,
+    "愤怒"
+   ]
+  ]
+ },
+ {
+  "id": "neg_angry_02",
+  "set": "negation",
+  "text": "没觉得有多满意。",
+  "cue": "满意",
+  "label": "愤怒",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "积极",
+  "comp": "愤怒",
+  "comp_nocheck": "愤怒",
+  "comp_regex": "愤怒",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "积极",
+    "start": 5,
+    "end": 6,
+    "score": 0.964
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 0,
+    "end": 3,
+    "score": 0.9957
+   }
+  ],
+  "kept": [
+   0
+  ],
+  "flipped": [
+   [
+    5,
+    6,
+    "愤怒"
+   ]
+  ]
+ },
+ {
+  "id": "neg_angry_03",
+  "set": "negation",
+  "text": "提不上满意，勉强能用。",
+  "cue": "满意",
+  "label": "愤怒",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "悲伤",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "悲伤",
+    "start": 3,
+    "end": 4,
+    "score": 0.6759
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 1,
+    "end": 1,
+    "score": 0.9988
+   }
+  ],
+  "kept": [
+   1
+  ],
+  "flipped": []
+ },
+ {
+  "id": "neg_angry_04",
+  "set": "negation",
+  "text": "我不是很满意这次的安排。",
+  "cue": "满意",
+  "label": "愤怒",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "积极",
+  "comp": "愤怒",
+  "comp_nocheck": "愤怒",
+  "comp_regex": "愤怒",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "积极",
+    "start": 4,
+    "end": 9,
+    "score": 0.756
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 1,
+    "end": 1,
+    "score": 0.9972
+   }
+  ],
+  "kept": [
+   1
+  ],
+  "flipped": [
+   [
+    4,
+    9,
+    "愤怒"
+   ]
+  ]
+ },
+ {
+  "id": "neg_angry_05",
+  "set": "negation",
+  "text": "算不上喜欢这个配色。",
+  "cue": "喜欢",
+  "label": "愤怒",
+  "sanity": true,
+  "recall": true,
+  "recall_strict": false,
+  "base": "积极",
+  "comp": "积极",
+  "comp_nocheck": "积极",
+  "comp_regex": "积极",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "积极",
+    "start": 4,
+    "end": 4,
+    "score": 0.4985
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 1,
+    "end": 1,
+    "score": 0.9995
+   }
+  ],
+  "kept": [
+   1
+  ],
+  "flipped": []
+ },
+ {
+  "id": "neg_angry_06",
+  "set": "negation",
+  "text": "谈不上多喜欢。",
+  "cue": "喜欢",
+  "label": "愤怒",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "积极",
+  "comp": "愤怒",
+  "comp_nocheck": "愤怒",
+  "comp_regex": "愤怒",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "积极",
+    "start": 4,
+    "end": 5,
+    "score": 0.5524
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 1,
+    "end": 1,
+    "score": 0.9988
+   }
+  ],
+  "kept": [
+   1
+  ],
+  "flipped": [
+   [
+    4,
+    5,
+    "愤怒"
+   ]
+  ]
+ },
+ {
+  "id": "neg_angry_07",
+  "set": "negation",
+  "text": "没那么喜欢。",
+  "cue": "喜欢",
+  "label": "愤怒",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "积极",
+  "comp": "愤怒",
+  "comp_nocheck": "愤怒",
+  "comp_regex": "愤怒",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "积极",
+    "start": 3,
+    "end": 4,
+    "score": 0.4995
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 0,
+    "end": 0,
+    "score": 0.9991
+   }
+  ],
+  "kept": [
+   0
+  ],
+  "flipped": [
+   [
+    3,
+    4,
+    "愤怒"
+   ]
+  ]
+ },
+ {
+  "id": "neg_angry_08",
+  "set": "negation",
+  "text": "并不怎么认可这种做法。",
+  "cue": "认可",
+  "label": "愤怒",
+  "sanity": true,
+  "recall": true,
+  "recall_strict": true,
+  "base": "愤怒",
+  "comp": "愤怒",
+  "comp_nocheck": "愤怒",
+  "comp_regex": "愤怒",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "愤怒",
+    "start": 1,
+    "end": 5,
+    "score": 0.8529
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 1,
+    "end": 1,
+    "score": 0.9987
+   }
+  ],
+  "kept": [
+   1
+  ],
+  "flipped": []
+ },
+ {
+  "id": "neg_angry_09",
+  "set": "negation",
+  "text": "谈不上赞同。",
+  "cue": "赞同",
+  "label": "愤怒",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "积极",
+  "comp": "愤怒",
+  "comp_nocheck": "愤怒",
+  "comp_regex": "愤怒",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "积极",
+    "start": 1,
+    "end": 4,
+    "score": 0.5313
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 1,
+    "end": 1,
+    "score": 0.9996
+   }
+  ],
+  "kept": [
+   1
+  ],
+  "flipped": [
+   [
+    1,
+    4,
+    "愤怒"
+   ]
+  ]
+ },
+ {
+  "id": "neg_angry_10",
+  "set": "negation",
+  "text": "也不怎么欣赏。",
+  "cue": "欣赏",
+  "label": "愤怒",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "悲伤",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "悲伤",
+    "start": 4,
+    "end": 5,
+    "score": 0.6042
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 1,
+    "end": 1,
+    "score": 0.988
+   }
+  ],
+  "kept": [
+   1
+  ],
+  "flipped": []
+ },
+ {
+  "id": "neg_angry_11",
+  "set": "negation",
+  "text": "没觉得有多认可。",
+  "cue": "认可",
+  "label": "愤怒",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "积极",
+  "comp": "愤怒",
+  "comp_nocheck": "愤怒",
+  "comp_regex": "愤怒",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "积极",
+    "start": 5,
+    "end": 6,
+    "score": 0.8464
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 0,
+    "end": 3,
+    "score": 0.9978
+   }
+  ],
+  "kept": [
+   0
+  ],
+  "flipped": [
+   [
+    5,
+    6,
+    "愤怒"
+   ]
+  ]
+ },
+ {
+  "id": "neg_angry_12",
+  "set": "negation",
+  "text": "不觉得有多赞成。",
+  "cue": "赞成",
+  "label": "愤怒",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "积极",
+  "comp": "愤怒",
+  "comp_nocheck": "愤怒",
+  "comp_regex": "愤怒",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "积极",
+    "start": 5,
+    "end": 6,
+    "score": 0.8241
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 0,
+    "end": 0,
+    "score": 0.9969
+   }
+  ],
+  "kept": [
+   0
+  ],
+  "flipped": [
+   [
+    5,
+    6,
+    "愤怒"
+   ]
+  ]
+ },
+ {
+  "id": "neg_angry_13",
+  "set": "negation",
+  "text": "并没有多赞成。",
+  "cue": "赞成",
+  "label": "愤怒",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "积极",
+  "comp": "愤怒",
+  "comp_nocheck": "愤怒",
+  "comp_regex": "愤怒",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "积极",
+    "start": 4,
+    "end": 5,
+    "score": 0.9626
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 1,
+    "end": 2,
+    "score": 0.9996
+   }
+  ],
+  "kept": [
+   1
+  ],
+  "flipped": [
+   [
+    4,
+    5,
+    "愤怒"
+   ]
+  ]
+ },
+ {
+  "id": "neg_angry_14",
+  "set": "negation",
+  "text": "谈不上喜欢。",
+  "cue": "喜欢",
+  "label": "愤怒",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "愤怒",
+  "comp": "愤怒",
+  "comp_nocheck": "愤怒",
+  "comp_regex": "愤怒",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "愤怒",
+    "start": 1,
+    "end": 4,
+    "score": 0.539
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 1,
+    "end": 1,
+    "score": 0.9996
+   }
+  ],
+  "kept": [
+   1
+  ],
+  "flipped": []
+ },
+ {
+  "id": "neg_angry_15",
+  "set": "negation",
+  "text": "不觉得有多满意。",
+  "cue": "满意",
+  "label": "愤怒",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "积极",
+  "comp": "愤怒",
+  "comp_nocheck": "愤怒",
+  "comp_regex": "愤怒",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "积极",
+    "start": 5,
+    "end": 6,
+    "score": 0.6623
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 0,
+    "end": 0,
+    "score": 0.9953
+   }
+  ],
+  "kept": [
+   0
+  ],
+  "flipped": [
+   [
+    5,
+    6,
+    "愤怒"
+   ]
+  ]
+ },
+ {
+  "id": "neg_angry_16",
+  "set": "negation",
+  "text": "没感到多满意。",
+  "cue": "满意",
+  "label": "愤怒",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "积极",
+  "comp": "愤怒",
+  "comp_nocheck": "愤怒",
+  "comp_regex": "愤怒",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "积极",
+    "start": 4,
+    "end": 5,
+    "score": 0.85
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 0,
+    "end": 0,
+    "score": 0.999
+   }
+  ],
+  "kept": [
+   0
+  ],
+  "flipped": [
+   [
+    4,
+    5,
+    "愤怒"
+   ]
+  ]
+ },
+ {
+  "id": "neg_angry_17",
+  "set": "negation",
+  "text": "也不觉得满意。",
+  "cue": "满意",
+  "label": "愤怒",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "积极",
+  "comp": "愤怒",
+  "comp_nocheck": "愤怒",
+  "comp_regex": "愤怒",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "积极",
+    "start": 4,
+    "end": 5,
+    "score": 0.655
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 1,
+    "end": 1,
+    "score": 0.9973
+   }
+  ],
+  "kept": [
+   1
+  ],
+  "flipped": [
+   [
+    4,
+    5,
+    "愤怒"
+   ]
+  ]
+ },
+ {
+  "id": "neg_angry_18",
+  "set": "negation",
+  "text": "并不赞成这个方案。",
+  "cue": "赞成",
+  "label": "愤怒",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "积极",
+  "comp": "愤怒",
+  "comp_nocheck": "愤怒",
+  "comp_regex": "愤怒",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "积极",
+    "start": 1,
+    "end": 3,
+    "score": 0.7621
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 1,
+    "end": 1,
+    "score": 0.9989
+   }
+  ],
+  "kept": [
+   1
+  ],
+  "flipped": [
+   [
+    1,
+    3,
+    "愤怒"
+   ]
+  ]
+ },
+ {
+  "id": "neg_angry_19",
+  "set": "negation",
+  "text": "也算不上多认可。",
+  "cue": "认可",
+  "label": "愤怒",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "愤怒",
+  "comp": "愤怒",
+  "comp_nocheck": "愤怒",
+  "comp_regex": "愤怒",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "愤怒",
+    "start": 2,
+    "end": 6,
+    "score": 0.7449
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 2,
+    "end": 2,
+    "score": 0.9997
+   }
+  ],
+  "kept": [
+   2
+  ],
+  "flipped": []
+ },
+ {
+  "id": "neg_angry_20",
+  "set": "negation",
+  "text": "没觉得多满意。",
+  "cue": "满意",
+  "label": "愤怒",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "积极",
+  "comp": "愤怒",
+  "comp_nocheck": "愤怒",
+  "comp_regex": "愤怒",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "积极",
+    "start": 4,
+    "end": 5,
+    "score": 0.9633
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 0,
+    "end": 0,
+    "score": 0.9912
+   }
+  ],
+  "kept": [
+   0
+  ],
+  "flipped": [
+   [
+    4,
+    5,
+    "愤怒"
+   ]
+  ]
+ },
+ {
+  "id": "neg_angry_21",
+  "set": "negation",
+  "text": "谈不上多赞成。",
+  "cue": "赞成",
+  "label": "愤怒",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "愤怒",
+  "comp": "愤怒",
+  "comp_nocheck": "愤怒",
+  "comp_regex": "愤怒",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "愤怒",
+    "start": 1,
+    "end": 5,
+    "score": 0.3825
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 1,
+    "end": 1,
+    "score": 0.9995
+   }
+  ],
+  "kept": [
+   1
+  ],
+  "flipped": []
+ },
+ {
+  "id": "neg_angry_22",
+  "set": "negation",
+  "text": "没觉得有多欣赏。",
+  "cue": "欣赏",
+  "label": "愤怒",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "悲伤",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "悲伤",
+    "start": 5,
+    "end": 6,
+    "score": 0.5148
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 0,
+    "end": 3,
+    "score": 0.9973
+   }
+  ],
+  "kept": [
+   0
+  ],
+  "flipped": []
+ },
+ {
+  "id": "neg_angry_23",
+  "set": "negation",
+  "text": "并未觉得满意。",
+  "cue": "满意",
+  "label": "愤怒",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "愤怒",
+  "comp": "愤怒",
+  "comp_nocheck": "愤怒",
+  "comp_regex": "愤怒",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "愤怒",
+    "start": 4,
+    "end": 5,
+    "score": 0.4554
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 1,
+    "end": 1,
+    "score": 0.9984
+   }
+  ],
+  "kept": [
+   1
+  ],
+  "flipped": []
+ },
+ {
+  "id": "neg_angry_24",
+  "set": "negation",
+  "text": "没感到多喜欢。",
+  "cue": "喜欢",
+  "label": "愤怒",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "积极",
+  "comp": "愤怒",
+  "comp_nocheck": "愤怒",
+  "comp_regex": "愤怒",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "积极",
+    "start": 4,
+    "end": 5,
+    "score": 0.6841
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 0,
+    "end": 0,
+    "score": 0.9996
+   }
+  ],
+  "kept": [
+   0
+  ],
+  "flipped": [
+   [
+    4,
+    5,
+    "愤怒"
+   ]
+  ]
+ },
+ {
+  "id": "neg_angry_25",
+  "set": "negation",
+  "text": "也谈不上喜欢。",
+  "cue": "喜欢",
+  "label": "愤怒",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "愤怒",
+  "comp": "愤怒",
+  "comp_nocheck": "愤怒",
+  "comp_regex": "愤怒",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "愤怒",
+    "start": 2,
+    "end": 5,
+    "score": 0.7068
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 2,
+    "end": 2,
+    "score": 0.9997
+   }
+  ],
+  "kept": [
+   2
+  ],
+  "flipped": []
+ },
+ {
+  "id": "neg_angry_26",
+  "set": "negation",
+  "text": "没有多喜欢。",
+  "cue": "喜欢",
+  "label": "愤怒",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "积极",
+  "comp": "愤怒",
+  "comp_nocheck": "愤怒",
+  "comp_regex": "愤怒",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "积极",
+    "start": 3,
+    "end": 4,
+    "score": 0.9229
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 0,
+    "end": 1,
+    "score": 0.9979
+   }
+  ],
+  "kept": [
+   0
+  ],
+  "flipped": [
+   [
+    3,
+    4,
+    "愤怒"
+   ]
+  ]
+ },
+ {
+  "id": "neg_angry_27",
+  "set": "negation",
+  "text": "提不上多认可。",
+  "cue": "认可",
+  "label": "愤怒",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "愤怒",
+  "comp": "愤怒",
+  "comp_nocheck": "愤怒",
+  "comp_regex": "愤怒",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "愤怒",
+    "start": 1,
+    "end": 5,
+    "score": 0.5009
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 1,
+    "end": 1,
+    "score": 0.999
+   }
+  ],
+  "kept": [
+   1
+  ],
+  "flipped": []
+ },
+ {
+  "id": "neg_angry_28",
+  "set": "negation",
+  "text": "没觉得多欣赏。",
+  "cue": "欣赏",
+  "label": "愤怒",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "悲伤",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "悲伤",
+    "start": 4,
+    "end": 5,
+    "score": 0.6156
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 0,
+    "end": 0,
+    "score": 0.9878
+   }
+  ],
+  "kept": [
+   0
+  ],
+  "flipped": []
+ },
+ {
+  "id": "neg_angry_29",
+  "set": "negation",
+  "text": "并不怎么赞同这个结论。",
+  "cue": "赞同",
+  "label": "愤怒",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "积极",
+  "comp": "愤怒",
+  "comp_nocheck": "愤怒",
+  "comp_regex": "愤怒",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "积极",
+    "start": 4,
+    "end": 5,
+    "score": 0.4178
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 1,
+    "end": 1,
+    "score": 0.9972
+   }
+  ],
+  "kept": [
+   1
+  ],
+  "flipped": [
+   [
+    4,
+    5,
+    "愤怒"
+   ]
+  ]
+ },
+ {
+  "id": "neg_angry_30",
+  "set": "negation",
+  "text": "没觉得多赞成。",
+  "cue": "赞成",
+  "label": "愤怒",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "积极",
+  "comp": "愤怒",
+  "comp_nocheck": "愤怒",
+  "comp_regex": "愤怒",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "积极",
+    "start": 0,
+    "end": 5,
+    "score": 0.9626
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 0,
+    "end": 0,
+    "score": 0.9988
+   }
+  ],
+  "kept": [
+   0
+  ],
+  "flipped": [
+   [
+    0,
+    5,
+    "愤怒"
+   ]
+  ]
+ },
+ {
+  "id": "ctrl_plain_01",
+  "set": "control",
+  "text": "我很喜欢这个颜色。",
+  "cue": "喜欢",
+  "label": "积极",
+  "sanity": true,
+  "recall": false,
+  "recall_strict": false,
+  "base": "积极",
+  "comp": "积极",
+  "comp_nocheck": "积极",
+  "comp_regex": "积极",
+  "n_sent": 1,
+  "n_neg": 0,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "积极",
+    "start": 7,
+    "end": 7,
+    "score": 0.587
+   }
+  ],
+  "neg": [],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_plain_02",
+  "set": "control",
+  "text": "这个方案太棒了。",
+  "cue": "太棒了",
+  "label": "积极",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "积极",
+  "comp": "积极",
+  "comp_nocheck": "积极",
+  "comp_regex": "积极",
+  "n_sent": 1,
+  "n_neg": 0,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "积极",
+    "start": 4,
+    "end": 6,
+    "score": 0.9207
+   }
+  ],
+  "neg": [],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_plain_03",
+  "set": "control",
+  "text": "今天特别开心。",
+  "cue": "开心",
+  "label": "积极",
+  "sanity": true,
+  "recall": true,
+  "recall_strict": false,
+  "base": "悲伤",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "悲伤",
+    "start": 5,
+    "end": 5,
+    "score": 0.692
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 3,
+    "end": 3,
+    "score": 0.9952
+   }
+  ],
+  "kept": [
+   3
+  ],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_plain_04",
+  "set": "control",
+  "text": "他表现得非常出色。",
+  "cue": "出色",
+  "label": "积极",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "积极",
+  "comp": "积极",
+  "comp_nocheck": "积极",
+  "comp_regex": "积极",
+  "n_sent": 1,
+  "n_neg": 0,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "积极",
+    "start": 6,
+    "end": 7,
+    "score": 0.943
+   }
+  ],
+  "neg": [],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_plain_05",
+  "set": "control",
+  "text": "这部电影真棒。",
+  "cue": "真棒",
+  "label": "积极",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "积极",
+  "comp": "积极",
+  "comp_nocheck": "积极",
+  "comp_regex": "积极",
+  "n_sent": 1,
+  "n_neg": 0,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "积极",
+    "start": 4,
+    "end": 5,
+    "score": 0.9901
+   }
+  ],
+  "neg": [],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_plain_06",
+  "set": "control",
+  "text": "我对结果非常满意。",
+  "cue": "满意",
+  "label": "积极",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "积极",
+  "comp": "积极",
+  "comp_nocheck": "积极",
+  "comp_regex": "积极",
+  "n_sent": 1,
+  "n_neg": 0,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "积极",
+    "start": 6,
+    "end": 7,
+    "score": 0.9301
+   }
+  ],
+  "neg": [],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_plain_07",
+  "set": "control",
+  "text": "周末过得很愉快。",
+  "cue": "愉快",
+  "label": "积极",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "积极",
+  "comp": "积极",
+  "comp_nocheck": "积极",
+  "comp_regex": "积极",
+  "n_sent": 1,
+  "n_neg": 0,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "积极",
+    "start": 5,
+    "end": 6,
+    "score": 0.5651
+   }
+  ],
+  "neg": [],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_plain_08",
+  "set": "control",
+  "text": "这里的服务让人舒服。",
+  "cue": "舒服",
+  "label": "积极",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "积极",
+  "comp": "积极",
+  "comp_nocheck": "积极",
+  "comp_regex": "积极",
+  "n_sent": 1,
+  "n_neg": 0,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "积极",
+    "start": 7,
+    "end": 8,
+    "score": 0.8956
+   }
+  ],
+  "neg": [],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_plain_09",
+  "set": "control",
+  "text": "我挺欣赏他的才华。",
+  "cue": "欣赏",
+  "label": "积极",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "积极",
+  "comp": "积极",
+  "comp_nocheck": "愤怒",
+  "comp_regex": "积极",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "积极",
+    "start": 2,
+    "end": 3,
+    "score": 0.7425
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 1,
+    "end": 1,
+    "score": 0.9943
+   }
+  ],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_plain_10",
+  "set": "control",
+  "text": "这个主意真好。",
+  "cue": "真好",
+  "label": "积极",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "积极",
+  "comp": "积极",
+  "comp_nocheck": "积极",
+  "comp_regex": "积极",
+  "n_sent": 1,
+  "n_neg": 0,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "积极",
+    "start": 4,
+    "end": 5,
+    "score": 0.9127
+   }
+  ],
+  "neg": [],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_plain_11",
+  "set": "control",
+  "text": "大家都认可这个方案。",
+  "cue": "认可",
+  "label": "积极",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "愤怒",
+  "comp": "愤怒",
+  "comp_nocheck": "愤怒",
+  "comp_regex": "愤怒",
+  "n_sent": 1,
+  "n_neg": 0,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "愤怒",
+    "start": 3,
+    "end": 4,
+    "score": 0.4521
+   }
+  ],
+  "neg": [],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_plain_12",
+  "set": "control",
+  "text": "我非常高兴能来。",
+  "cue": "高兴",
+  "label": "积极",
+  "sanity": true,
+  "recall": true,
+  "recall_strict": true,
+  "base": "悲伤",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 0,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "悲伤",
+    "start": 3,
+    "end": 4,
+    "score": 0.6482
+   }
+  ],
+  "neg": [],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_plain_13",
+  "set": "control",
+  "text": "这份工作让我满足。",
+  "cue": "满足",
+  "label": "积极",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "积极",
+  "comp": "积极",
+  "comp_nocheck": "积极",
+  "comp_regex": "积极",
+  "n_sent": 1,
+  "n_neg": 0,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "积极",
+    "start": 6,
+    "end": 7,
+    "score": 0.9568
+   }
+  ],
+  "neg": [],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_plain_14",
+  "set": "control",
+  "text": "天气不错，适合出门。",
+  "cue": "不错",
+  "label": "积极",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "愤怒",
+  "comp": "愤怒",
+  "comp_nocheck": "愤怒",
+  "comp_regex": "愤怒",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "愤怒",
+    "start": 1,
+    "end": 3,
+    "score": 0.5704
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 2,
+    "end": 2,
+    "score": 0.9997
+   }
+  ],
+  "kept": [
+   2
+  ],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_plain_15",
+  "set": "control",
+  "text": "他干得漂亮，大家都服气。",
+  "cue": "干得漂亮",
+  "label": "积极",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "悲伤",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 0,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "悲伤",
+    "start": 1,
+    "end": 10,
+    "score": 0.6015
+   }
+  ],
+  "neg": [],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_plain_16",
+  "set": "control",
+  "text": "我对这次演出很满意。",
+  "cue": "满意",
+  "label": "积极",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "积极",
+  "comp": "积极",
+  "comp_nocheck": "积极",
+  "comp_regex": "积极",
+  "n_sent": 1,
+  "n_neg": 0,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "积极",
+    "start": 7,
+    "end": 8,
+    "score": 0.9809
+   }
+  ],
+  "neg": [],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_plain_17",
+  "set": "control",
+  "text": "心情轻松了不少。",
+  "cue": "轻松",
+  "label": "积极",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "愤怒",
+  "comp": "愤怒",
+  "comp_nocheck": "愤怒",
+  "comp_regex": "愤怒",
+  "n_sent": 1,
+  "n_neg": 2,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "愤怒",
+    "start": 2,
+    "end": 3,
+    "score": 0.467
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 2,
+    "end": 2,
+    "score": 0.9848
+   },
+   {
+    "label": "否定",
+    "start": 5,
+    "end": 5,
+    "score": 0.9998
+   }
+  ],
+  "kept": [
+   5
+  ],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_plain_18",
+  "set": "control",
+  "text": "这个结果令人愉快。",
+  "cue": "愉快",
+  "label": "积极",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "积极",
+  "comp": "积极",
+  "comp_nocheck": "积极",
+  "comp_regex": "积极",
+  "n_sent": 1,
+  "n_neg": 0,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "积极",
+    "start": 6,
+    "end": 7,
+    "score": 0.8999
+   }
+  ],
+  "neg": [],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_plain_19",
+  "set": "control",
+  "text": "我赞成你的看法。",
+  "cue": "赞成",
+  "label": "积极",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": false,
+  "base": "积极",
+  "comp": "积极",
+  "comp_nocheck": "积极",
+  "comp_regex": "积极",
+  "n_sent": 1,
+  "n_neg": 0,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "积极",
+    "start": 2,
+    "end": 6,
+    "score": 0.9606
+   }
+  ],
+  "neg": [],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_plain_20",
+  "set": "control",
+  "text": "孩子笑得很开心。",
+  "cue": "开心",
+  "label": "积极",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "悲伤",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 0,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "悲伤",
+    "start": 5,
+    "end": 6,
+    "score": 0.8189
+   }
+  ],
+  "neg": [],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_plain_21",
+  "set": "control",
+  "text": "这件事太离谱了。",
+  "cue": "离谱",
+  "label": "愤怒",
+  "sanity": true,
+  "recall": true,
+  "recall_strict": true,
+  "base": "悲伤",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "悲伤",
+    "start": 4,
+    "end": 6,
+    "score": 0.3574
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 0,
+    "end": 4,
+    "score": 0.9588
+   }
+  ],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_plain_22",
+  "set": "control",
+  "text": "我对这种敷衍很生气。",
+  "cue": "生气",
+  "label": "愤怒",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "悲伤",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "悲伤",
+    "start": 4,
+    "end": 8,
+    "score": 0.6665
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 0,
+    "end": 0,
+    "score": 0.6141
+   }
+  ],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_plain_23",
+  "set": "control",
+  "text": "他的态度让人恼火。",
+  "cue": "恼火",
+  "label": "愤怒",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "愤怒",
+  "comp": "愤怒",
+  "comp_nocheck": "愤怒",
+  "comp_regex": "愤怒",
+  "n_sent": 1,
+  "n_neg": 0,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "愤怒",
+    "start": 6,
+    "end": 7,
+    "score": 0.9384
+   }
+  ],
+  "neg": [],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_plain_24",
+  "set": "control",
+  "text": "这个产品真是垃圾。",
+  "cue": "垃圾",
+  "label": "愤怒",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "愤怒",
+  "comp": "愤怒",
+  "comp_nocheck": "愤怒",
+  "comp_regex": "愤怒",
+  "n_sent": 1,
+  "n_neg": 0,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "愤怒",
+    "start": 6,
+    "end": 7,
+    "score": 0.8937
+   }
+  ],
+  "neg": [],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_plain_25",
+  "set": "control",
+  "text": "我受够了这种拖延。",
+  "cue": "受够了",
+  "label": "愤怒",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "悲伤",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "悲伤",
+    "start": 1,
+    "end": 3,
+    "score": 0.5339
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 1,
+    "end": 1,
+    "score": 0.981
+   }
+  ],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_plain_26",
+  "set": "control",
+  "text": "这活儿干得真差劲。",
+  "cue": "差劲",
+  "label": "愤怒",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "积极",
+  "comp": "积极",
+  "comp_nocheck": "积极",
+  "comp_regex": "积极",
+  "n_sent": 1,
+  "n_neg": 0,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "积极",
+    "start": 6,
+    "end": 7,
+    "score": 0.6732
+   }
+  ],
+  "neg": [],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_plain_27",
+  "set": "control",
+  "text": "我很反感这种做法。",
+  "cue": "反感",
+  "label": "愤怒",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "愤怒",
+  "comp": "愤怒",
+  "comp_nocheck": "愤怒",
+  "comp_regex": "愤怒",
+  "n_sent": 1,
+  "n_neg": 0,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "愤怒",
+    "start": 2,
+    "end": 3,
+    "score": 0.7382
+   }
+  ],
+  "neg": [],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_plain_28",
+  "set": "control",
+  "text": "简直莫名其妙。",
+  "cue": "莫名其妙",
+  "label": "愤怒",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "悲伤",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "悲伤",
+    "start": 2,
+    "end": 5,
+    "score": 0.4969
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 2,
+    "end": 2,
+    "score": 0.9995
+   }
+  ],
+  "kept": [
+   2
+  ],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_plain_29",
+  "set": "control",
+  "text": "这家店太坑人了。",
+  "cue": "坑人",
+  "label": "愤怒",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "愤怒",
+  "comp": "愤怒",
+  "comp_nocheck": "愤怒",
+  "comp_regex": "愤怒",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "愤怒",
+    "start": 4,
+    "end": 5,
+    "score": 0.7192
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 0,
+    "end": 0,
+    "score": 0.9166
+   }
+  ],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_plain_30",
+  "set": "control",
+  "text": "我很不耐烦。",
+  "cue": "不耐烦",
+  "label": "愤怒",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": false,
+  "base": "愤怒",
+  "comp": "愤怒",
+  "comp_nocheck": "愤怒",
+  "comp_regex": "愤怒",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "愤怒",
+    "start": 4,
+    "end": 4,
+    "score": 0.6859
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 2,
+    "end": 2,
+    "score": 0.999
+   }
+  ],
+  "kept": [
+   2
+  ],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_plain_31",
+  "set": "control",
+  "text": "这种敷衍让人无语。",
+  "cue": "无语",
+  "label": "愤怒",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "悲伤",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "悲伤",
+    "start": 2,
+    "end": 7,
+    "score": 0.6614
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 2,
+    "end": 3,
+    "score": 0.9939
+   }
+  ],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_plain_32",
+  "set": "control",
+  "text": "他的话让我火大。",
+  "cue": "火大",
+  "label": "愤怒",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "愤怒",
+  "comp": "愤怒",
+  "comp_nocheck": "愤怒",
+  "comp_regex": "愤怒",
+  "n_sent": 1,
+  "n_neg": 0,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "愤怒",
+    "start": 5,
+    "end": 6,
+    "score": 0.5088
+   }
+  ],
+  "neg": [],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_plain_33",
+  "set": "control",
+  "text": "我觉得很难过。",
+  "cue": "难过",
+  "label": "悲伤",
+  "sanity": true,
+  "recall": true,
+  "recall_strict": true,
+  "base": "悲伤",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "悲伤",
+    "start": 4,
+    "end": 5,
+    "score": 0.8123
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 0,
+    "end": 0,
+    "score": 0.9048
+   }
+  ],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_plain_34",
+  "set": "control",
+  "text": "这次考试让我很失望。",
+  "cue": "失望",
+  "label": "悲伤",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "悲伤",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 0,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "悲伤",
+    "start": 7,
+    "end": 8,
+    "score": 0.5246
+   }
+  ],
+  "neg": [],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_plain_35",
+  "set": "control",
+  "text": "他心里很委屈。",
+  "cue": "委屈",
+  "label": "悲伤",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "悲伤",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 0,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "悲伤",
+    "start": 4,
+    "end": 5,
+    "score": 0.7924
+   }
+  ],
+  "neg": [],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_plain_36",
+  "set": "control",
+  "text": "最近有点低落。",
+  "cue": "低落",
+  "label": "悲伤",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "悲伤",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "悲伤",
+    "start": 4,
+    "end": 5,
+    "score": 0.5263
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 2,
+    "end": 4,
+    "score": 0.9703
+   }
+  ],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_plain_37",
+  "set": "control",
+  "text": "我感到很沮丧。",
+  "cue": "沮丧",
+  "label": "悲伤",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "悲伤",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 0,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "悲伤",
+    "start": 4,
+    "end": 5,
+    "score": 0.933
+   }
+  ],
+  "neg": [],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_plain_38",
+  "set": "control",
+  "text": "这件事让我很伤心。",
+  "cue": "伤心",
+  "label": "悲伤",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "悲伤",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 0,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "悲伤",
+    "start": 6,
+    "end": 7,
+    "score": 0.8131
+   }
+  ],
+  "neg": [],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_plain_39",
+  "set": "control",
+  "text": "他看起来很孤独。",
+  "cue": "孤独",
+  "label": "悲伤",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "积极",
+  "comp": "积极",
+  "comp_nocheck": "积极",
+  "comp_regex": "积极",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "积极",
+    "start": 5,
+    "end": 6,
+    "score": 0.6164
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 1,
+    "end": 5,
+    "score": 0.9832
+   }
+  ],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_plain_40",
+  "set": "control",
+  "text": "这几天疲惫不堪。",
+  "cue": "疲惫",
+  "label": "悲伤",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "愤怒",
+  "comp": "愤怒",
+  "comp_nocheck": "愤怒",
+  "comp_regex": "愤怒",
+  "n_sent": 1,
+  "n_neg": 2,
+  "n_kept": 2,
+  "sent": [
+   {
+    "label": "愤怒",
+    "start": 3,
+    "end": 4,
+    "score": 0.8729
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 3,
+    "end": 5,
+    "score": 0.9993
+   },
+   {
+    "label": "否定",
+    "start": 5,
+    "end": 5,
+    "score": 0.9998
+   }
+  ],
+  "kept": [
+   3,
+   5
+  ],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_plain_41",
+  "set": "control",
+  "text": "想起这件事就心酸。",
+  "cue": "心酸",
+  "label": "悲伤",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "悲伤",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 0,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "悲伤",
+    "start": 6,
+    "end": 7,
+    "score": 0.6877
+   }
+  ],
+  "neg": [],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_plain_42",
+  "set": "control",
+  "text": "我有点担心明天的会议。",
+  "cue": "担心",
+  "label": "悲伤",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "悲伤",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 0,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "悲伤",
+    "start": 3,
+    "end": 4,
+    "score": 0.6967
+   }
+  ],
+  "neg": [],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_plain_43",
+  "set": "control",
+  "text": "这个消息让我很绝望。",
+  "cue": "绝望",
+  "label": "悲伤",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "积极",
+  "comp": "积极",
+  "comp_nocheck": "积极",
+  "comp_regex": "积极",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "积极",
+    "start": 7,
+    "end": 8,
+    "score": 0.6499
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 0,
+    "end": 0,
+    "score": 0.5242
+   }
+  ],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_plain_44",
+  "set": "control",
+  "text": "心里堵得慌。",
+  "cue": "堵得慌",
+  "label": "悲伤",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "悲伤",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 0,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "悲伤",
+    "start": 2,
+    "end": 4,
+    "score": 0.9606
+   }
+  ],
+  "neg": [],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_neg_01",
+  "set": "control",
+  "text": "他不来了，但我很开心。",
+  "cue": "开心",
+  "label": "积极",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "悲伤",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "悲伤",
+    "start": 8,
+    "end": 9,
+    "score": 0.4698
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 1,
+    "end": 1,
+    "score": 0.9964
+   }
+  ],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_neg_02",
+  "set": "control",
+  "text": "我不在乎这些细节，反正我很满意。",
+  "cue": "满意",
+  "label": "积极",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "积极",
+  "comp": "积极",
+  "comp_nocheck": "积极",
+  "comp_regex": "积极",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "积极",
+    "start": 13,
+    "end": 14,
+    "score": 0.5562
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 1,
+    "end": 1,
+    "score": 0.9967
+   }
+  ],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_neg_03",
+  "set": "control",
+  "text": "这个方案不难，我很喜欢。",
+  "cue": "喜欢",
+  "label": "积极",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "愤怒",
+  "comp": "愤怒",
+  "comp_nocheck": "愤怒",
+  "comp_regex": "愤怒",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "愤怒",
+    "start": 9,
+    "end": 10,
+    "score": 0.6983
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 4,
+    "end": 4,
+    "score": 0.9991
+   }
+  ],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_neg_04",
+  "set": "control",
+  "text": "别着急，我很满意这个结果。",
+  "cue": "满意",
+  "label": "积极",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "积极",
+  "comp": "积极",
+  "comp_nocheck": "积极",
+  "comp_regex": "积极",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "积极",
+    "start": 6,
+    "end": 7,
+    "score": 0.4549
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 0,
+    "end": 0,
+    "score": 0.9923
+   }
+  ],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_neg_05",
+  "set": "control",
+  "text": "未免太好了，我很满意。",
+  "cue": "满意",
+  "label": "积极",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "积极",
+  "comp": "积极",
+  "comp_nocheck": "积极",
+  "comp_regex": "积极",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "积极",
+    "start": 8,
+    "end": 9,
+    "score": 0.7237
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 0,
+    "end": 0,
+    "score": 0.9968
+   }
+  ],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_neg_06",
+  "set": "control",
+  "text": "他没来，我们照样很开心。",
+  "cue": "开心",
+  "label": "积极",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "积极",
+  "comp": "积极",
+  "comp_nocheck": "积极",
+  "comp_regex": "积极",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "积极",
+    "start": 9,
+    "end": 10,
+    "score": 0.4846
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 1,
+    "end": 1,
+    "score": 0.9943
+   }
+  ],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_neg_07",
+  "set": "control",
+  "text": "我不确定明天的安排，不过我很满意。",
+  "cue": "满意",
+  "label": "积极",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "悲伤",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "悲伤",
+    "start": 10,
+    "end": 15,
+    "score": 0.7425
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 1,
+    "end": 1,
+    "score": 0.9974
+   }
+  ],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_neg_08",
+  "set": "control",
+  "text": "这道题不难，答案真棒。",
+  "cue": "真棒",
+  "label": "积极",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "愤怒",
+  "comp": "愤怒",
+  "comp_nocheck": "愤怒",
+  "comp_regex": "愤怒",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "愤怒",
+    "start": 8,
+    "end": 9,
+    "score": 0.517
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 3,
+    "end": 3,
+    "score": 0.9986
+   }
+  ],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_neg_09",
+  "set": "control",
+  "text": "我不管别人怎么想，反正我很生气。",
+  "cue": "生气",
+  "label": "愤怒",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "愤怒",
+  "comp": "愤怒",
+  "comp_nocheck": "愤怒",
+  "comp_regex": "愤怒",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "愤怒",
+    "start": 13,
+    "end": 14,
+    "score": 0.7501
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 1,
+    "end": 3,
+    "score": 0.9994
+   }
+  ],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_neg_10",
+  "set": "control",
+  "text": "这件事没有回旋余地，真让人恼火。",
+  "cue": "恼火",
+  "label": "愤怒",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "愤怒",
+  "comp": "愤怒",
+  "comp_nocheck": "愤怒",
+  "comp_regex": "愤怒",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "愤怒",
+    "start": 13,
+    "end": 14,
+    "score": 0.9477
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 3,
+    "end": 4,
+    "score": 0.9986
+   }
+  ],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_neg_11",
+  "set": "control",
+  "text": "别说了，我很难过。",
+  "cue": "难过",
+  "label": "悲伤",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "悲伤",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "悲伤",
+    "start": 6,
+    "end": 7,
+    "score": 0.7032
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 0,
+    "end": 0,
+    "score": 0.9978
+   }
+  ],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_neg_12",
+  "set": "control",
+  "text": "他没有道歉，我非常失望。",
+  "cue": "失望",
+  "label": "悲伤",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "悲伤",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "悲伤",
+    "start": 9,
+    "end": 10,
+    "score": 0.7362
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 1,
+    "end": 2,
+    "score": 0.9986
+   }
+  ],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "ctrl_neg_13",
+  "set": "control",
+  "text": "我不怪你，只是有点伤心。",
+  "cue": "伤心",
+  "label": "悲伤",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "悲伤",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "悲伤",
+    "start": 9,
+    "end": 10,
+    "score": 0.7956
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 1,
+    "end": 1,
+    "score": 0.9923
+   }
+  ],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "stress_01",
+  "set": "stress",
+  "text": "不愧是让人开心的一天。",
+  "cue": "开心",
+  "label": "积极",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "积极",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "积极",
+    "start": 5,
+    "end": 6,
+    "score": 0.473
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 0,
+    "end": 0,
+    "score": 0.9952
+   }
+  ],
+  "kept": [
+   0
+  ],
+  "flipped": [
+   [
+    5,
+    6,
+    "悲伤"
+   ]
+  ]
+ },
+ {
+  "id": "stress_02",
+  "set": "stress",
+  "text": "这点困难不算什么，我很开心。",
+  "cue": "开心",
+  "label": "积极",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "悲伤",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "悲伤",
+    "start": 11,
+    "end": 12,
+    "score": 0.8009
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 4,
+    "end": 4,
+    "score": 0.9972
+   }
+  ],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "stress_03",
+  "set": "stress",
+  "text": "不是吧，这也太高兴了。",
+  "cue": "高兴",
+  "label": "积极",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "愤怒",
+  "comp": "愤怒",
+  "comp_nocheck": "愤怒",
+  "comp_regex": "愤怒",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "愤怒",
+    "start": 6,
+    "end": 9,
+    "score": 0.4733
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 0,
+    "end": 0,
+    "score": 0.9964
+   }
+  ],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "stress_04",
+  "set": "stress",
+  "text": "别提我多高兴了。",
+  "cue": "高兴",
+  "label": "积极",
+  "sanity": true,
+  "recall": true,
+  "recall_strict": true,
+  "base": "悲伤",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "悲伤",
+    "start": 4,
+    "end": 5,
+    "score": 0.8452
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 0,
+    "end": 0,
+    "score": 0.994
+   }
+  ],
+  "kept": [
+   0
+  ],
+  "flipped": []
+ },
+ {
+  "id": "stress_05",
+  "set": "stress",
+  "text": "我没别的意思，就是很高兴。",
+  "cue": "高兴",
+  "label": "积极",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "悲伤",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "悲伤",
+    "start": 10,
+    "end": 11,
+    "score": 0.465
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 1,
+    "end": 2,
+    "score": 0.9989
+   }
+  ],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "stress_06",
+  "set": "stress",
+  "text": "不要紧，我很开心。",
+  "cue": "开心",
+  "label": "积极",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "悲伤",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "悲伤",
+    "start": 6,
+    "end": 7,
+    "score": 0.7017
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 0,
+    "end": 1,
+    "score": 0.9966
+   }
+  ],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "stress_07",
+  "set": "stress",
+  "text": "未必不好，我很满意。",
+  "cue": "满意",
+  "label": "积极",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "积极",
+  "comp": "积极",
+  "comp_nocheck": "积极",
+  "comp_regex": "积极",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 0,
+  "sent": [
+   {
+    "label": "积极",
+    "start": 7,
+    "end": 8,
+    "score": 0.4853
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 2,
+    "end": 2,
+    "score": 0.9993
+   }
+  ],
+  "kept": [],
+  "flipped": []
+ },
+ {
+  "id": "stress_08",
+  "set": "stress",
+  "text": "没什么可抱怨的，我很满意。",
+  "cue": "满意",
+  "label": "积极",
+  "sanity": false,
+  "recall": false,
+  "recall_strict": false,
+  "base": "悲伤",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "悲伤",
+    "start": 4,
+    "end": 5,
+    "score": 0.4546
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 0,
+    "end": 0,
+    "score": 0.9966
+   }
+  ],
+  "kept": [
+   0
+  ],
+  "flipped": []
+ },
+ {
+  "id": "stress_09",
+  "set": "stress",
+  "text": "这点小事不足为奇，我很满意。",
+  "cue": "满意",
+  "label": "积极",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "悲伤",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 1,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "悲伤",
+    "start": 4,
+    "end": 12,
+    "score": 0.5485
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 4,
+    "end": 4,
+    "score": 0.9972
+   }
+  ],
+  "kept": [
+   4
+  ],
+  "flipped": []
+ },
+ {
+  "id": "stress_10",
+  "set": "stress",
+  "text": "不是我说，这电影真不错。",
+  "cue": "不错",
+  "label": "积极",
+  "sanity": false,
+  "recall": true,
+  "recall_strict": true,
+  "base": "悲伤",
+  "comp": "悲伤",
+  "comp_nocheck": "悲伤",
+  "comp_regex": "悲伤",
+  "n_sent": 1,
+  "n_neg": 2,
+  "n_kept": 1,
+  "sent": [
+   {
+    "label": "悲伤",
+    "start": 9,
+    "end": 10,
+    "score": 0.4905
+   }
+  ],
+  "neg": [
+   {
+    "label": "否定",
+    "start": 0,
+    "end": 0,
+    "score": 0.9973
+   },
+   {
+    "label": "否定",
+    "start": 9,
+    "end": 9,
+    "score": 1.0
+   }
+  ],
+  "kept": [
+   9
+  ],
+  "flipped": []
+ }
+]

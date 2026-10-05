@@ -13,9 +13,22 @@ dependencies = [
     "pytest>=9.1.1",
     "ruff>=0.16.9",
     "scipy>=1.18.1",
-    "torch>=2.14.0",
+    "torch==2.9.1+rocm6.4",
+    "pytorch-triton-rocm==3.5.1 ; sys_platform == 'linux'",
     "transformers>=5.17.0",
 ]
+
+# AMD ROCm 源（备用）：torch 官方 ROCm wheel 源。本机网络下载大文件不稳定，
+# 所以 torch/pytorch-triton-rocm 在本机通过 gitignore 的 uv.toml（find-links）指向
+# 本地 wheel 目录；换机器时删掉 uv.toml，把 dependencies 的版本改回无 +rocm6.4 后缀，
+# 或用下方 index 从官方源安装。
+# RX 6600 / gfx1032 需配合 HSA_OVERRIDE_GFX_VERSION=10.3.0 使用；
+# ROCm 7.x 已移除 RDNA2 支持，绝不要升级到 rocm7。
+[[tool.uv.index]]
+name = "pytorch-rocm"
+url = "https://download.pytorch.org/whl/rocm6.4"
+explicit = true
+
 
 [project.scripts]
 dtseek = "dtseek:main"

@@ -1,0 +1,248 @@
+{
+  "runs": {
+    "base_seed42": {
+      "card": "person",
+      "seed": 42,
+      "ndb": false,
+      "ndb_read": null,
+      "epochs": 8,
+      "steps_per_epoch": 150,
+      "num_layers": 2,
+      "batch_size": 64,
+      "metrics": {
+        "cls_acc": 1.0,
+        "span_hit": 1.0,
+        "bg_fp": 0.0,
+        "n_cls": 620,
+        "n_bg": 280,
+        "exact_match": 0.3233333333333333,
+        "slice_precision": 0.5578553124383994,
+        "slice_recall": 0.5827841845140033,
+        "id_acc": 0.6974541148608644,
+        "first_mention_acc": 0.8670520231213873,
+        "repeat_mention_acc": 0.3596102745792737,
+        "cluster_f1": 0.3520813473149031,
+        "n_measurable": 3378
+      },
+      "n_head_params": 631306,
+      "n_ndb_params": 0,
+      "train_sec": 130.85144385999956,
+      "n_steps": 1200,
+      "sec_per_step": 0.10904286988333296,
+      "peak_mem_mb": 867.66943359375,
+      "ndb_stats": {},
+      "ndb_table_gb": 0.0
+    },
+    "base_seed43": {
+      "card": "person",
+      "seed": 43,
+      "ndb": false,
+      "ndb_read": null,
+      "epochs": 8,
+      "steps_per_epoch": 150,
+      "num_layers": 2,
+      "batch_size": 64,
+      "metrics": {
+        "cls_acc": 1.0,
+        "span_hit": 1.0,
+        "bg_fp": 0.0,
+        "n_cls": 636,
+        "n_bg": 264,
+        "exact_match": 0.2966666666666667,
+        "slice_precision": 0.5824376394240519,
+        "slice_recall": 0.583739837398374,
+        "id_acc": 0.7296965982224947,
+        "first_mention_acc": 0.8836797877045555,
+        "repeat_mention_acc": 0.38223552894211577,
+        "cluster_f1": 0.3803230543318649,
+        "n_measurable": 3263
+      },
+      "n_head_params": 631306,
+      "n_ndb_params": 0,
+      "train_sec": 130.64572959600082,
+      "n_steps": 1200,
+      "sec_per_step": 0.10887144133000068,
+      "peak_mem_mb": 867.66943359375,
+      "ndb_stats": {},
+      "ndb_table_gb": 0.0
+    },
+    "ndb_seed42": {
+      "card": "person",
+      "seed": 42,
+      "ndb": true,
+      "ndb_read": "true",
+      "epochs": 8,
+      "steps_per_epoch": 150,
+      "num_layers": 2,
+      "batch_size": 64,
+      "metrics": {
+        "cls_acc": 1.0,
+        "span_hit": 1.0,
+        "bg_fp": 0.0,
+        "n_cls": 620,
+        "n_bg": 280,
+        "exact_match": 0.32222222222222224,
+        "slice_precision": 0.8276422764227642,
+        "slice_recall": 0.6289126853377265,
+        "id_acc": 0.9408502772643254,
+        "first_mention_acc": 0.990578734858681,
+        "repeat_mention_acc": 0.831858407079646,
+        "cluster_f1": 0.7907330041777441,
+        "n_measurable": 3246
+      },
+      "n_head_params": 631306,
+      "n_ndb_params": 264,
+      "train_sec": 147.89431764800065,
+      "n_steps": 1200,
+      "sec_per_step": 0.1232452647066672,
+      "peak_mem_mb": 899.32861328125,
+      "ndb_stats": {
+        "n_written": 432720,
+        "table_gb": 0.00164794921875,
+        "batch": 4,
+        "last_gate": 0.7394477128982544,
+        "last_covered": 0.75,
+        "alpha": [
+          0.519305944442749,
+          0.4806940257549286
+        ],
+        "write_gate_bias": 0.9649375677108765,
+        "read_gate_bias": -1.9271249771118164,
+        "retrieval_top1_hit": NaN,
+        "retrieval_covered": NaN,
+        "n_retrieval": 0
+      },
+      "ndb_table_gb": 0.0263671875
+    },
+    "ndb_seed43": {
+      "card": "person",
+      "seed": 43,
+      "ndb": true,
+      "ndb_read": "true",
+      "epochs": 8,
+      "steps_per_epoch": 150,
+      "num_layers": 2,
+      "batch_size": 64,
+      "metrics": {
+        "cls_acc": 1.0,
+        "span_hit": 1.0,
+        "bg_fp": 0.0,
+        "n_cls": 636,
+        "n_bg": 264,
+        "exact_match": 0.3022222222222222,
+        "slice_precision": 0.835731101229401,
+        "slice_recall": 0.649390243902439,
+        "id_acc": 0.9347571679344646,
+        "first_mention_acc": 0.996914940502424,
+        "repeat_mention_acc": 0.8120104438642297,
+        "cluster_f1": 0.7705862419518807,
+        "n_measurable": 3418
+      },
+      "n_head_params": 631306,
+      "n_ndb_params": 264,
+      "train_sec": 147.80675234599948,
+      "n_steps": 1200,
+      "sec_per_step": 0.12317229362166623,
+      "peak_mem_mb": 899.32861328125,
+      "ndb_stats": {
+        "n_written": 432528,
+        "table_gb": 0.00164794921875,
+        "batch": 4,
+        "last_gate": 0.49000751972198486,
+        "last_covered": 0.5,
+        "alpha": [
+          0.5163460373878479,
+          0.4836539626121521
+        ],
+        "write_gate_bias": 1.0339680910110474,
+        "read_gate_bias": -1.9341920614242554,
+        "retrieval_top1_hit": NaN,
+        "retrieval_covered": NaN,
+        "n_retrieval": 0
+      },
+      "ndb_table_gb": 0.0263671875
+    }
+  },
+  "deltas": {
+    "repeat_mention_acc": [
+      0.4722481325003723,
+      0.42977491492211395
+    ],
+    "first_mention_acc": [
+      0.12352671173729368,
+      0.11323515279786855
+    ],
+    "cluster_f1": [
+      0.43865165686284097,
+      0.39026318762001583
+    ],
+    "exact_match": [
+      -0.0011111111111110628,
+      0.005555555555555536
+    ],
+    "id_acc": [
+      0.24339616240346096,
+      0.20506056971196995
+    ],
+    "cls_acc": [
+      0.0,
+      0.0
+    ],
+    "span_hit": [
+      0.0,
+      0.0
+    ],
+    "bg_fp": [
+      0.0,
+      0.0
+    ],
+    "n_measurable": [
+      -132,
+      155
+    ]
+  },
+  "cost": {
+    "base": {
+      "train_sec": [
+        130.85144385999956,
+        130.64572959600082
+      ],
+      "sec_per_step": [
+        0.10904286988333296,
+        0.10887144133000068
+      ],
+      "peak_mem_mb": [
+        867.66943359375,
+        867.66943359375
+      ],
+      "n_head_params": 631306,
+      "n_ndb_params": 0,
+      "ndb_table_gb": 0.0
+    },
+    "ndb": {
+      "train_sec": [
+        147.89431764800065,
+        147.80675234599948
+      ],
+      "sec_per_step": [
+        0.1232452647066672,
+        0.12317229362166623
+      ],
+      "peak_mem_mb": [
+        899.32861328125,
+        899.32861328125
+      ],
+      "n_head_params": 631306,
+      "n_ndb_params": 264,
+      "ndb_table_gb": 0.0263671875
+    }
+  },
+  "delta_sec_per_step": [
+    0.014202394823334241,
+    0.014300852291665556
+  ],
+  "delta_peak_mem_mb": [
+    31.6591796875,
+    31.6591796875
+  ]
+}
