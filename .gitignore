@@ -39,3 +39,6 @@ release/
 experiments/**/person_val_seed*.json
 experiments/**/cache/
 *.pkl
+
+# GPU 崩溃转储（ROCm 并发争用时会掉在仓库根，单个 ~160MB）
+gpucore.*

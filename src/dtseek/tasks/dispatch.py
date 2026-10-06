@@ -21,9 +21,13 @@ dev-notes/16 §2.0–§2.1 的形式化在这里落地，分工严格照抄那�
 两条 fail-closed 硬要求（dev-notes/16 §2.1），破坏任意一条都是 bug：
   1. 信息位对应的卡不在 `plugin.all_tasks()` 里 ⇒ 该状态**拒答**，
      不许静默跳过这个信息位；
-  2. 任何"读不到 / 判不动"（type 不认识、info 位数不对、conf/steps 越界、
-     注册表读不出来、source_span 结构非法）都通向**拒答**，
+  2. 任何"读不到 / 判不动"（type 不认识、info 位数不对、位种类未声明/取值未知、
+     conf/steps 越界、注册表读不出来、source_span 结构非法）都通向**拒答**，
      不许落到默认值上 —— 抛异常也不行，那只是把 fail-closed 换成 fail-crash。
+
+§3.1 规格订正（位种类 `bit_kinds`）：`required` = 「必须被**判定**过」，不是"必须为有"；
+`无` 对抽取类是缺信息（拒答）、对检测类是**判否**（有效结论 ⇒ 继续）；
+「调用失败」不进状态机，在对话层的调用出口 fail-closed 拒答。
 
 用法::
 
@@ -40,12 +44,15 @@ from enum import Enum
 from itertools import product
 
 __all__ = [
+    "BIT_KINDS",
     "CONF_LABELS",
     "CONF_RANK",
     "GENERATE",
     "INFO_BITS",
     "INFO_LABELS",
     "INPUT_TYPES",
+    "KIND_DETECT",
+    "KIND_EXTRACT",
     "MAX_STEPS",
     "NUM_INFO_BITS",
     "POINTER",
@@ -104,7 +111,8 @@ class InfoState(Enum):
 
     UNCHECKED = "unchecked"   # 未查：这张卡还没调过
     HAVE = "have"             # 有：调过、产出了切片、最高置信度 ≥ 该卡阈值
-    ABSENT = "absent"         # 无：调过但没产出 —— 缺必需信息，通向拒答
+    ABSENT = "absent"         # 无：调过但没产出 —— 含义按位种类（BIT_KINDS）分岔：
+                              #   抽取类 = 缺信息 ⇒ 拒答；检测类 = 判否（有效结论）⇒ 继续
 
 
 INFO_LABELS = {InfoState.UNCHECKED: "未查", InfoState.HAVE: "有", InfoState.ABSENT: "无"}
@@ -171,20 +179,45 @@ REQUIRED_BITS: Mapping[str, tuple[str, ...]] = {
     UNKNOWN_TYPE: (),
 }
 
+#: 位的**种类**（dev-notes/16 §3.1 规格订正）—— `无` 这个值对两类含义完全不同：
+#:
+#: | 种类 | `无` 的含义 | 规则 |
+#: |---|---|---|
+#: | 抽取类（时间/地点/对象/人物） | 该信息确实不存在 | `无` ⇒ 拒答（缺必需信息） |
+#: | 检测类（否定/情绪/安全） | **判否**，是有效结论 | `无` ⇒ 继续（记「否」并推进） |
+#:
+#: 取值域就是这两个常量；未声明 / 取值未知 ⇒ `signals_problems()` 判不动 ⇒ 拒答（fail-closed）。
+#: 默认表给 `INFO_BITS` 全部标 `extract`（time/place/object/intent 本来就全是抽取类）
+#: ⇒ 默认规则行为一字不变；对话层注入自己的那张（`dialogue.DIALOGUE_BIT_KINDS`）。
+KIND_EXTRACT = "extract"
+KIND_DETECT = "detect"
+BIT_KINDS: Mapping[str, str] = {bit.key: KIND_EXTRACT for bit in INFO_BITS}
+
 #: 状态空间上界：5 类 type × 3⁴ 位 × 3 档 conf × 4 档 steps = 4860。
+#: 位仍是**三态**：§3.1 的第 4 态「调用失败」不进状态机 —— 它在规则表里没有出边
+#: （唯一出口就是拒答），所以在对话层的**调用出口**实现（fail-closed），观测等价且 |S| 不变。
 STATE_SPACE_SIZE = (
     len(INPUT_TYPES) * (len(InfoState) ** NUM_INFO_BITS) * len(Conf) * len(STEPS_VALUES)
 )
 
 
-def required_bit_indices(type_: str) -> tuple[int, ...]:
-    """该 type 的必需位在 `INFO_BITS` 里的下标，**按位序**（升序）；声明表里没有的 type ⇒ 空元组。
+def required_bit_indices(
+    type_: str,
+    *,
+    info_bits: tuple[InfoBit, ...] = INFO_BITS,
+    required_bits: Mapping[str, tuple[str, ...]] = REQUIRED_BITS,
+) -> tuple[int, ...]:
+    """该 type 的必需位在 `info_bits` 里的下标，**按位序**（升序）；声明表里没有的 type ⇒ 空元组。
 
-    声明表与 `INPUT_TYPES`/`INFO_BITS` 对不齐由 `signals_problems()` 判成"判不动"
+    声明表与 `INPUT_TYPES`/`info_bits` 对不齐由 `signals_problems()` 判成"判不动"
     ⇒ 拒答，不会静默漏掉一个必需位。按位序保证同一状态下授权集的行序固定（确定性）。
+
+    `info_bits` / `required_bits` 默认即模块级 `INFO_BITS` / `REQUIRED_BITS`（默认行为
+    一字不变）；对话层注入自己那张映射到现有卡的位表（dev-notes/16 §3 四段之第 2 段）。
     """
-    keys = REQUIRED_BITS.get(type_, ())
-    return tuple(sorted(BIT_INDEX[key] for key in keys if key in BIT_INDEX))
+    keys = required_bits.get(type_, ())
+    index = {bit.key: i for i, bit in enumerate(info_bits)}
+    return tuple(sorted(index[key] for key in keys if key in index))
 
 
 #: 注册表**读取失败**时写进表里的哨兵键：让"读不到"在拒答原因里露头，
@@ -214,13 +247,16 @@ class Signals:
         return f"type={self.type} info=[{info}] conf={conf} steps={self.steps}"
 
 
-def initial_states() -> tuple[Signals, ...]:
-    """每个可声明 type 一个起点：四位全"未查"、steps=MAX_STEPS、conf=LOW。
+def initial_states(*, info_bits: tuple[InfoBit, ...] = INFO_BITS) -> tuple[Signals, ...]:
+    """每个可声明 type 一个起点：各位全"未查"、steps=MAX_STEPS、conf=LOW。
 
     conf 初值 = `LOW`（§2.2 D4）：初态没有"最近一次调用"可读，取最保守档；
     它只会把终点从生成降级到指针，绝不把拒答变成放行。
+
+    `info_bits` 决定位的个数（默认 `INFO_BITS` ⇒ 4 位，`NUM_INFO_BITS`）——
+    注入别的位表时起点随它变长；默认行为一字不变。
     """
-    info = (InfoState.UNCHECKED,) * NUM_INFO_BITS
+    info = (InfoState.UNCHECKED,) * len(info_bits)
     return tuple(Signals(t, info, Conf.LOW, MAX_STEPS) for t in INPUT_TYPES)
 
 
@@ -377,12 +413,18 @@ def resolve_registry(registry: Registry | None = None) -> Registry:
     return load_default_registry() if registry is None else registry
 
 
-def registry_problems(registry: Registry) -> list[str]:
-    """注册表侧的判不动项：读取失败哨兵 + 每个信息位的卡是否在册。空列表 = 都在册。"""
+def registry_problems(
+    registry: Registry, *, info_bits: tuple[InfoBit, ...] = INFO_BITS
+) -> list[str]:
+    """注册表侧的判不动项：读取失败哨兵 + 每个信息位的卡是否在册。空列表 = 都在册。
+
+    查哪些位由 `info_bits` 决定（默认 `INFO_BITS`，一字不变）；对话层注入的位表
+    映射到**现有卡**，这里因此查的是那张表声明的卡。
+    """
     bad: list[str] = []
     if REGISTRY_ERROR_KEY in registry:
         bad.append(f"注册表读取失败：{registry[REGISTRY_ERROR_KEY]}")
-    for bit in INFO_BITS:
+    for bit in info_bits:
         if bit.card not in registry:
             bad.append(f"信息位 {bit.key}({bit.label}) 的卡 {bit.card!r} 未注册")
     return bad
@@ -390,21 +432,45 @@ def registry_problems(registry: Registry) -> list[str]:
 
 # ---- 信号校验（fail-closed 的入口） ------------------------------------------
 
-def signals_problems(signals: Signals) -> list[str]:
-    """信号结构的判不动项（纯结构，不看注册表）。空列表 = 读得到、判得动。"""
+def signals_problems(
+    signals: Signals,
+    *,
+    info_bits: tuple[InfoBit, ...] = INFO_BITS,
+    required_bits: Mapping[str, tuple[str, ...]] = REQUIRED_BITS,
+    bit_kinds: Mapping[str, str] = BIT_KINDS,
+) -> list[str]:
+    """信号结构的判不动项（纯结构，不看注册表）。空列表 = 读得到、判得动。
+
+    `info_bits` / `required_bits` / `bit_kinds` 默认即模块级表（默认行为一字不变）；对齐检查
+    （必需位声明 vs 位表、位种类声明 vs 位表、info 位数）都按**传入的那张表**判 ——
+    表对不齐 ⇒ 判不动 ⇒ 拒答。§3.1：位种类（抽取/检测）决定 `无` 的语义，
+    没声明种类的位等于"判不动它是什么"，必须 fail-closed 而不是默认当抽取类。
+    """
     if not isinstance(signals, Signals):
         return [f"signals 不是 Signals：{type(signals).__name__}"]
     bad: list[str] = []
     if signals.type not in INPUT_TYPES:
         bad.append(f"type={signals.type!r} 不在 {INPUT_TYPES}")
     else:
-        declared = REQUIRED_BITS.get(signals.type, ())
-        if len(required_bit_indices(signals.type)) != len(declared):
+        declared = required_bits.get(signals.type, ())
+        checked = required_bit_indices(
+            signals.type, info_bits=info_bits, required_bits=required_bits
+        )
+        if len(checked) != len(declared):
             bad.append(f"REQUIRED_BITS[{signals.type!r}] 声明了不存在的信息位：{declared}")
+    for bit in info_bits:
+        kind = bit_kinds.get(bit.key)
+        if kind is None:
+            bad.append(f"信息位 {bit.key}({bit.label}) 没有声明种类：判不动")
+        elif kind not in (KIND_EXTRACT, KIND_DETECT):
+            bad.append(
+                f"信息位 {bit.key}({bit.label}) 的种类 {kind!r} 不在 "
+                f"{{{KIND_EXTRACT!r}, {KIND_DETECT!r}}}：判不动"
+            )
     if not isinstance(signals.info, tuple):
         bad.append(f"info={signals.info!r} 不是 tuple（不可哈希 ⇒ 进不了可达集）")
-    elif len(signals.info) != NUM_INFO_BITS:
-        bad.append(f"info 位数={len(signals.info)}，必须 {NUM_INFO_BITS}")
+    elif len(signals.info) != len(info_bits):
+        bad.append(f"info 位数={len(signals.info)}，必须 {len(info_bits)}")
     else:
         bad += [
             f"info[{i}]={v!r} 不是 InfoState"
@@ -422,14 +488,30 @@ def signals_problems(signals: Signals) -> list[str]:
     return bad
 
 
-def dispatch_problems(signals: Signals, registry: Registry) -> list[str]:
+def dispatch_problems(
+    signals: Signals,
+    registry: Registry,
+    *,
+    info_bits: tuple[InfoBit, ...] = INFO_BITS,
+    required_bits: Mapping[str, tuple[str, ...]] = REQUIRED_BITS,
+    bit_kinds: Mapping[str, str] = BIT_KINDS,
+) -> list[str]:
     """一次决策的全部判不动项：信号结构 + 注册表。任一非空 ⇒ 拒答。"""
-    return signals_problems(signals) + registry_problems(registry)
+    return signals_problems(
+        signals, info_bits=info_bits, required_bits=required_bits, bit_kinds=bit_kinds
+    ) + registry_problems(registry, info_bits=info_bits)
 
 
 # ---- 规则策略 π（dev-notes/16 §2.1 那张表，逐行照抄） ------------------------
 
-def _authorized(signals: Signals, registry: Registry) -> tuple[Action, ...]:
+def _authorized(
+    signals: Signals,
+    registry: Registry,
+    *,
+    info_bits: tuple[InfoBit, ...] = INFO_BITS,
+    required_bits: Mapping[str, tuple[str, ...]] = REQUIRED_BITS,
+    bit_kinds: Mapping[str, str] = BIT_KINDS,
+) -> tuple[Action, ...]:
     """规则表 if-else 链：返回**第一个命中行**授权的动作集合（永不为空）。
 
     **规格要求（dev-notes/16 §2.1 + §2.2 D2），不是实现细节**：
@@ -441,79 +523,145 @@ def _authorized(signals: Signals, registry: Registry) -> tuple[Action, ...]:
     行序（§2.2 D3：**缺位先拒答** —— 缺位意味着必需信息已确定拿不到，
     继续调别的卡无意义，拒答要早）：
 
-      R0  信号读不到/判不动                ⇒ 拒答
+      R0  信号读不到/判不动（含位种类未声明） ⇒ 拒答
       R1  type == unknown                  ⇒ 拒答（类型不确定不许猜）
       Rg  映射声明的卡未注册                ⇒ 拒答（fail-closed，与注册表总数无关）
-      R2  存在"无"位                        ⇒ 拒答（缺必需信息）——先于 R3
+      R2  存在**抽取类**"无"位               ⇒ 拒答（缺必需信息）——先于 R3
       R3  存在"未查"必需位且 steps > 0       ⇒ 调该位对应的卡
-      R4  全部必需位"有"且 conf ≥ 中         ⇒ 生成输出
-      R5  全部必需位"有"且 conf == 低        ⇒ 降级为指针输出
+      R4  必需位**全部判定过**且 conf ≥ 中    ⇒ 生成输出
+      R5  必需位**全部判定过**且 conf == 低   ⇒ 降级为指针输出
       R6  steps == 0 且未完成               ⇒ 拒答（不许无限调用）
+
+    §3.1 的两条订正（位种类表 `bit_kinds`，默认全 `extract` ⇒ 行为一字不变）：
+
+    1. **`required` 的语义 = 「必须被判定过」**，不是"必须为 `有`"：`未查` ⇒ R3 去调卡；
+       抽取类位的 `无` 已在 R2 拒答（信息确实不存在），所以走到 R4/R5 时抽取位只可能是
+       `有`；**检测类位的 `无` = 判否，是有效结论** ⇒ 算"判定过"，参与 R4/R5 而不是拒答。
+    2. **「读不到 / 调用失败」与上面两种分开**：位种类没声明属于"判不动" ⇒ R0 拒答；
+       真实调用失败不进状态机（它在规则表里唯一出口就是拒答），由对话层在**调用出口**
+       fail-closed 拒答 —— 与"判否"走的是完全不同的两条路。
 
     必需位按 type 声明（§2.2 D5，表在 `REQUIRED_BITS`）：plain=intent、
     cloze=object、candidates=intent+object、multi_turn=四位全要、unknown=无（走 R1）。
-    非必需位不驱动规则；R2 看全部 4 位，与"只看必需位"在可达集上等价 ——
+    非必需位不驱动规则；R2 看全部位，与"只看必需位"在可达集上等价 ——
     非必需位与必需位共卡（D6），没有调用就永远停在"未查"，不会单独变"无"。
 
-    R6 是兜底行。推导：走到 R3 之后已无"无"位（R2 挡过）且 type 已知、卡都在册；
-    若必需位无"未查"则全为"有" ⇒ R4/R5；否则 R3 没命中只能是 steps==0 ⇒ R6。
+    R6 是兜底行。推导：走到 R3 之后已无"抽取类无"位（R2 挡过）且 type 已知、卡都在册；
+    若必需位无"未查"则必需位全部判定过 ⇒ R4/R5；否则 R3 没命中只能是 steps==0 ⇒ R6。
     所以规则表自身完备 —— 没有哪个状态会落进空分支。
+
+    `info_bits` / `required_bits` / `bit_kinds` 默认即模块级表（默认行为一字不变）；
+    对话层注入映射到现有卡的位表时，**行序与门禁一字不改**，只换数据。
     """
-    problems = signals_problems(signals)
+    problems = signals_problems(
+        signals, info_bits=info_bits, required_bits=required_bits, bit_kinds=bit_kinds
+    )
     if problems:
         return (Terminate(REJECT, "信号读不到/判不动：" + "；".join(problems)),)
     if signals.type == UNKNOWN_TYPE:
         return (Terminate(REJECT, "type=unknown：类型不确定不许猜"),)
-    reg_problems = registry_problems(registry)
+    reg_problems = registry_problems(registry, info_bits=info_bits)
     if reg_problems:
         return (Terminate(REJECT, "fail-closed（不许静默跳过信息位）：" + "；".join(reg_problems)),)
 
-    # R2（§2.2 D3：缺位先拒答，先于"调卡"）
-    if any(state is InfoState.ABSENT for state in signals.info):
+    # R2（§2.2 D3：缺位先拒答，先于"调卡"；§3.1：只有**抽取类**的"无"才叫缺信息 ——
+    # 检测类的"无"是判否，是有效结论，放行走 R4/R5）
+    if any(
+        state is InfoState.ABSENT
+        and bit_kinds[info_bits[i].key] == KIND_EXTRACT
+        for i, state in enumerate(signals.info)
+    ):
         return (Terminate(REJECT, "存在 info 位=无：缺必需信息"),)
 
-    required = required_bit_indices(signals.type)
+    required = required_bit_indices(signals.type, info_bits=info_bits, required_bits=required_bits)
     unchecked = [i for i in required if signals.info[i] is InfoState.UNCHECKED]
     if unchecked and signals.steps > 0:
         actions: list[Action] = []
         seen: set[str] = set()
         for i in unchecked:  # 按位序，去重到"卡"：调用的单位是卡，不是位
-            card = INFO_BITS[i].card
+            card = info_bits[i].card
             if card not in seen:
                 seen.add(card)
-                actions.append(CallCard(card, INFO_BITS[i].key))
+                actions.append(CallCard(card, info_bits[i].key))
         return tuple(actions)
-    if all(signals.info[i] is InfoState.HAVE for i in required):
+    judged = [
+        state is InfoState.HAVE
+        or (
+            state is InfoState.ABSENT
+            and bit_kinds[info_bits[i].key] == KIND_DETECT  # 检测位判否 = 判定过
+        )
+        for i, state in enumerate(signals.info)
+        if i in required
+    ]
+    if all(judged):  # required 为空时与旧口径一致（all(空) = True ⇒ 照样出输出）
+        # reason 的两种说法只在"含检测位判否"时分岔；默认（全抽取类）永远走前一种，
+        # 文案与 §2.2 原表逐字相同。
+        judged_note = (
+            "必需位全部判定过（检测位判否=有效结论）"
+            if any(signals.info[i] is InfoState.ABSENT for i in required)
+            else "必需位全=有"
+        )
         if CONF_RANK[signals.conf] >= CONF_RANK[Conf.MID]:
-            return (Terminate(GENERATE, "必需位全=有 且 conf ≥ 中 ⇒ 生成输出"),)
-        return (Terminate(POINTER, "必需位全=有 但 conf == 低 ⇒ 降级为指针输出"),)
+            return (Terminate(GENERATE, f"{judged_note} 且 conf ≥ 中 ⇒ 生成输出"),)
+        return (Terminate(POINTER, f"{judged_note} 但 conf == 低 ⇒ 降级为指针输出"),)
     return (Terminate(REJECT, "steps=0 且未完成：不许无限调用"),)
 
 
-def admissible_actions(signals: Signals, *, registry: Registry | None = None) -> tuple[Action, ...]:
+def admissible_actions(
+    signals: Signals,
+    *,
+    registry: Registry | None = None,
+    info_bits: tuple[InfoBit, ...] = INFO_BITS,
+    required_bits: Mapping[str, tuple[str, ...]] = REQUIRED_BITS,
+    bit_kinds: Mapping[str, str] = BIT_KINDS,
+) -> tuple[Action, ...]:
     """该状态下规则策略**授权**的动作集合 —— §2.2 D2 把它写成规格：可行动作 = `admissible(s)`。
 
-    与"行动空间"的区别：行动空间 = `INFO_BITS` 映射**声明**的卡（与注册表里的卡总数
+    与"行动空间"的区别：行动空间 = 位表**声明**的卡（与注册表里的卡总数
     无关，§2.2 D9）+ 终止三选一；**授权**只有第一个命中行那些 —— 比如 type=unknown
     时授权集只有拒答。把整个行动空间当可行动作，"缺位只能到拒答"立刻不成立
     （重调那张卡可以把"无"救回"有"），验证点 3 就废了。
     """
-    return _authorized(signals, resolve_registry(registry))
+    return _authorized(
+        signals,
+        resolve_registry(registry),
+        info_bits=info_bits,
+        required_bits=required_bits,
+        bit_kinds=bit_kinds,
+    )
 
 
-def decide(signals: Signals, *, registry: Registry | None = None) -> Action:
+def decide(
+    signals: Signals,
+    *,
+    registry: Registry | None = None,
+    info_bits: tuple[InfoBit, ...] = INFO_BITS,
+    required_bits: Mapping[str, tuple[str, ...]] = REQUIRED_BITS,
+    bit_kinds: Mapping[str, str] = BIT_KINDS,
+) -> Action:
     """规则策略 π：每个状态**唯一**动作（授权集的第一个元素）。
 
     确定性来自"纯函数 + 固定行序 + 固定取位序"，不来自任何随机或模型判断 ⇒
     同一 (type, info, conf, steps) 两次 `plan()` 逐字相同。
     """
-    return _authorized(signals, resolve_registry(registry))[0]
+    return _authorized(
+        signals,
+        resolve_registry(registry),
+        info_bits=info_bits,
+        required_bits=required_bits,
+        bit_kinds=bit_kinds,
+    )[0]
 
 
 # ---- 抽象转移 P（非确定，不接真卡） ------------------------------------------
 
 def possible_outcomes(
-    signals: Signals, action: Action, *, registry: Registry | None = None
+    signals: Signals,
+    action: Action,
+    *,
+    registry: Registry | None = None,
+    info_bits: tuple[InfoBit, ...] = INFO_BITS,
+    bit_kinds: Mapping[str, str] = BIT_KINDS,
 ) -> set[Signals]:
     """抽象（非确定）转移：在该状态执行 `action` 后**可能**到达的状态集合。不接真卡。
 
@@ -538,15 +686,20 @@ def possible_outcomes(
 
     重复调同一张卡会把它服务的位**重新判定**；规则授权只调"未查"必需位的卡，
     所以这种后继进不了真实可达集 —— 这里仍然如实给出（抽象模型不替策略兜底）。
+
+    位的种类（`bit_kinds`）**不改变后继集合本身**：抽取类与检测类的"无"都是
+    「调过、没产出切片」这同一个可观测事实 —— 分岔发生在**规则层**（R2 拒答还是
+    放行），不在转移层。§3.1 的第 4 态"调用失败"也不在这里：失败在调用出口就拒答了，
+    抽象转移只描述"调用成功返回"的世界。
     """
     reg = resolve_registry(registry)
     if not isinstance(action, CallCard):
         return set()
-    if signals_problems(signals):
+    if signals_problems(signals, info_bits=info_bits, bit_kinds=bit_kinds):
         return set()
     if action.card not in reg:
         return set()
-    served = tuple(i for i, bit in enumerate(INFO_BITS) if bit.card == action.card)
+    served = tuple(i for i, bit in enumerate(info_bits) if bit.card == action.card)
     if not served:
         return set()
     if signals.steps == 0:
@@ -565,26 +718,43 @@ def possible_outcomes(
 
 # ---- 可达性 / 死状态 / 拒答受控（可判代理） ----------------------------------
 
-def reachable_states(*, registry: Registry | None = None) -> set[Signals]:
+def reachable_states(
+    *,
+    registry: Registry | None = None,
+    info_bits: tuple[InfoBit, ...] = INFO_BITS,
+    required_bits: Mapping[str, tuple[str, ...]] = REQUIRED_BITS,
+    bit_kinds: Mapping[str, str] = BIT_KINDS,
+) -> set[Signals]:
     """**真实可达**状态集：从 `initial_states()` 出发，沿"授权动作 × 抽象转移"BFS。
 
     用授权集（而不是只跟 `decide()` 的单一轨迹）算是更保守的上界：
     连这个集合都 ≤ 4860，策略轨迹自然也 ≤。
     """
     reg = resolve_registry(registry)
-    seen: set[Signals] = set(initial_states())
+    seen: set[Signals] = set(initial_states(info_bits=info_bits))
     queue: deque[Signals] = deque(seen)
     while queue:
         state = queue.popleft()
-        for action in _authorized(state, reg):
-            for nxt in possible_outcomes(state, action, registry=reg):
+        for action in _authorized(
+            state, reg, info_bits=info_bits, required_bits=required_bits, bit_kinds=bit_kinds
+        ):
+            for nxt in possible_outcomes(
+                state, action, registry=reg, info_bits=info_bits, bit_kinds=bit_kinds
+            ):
                 if nxt not in seen:
                     seen.add(nxt)
                     queue.append(nxt)
     return seen
 
 
-def terminal_kinds_reachable(signals: Signals, *, registry: Registry | None = None) -> frozenset[str]:
+def terminal_kinds_reachable(
+    signals: Signals,
+    *,
+    registry: Registry | None = None,
+    info_bits: tuple[InfoBit, ...] = INFO_BITS,
+    required_bits: Mapping[str, tuple[str, ...]] = REQUIRED_BITS,
+    bit_kinds: Mapping[str, str] = BIT_KINDS,
+) -> frozenset[str]:
     """从该状态出发、沿授权动作可达的**全部终止动作种类**（拒答受控的判据）。"""
     reg = resolve_registry(registry)
     seen: set[Signals] = set()
@@ -595,21 +765,34 @@ def terminal_kinds_reachable(signals: Signals, *, registry: Registry | None = No
         if state in seen:
             continue
         seen.add(state)
-        for action in _authorized(state, reg):
+        for action in _authorized(
+            state, reg, info_bits=info_bits, required_bits=required_bits, bit_kinds=bit_kinds
+        ):
             if isinstance(action, Terminate):
                 found.add(action.kind)
             else:
-                stack.extend(possible_outcomes(state, action, registry=reg))
+                stack.extend(
+                    possible_outcomes(
+                        state, action, registry=reg, info_bits=info_bits, bit_kinds=bit_kinds
+                    )
+                )
     return frozenset(found)
 
 
-def dead_states(*, registry: Registry | None = None) -> set[Signals]:
+def dead_states(
+    *,
+    registry: Registry | None = None,
+    info_bits: tuple[InfoBit, ...] = INFO_BITS,
+    required_bits: Mapping[str, tuple[str, ...]] = REQUIRED_BITS,
+    bit_kinds: Mapping[str, str] = BIT_KINDS,
+) -> set[Signals]:
     """**死状态**：可达、但沿授权动作怎么走都到不了任何终止动作的状态。必须为空。"""
     reg = resolve_registry(registry)
+    kwargs = {"info_bits": info_bits, "required_bits": required_bits, "bit_kinds": bit_kinds}
     return {
         state
-        for state in reachable_states(registry=reg)
-        if not terminal_kinds_reachable(state, registry=reg)
+        for state in reachable_states(registry=reg, **kwargs)
+        if not terminal_kinds_reachable(state, registry=reg, **kwargs)
     }
 
 
@@ -620,6 +803,9 @@ def plan(
     *,
     registry: Registry | None = None,
     source_span: tuple[int, int] | None = None,
+    info_bits: tuple[InfoBit, ...] = INFO_BITS,
+    required_bits: Mapping[str, tuple[str, ...]] = REQUIRED_BITS,
+    bit_kinds: Mapping[str, str] = BIT_KINDS,
 ) -> Plan:
     """把规则策略落成可执行计划：`Plan = [Step{module_id, params, input_span}]`（§1）。
 
@@ -628,9 +814,18 @@ def plan(
 
     `source_span` 是调用方给的原文区间（没有就传 None）。结构非法 ⇒ 整个计划
     降级为拒答 —— 坏 span 绝不流到执行层。
+
+    `info_bits` / `required_bits` / `bit_kinds` 默认即模块级表（默认行为一字不变）；
+    对话层传入映射到现有卡的位表 ⇒ Step.module_id 是那张表声明的**现有卡**。
     """
     reg = resolve_registry(registry)
-    action = decide(signals, registry=reg)
+    action = decide(
+        signals,
+        registry=reg,
+        info_bits=info_bits,
+        required_bits=required_bits,
+        bit_kinds=bit_kinds,
+    )
     if (
         action_kind(action) != REJECT
         and source_span is not None
@@ -639,7 +834,7 @@ def plan(
         action = Terminate(REJECT, f"source_span 结构非法：{source_span!r}")
 
     if isinstance(action, CallCard):
-        serves = "|".join(bit.key for bit in INFO_BITS if bit.card == action.card)
+        serves = "|".join(bit.key for bit in info_bits if bit.card == action.card)
         steps = (
             Step(action.card, source_span, (("trigger_bit", action.bit), ("serves", serves))),
         )

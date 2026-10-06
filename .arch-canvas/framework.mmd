@@ -4,6 +4,39 @@
 %%! @file <节点id> <路径> 是这个节点对应的源码文件（可带 #符号），一个节点可多条
 %%! 以上对 Mermaid 渲染都无任何影响，可忽略或手改
 %% @summary "DTSeek 基本框架：冷启动训核 → 温启动联合加卡；语言输出卡：有限 MDP 决策机 + 按卡选型的指针/生成输出"
+%% @pos core -1288 441
+%% @pos heads -1100 441
+%% @pos cost1 -859 441
+%% @pos init -1344 -164
+%% @pos gate -1034 -164
+%% @pos joint -1034 -38
+%% @pos outck -1344 -38
+%% @pos void -734 -164
+%% @pos e1 -1318 178
+%% @pos e2 -1667 178
+%% @pos e3 -1018 178
+%% @pos e4 -363 178
+%% @pos e5 -682 178
+%% @pos inp -306 753
+%% @pos rule 0 753
+%% @pos mdp 346 753
+%% @pos old 561 441
+%% @pos add 749 441
+%% @pos dead 940 441
+%% @pos ptr -114 69
+%% @pos gen -114 -124
+%% @pos rec -114 -7
+%% @pos sel 222 -124
+%% @pos i1 543 -38
+%% @pos i2 561 69
+%% @pos i3 561 178
+%% @pos consume 543 -124
+%% @pos s1 -529 321
+%% @pos s2 -283 321
+%% @pos plan 0 321
+%% @pos cards 0 630
+%% @pos outm 0 516
+%% @pos inv 0 418
 %% @file gate "experiments/cumulative_add/train_cumulative.py"
 %% @file joint "experiments/core_keep/train_core_keep.py"
 %% @file ptr "src/dtseek/decoder/robust_ar_model.py"
@@ -20,6 +53,7 @@ flowchart TD
     joint["旧任务 + 新任务**同批梯度**<br/>核可训；老头冻结最省且持平"]
     outck["产出：升级后的核 + 全部头<br/>**版本化**"]
     void["该步作废（权重没接对）"]
+    cndb["NDB ≈ 插件：(写接口, 读接口, reset 作用域, 挂载层级)<br/>接口一样、**层级可换** ⇒ 核级与**卡级私有** NDB **不冲突、可共存**<br/>唯一禁止：「**共享表 + 由卡写入**」⇒ 加卡即改内容，破坏“老卡逐位不变”<br/>适用：绑定需随样本清零 + 能从表层键召回 + 有可聚合的查询分布<br/>核级缺口：核没有指针头 ⇒ 需 mention 门控头 + step-0 零初始化门禁"]
   end
   subgraph ev["实测"]
     e1["老卡 Δ 全部 ≥0（sentiment +12pt）"]
@@ -43,6 +77,7 @@ flowchart TD
     gen["生成型：发射**字**<br/>回复与改写首选 · 必须带 evidence"]
     rec["统一记录<br/>{kind, text, evidence, plan_step_id}"]
     sel["按卡选型，不是全局二选一<br/>两者不冲突：同一记录用 kind 区分"]
+    spec["投机式：生成候选(可并行) → **指针选择** → 重整<br/>≡ 多头投机（Medusa / EAGLE 谱系）<br/>**保证在选择边界**：生成可以弱，验证器负责质量<br/>⚠ 断裂1：验证器是学出来的，无精确性定理<br/>⚠ 断裂2：验证器未必更强（reply_pick 20% / cloze 19%）<br/>⇒ 问题变窄为「有证据支持吗」+ 投机单位降到**词组**（才能部分接受）<br/>⇒ 拒绝出口 = **显式拒答**（不是重采样）"]
   end
   subgraph inv["不变量 · 实测状态"]
     i1["元决策不交给模型<br/>路由 9.19% / 类型 29.78% / 拒答 ~96% 误开火"]
@@ -82,3 +117,7 @@ flowchart TD
   ptr --> sel
   gen --> sel
   consume -.-> sel
+  core --> cndb
+  cndb --> heads
+  cards --> spec
+  spec --> rec

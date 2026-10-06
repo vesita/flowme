@@ -57,6 +57,19 @@ def load_card_ndb(ck: dict, device):
     return ndb
 
 
+def _encode_cache_key(enc: dict) -> tuple:
+    """基座编码结果的缓存键：`(input_ids, attention_mask)` 的元组。
+
+    为什么用这个键：
+    - 同键 ⇒ 输入张量逐位相同 ⇒ `doc_encoder` 输出逐位相同。这是**构造上**的逐位一致，
+      比"同输入再算一遍"更严 —— 后者在 ROCm 上仍有 1e-6 级不确定性，复用则连这个
+      缺口都没有；
+    - 键里不掺 `max_len`、也不统一各卡的截断长度：统一了会改变切段/截断，进而改变预测，
+      破坏本项目"加卡后老卡 pred/exact 逐位不变"的判据；
+    - 不同卡因 `max_len` 不同而切段/截断不同时，键自然不同、各自缓存，不会串味。
+    """
+    return (tuple(enc["input_ids"]), tuple(enc["attention_mask"]))
+
 
 class MultiTaskEngine:
     """基座常驻 + 可热插拔的任务卡。"""
@@ -130,7 +143,8 @@ class MultiTaskEngine:
     # ---- 推理 -------------------------------------------------------------
 
     @torch.no_grad()
-    def _run_segment(self, task: str, segment_text: str) -> list[dict]:
+    def _run_segment(self, task: str, segment_text: str,
+                     encode_cache: dict | None = None) -> list[dict]:
         decoder = self.decoders[task]
         spec = self.specs[task]
         classes = spec.classes
@@ -140,7 +154,16 @@ class MultiTaskEngine:
         mask = torch.tensor([enc["attention_mask"]], dtype=torch.bool, device=self.device)
         L = len(segment_text)
 
-        doc_memory = self.doc_encoder(inp, attention_mask=mask)
+        # 同键 ⇒ 同一份 `doc_memory` 直接复用（不重算）；`encode_cache=None`（不经
+        # `predict` 的调用）不走缓存，逐次编码，行为与从前逐位一致。键的含义见
+        # `_encode_cache_key`。
+        key = None if encode_cache is None else _encode_cache_key(enc)
+        if key is not None and key in encode_cache:
+            doc_memory = encode_cache[key]
+        else:
+            doc_memory = self.doc_encoder(inp, attention_mask=mask)
+            if key is not None:
+                encode_cache[key] = doc_memory
         q_seq = decoder.bos_query.clone()
         anchors, seen = [], set()
 
@@ -208,13 +231,22 @@ class MultiTaskEngine:
 
     def predict(self, text: str, tasks: list[str] | None = None,
                 max_chunk_len: int | None = None) -> dict:
-        """对已挂载的（或指定的）任务卡输出。基座只编码一次，各卡共享。"""
+        """对已挂载的（或指定的）任务卡输出。
+
+        基座编码在**这一次调用内**按 `(input_ids, attention_mask)` 缓存：同一段文本被
+        多张卡用到时只过一次 `doc_encoder`，之后各卡直接共享同一份 `doc_memory`；不同卡
+        因 `max_len` 不同而切段/截断不同时，键不同、各自编码（键的含义与为什么不统一
+        `max_len` 见 `_encode_cache_key`）。缓存作用域只有本次调用，不跨调用 memoize，
+        免得结果一直堆在内存里。
+        """
         text = text.strip()
         if not text:
             return {"error": "输入为空"}
 
         chosen = self.attached if tasks is None else [t for t in tasks if t in self.decoders]
         result = {"text": text, "num_segments": 0, "tasks": {}}
+        # 编码缓存：作用域 = 这一次 predict() 调用（见 docstring）
+        encode_cache: dict = {}
 
         for task in chosen:
             spec = self.specs[task]
@@ -230,7 +262,7 @@ class MultiTaskEngine:
             anchors = []
             for seg in segments:
                 g0 = seg["global_start"]
-                for a in self._run_segment(task, seg["text"]):
+                for a in self._run_segment(task, seg["text"], encode_cache):
                     anchors.append({
                         **a,
                         "step": len(anchors) + 1,
