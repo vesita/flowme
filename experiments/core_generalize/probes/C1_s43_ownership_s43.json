@@ -1,0 +1,36 @@
+{
+  "label": "C1_s43",
+  "core": "experiments/core_generalize/cores/C1_s43.pt",
+  "holdout": "ownership",
+  "seed": 43,
+  "metrics": {
+    "cls_acc": 0.9528301886792453,
+    "span_hit": 0.9056603773584906,
+    "bg_fp": 0.0,
+    "exact_match": 0.92,
+    "slice_precision": 0.9054373522458629,
+    "slice_recall": 0.8764302059496567
+  },
+  "budget": {
+    "epochs": 16,
+    "steps_per_epoch": 84,
+    "n_steps": 1344,
+    "batch_size": 64,
+    "lr": 0.001,
+    "n_train": 5400,
+    "n_val": 600,
+    "sample_draws": 86016,
+    "core_trainable": 0,
+    "head_trainable": 630278,
+    "head_total": 630278
+  },
+  "floor": 0.29333333333333333,
+  "step0_exact": 0.28,
+  "floor_plus_delta_hint": 0.29333333333333333,
+  "timing": {
+    "train_sec": 36.850006475000555,
+    "sec_per_step": 0.027418159579613507,
+    "sec_per_step_steady": 0.024359005998121575,
+    "peak_mem_mb": 165.72216796875
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "label": "C5_s43",
+  "core": "experiments/core_generalize/cores/C5_s43.pt",
+  "holdout": "idiom",
+  "seed": 43,
+  "metrics": {
+    "cls_acc": 0.8425,
+    "span_hit": 0.695,
+    "bg_fp": 0.105,
+    "exact_match": 0.7583333333333333,
+    "slice_precision": 0.770949720670391,
+    "slice_recall": 0.6798029556650246
+  },
+  "budget": {
+    "epochs": 16,
+    "steps_per_epoch": 84,
+    "n_steps": 1344,
+    "batch_size": 64,
+    "lr": 0.001,
+    "n_train": 5400,
+    "n_val": 600,
+    "sample_draws": 86016,
+    "core_trainable": 0,
+    "head_trainable": 629764,
+    "head_total": 629764
+  },
+  "floor": 0.3333333333333333,
+  "step0_exact": 0.2683333333333333,
+  "floor_plus_delta_hint": 0.3333333333333333,
+  "timing": {
+    "train_sec": 37.08535287500126,
+    "sec_per_step": 0.027593268508185463,
+    "sec_per_step_steady": 0.02705925700138323,
+    "peak_mem_mb": 165.67578125
+  }
+}

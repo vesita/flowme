@@ -1,0 +1,201 @@
+{
+  "mode": "gate",
+  "step": 0,
+  "seed": 43,
+  "cards": [
+    "pronoun",
+    "sentiment",
+    "relation",
+    "person"
+  ],
+  "new_card": null,
+  "frozen": [
+    "pronoun",
+    "sentiment",
+    "relation",
+    "person"
+  ],
+  "trainable_heads": [],
+  "init": "checkpoints/base_encoder.pt+frozen_cards",
+  "prev_metrics": null,
+  "gate": {
+    "ok": true,
+    "checked": true
+  },
+  "start": {
+    "pronoun": {
+      "cls_acc": 0.9929245283018868,
+      "span_hit": 0.9976415094339622,
+      "bg_fp": 0.0,
+      "n_cls": 424,
+      "n_bg": 176,
+      "exact_match": 0.98,
+      "slice_precision": 0.9930955120828538,
+      "slice_recall": 0.9908151549942594,
+      "fingerprint": {
+        "pred_sha256": "55e720e46193ffc16183fb48d60a071b13ddaf454a2ed4a0830cb514313cc2e1",
+        "logit_sha256": "98f72895f0f648d6d71e229af7efc8b1419a64cadfb580784c1af8641c1f0c6e"
+      }
+    },
+    "sentiment": {
+      "cls_acc": 0.8230088495575221,
+      "span_hit": 0.9136114622840287,
+      "bg_fp": 0.0,
+      "n_cls": 2373,
+      "n_bg": 827,
+      "exact_match": 0.8146875,
+      "slice_precision": 0.7736556898707795,
+      "slice_recall": 0.7441860465116279,
+      "fingerprint": {
+        "pred_sha256": "334c8b6c45efbf98c0d312fe050b5af25c3ea705502a01bd9389d254e0a9b6b3",
+        "logit_sha256": "89ec72cf1c9764f18f7706490a13b5e648e3ba81a270495b1254cfe04c00456a"
+      }
+    },
+    "relation": {
+      "cls_acc": 0.9524714828897338,
+      "span_hit": 1.0,
+      "bg_fp": 0.0,
+      "n_cls": 526,
+      "n_bg": 194,
+      "exact_match": 0.9652777777777778,
+      "slice_precision": 0.9524714828897338,
+      "slice_recall": 0.9524714828897338,
+      "pair_exact": 0.9524714828897338,
+      "pair_order": 1.0,
+      "pair_odd": 0.0,
+      "n_pair": 526,
+      "fingerprint": {
+        "pred_sha256": "febad256ba4aafa172bf49b84a307607396422a0a136432ed7b4cefa941891ed",
+        "logit_sha256": "aa1d75367059e08e57ca666f725b785f9d013c7f09f0b3d0bf29b3bb509b73ba"
+      }
+    },
+    "person": {
+      "cls_acc": 1.0,
+      "span_hit": 0.9975609756097561,
+      "bg_fp": 0.0,
+      "n_cls": 410,
+      "n_bg": 190,
+      "exact_match": 0.3233333333333333,
+      "slice_precision": 0.5782836050446016,
+      "slice_recall": 0.5838509316770186,
+      "id_acc": 0.7093862815884476,
+      "first_mention_acc": 0.8759124087591241,
+      "repeat_mention_acc": 0.3554301833568406,
+      "cluster_f1": 0.3742138364779874,
+      "n_measurable": 2216,
+      "fingerprint": {
+        "pred_sha256": "816e8768234e797ff0a3be1e11f53bcd6a369dcf8f227b88589ef1b0d1bcdea7",
+        "logit_sha256": "dc74388d2b8f0a23f1238a5b10610d702894d2d351076a0e8c23d3d3fb06da76"
+      }
+    }
+  },
+  "end": {
+    "pronoun": {
+      "cls_acc": 0.9929245283018868,
+      "span_hit": 0.9976415094339622,
+      "bg_fp": 0.0,
+      "n_cls": 424,
+      "n_bg": 176,
+      "exact_match": 0.98,
+      "slice_precision": 0.9930955120828538,
+      "slice_recall": 0.9908151549942594,
+      "fingerprint": {
+        "pred_sha256": "55e720e46193ffc16183fb48d60a071b13ddaf454a2ed4a0830cb514313cc2e1",
+        "logit_sha256": "98f72895f0f648d6d71e229af7efc8b1419a64cadfb580784c1af8641c1f0c6e"
+      }
+    },
+    "sentiment": {
+      "cls_acc": 0.8230088495575221,
+      "span_hit": 0.9136114622840287,
+      "bg_fp": 0.0,
+      "n_cls": 2373,
+      "n_bg": 827,
+      "exact_match": 0.8146875,
+      "slice_precision": 0.7736556898707795,
+      "slice_recall": 0.7441860465116279,
+      "fingerprint": {
+        "pred_sha256": "334c8b6c45efbf98c0d312fe050b5af25c3ea705502a01bd9389d254e0a9b6b3",
+        "logit_sha256": "89ec72cf1c9764f18f7706490a13b5e648e3ba81a270495b1254cfe04c00456a"
+      }
+    },
+    "relation": {
+      "cls_acc": 0.9524714828897338,
+      "span_hit": 1.0,
+      "bg_fp": 0.0,
+      "n_cls": 526,
+      "n_bg": 194,
+      "exact_match": 0.9652777777777778,
+      "slice_precision": 0.9524714828897338,
+      "slice_recall": 0.9524714828897338,
+      "pair_exact": 0.9524714828897338,
+      "pair_order": 1.0,
+      "pair_odd": 0.0,
+      "n_pair": 526,
+      "fingerprint": {
+        "pred_sha256": "febad256ba4aafa172bf49b84a307607396422a0a136432ed7b4cefa941891ed",
+        "logit_sha256": "aa1d75367059e08e57ca666f725b785f9d013c7f09f0b3d0bf29b3bb509b73ba"
+      }
+    },
+    "person": {
+      "cls_acc": 1.0,
+      "span_hit": 0.9975609756097561,
+      "bg_fp": 0.0,
+      "n_cls": 410,
+      "n_bg": 190,
+      "exact_match": 0.3233333333333333,
+      "slice_precision": 0.5782836050446016,
+      "slice_recall": 0.5838509316770186,
+      "id_acc": 0.7093862815884476,
+      "first_mention_acc": 0.8759124087591241,
+      "repeat_mention_acc": 0.3554301833568406,
+      "cluster_f1": 0.3742138364779874,
+      "n_measurable": 2216,
+      "fingerprint": {
+        "pred_sha256": "816e8768234e797ff0a3be1e11f53bcd6a369dcf8f227b88589ef1b0d1bcdea7",
+        "logit_sha256": "dc74388d2b8f0a23f1238a5b10610d702894d2d351076a0e8c23d3d3fb06da76"
+      }
+    }
+  },
+  "params": {
+    "core_total": 1688460,
+    "core_trainable": 0,
+    "heads": {
+      "pronoun": {
+        "total": 630278,
+        "trainable": 0
+      },
+      "sentiment": {
+        "total": 630278,
+        "trainable": 0
+      },
+      "relation": {
+        "total": 630021,
+        "trainable": 0
+      },
+      "person": {
+        "total": 631306,
+        "trainable": 0
+      }
+    },
+    "trainable_total": 0
+  },
+  "timing": {
+    "train_sec": 0.0,
+    "n_steps": 0,
+    "sec_per_step": 0.0,
+    "sec_per_step_steady": 0.0,
+    "peak_mem_mb": 0.0
+  },
+  "drift": {
+    "vs_base_end": 0.0,
+    "vs_base_start": 0.0,
+    "vs_prev_end": 0.0
+  },
+  "val_sha256": {
+    "pronoun": "5c8369383e9455c185899e4c0ed5c839bdc78396ef54fa0e151894322cfaa4a3",
+    "sentiment": "eabdc789cf43db812aaefc1a17538fc709e1ac991cb72f8c6a5b08d855dccb4b",
+    "relation": "354e5088b534c86095ddbe38a6da325ddaff17e1b05cc5b8a219591d7e9ee211",
+    "person": "146241c432dd09757a54c5817967aca2831d3a7bdcafd802aec93265ec4a90a1"
+  },
+  "history": []
+}

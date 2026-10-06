@@ -1,0 +1,201 @@
+{
+  "mode": "gate",
+  "step": 0,
+  "seed": 42,
+  "cards": [
+    "pronoun",
+    "sentiment",
+    "relation",
+    "person"
+  ],
+  "new_card": null,
+  "frozen": [
+    "pronoun",
+    "sentiment",
+    "relation",
+    "person"
+  ],
+  "trainable_heads": [],
+  "init": "checkpoints/base_encoder.pt+frozen_cards",
+  "prev_metrics": null,
+  "gate": {
+    "ok": true,
+    "checked": true
+  },
+  "start": {
+    "pronoun": {
+      "cls_acc": 0.9926650366748166,
+      "span_hit": 0.9902200488997555,
+      "bg_fp": 0.0,
+      "n_cls": 409,
+      "n_bg": 191,
+      "exact_match": 0.9533333333333334,
+      "slice_precision": 0.9821640903686087,
+      "slice_recall": 0.9798339264531435,
+      "fingerprint": {
+        "pred_sha256": "34efb8b462f2bafd07cf7ac2cbb9688671c6d28b940b3fefdb0328c43726186a",
+        "logit_sha256": "8b2e0a62cfe3fa20fb966a45dc989874e6d2ead0c925e7f6d8b1afbb9d22886f"
+      }
+    },
+    "sentiment": {
+      "cls_acc": 0.8122362869198312,
+      "span_hit": 0.8962025316455696,
+      "bg_fp": 0.0,
+      "n_cls": 2370,
+      "n_bg": 830,
+      "exact_match": 0.79375,
+      "slice_precision": 0.7471698113207547,
+      "slice_recall": 0.7165259348612787,
+      "fingerprint": {
+        "pred_sha256": "8e25e212498983d77f99db74fc93f9f5014fcf41c9085a331548708e74353671",
+        "logit_sha256": "35b11b6c45f9b20825d5449ecf9612899dd99b57d30071a40bbddc9196013407"
+      }
+    },
+    "relation": {
+      "cls_acc": 0.953307392996109,
+      "span_hit": 0.9980544747081712,
+      "bg_fp": 0.0048543689320388345,
+      "n_cls": 514,
+      "n_bg": 206,
+      "exact_match": 0.9638888888888889,
+      "slice_precision": 0.9504854368932039,
+      "slice_recall": 0.9523346303501945,
+      "pair_exact": 0.9513618677042801,
+      "pair_order": 1.0,
+      "pair_odd": 0.0,
+      "n_pair": 514,
+      "fingerprint": {
+        "pred_sha256": "ef8beb6d0b4b8894626f7662ebc280cff16e04779c985421b39094a152151884",
+        "logit_sha256": "0a30aa6e1ef4cba4dc82712080025616f094c53c7c791b3082d000e9858242e1"
+      }
+    },
+    "person": {
+      "cls_acc": 1.0,
+      "span_hit": 0.9976019184652278,
+      "bg_fp": 0.0,
+      "n_cls": 417,
+      "n_bg": 183,
+      "exact_match": 0.31,
+      "slice_precision": 0.5807453416149069,
+      "slice_recall": 0.566151983045716,
+      "id_acc": 0.7065759637188208,
+      "first_mention_acc": 0.8682274247491639,
+      "repeat_mention_acc": 0.36619718309859156,
+      "cluster_f1": 0.36547198384654217,
+      "n_measurable": 2205,
+      "fingerprint": {
+        "pred_sha256": "bb209b431b3d44238eba8e22fc1e68d3c691270246344ff26446a256ef668930",
+        "logit_sha256": "c8da2e0e6508faf76b476075fbd65bb50dddf182dc976a48936420d15ba3d793"
+      }
+    }
+  },
+  "end": {
+    "pronoun": {
+      "cls_acc": 0.9926650366748166,
+      "span_hit": 0.9902200488997555,
+      "bg_fp": 0.0,
+      "n_cls": 409,
+      "n_bg": 191,
+      "exact_match": 0.9533333333333334,
+      "slice_precision": 0.9821640903686087,
+      "slice_recall": 0.9798339264531435,
+      "fingerprint": {
+        "pred_sha256": "34efb8b462f2bafd07cf7ac2cbb9688671c6d28b940b3fefdb0328c43726186a",
+        "logit_sha256": "8b2e0a62cfe3fa20fb966a45dc989874e6d2ead0c925e7f6d8b1afbb9d22886f"
+      }
+    },
+    "sentiment": {
+      "cls_acc": 0.8122362869198312,
+      "span_hit": 0.8962025316455696,
+      "bg_fp": 0.0,
+      "n_cls": 2370,
+      "n_bg": 830,
+      "exact_match": 0.79375,
+      "slice_precision": 0.7471698113207547,
+      "slice_recall": 0.7165259348612787,
+      "fingerprint": {
+        "pred_sha256": "8e25e212498983d77f99db74fc93f9f5014fcf41c9085a331548708e74353671",
+        "logit_sha256": "35b11b6c45f9b20825d5449ecf9612899dd99b57d30071a40bbddc9196013407"
+      }
+    },
+    "relation": {
+      "cls_acc": 0.953307392996109,
+      "span_hit": 0.9980544747081712,
+      "bg_fp": 0.0048543689320388345,
+      "n_cls": 514,
+      "n_bg": 206,
+      "exact_match": 0.9638888888888889,
+      "slice_precision": 0.9504854368932039,
+      "slice_recall": 0.9523346303501945,
+      "pair_exact": 0.9513618677042801,
+      "pair_order": 1.0,
+      "pair_odd": 0.0,
+      "n_pair": 514,
+      "fingerprint": {
+        "pred_sha256": "ef8beb6d0b4b8894626f7662ebc280cff16e04779c985421b39094a152151884",
+        "logit_sha256": "0a30aa6e1ef4cba4dc82712080025616f094c53c7c791b3082d000e9858242e1"
+      }
+    },
+    "person": {
+      "cls_acc": 1.0,
+      "span_hit": 0.9976019184652278,
+      "bg_fp": 0.0,
+      "n_cls": 417,
+      "n_bg": 183,
+      "exact_match": 0.31,
+      "slice_precision": 0.5807453416149069,
+      "slice_recall": 0.566151983045716,
+      "id_acc": 0.7065759637188208,
+      "first_mention_acc": 0.8682274247491639,
+      "repeat_mention_acc": 0.36619718309859156,
+      "cluster_f1": 0.36547198384654217,
+      "n_measurable": 2205,
+      "fingerprint": {
+        "pred_sha256": "bb209b431b3d44238eba8e22fc1e68d3c691270246344ff26446a256ef668930",
+        "logit_sha256": "c8da2e0e6508faf76b476075fbd65bb50dddf182dc976a48936420d15ba3d793"
+      }
+    }
+  },
+  "params": {
+    "core_total": 1688460,
+    "core_trainable": 0,
+    "heads": {
+      "pronoun": {
+        "total": 630278,
+        "trainable": 0
+      },
+      "sentiment": {
+        "total": 630278,
+        "trainable": 0
+      },
+      "relation": {
+        "total": 630021,
+        "trainable": 0
+      },
+      "person": {
+        "total": 631306,
+        "trainable": 0
+      }
+    },
+    "trainable_total": 0
+  },
+  "timing": {
+    "train_sec": 0.0,
+    "n_steps": 0,
+    "sec_per_step": 0.0,
+    "sec_per_step_steady": 0.0,
+    "peak_mem_mb": 0.0
+  },
+  "drift": {
+    "vs_base_end": 0.0,
+    "vs_base_start": 0.0,
+    "vs_prev_end": 0.0
+  },
+  "val_sha256": {
+    "pronoun": "af522ea50a4e6ae0ef526e0320cd8f8be0ff2260a3ebfa273bd2963512129851",
+    "sentiment": "38003153379ba25425f31dc6ce2240c83142d8d59e02eab97ac539beda09a5c6",
+    "relation": "2e794d7ef07c2ddb4382d69b00aa1be720253a93ec92369da82465bce787c60c",
+    "person": "6c101185d4fcc33655bdf2f37261ec6968e6c2c862fb52662b9652721513f702"
+  },
+  "history": []
+}

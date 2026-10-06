@@ -1,0 +1,36 @@
+{
+  "label": "C1_s43",
+  "core": "experiments/core_generalize/cores/C1_s43.pt",
+  "holdout": "idiom",
+  "seed": 43,
+  "metrics": {
+    "cls_acc": 0.815,
+    "span_hit": 0.555,
+    "bg_fp": 0.11,
+    "exact_match": 0.66,
+    "slice_precision": 0.6264367816091954,
+    "slice_recall": 0.5369458128078818
+  },
+  "budget": {
+    "epochs": 16,
+    "steps_per_epoch": 84,
+    "n_steps": 1344,
+    "batch_size": 64,
+    "lr": 0.001,
+    "n_train": 5400,
+    "n_val": 600,
+    "sample_draws": 86016,
+    "core_trainable": 0,
+    "head_trainable": 629764,
+    "head_total": 629764
+  },
+  "floor": 0.3333333333333333,
+  "step0_exact": 0.33,
+  "floor_plus_delta_hint": 0.3333333333333333,
+  "timing": {
+    "train_sec": 35.214970254000946,
+    "sec_per_step": 0.02620161477232213,
+    "sec_per_step_steady": 0.022974199000600493,
+    "peak_mem_mb": 165.67578125
+  }
+}

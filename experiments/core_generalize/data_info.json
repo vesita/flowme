@@ -1,0 +1,135 @@
+{
+  "core_samples": {
+    "pronoun": 6000,
+    "sentiment": 32000,
+    "relation": 6000,
+    "person": 6000,
+    "negation": 6000
+  },
+  "holdout_samples": {
+    "idiom": 6000,
+    "ownership": 6000
+  },
+  "default_seed": 20240927,
+  "seeds": [
+    42,
+    43
+  ],
+  "tasks": {
+    "pronoun": {
+      "n_total": 6000,
+      "num_classes": 4,
+      "class_names": [
+        "无代词",
+        "第一人称",
+        "第二人称",
+        "第三人称"
+      ],
+      "max_steps": 4,
+      "max_len": 64
+    },
+    "sentiment": {
+      "n_total": 32000,
+      "num_classes": 4,
+      "class_names": [
+        "中性",
+        "积极",
+        "愤怒",
+        "悲伤"
+      ],
+      "max_steps": 4,
+      "max_len": 64
+    },
+    "relation": {
+      "n_total": 7200,
+      "num_classes": 3,
+      "class_names": [
+        "无关系",
+        "近义词",
+        "反义词"
+      ],
+      "max_steps": 4,
+      "max_len": 64
+    },
+    "person": {
+      "n_total": 6000,
+      "num_classes": 8,
+      "class_names": [
+        "无人物",
+        "人物1",
+        "人物2",
+        "人物3",
+        "人物4",
+        "人物5",
+        "人物6",
+        "人物7"
+      ],
+      "max_steps": 16,
+      "max_len": 120
+    },
+    "negation": {
+      "n_total": 6000,
+      "num_classes": 2,
+      "class_names": [
+        "背景",
+        "否定"
+      ],
+      "max_steps": 4,
+      "max_len": 64
+    },
+    "idiom": {
+      "n_total": 6000,
+      "num_classes": 2,
+      "class_names": [
+        "非成语",
+        "成语"
+      ],
+      "max_steps": 4,
+      "max_len": 64,
+      "splits": {
+        "42": {
+          "n_eval": 600,
+          "n_train": 5400,
+          "n_bg": 214,
+          "floor_exact_empty_predictor": 0.3566666666666667,
+          "n_gold_spans_mean": 0.6516666666666666
+        },
+        "43": {
+          "n_eval": 600,
+          "n_train": 5400,
+          "n_bg": 200,
+          "floor_exact_empty_predictor": 0.3333333333333333,
+          "n_gold_spans_mean": 0.6766666666666666
+        }
+      }
+    },
+    "ownership": {
+      "n_total": 6000,
+      "num_classes": 4,
+      "class_names": [
+        "无归属",
+        "用户",
+        "助手",
+        "第三方"
+      ],
+      "max_steps": 4,
+      "max_len": 64,
+      "splits": {
+        "42": {
+          "n_eval": 600,
+          "n_train": 5400,
+          "n_bg": 185,
+          "floor_exact_empty_predictor": 0.30833333333333335,
+          "n_gold_spans_mean": 0.7383333333333333
+        },
+        "43": {
+          "n_eval": 600,
+          "n_train": 5400,
+          "n_bg": 176,
+          "floor_exact_empty_predictor": 0.29333333333333333,
+          "n_gold_spans_mean": 0.7283333333333334
+        }
+      }
+    }
+  }
+}

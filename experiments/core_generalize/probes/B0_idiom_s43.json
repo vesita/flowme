@@ -1,0 +1,36 @@
+{
+  "label": "B0",
+  "core": "checkpoints/base_encoder.pt",
+  "holdout": "idiom",
+  "seed": 43,
+  "metrics": {
+    "cls_acc": 0.825,
+    "span_hit": 0.675,
+    "bg_fp": 0.155,
+    "exact_match": 0.7266666666666667,
+    "slice_precision": 0.739612188365651,
+    "slice_recall": 0.6576354679802956
+  },
+  "budget": {
+    "epochs": 16,
+    "steps_per_epoch": 84,
+    "n_steps": 1344,
+    "batch_size": 64,
+    "lr": 0.001,
+    "n_train": 5400,
+    "n_val": 600,
+    "sample_draws": 86016,
+    "core_trainable": 0,
+    "head_trainable": 629764,
+    "head_total": 629764
+  },
+  "floor": 0.3333333333333333,
+  "step0_exact": 0.25833333333333336,
+  "floor_plus_delta_hint": 0.3333333333333333,
+  "timing": {
+    "train_sec": 37.25255068399929,
+    "sec_per_step": 0.027717671639880422,
+    "sec_per_step_steady": 0.027470126002299367,
+    "peak_mem_mb": 165.67578125
+  }
+}

@@ -1,0 +1,515 @@
+{
+  "mode": "chain",
+  "step": 2,
+  "seed": 42,
+  "cards": [
+    "pronoun",
+    "sentiment",
+    "relation",
+    "person",
+    "negation",
+    "idiom"
+  ],
+  "new_card": "idiom",
+  "frozen": [
+    "pronoun",
+    "sentiment",
+    "relation",
+    "person",
+    "negation"
+  ],
+  "trainable_heads": [
+    "idiom"
+  ],
+  "init": "experiments/cumulative_add/cards/step1_s42.pt",
+  "prev_metrics": "experiments/cumulative_add/cards/step1_s42.json",
+  "gate": {
+    "ok": true,
+    "checked": true
+  },
+  "start": {
+    "pronoun": {
+      "cls_acc": 1.0,
+      "span_hit": 0.9902200488997555,
+      "bg_fp": 0.0,
+      "n_cls": 409,
+      "n_bg": 191,
+      "exact_match": 0.9766666666666667,
+      "slice_precision": 0.990521327014218,
+      "slice_recall": 0.9916963226571768,
+      "fingerprint": {
+        "pred_sha256": "63738ecbca8b15ced0ebb0b720b5f237b11c1a59ddd2a158992f61d37f8a50d9",
+        "logit_sha256": "cf4732b8277db51d27c15d72095c2a8cdbf74c773aa5990ce544922f7a21b28b"
+      }
+    },
+    "sentiment": {
+      "cls_acc": 0.9476793248945148,
+      "span_hit": 0.9569620253164557,
+      "bg_fp": 0.0,
+      "n_cls": 2370,
+      "n_bg": 830,
+      "exact_match": 0.9178125,
+      "slice_precision": 0.9164253206454283,
+      "slice_recall": 0.8906312826698833,
+      "fingerprint": {
+        "pred_sha256": "34ec6fff57882c9e48f8336100fc648eb537654999a8470ab26b1ee3d0c9f2cb",
+        "logit_sha256": "72f320e0ba7b92d5cf67d878b20bc6d1b9122995896dd3fb132a598928bdc350"
+      }
+    },
+    "relation": {
+      "cls_acc": 0.9941634241245136,
+      "span_hit": 0.9980544747081712,
+      "bg_fp": 0.0048543689320388345,
+      "n_cls": 514,
+      "n_bg": 206,
+      "exact_match": 0.9930555555555556,
+      "slice_precision": 0.9912621359223301,
+      "slice_recall": 0.9931906614785992,
+      "pair_exact": 0.9922178988326849,
+      "pair_order": 1.0,
+      "pair_odd": 0.0,
+      "n_pair": 514,
+      "fingerprint": {
+        "pred_sha256": "eba341dc52d126f73168b63c520a5c2a079c1817950c624637f0d5b48573ad6a",
+        "logit_sha256": "bf65edfa4cbbf6e1c81355540164961cc303226e218e17604341e8718dc3128e"
+      }
+    },
+    "person": {
+      "cls_acc": 1.0,
+      "span_hit": 1.0,
+      "bg_fp": 0.0,
+      "n_cls": 417,
+      "n_bg": 183,
+      "exact_match": 0.31333333333333335,
+      "slice_precision": 0.5864083640836408,
+      "slice_recall": 0.5773539206781714,
+      "id_acc": 0.7004464285714286,
+      "first_mention_acc": 0.8699132755170114,
+      "repeat_mention_acc": 0.3576248313090418,
+      "cluster_f1": 0.35978314440611137,
+      "n_measurable": 2240,
+      "fingerprint": {
+        "pred_sha256": "47093cb1aae0f31e28a08c1afd95bfcc5009dad2cb7a90657deb4d8dd814f37d",
+        "logit_sha256": "90bdf40309ea30c1af875a389c87c3a4dc7ea14b02029cc4309b47517b43643a"
+      }
+    },
+    "negation": {
+      "cls_acc": 1.0,
+      "span_hit": 1.0,
+      "bg_fp": 0.031088082901554404,
+      "n_cls": 407,
+      "n_bg": 193,
+      "exact_match": 0.9766666666666667,
+      "slice_precision": 0.9841986455981941,
+      "slice_recall": 0.9864253393665159,
+      "fingerprint": {
+        "pred_sha256": "1197e5a04b87cf7ff3ce80713fee86df8428a71e604514194e2896652aec0388",
+        "logit_sha256": "9320a0aaf79fb620c38334c53ab94b9c7ded8b02ac973036aa6e540b659cd6e0"
+      }
+    }
+  },
+  "end": {
+    "pronoun": {
+      "cls_acc": 1.0,
+      "span_hit": 0.9951100244498777,
+      "bg_fp": 0.0,
+      "n_cls": 409,
+      "n_bg": 191,
+      "exact_match": 0.9833333333333333,
+      "slice_precision": 0.9964243146603099,
+      "slice_recall": 0.9916963226571768,
+      "fingerprint": {
+        "pred_sha256": "ea11fc38b92747d324de7316917d780c05a6156ef195893ff8e1ee6b61e76536",
+        "logit_sha256": "6f8fb612dded4e6d02598185739711293c91f47f64304e9ff3ca079e1f7aca50"
+      }
+    },
+    "sentiment": {
+      "cls_acc": 0.9742616033755275,
+      "span_hit": 0.9687763713080169,
+      "bg_fp": 0.0,
+      "n_cls": 2370,
+      "n_bg": 830,
+      "exact_match": 0.943125,
+      "slice_precision": 0.951048951048951,
+      "slice_recall": 0.9296340973059911,
+      "fingerprint": {
+        "pred_sha256": "ddc603cbca62813bdc2066eff3c5d399e3bb04683655acab70c00aac01be4344",
+        "logit_sha256": "4f6cac133da8721355d80f62339717fbdaeb9ef520ae357b4699d20c97d177e6"
+      }
+    },
+    "relation": {
+      "cls_acc": 0.9980544747081712,
+      "span_hit": 1.0,
+      "bg_fp": 0.0048543689320388345,
+      "n_cls": 514,
+      "n_bg": 206,
+      "exact_match": 0.9972222222222222,
+      "slice_precision": 0.996116504854369,
+      "slice_recall": 0.9980544747081712,
+      "pair_exact": 0.9980544747081712,
+      "pair_order": 1.0,
+      "pair_odd": 0.0,
+      "n_pair": 514,
+      "fingerprint": {
+        "pred_sha256": "29f9211f523166284ecde87c5c4f2b5694045ac8cd3df6a2676e74c687bfe048",
+        "logit_sha256": "c733f1ac9d26aed6b924c15febb73398d3381fd9e73c2264d9b2edb4dd2f0505"
+      }
+    },
+    "person": {
+      "cls_acc": 1.0,
+      "span_hit": 1.0,
+      "bg_fp": 0.0,
+      "n_cls": 417,
+      "n_bg": 183,
+      "exact_match": 0.31666666666666665,
+      "slice_precision": 0.5919434194341944,
+      "slice_recall": 0.5828035119588253,
+      "id_acc": 0.7014134275618374,
+      "first_mention_acc": 0.8736702127659575,
+      "repeat_mention_acc": 0.3605263157894737,
+      "cluster_f1": 0.3634651600753296,
+      "n_measurable": 2264,
+      "fingerprint": {
+        "pred_sha256": "926c2ea6ffbc5e15dd8322b1567ca85173e02bf43c9b03cba074cf43f2fe2023",
+        "logit_sha256": "e82428489f2f4fbeb1440e184a7a149994427efed860bf37b0662a78fe60ea0c"
+      }
+    },
+    "negation": {
+      "cls_acc": 1.0,
+      "span_hit": 0.9975429975429976,
+      "bg_fp": 0.0051813471502590676,
+      "n_cls": 407,
+      "n_bg": 193,
+      "exact_match": 0.9833333333333333,
+      "slice_precision": 0.9886104783599089,
+      "slice_recall": 0.9819004524886877,
+      "fingerprint": {
+        "pred_sha256": "b414632a5be08b6981b496aee812bc57d9c12268602bbebf09522e9cd6612d4f",
+        "logit_sha256": "afb2450118ff7691cd767d690550c19ba11bd898b218b1a14deef94924f6c252"
+      }
+    },
+    "idiom": {
+      "cls_acc": 0.9352331606217616,
+      "span_hit": 0.8471502590673575,
+      "bg_fp": 0.11214953271028037,
+      "n_cls": 386,
+      "n_bg": 214,
+      "exact_match": 0.86,
+      "slice_precision": 0.845360824742268,
+      "slice_recall": 0.8388746803069054,
+      "fingerprint": {
+        "pred_sha256": "905c6dc01e6f9ef8af1937c005894d4d0eb67714583459461592ac19373fa3d0",
+        "logit_sha256": "51ef4ac945bf2825282aff47686833a3cbe37b6479e7c0c78387d77c105eb390"
+      }
+    }
+  },
+  "params": {
+    "core_total": 1688460,
+    "core_trainable": 1688460,
+    "heads": {
+      "pronoun": {
+        "total": 630278,
+        "trainable": 0
+      },
+      "sentiment": {
+        "total": 630278,
+        "trainable": 0
+      },
+      "relation": {
+        "total": 630021,
+        "trainable": 0
+      },
+      "person": {
+        "total": 631306,
+        "trainable": 0
+      },
+      "negation": {
+        "total": 629764,
+        "trainable": 0
+      },
+      "idiom": {
+        "total": 629764,
+        "trainable": 629764
+      }
+    },
+    "trainable_total": 2318224
+  },
+  "timing": {
+    "train_sec": 444.76409129700187,
+    "n_steps": 1344,
+    "sec_per_step": 0.3309256631674121,
+    "sec_per_step_steady": 0.33470728500105906,
+    "peak_mem_mb": 2317.67041015625
+  },
+  "drift": {
+    "vs_base_end": 0.17516875220744316,
+    "vs_prev_end": 0.11421805540898117,
+    "vs_base_start": 0.1125965393125263
+  },
+  "val_sha256": {
+    "pronoun": "af522ea50a4e6ae0ef526e0320cd8f8be0ff2260a3ebfa273bd2963512129851",
+    "sentiment": "38003153379ba25425f31dc6ce2240c83142d8d59e02eab97ac539beda09a5c6",
+    "relation": "2e794d7ef07c2ddb4382d69b00aa1be720253a93ec92369da82465bce787c60c",
+    "person": "6c101185d4fcc33655bdf2f37261ec6968e6c2c862fb52662b9652721513f702",
+    "negation": "d9b80044ef1922480b149e5a1df1589f7e12b10de3db95d8a6cb3458775c4bcb",
+    "idiom": "c01edad93fada7ed982f0d6b12e569d6dc919e0679100d4f0c4b207315e3b372"
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "ce": {
+        "pronoun": 0.25811336987784933,
+        "sentiment": 2.196076632078205,
+        "relation": 0.19666092133238203,
+        "person": 17.765905630020868,
+        "negation": 0.6467362016749879,
+        "idiom": 8.951129757222676
+      },
+      "total": 30.014622586114065,
+      "lr": [
+        "2.971e-04",
+        "9.904e-04"
+      ]
+    },
+    {
+      "epoch": 2,
+      "ce": {
+        "pronoun": 0.31058781210421804,
+        "sentiment": 3.0182427582996234,
+        "relation": 0.2041780169764977,
+        "person": 15.114843232291085,
+        "negation": 0.47718832029828,
+        "idiom": 3.207592781100954
+      },
+      "total": 22.332632848194667,
+      "lr": [
+        "2.886e-04",
+        "9.619e-04"
+      ]
+    },
+    {
+      "epoch": 3,
+      "ce": {
+        "pronoun": 0.3907438554756698,
+        "sentiment": 2.318966537359215,
+        "relation": 0.1719523093973597,
+        "person": 14.759694110779535,
+        "negation": 0.4110249612657797,
+        "idiom": 2.1811239627145587
+      },
+      "total": 20.233505691800797,
+      "lr": [
+        "2.747e-04",
+        "9.157e-04"
+      ]
+    },
+    {
+      "epoch": 4,
+      "ce": {
+        "pronoun": 0.3228444015452017,
+        "sentiment": 2.010147201873007,
+        "relation": 0.137338443980774,
+        "person": 14.500554845446633,
+        "negation": 0.4021459155316864,
+        "idiom": 1.4562003701215698
+      },
+      "total": 18.829231046494982,
+      "lr": [
+        "2.561e-04",
+        "8.536e-04"
+      ]
+    },
+    {
+      "epoch": 5,
+      "ce": {
+        "pronoun": 0.2416684509121946,
+        "sentiment": 1.9612638588462556,
+        "relation": 0.14224875003232487,
+        "person": 13.955334368206206,
+        "negation": 0.4567622302011365,
+        "idiom": 1.2442159539177304
+      },
+      "total": 18.001493646985008,
+      "lr": [
+        "2.333e-04",
+        "7.778e-04"
+      ]
+    },
+    {
+      "epoch": 6,
+      "ce": {
+        "pronoun": 0.13948463468945452,
+        "sentiment": 1.981860793772198,
+        "relation": 0.10670521444020171,
+        "person": 13.675405740737915,
+        "negation": 0.37680111209019307,
+        "idiom": 0.9377565048635006
+      },
+      "total": 17.218013967786515,
+      "lr": [
+        "2.074e-04",
+        "6.913e-04"
+      ]
+    },
+    {
+      "epoch": 7,
+      "ce": {
+        "pronoun": 0.20351534361197127,
+        "sentiment": 1.9372097083500452,
+        "relation": 0.08048457039209704,
+        "person": 13.861938045138405,
+        "negation": 0.3043649216581668,
+        "idiom": 0.7723663837781974
+      },
+      "total": 17.15987898054577,
+      "lr": [
+        "1.793e-04",
+        "5.975e-04"
+      ]
+    },
+    {
+      "epoch": 8,
+      "ce": {
+        "pronoun": 0.093266827708465,
+        "sentiment": 1.4362916114429634,
+        "relation": 0.08785509089717553,
+        "person": 13.054058557464963,
+        "negation": 0.24436278437219916,
+        "idiom": 0.7924914049605528
+      },
+      "total": 15.70832620348249,
+      "lr": [
+        "1.500e-04",
+        "5.000e-04"
+      ]
+    },
+    {
+      "epoch": 9,
+      "ce": {
+        "pronoun": 0.08540596719276869,
+        "sentiment": 2.079586291597003,
+        "relation": 0.06575774885935798,
+        "person": 13.220606923103333,
+        "negation": 0.21714974999693887,
+        "idiom": 0.46468389007662025
+      },
+      "total": 16.133190506980533,
+      "lr": [
+        "1.207e-04",
+        "4.025e-04"
+      ]
+    },
+    {
+      "epoch": 10,
+      "ce": {
+        "pronoun": 0.0682253019518352,
+        "sentiment": 1.562810855429797,
+        "relation": 0.05761751318572178,
+        "person": 12.980375971112933,
+        "negation": 0.16826048447927905,
+        "idiom": 0.3769239780626127
+      },
+      "total": 15.214214052472796,
+      "lr": [
+        "9.260e-05",
+        "3.087e-04"
+      ]
+    },
+    {
+      "epoch": 11,
+      "ce": {
+        "pronoun": 0.055068622792272696,
+        "sentiment": 1.3592490429679553,
+        "relation": 0.0445760297200953,
+        "person": 12.940213776770092,
+        "negation": 0.1984457586492811,
+        "idiom": 0.3533939975535586
+      },
+      "total": 14.9509471314294,
+      "lr": [
+        "6.666e-05",
+        "2.222e-04"
+      ]
+    },
+    {
+      "epoch": 12,
+      "ce": {
+        "pronoun": 0.047122849276222824,
+        "sentiment": 1.0475425031923113,
+        "relation": 0.039470531999887454,
+        "person": 12.731378771009899,
+        "negation": 0.2212929197454027,
+        "idiom": 0.2752644205465913
+      },
+      "total": 14.362071990966797,
+      "lr": [
+        "4.393e-05",
+        "1.464e-04"
+      ]
+    },
+    {
+      "epoch": 13,
+      "ce": {
+        "pronoun": 0.07842448614315972,
+        "sentiment": 0.8834801714512563,
+        "relation": 0.03671176688623659,
+        "person": 12.685542634555272,
+        "negation": 0.13118489427004187,
+        "idiom": 0.21181830165109464
+      },
+      "total": 14.027162330491203,
+      "lr": [
+        "2.528e-05",
+        "8.427e-05"
+      ]
+    },
+    {
+      "epoch": 14,
+      "ce": {
+        "pronoun": 0.028869560664697064,
+        "sentiment": 1.1628300866466903,
+        "relation": 0.04472506812973214,
+        "person": 12.464984479404631,
+        "negation": 0.18214584747329354,
+        "idiom": 0.21765240509107353
+      },
+      "total": 14.101207449322654,
+      "lr": [
+        "1.142e-05",
+        "3.806e-05"
+      ]
+    },
+    {
+      "epoch": 15,
+      "ce": {
+        "pronoun": 0.0393035757033864,
+        "sentiment": 1.0302911097449916,
+        "relation": 0.04208052515639879,
+        "person": 12.480076051893688,
+        "negation": 0.13261398092089666,
+        "idiom": 0.2107994676057604
+      },
+      "total": 13.935164803550357,
+      "lr": [
+        "2.882e-06",
+        "9.607e-06"
+      ]
+    },
+    {
+      "epoch": 16,
+      "ce": {
+        "pronoun": 0.03040561976376921,
+        "sentiment": 0.9588904452643224,
+        "relation": 0.03332094753637821,
+        "person": 12.397249318304516,
+        "negation": 0.11224807026086464,
+        "idiom": 0.19531559617081212
+      },
+      "total": 13.727430014383225,
+      "lr": [
+        "0.000e+00",
+        "0.000e+00"
+      ]
+    }
+  ]
+}

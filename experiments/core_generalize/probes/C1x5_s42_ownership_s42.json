@@ -1,0 +1,36 @@
+{
+  "label": "C1x5_s42",
+  "core": "experiments/core_generalize/cores/C1x5_s42.pt",
+  "holdout": "ownership",
+  "seed": 42,
+  "metrics": {
+    "cls_acc": 0.963855421686747,
+    "span_hit": 0.9301204819277108,
+    "bg_fp": 0.0,
+    "exact_match": 0.9266666666666666,
+    "slice_precision": 0.9253012048192771,
+    "slice_recall": 0.8767123287671232
+  },
+  "budget": {
+    "epochs": 16,
+    "steps_per_epoch": 84,
+    "n_steps": 1344,
+    "batch_size": 64,
+    "lr": 0.001,
+    "n_train": 5400,
+    "n_val": 600,
+    "sample_draws": 86016,
+    "core_trainable": 0,
+    "head_trainable": 630278,
+    "head_total": 630278
+  },
+  "floor": 0.30833333333333335,
+  "step0_exact": 0.21833333333333332,
+  "floor_plus_delta_hint": 0.30833333333333335,
+  "timing": {
+    "train_sec": 39.295938044997456,
+    "sec_per_step": 0.029238049140623106,
+    "sec_per_step_steady": 0.028855513999587856,
+    "peak_mem_mb": 165.72216796875
+  }
+}

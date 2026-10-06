@@ -1,0 +1,566 @@
+{
+  "mode": "chain",
+  "step": 3,
+  "seed": 42,
+  "cards": [
+    "pronoun",
+    "sentiment",
+    "relation",
+    "person",
+    "negation",
+    "idiom",
+    "ownership"
+  ],
+  "new_card": "ownership",
+  "frozen": [
+    "pronoun",
+    "sentiment",
+    "relation",
+    "person",
+    "negation",
+    "idiom"
+  ],
+  "trainable_heads": [
+    "ownership"
+  ],
+  "init": "experiments/cumulative_add/cards/step2_s42.pt",
+  "prev_metrics": "experiments/cumulative_add/cards/step2_s42.json",
+  "gate": {
+    "ok": true,
+    "checked": true
+  },
+  "start": {
+    "pronoun": {
+      "cls_acc": 1.0,
+      "span_hit": 0.9951100244498777,
+      "bg_fp": 0.0,
+      "n_cls": 409,
+      "n_bg": 191,
+      "exact_match": 0.9833333333333333,
+      "slice_precision": 0.9964243146603099,
+      "slice_recall": 0.9916963226571768,
+      "fingerprint": {
+        "pred_sha256": "ea11fc38b92747d324de7316917d780c05a6156ef195893ff8e1ee6b61e76536",
+        "logit_sha256": "6f8fb612dded4e6d02598185739711293c91f47f64304e9ff3ca079e1f7aca50"
+      }
+    },
+    "sentiment": {
+      "cls_acc": 0.9742616033755275,
+      "span_hit": 0.9687763713080169,
+      "bg_fp": 0.0,
+      "n_cls": 2370,
+      "n_bg": 830,
+      "exact_match": 0.943125,
+      "slice_precision": 0.951048951048951,
+      "slice_recall": 0.9296340973059911,
+      "fingerprint": {
+        "pred_sha256": "ddc603cbca62813bdc2066eff3c5d399e3bb04683655acab70c00aac01be4344",
+        "logit_sha256": "4f6cac133da8721355d80f62339717fbdaeb9ef520ae357b4699d20c97d177e6"
+      }
+    },
+    "relation": {
+      "cls_acc": 0.9980544747081712,
+      "span_hit": 1.0,
+      "bg_fp": 0.0048543689320388345,
+      "n_cls": 514,
+      "n_bg": 206,
+      "exact_match": 0.9972222222222222,
+      "slice_precision": 0.996116504854369,
+      "slice_recall": 0.9980544747081712,
+      "pair_exact": 0.9980544747081712,
+      "pair_order": 1.0,
+      "pair_odd": 0.0,
+      "n_pair": 514,
+      "fingerprint": {
+        "pred_sha256": "29f9211f523166284ecde87c5c4f2b5694045ac8cd3df6a2676e74c687bfe048",
+        "logit_sha256": "c733f1ac9d26aed6b924c15febb73398d3381fd9e73c2264d9b2edb4dd2f0505"
+      }
+    },
+    "person": {
+      "cls_acc": 1.0,
+      "span_hit": 1.0,
+      "bg_fp": 0.0,
+      "n_cls": 417,
+      "n_bg": 183,
+      "exact_match": 0.31666666666666665,
+      "slice_precision": 0.5919434194341944,
+      "slice_recall": 0.5828035119588253,
+      "id_acc": 0.7014134275618374,
+      "first_mention_acc": 0.8736702127659575,
+      "repeat_mention_acc": 0.3605263157894737,
+      "cluster_f1": 0.3634651600753296,
+      "n_measurable": 2264,
+      "fingerprint": {
+        "pred_sha256": "926c2ea6ffbc5e15dd8322b1567ca85173e02bf43c9b03cba074cf43f2fe2023",
+        "logit_sha256": "e82428489f2f4fbeb1440e184a7a149994427efed860bf37b0662a78fe60ea0c"
+      }
+    },
+    "negation": {
+      "cls_acc": 1.0,
+      "span_hit": 0.9975429975429976,
+      "bg_fp": 0.0051813471502590676,
+      "n_cls": 407,
+      "n_bg": 193,
+      "exact_match": 0.9833333333333333,
+      "slice_precision": 0.9886104783599089,
+      "slice_recall": 0.9819004524886877,
+      "fingerprint": {
+        "pred_sha256": "b414632a5be08b6981b496aee812bc57d9c12268602bbebf09522e9cd6612d4f",
+        "logit_sha256": "afb2450118ff7691cd767d690550c19ba11bd898b218b1a14deef94924f6c252"
+      }
+    },
+    "idiom": {
+      "cls_acc": 0.9352331606217616,
+      "span_hit": 0.8471502590673575,
+      "bg_fp": 0.11214953271028037,
+      "n_cls": 386,
+      "n_bg": 214,
+      "exact_match": 0.86,
+      "slice_precision": 0.845360824742268,
+      "slice_recall": 0.8388746803069054,
+      "fingerprint": {
+        "pred_sha256": "905c6dc01e6f9ef8af1937c005894d4d0eb67714583459461592ac19373fa3d0",
+        "logit_sha256": "d8e1059101041a704e898be1f071f836442bc6361e233afb2e6d72ece3e4f1b7"
+      }
+    }
+  },
+  "end": {
+    "pronoun": {
+      "cls_acc": 1.0,
+      "span_hit": 0.9926650366748166,
+      "bg_fp": 0.0,
+      "n_cls": 409,
+      "n_bg": 191,
+      "exact_match": 0.9733333333333334,
+      "slice_precision": 0.9916467780429594,
+      "slice_recall": 0.9857651245551602,
+      "fingerprint": {
+        "pred_sha256": "905be098d407c18a9fbe9938440cd68afae5492fa83f593567e627745cb98274",
+        "logit_sha256": "f8d28e975db4eb9df16cf26474048b655b7bf6257baeb462e11cfd3134c4dd89"
+      }
+    },
+    "sentiment": {
+      "cls_acc": 0.9789029535864979,
+      "span_hit": 0.970042194092827,
+      "bg_fp": 0.0,
+      "n_cls": 2370,
+      "n_bg": 830,
+      "exact_match": 0.9471875,
+      "slice_precision": 0.9536695366953669,
+      "slice_recall": 0.9352633695215119,
+      "fingerprint": {
+        "pred_sha256": "7225473ad9afdd192fa5f0ed307544cedbc5323cb456814abd4165a06737f32f",
+        "logit_sha256": "479c02d9c5af0715b4c8782a1532835c6be8d394fedf0ee12bfcced5b22363bc"
+      }
+    },
+    "relation": {
+      "cls_acc": 1.0,
+      "span_hit": 1.0,
+      "bg_fp": 0.0048543689320388345,
+      "n_cls": 514,
+      "n_bg": 206,
+      "exact_match": 0.9986111111111111,
+      "slice_precision": 0.9980582524271845,
+      "slice_recall": 1.0,
+      "pair_exact": 1.0,
+      "pair_order": 1.0,
+      "pair_odd": 0.0,
+      "n_pair": 514,
+      "fingerprint": {
+        "pred_sha256": "9c6583d86389423332658c69636cf7fa78dd70e0b58105ce3434e48ebe6caeae",
+        "logit_sha256": "058e39620548c457d32a0257a1bb2ad609f54a951923c091767f60046854f2d2"
+      }
+    },
+    "person": {
+      "cls_acc": 1.0,
+      "span_hit": 1.0,
+      "bg_fp": 0.0,
+      "n_cls": 417,
+      "n_bg": 183,
+      "exact_match": 0.31666666666666665,
+      "slice_precision": 0.5966748768472906,
+      "slice_recall": 0.5867393278837421,
+      "id_acc": 0.7080035180299032,
+      "first_mention_acc": 0.8855622089155023,
+      "repeat_mention_acc": 0.36186770428015563,
+      "cluster_f1": 0.3659889094269871,
+      "n_measurable": 2274,
+      "fingerprint": {
+        "pred_sha256": "325b5b7ca4d5f93e4862b35b6a038723fd46b610a94ea1e9efe032264225007f",
+        "logit_sha256": "9cd7744f7571faf44ce4c2bc2b02b9af294dfb7e539661c4a16aeb2c8468d827"
+      }
+    },
+    "negation": {
+      "cls_acc": 1.0,
+      "span_hit": 1.0,
+      "bg_fp": 0.02072538860103627,
+      "n_cls": 407,
+      "n_bg": 193,
+      "exact_match": 0.9783333333333334,
+      "slice_precision": 0.9863945578231292,
+      "slice_recall": 0.9841628959276018,
+      "fingerprint": {
+        "pred_sha256": "8ffcdc790a7e773d190516ea3abf3a29268a1d9001acf789c1c0458868a7c25a",
+        "logit_sha256": "917f7d12d0b9d2ba02db52079ed6f047b67638eac3c58e021e1e754c234beaf8"
+      }
+    },
+    "idiom": {
+      "cls_acc": 0.9430051813471503,
+      "span_hit": 0.8575129533678757,
+      "bg_fp": 0.09345794392523364,
+      "n_cls": 386,
+      "n_bg": 214,
+      "exact_match": 0.875,
+      "slice_precision": 0.8656330749354005,
+      "slice_recall": 0.8567774936061381,
+      "fingerprint": {
+        "pred_sha256": "1a5c0df2178825469efe789b0b687e3180680d4c9d90e1fa243166118e5ff85d",
+        "logit_sha256": "eb546da12f4583ee61323fd3accc91f88c8b0e500e60e53015bc484d531a38b0"
+      }
+    },
+    "ownership": {
+      "cls_acc": 0.9855421686746988,
+      "span_hit": 0.9903614457831326,
+      "bg_fp": 0.0,
+      "n_cls": 415,
+      "n_bg": 185,
+      "exact_match": 0.965,
+      "slice_precision": 0.9811764705882353,
+      "slice_recall": 0.952054794520548,
+      "fingerprint": {
+        "pred_sha256": "2c473a1a557f09e4aab7df3b13953a4509d6d9bf68cfd6816c188fb7c16b1036",
+        "logit_sha256": "0b628b6114043d0f2574bfdef4a00661c57cb745336976515d1743256650b747"
+      }
+    }
+  },
+  "params": {
+    "core_total": 1688460,
+    "core_trainable": 1688460,
+    "heads": {
+      "pronoun": {
+        "total": 630278,
+        "trainable": 0
+      },
+      "sentiment": {
+        "total": 630278,
+        "trainable": 0
+      },
+      "relation": {
+        "total": 630021,
+        "trainable": 0
+      },
+      "person": {
+        "total": 631306,
+        "trainable": 0
+      },
+      "negation": {
+        "total": 629764,
+        "trainable": 0
+      },
+      "idiom": {
+        "total": 629764,
+        "trainable": 0
+      },
+      "ownership": {
+        "total": 630278,
+        "trainable": 630278
+      }
+    },
+    "trainable_total": 2318738
+  },
+  "timing": {
+    "train_sec": 496.1670028769986,
+    "n_steps": 1344,
+    "sec_per_step": 0.36917187714062394,
+    "sec_per_step_steady": 0.36991158000091673,
+    "peak_mem_mb": 2532.048828125
+  },
+  "drift": {
+    "vs_base_end": 0.22209573580904843,
+    "vs_prev_end": 0.1040160376387116,
+    "vs_base_start": 0.17516875220744316
+  },
+  "val_sha256": {
+    "pronoun": "af522ea50a4e6ae0ef526e0320cd8f8be0ff2260a3ebfa273bd2963512129851",
+    "sentiment": "38003153379ba25425f31dc6ce2240c83142d8d59e02eab97ac539beda09a5c6",
+    "relation": "2e794d7ef07c2ddb4382d69b00aa1be720253a93ec92369da82465bce787c60c",
+    "person": "6c101185d4fcc33655bdf2f37261ec6968e6c2c862fb52662b9652721513f702",
+    "negation": "d9b80044ef1922480b149e5a1df1589f7e12b10de3db95d8a6cb3458775c4bcb",
+    "idiom": "c01edad93fada7ed982f0d6b12e569d6dc919e0679100d4f0c4b207315e3b372",
+    "ownership": "db8ac92c407197cf5345431d36f7f27160600ba17f72d0a834eab71a2ded2590"
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "ce": {
+        "pronoun": 0.11780512197652743,
+        "sentiment": 1.421518921674717,
+        "relation": 0.08689067978411913,
+        "person": 15.206865094956898,
+        "negation": 0.2547032507136464,
+        "idiom": 0.3096508769806297,
+        "ownership": 9.723522220339094
+      },
+      "total": 27.120956103007,
+      "lr": [
+        "2.971e-04",
+        "9.904e-04"
+      ]
+    },
+    {
+      "epoch": 2,
+      "ce": {
+        "pronoun": 0.14722526465387395,
+        "sentiment": 1.840576542807477,
+        "relation": 0.11483282038188052,
+        "person": 13.879701217015585,
+        "negation": 0.5472684604825363,
+        "idiom": 0.41652716288254377,
+        "ownership": 3.7003988098530542
+      },
+      "total": 20.646530242193315,
+      "lr": [
+        "2.886e-04",
+        "9.619e-04"
+      ]
+    },
+    {
+      "epoch": 3,
+      "ce": {
+        "pronoun": 0.20823579219480357,
+        "sentiment": 1.6206949314191228,
+        "relation": 0.15817749036830805,
+        "person": 13.577151616414389,
+        "negation": 0.44818036324743715,
+        "idiom": 0.49624694883823395,
+        "ownership": 2.5251643498916003
+      },
+      "total": 19.033851385116577,
+      "lr": [
+        "2.747e-04",
+        "9.157e-04"
+      ]
+    },
+    {
+      "epoch": 4,
+      "ce": {
+        "pronoun": 0.3028387953859887,
+        "sentiment": 1.8957474731973238,
+        "relation": 0.07967845049209982,
+        "person": 13.918437878290812,
+        "negation": 0.2505837913070406,
+        "idiom": 0.3658382292016454,
+        "ownership": 2.2180263709631705
+      },
+      "total": 19.031150817871094,
+      "lr": [
+        "2.561e-04",
+        "8.536e-04"
+      ]
+    },
+    {
+      "epoch": 5,
+      "ce": {
+        "pronoun": 0.1504495836062623,
+        "sentiment": 1.6489591100918395,
+        "relation": 0.08065138179587111,
+        "person": 13.461489995320639,
+        "negation": 0.24350479305056588,
+        "idiom": 0.3766875698319858,
+        "ownership": 1.9142252151366501
+      },
+      "total": 17.87596761612665,
+      "lr": [
+        "2.333e-04",
+        "7.778e-04"
+      ]
+    },
+    {
+      "epoch": 6,
+      "ce": {
+        "pronoun": 0.1531156808736601,
+        "sentiment": 1.174212591811305,
+        "relation": 0.09571258244215555,
+        "person": 13.281479120254517,
+        "negation": 0.22491025960161573,
+        "idiom": 0.30581480860044913,
+        "ownership": 2.048555228149607
+      },
+      "total": 17.28380009106227,
+      "lr": [
+        "2.074e-04",
+        "6.913e-04"
+      ]
+    },
+    {
+      "epoch": 7,
+      "ce": {
+        "pronoun": 0.09744115763099953,
+        "sentiment": 1.3292510524569523,
+        "relation": 0.06458864558399433,
+        "person": 13.016764584041777,
+        "negation": 0.39011857184093623,
+        "idiom": 0.29003918665416895,
+        "ownership": 1.3977443825320475
+      },
+      "total": 16.58594744546073,
+      "lr": [
+        "1.793e-04",
+        "5.975e-04"
+      ]
+    },
+    {
+      "epoch": 8,
+      "ce": {
+        "pronoun": 0.09665051975753158,
+        "sentiment": 1.4194682424089737,
+        "relation": 0.059798539810193084,
+        "person": 13.096060855048043,
+        "negation": 0.17995402966404245,
+        "idiom": 0.23259039648941585,
+        "ownership": 1.090121012779751
+      },
+      "total": 16.174643550600326,
+      "lr": [
+        "1.500e-04",
+        "5.000e-04"
+      ]
+    },
+    {
+      "epoch": 9,
+      "ce": {
+        "pronoun": 0.05753697770082259,
+        "sentiment": 1.1978833322368918,
+        "relation": 0.04532184292440347,
+        "person": 12.770360747973124,
+        "negation": 0.1729567071001622,
+        "idiom": 0.21673802795287753,
+        "ownership": 1.144711271637962
+      },
+      "total": 15.605508929207211,
+      "lr": [
+        "1.207e-04",
+        "4.025e-04"
+      ]
+    },
+    {
+      "epoch": 10,
+      "ce": {
+        "pronoun": 0.050430775755861156,
+        "sentiment": 1.019550502655052,
+        "relation": 0.04599858918282691,
+        "person": 12.521259341921125,
+        "negation": 0.12915076679062276,
+        "idiom": 0.19410194769235595,
+        "ownership": 0.7277939707218182
+      },
+      "total": 14.688285986582438,
+      "lr": [
+        "9.260e-05",
+        "3.087e-04"
+      ]
+    },
+    {
+      "epoch": 11,
+      "ce": {
+        "pronoun": 0.03841007825186742,
+        "sentiment": 1.6625061326970656,
+        "relation": 0.032745819290756206,
+        "person": 12.517436720076061,
+        "negation": 0.09876484245372315,
+        "idiom": 0.0783869515539014,
+        "ownership": 0.6090698747762612
+      },
+      "total": 15.037320409502302,
+      "lr": [
+        "6.666e-05",
+        "2.222e-04"
+      ]
+    },
+    {
+      "epoch": 12,
+      "ce": {
+        "pronoun": 0.028439619340046886,
+        "sentiment": 0.7843262973640647,
+        "relation": 0.035573362602874456,
+        "person": 12.011941620281764,
+        "negation": 0.10023135759512938,
+        "idiom": 0.13012965687639302,
+        "ownership": 0.4145473485834719
+      },
+      "total": 13.505189214433942,
+      "lr": [
+        "4.393e-05",
+        "1.464e-04"
+      ]
+    },
+    {
+      "epoch": 13,
+      "ce": {
+        "pronoun": 0.04444309171577472,
+        "sentiment": 1.0377793155965351,
+        "relation": 0.024960955481566044,
+        "person": 11.992077730950855,
+        "negation": 0.09417589658516504,
+        "idiom": 0.1196255936132123,
+        "ownership": 0.400400837550738
+      },
+      "total": 13.713463635671706,
+      "lr": [
+        "2.528e-05",
+        "8.427e-05"
+      ]
+    },
+    {
+      "epoch": 14,
+      "ce": {
+        "pronoun": 0.0332017298912563,
+        "sentiment": 0.9161855817905494,
+        "relation": 0.020909423488081388,
+        "person": 11.940185910179501,
+        "negation": 0.10738036432303488,
+        "idiom": 0.17229479896680763,
+        "ownership": 0.2772360868485911
+      },
+      "total": 13.467393841062274,
+      "lr": [
+        "1.142e-05",
+        "3.806e-05"
+      ]
+    },
+    {
+      "epoch": 15,
+      "ce": {
+        "pronoun": 0.026608765197341285,
+        "sentiment": 1.0594799565594821,
+        "relation": 0.029162646468085723,
+        "person": 11.794620230084373,
+        "negation": 0.11754649577085816,
+        "idiom": 0.1334277266259527,
+        "ownership": 0.31030974105843123
+      },
+      "total": 13.4711556548164,
+      "lr": [
+        "2.882e-06",
+        "9.607e-06"
+      ]
+    },
+    {
+      "epoch": 16,
+      "ce": {
+        "pronoun": 0.027895744848397692,
+        "sentiment": 0.8351556581578085,
+        "relation": 0.02521908242904049,
+        "person": 11.8058979340962,
+        "negation": 0.10354434606796574,
+        "idiom": 0.11494611081711593,
+        "ownership": 0.3000076430672336
+      },
+      "total": 13.21266660236177,
+      "lr": [
+        "0.000e+00",
+        "0.000e+00"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,800 @@
+{
+  "bands": {
+    "pronoun": 0.0283,
+    "sentiment": 0.0041,
+    "relation": 0.0139,
+    "person": 0.0033,
+    "negation": 0.018333333333333313,
+    "idiom": 0.06166666666666665,
+    "ownership": 0.0033333333333332993
+  },
+  "band_pt": {
+    "pronoun": 2.83,
+    "sentiment": 0.41,
+    "relation": 1.39,
+    "person": 0.33,
+    "negation": 1.83,
+    "idiom": 6.17,
+    "ownership": 0.33
+  },
+  "seeds": {
+    "42": {
+      "step0_exact": {
+        "pronoun": 0.9533333333333334,
+        "sentiment": 0.79375,
+        "relation": 0.9638888888888889,
+        "person": 0.31,
+        "negation": 0.9766666666666667,
+        "idiom": 0.86,
+        "ownership": 0.965
+      },
+      "gate_ok_step0": true,
+      "steps": {
+        "1": {
+          "new": "negation",
+          "exact_start": {
+            "pronoun": 0.9533333333333334,
+            "sentiment": 0.79375,
+            "relation": 0.9638888888888889,
+            "person": 0.31
+          },
+          "exact_end": {
+            "pronoun": 0.9766666666666667,
+            "sentiment": 0.9178125,
+            "relation": 0.9930555555555556,
+            "person": 0.31333333333333335,
+            "negation": 0.9766666666666667
+          },
+          "p1": {
+            "pronoun": {
+              "start": 0.9533333333333334,
+              "end": 0.9766666666666667,
+              "delta": 0.023333333333333317,
+              "delta_pt": 2.333,
+              "band": 0.0283,
+              "pass_one_side": true,
+              "pass_two_side": true,
+              "delta_vs_step0": 0.023333333333333317,
+              "delta_vs_step0_pt": 2.333,
+              "floor": 0.3183,
+              "on_floor": false
+            },
+            "sentiment": {
+              "start": 0.79375,
+              "end": 0.9178125,
+              "delta": 0.12406250000000008,
+              "delta_pt": 12.406,
+              "band": 0.0041,
+              "pass_one_side": true,
+              "pass_two_side": false,
+              "delta_vs_step0": 0.12406250000000008,
+              "delta_vs_step0_pt": 12.406,
+              "floor": 0.2594,
+              "on_floor": false
+            },
+            "relation": {
+              "start": 0.9638888888888889,
+              "end": 0.9930555555555556,
+              "delta": 0.029166666666666674,
+              "delta_pt": 2.917,
+              "band": 0.0139,
+              "pass_one_side": true,
+              "pass_two_side": false,
+              "delta_vs_step0": 0.029166666666666674,
+              "delta_vs_step0_pt": 2.917,
+              "floor": 0.2861,
+              "on_floor": false
+            },
+            "person": {
+              "start": 0.31,
+              "end": 0.31333333333333335,
+              "delta": 0.003333333333333355,
+              "delta_pt": 0.333,
+              "band": 0.0033,
+              "pass_one_side": true,
+              "pass_two_side": false,
+              "delta_vs_step0": 0.003333333333333355,
+              "delta_vs_step0_pt": 0.333,
+              "floor": 0.305,
+              "on_floor": true
+            }
+          },
+          "p1_pass": true,
+          "p1_pass_two_side": false,
+          "p2": {
+            "new": "negation",
+            "exact": 0.9766666666666667,
+            "ctrl": 0.9816666666666667,
+            "ratio": 0.9949066213921901,
+            "ratio_pct": 99.5,
+            "line": 0.9,
+            "pass": true,
+            "degenerate": true
+          },
+          "timing": {
+            "train_sec": 362.3874384780029,
+            "n_steps": 1344,
+            "sec_per_step": 0.26963351077232356,
+            "sec_per_step_steady": 0.25512507099847426,
+            "peak_mem_mb": 2081.54052734375
+          },
+          "drift": {
+            "vs_base_end": 0.1125965393125263,
+            "vs_base_start": 0.0,
+            "vs_prev_end": 0.0
+          },
+          "params_trainable": 2318224
+        },
+        "2": {
+          "new": "idiom",
+          "exact_start": {
+            "pronoun": 0.9766666666666667,
+            "sentiment": 0.9178125,
+            "relation": 0.9930555555555556,
+            "person": 0.31333333333333335,
+            "negation": 0.9766666666666667
+          },
+          "exact_end": {
+            "pronoun": 0.9833333333333333,
+            "sentiment": 0.943125,
+            "relation": 0.9972222222222222,
+            "person": 0.31666666666666665,
+            "negation": 0.9833333333333333,
+            "idiom": 0.86
+          },
+          "p1": {
+            "pronoun": {
+              "start": 0.9766666666666667,
+              "end": 0.9833333333333333,
+              "delta": 0.006666666666666599,
+              "delta_pt": 0.667,
+              "band": 0.0283,
+              "pass_one_side": true,
+              "pass_two_side": true,
+              "delta_vs_step0": 0.029999999999999916,
+              "delta_vs_step0_pt": 3.0,
+              "floor": 0.3183,
+              "on_floor": false
+            },
+            "sentiment": {
+              "start": 0.9178125,
+              "end": 0.943125,
+              "delta": 0.02531249999999996,
+              "delta_pt": 2.531,
+              "band": 0.0041,
+              "pass_one_side": true,
+              "pass_two_side": false,
+              "delta_vs_step0": 0.14937500000000004,
+              "delta_vs_step0_pt": 14.938,
+              "floor": 0.2594,
+              "on_floor": false
+            },
+            "relation": {
+              "start": 0.9930555555555556,
+              "end": 0.9972222222222222,
+              "delta": 0.004166666666666652,
+              "delta_pt": 0.417,
+              "band": 0.0139,
+              "pass_one_side": true,
+              "pass_two_side": true,
+              "delta_vs_step0": 0.033333333333333326,
+              "delta_vs_step0_pt": 3.333,
+              "floor": 0.2861,
+              "on_floor": false
+            },
+            "person": {
+              "start": 0.31333333333333335,
+              "end": 0.31666666666666665,
+              "delta": 0.0033333333333332993,
+              "delta_pt": 0.333,
+              "band": 0.0033,
+              "pass_one_side": true,
+              "pass_two_side": false,
+              "delta_vs_step0": 0.006666666666666654,
+              "delta_vs_step0_pt": 0.667,
+              "floor": 0.305,
+              "on_floor": true
+            },
+            "negation": {
+              "start": 0.9766666666666667,
+              "end": 0.9833333333333333,
+              "delta": 0.006666666666666599,
+              "delta_pt": 0.667,
+              "band": 0.018333333333333313,
+              "pass_one_side": true,
+              "pass_two_side": true,
+              "delta_vs_step0": 0.006666666666666599,
+              "delta_vs_step0_pt": 0.667,
+              "floor": 0.3217,
+              "on_floor": false
+            }
+          },
+          "p1_pass": true,
+          "p1_pass_two_side": false,
+          "p2": {
+            "new": "idiom",
+            "exact": 0.86,
+            "ctrl": 0.85,
+            "ratio": 1.011764705882353,
+            "ratio_pct": 101.2,
+            "line": 0.9,
+            "pass": true,
+            "degenerate": false
+          },
+          "timing": {
+            "train_sec": 444.76409129700187,
+            "n_steps": 1344,
+            "sec_per_step": 0.3309256631674121,
+            "sec_per_step_steady": 0.33470728500105906,
+            "peak_mem_mb": 2317.67041015625
+          },
+          "drift": {
+            "vs_base_end": 0.17516875220744316,
+            "vs_prev_end": 0.11421805540898117,
+            "vs_base_start": 0.1125965393125263
+          },
+          "params_trainable": 2318224
+        },
+        "3": {
+          "new": "ownership",
+          "exact_start": {
+            "pronoun": 0.9833333333333333,
+            "sentiment": 0.943125,
+            "relation": 0.9972222222222222,
+            "person": 0.31666666666666665,
+            "negation": 0.9833333333333333,
+            "idiom": 0.86
+          },
+          "exact_end": {
+            "pronoun": 0.9733333333333334,
+            "sentiment": 0.9471875,
+            "relation": 0.9986111111111111,
+            "person": 0.31666666666666665,
+            "negation": 0.9783333333333334,
+            "idiom": 0.875,
+            "ownership": 0.965
+          },
+          "p1": {
+            "pronoun": {
+              "start": 0.9833333333333333,
+              "end": 0.9733333333333334,
+              "delta": -0.009999999999999898,
+              "delta_pt": -1.0,
+              "band": 0.0283,
+              "pass_one_side": true,
+              "pass_two_side": true,
+              "delta_vs_step0": 0.020000000000000018,
+              "delta_vs_step0_pt": 2.0,
+              "floor": 0.3183,
+              "on_floor": false
+            },
+            "sentiment": {
+              "start": 0.943125,
+              "end": 0.9471875,
+              "delta": 0.004062499999999969,
+              "delta_pt": 0.406,
+              "band": 0.0041,
+              "pass_one_side": true,
+              "pass_two_side": true,
+              "delta_vs_step0": 0.1534375,
+              "delta_vs_step0_pt": 15.344,
+              "floor": 0.2594,
+              "on_floor": false
+            },
+            "relation": {
+              "start": 0.9972222222222222,
+              "end": 0.9986111111111111,
+              "delta": 0.001388888888888884,
+              "delta_pt": 0.139,
+              "band": 0.0139,
+              "pass_one_side": true,
+              "pass_two_side": true,
+              "delta_vs_step0": 0.03472222222222221,
+              "delta_vs_step0_pt": 3.472,
+              "floor": 0.2861,
+              "on_floor": false
+            },
+            "person": {
+              "start": 0.31666666666666665,
+              "end": 0.31666666666666665,
+              "delta": 0.0,
+              "delta_pt": 0.0,
+              "band": 0.0033,
+              "pass_one_side": true,
+              "pass_two_side": true,
+              "delta_vs_step0": 0.006666666666666654,
+              "delta_vs_step0_pt": 0.667,
+              "floor": 0.305,
+              "on_floor": true
+            },
+            "negation": {
+              "start": 0.9833333333333333,
+              "end": 0.9783333333333334,
+              "delta": -0.004999999999999893,
+              "delta_pt": -0.5,
+              "band": 0.018333333333333313,
+              "pass_one_side": true,
+              "pass_two_side": true,
+              "delta_vs_step0": 0.0016666666666667052,
+              "delta_vs_step0_pt": 0.167,
+              "floor": 0.3217,
+              "on_floor": false
+            },
+            "idiom": {
+              "start": 0.86,
+              "end": 0.875,
+              "delta": 0.015000000000000013,
+              "delta_pt": 1.5,
+              "band": 0.06166666666666665,
+              "pass_one_side": true,
+              "pass_two_side": true,
+              "delta_vs_step0": 0.015000000000000013,
+              "delta_vs_step0_pt": 1.5,
+              "floor": 0.3567,
+              "on_floor": false
+            }
+          },
+          "p1_pass": true,
+          "p1_pass_two_side": true,
+          "p2": {
+            "new": "ownership",
+            "exact": 0.965,
+            "ctrl": 0.965,
+            "ratio": 1.0,
+            "ratio_pct": 100.0,
+            "line": 0.9,
+            "pass": true,
+            "degenerate": false
+          },
+          "timing": {
+            "train_sec": 496.1670028769986,
+            "n_steps": 1344,
+            "sec_per_step": 0.36917187714062394,
+            "sec_per_step_steady": 0.36991158000091673,
+            "peak_mem_mb": 2532.048828125
+          },
+          "drift": {
+            "vs_base_end": 0.22209573580904843,
+            "vs_prev_end": 0.1040160376387116,
+            "vs_base_start": 0.17516875220744316
+          },
+          "params_trainable": 2318738
+        }
+      }
+    },
+    "43": {
+      "step0_exact": {
+        "pronoun": 0.98,
+        "sentiment": 0.8146875,
+        "relation": 0.9652777777777778,
+        "person": 0.3233333333333333,
+        "negation": 0.955,
+        "idiom": 0.8133333333333334,
+        "ownership": 0.965
+      },
+      "gate_ok_step0": true,
+      "steps": {
+        "1": {
+          "new": "negation",
+          "exact_start": {
+            "pronoun": 0.98,
+            "sentiment": 0.8146875,
+            "relation": 0.9652777777777778,
+            "person": 0.3233333333333333
+          },
+          "exact_end": {
+            "pronoun": 0.985,
+            "sentiment": 0.9328125,
+            "relation": 0.9930555555555556,
+            "person": 0.3233333333333333,
+            "negation": 0.955
+          },
+          "p1": {
+            "pronoun": {
+              "start": 0.98,
+              "end": 0.985,
+              "delta": 0.0050000000000000044,
+              "delta_pt": 0.5,
+              "band": 0.0283,
+              "pass_one_side": true,
+              "pass_two_side": true,
+              "delta_vs_step0": 0.0050000000000000044,
+              "delta_vs_step0_pt": 0.5,
+              "floor": 0.2933,
+              "on_floor": false
+            },
+            "sentiment": {
+              "start": 0.8146875,
+              "end": 0.9328125,
+              "delta": 0.11812500000000004,
+              "delta_pt": 11.813,
+              "band": 0.0041,
+              "pass_one_side": true,
+              "pass_two_side": false,
+              "delta_vs_step0": 0.11812500000000004,
+              "delta_vs_step0_pt": 11.813,
+              "floor": 0.2584,
+              "on_floor": false
+            },
+            "relation": {
+              "start": 0.9652777777777778,
+              "end": 0.9930555555555556,
+              "delta": 0.02777777777777779,
+              "delta_pt": 2.778,
+              "band": 0.0139,
+              "pass_one_side": true,
+              "pass_two_side": false,
+              "delta_vs_step0": 0.02777777777777779,
+              "delta_vs_step0_pt": 2.778,
+              "floor": 0.2694,
+              "on_floor": false
+            },
+            "person": {
+              "start": 0.3233333333333333,
+              "end": 0.3233333333333333,
+              "delta": 0.0,
+              "delta_pt": 0.0,
+              "band": 0.0033,
+              "pass_one_side": true,
+              "pass_two_side": true,
+              "delta_vs_step0": 0.0,
+              "delta_vs_step0_pt": 0.0,
+              "floor": 0.3167,
+              "on_floor": true
+            }
+          },
+          "p1_pass": true,
+          "p1_pass_two_side": false,
+          "p2": {
+            "new": "negation",
+            "exact": 0.955,
+            "ctrl": 0.9633333333333334,
+            "ratio": 0.991349480968858,
+            "ratio_pct": 99.1,
+            "line": 0.9,
+            "pass": true,
+            "degenerate": true
+          },
+          "timing": {
+            "train_sec": 344.2082244560006,
+            "n_steps": 1344,
+            "sec_per_step": 0.2561073098630957,
+            "sec_per_step_steady": 0.25504100599937374,
+            "peak_mem_mb": 2088.09912109375
+          },
+          "drift": {
+            "vs_base_end": 0.11220639945625602,
+            "vs_base_start": 0.0,
+            "vs_prev_end": 0.0
+          },
+          "params_trainable": 2318224
+        },
+        "2": {
+          "new": "idiom",
+          "exact_start": {
+            "pronoun": 0.985,
+            "sentiment": 0.9328125,
+            "relation": 0.9930555555555556,
+            "person": 0.3233333333333333,
+            "negation": 0.955
+          },
+          "exact_end": {
+            "pronoun": 0.9766666666666667,
+            "sentiment": 0.9521875,
+            "relation": 0.9958333333333333,
+            "person": 0.3233333333333333,
+            "negation": 0.9566666666666667,
+            "idiom": 0.8133333333333334
+          },
+          "p1": {
+            "pronoun": {
+              "start": 0.985,
+              "end": 0.9766666666666667,
+              "delta": -0.008333333333333304,
+              "delta_pt": -0.833,
+              "band": 0.0283,
+              "pass_one_side": true,
+              "pass_two_side": true,
+              "delta_vs_step0": -0.0033333333333332993,
+              "delta_vs_step0_pt": -0.333,
+              "floor": 0.2933,
+              "on_floor": false
+            },
+            "sentiment": {
+              "start": 0.9328125,
+              "end": 0.9521875,
+              "delta": 0.01937499999999992,
+              "delta_pt": 1.937,
+              "band": 0.0041,
+              "pass_one_side": true,
+              "pass_two_side": false,
+              "delta_vs_step0": 0.13749999999999996,
+              "delta_vs_step0_pt": 13.75,
+              "floor": 0.2584,
+              "on_floor": false
+            },
+            "relation": {
+              "start": 0.9930555555555556,
+              "end": 0.9958333333333333,
+              "delta": 0.002777777777777768,
+              "delta_pt": 0.278,
+              "band": 0.0139,
+              "pass_one_side": true,
+              "pass_two_side": true,
+              "delta_vs_step0": 0.030555555555555558,
+              "delta_vs_step0_pt": 3.056,
+              "floor": 0.2694,
+              "on_floor": false
+            },
+            "person": {
+              "start": 0.3233333333333333,
+              "end": 0.3233333333333333,
+              "delta": 0.0,
+              "delta_pt": 0.0,
+              "band": 0.0033,
+              "pass_one_side": true,
+              "pass_two_side": true,
+              "delta_vs_step0": 0.0,
+              "delta_vs_step0_pt": 0.0,
+              "floor": 0.3167,
+              "on_floor": true
+            },
+            "negation": {
+              "start": 0.955,
+              "end": 0.9566666666666667,
+              "delta": 0.0016666666666667052,
+              "delta_pt": 0.167,
+              "band": 0.018333333333333313,
+              "pass_one_side": true,
+              "pass_two_side": true,
+              "delta_vs_step0": 0.0016666666666667052,
+              "delta_vs_step0_pt": 0.167,
+              "floor": 0.3633,
+              "on_floor": false
+            }
+          },
+          "p1_pass": true,
+          "p1_pass_two_side": false,
+          "p2": {
+            "new": "idiom",
+            "exact": 0.8133333333333334,
+            "ctrl": 0.7883333333333333,
+            "ratio": 1.0317124735729388,
+            "ratio_pct": 103.2,
+            "line": 0.9,
+            "pass": true,
+            "degenerate": false
+          },
+          "timing": {
+            "train_sec": 383.6128556629992,
+            "n_steps": 1344,
+            "sec_per_step": 0.2854262318921125,
+            "sec_per_step_steady": 0.28335238300132914,
+            "peak_mem_mb": 2332.5576171875
+          },
+          "drift": {
+            "vs_base_end": 0.1720174848925409,
+            "vs_prev_end": 0.11042168481197727,
+            "vs_base_start": 0.11220639945625602
+          },
+          "params_trainable": 2318224
+        },
+        "3": {
+          "new": "ownership",
+          "exact_start": {
+            "pronoun": 0.9766666666666667,
+            "sentiment": 0.9521875,
+            "relation": 0.9958333333333333,
+            "person": 0.3233333333333333,
+            "negation": 0.9566666666666667,
+            "idiom": 0.8133333333333334
+          },
+          "exact_end": {
+            "pronoun": 0.9816666666666667,
+            "sentiment": 0.958125,
+            "relation": 0.9972222222222222,
+            "person": 0.32166666666666666,
+            "negation": 0.965,
+            "idiom": 0.8116666666666666,
+            "ownership": 0.965
+          },
+          "p1": {
+            "pronoun": {
+              "start": 0.9766666666666667,
+              "end": 0.9816666666666667,
+              "delta": 0.0050000000000000044,
+              "delta_pt": 0.5,
+              "band": 0.0283,
+              "pass_one_side": true,
+              "pass_two_side": true,
+              "delta_vs_step0": 0.0016666666666667052,
+              "delta_vs_step0_pt": 0.167,
+              "floor": 0.2933,
+              "on_floor": false
+            },
+            "sentiment": {
+              "start": 0.9521875,
+              "end": 0.958125,
+              "delta": 0.00593750000000004,
+              "delta_pt": 0.594,
+              "band": 0.0041,
+              "pass_one_side": true,
+              "pass_two_side": false,
+              "delta_vs_step0": 0.1434375,
+              "delta_vs_step0_pt": 14.344,
+              "floor": 0.2584,
+              "on_floor": false
+            },
+            "relation": {
+              "start": 0.9958333333333333,
+              "end": 0.9972222222222222,
+              "delta": 0.001388888888888884,
+              "delta_pt": 0.139,
+              "band": 0.0139,
+              "pass_one_side": true,
+              "pass_two_side": true,
+              "delta_vs_step0": 0.03194444444444444,
+              "delta_vs_step0_pt": 3.194,
+              "floor": 0.2694,
+              "on_floor": false
+            },
+            "person": {
+              "start": 0.3233333333333333,
+              "end": 0.32166666666666666,
+              "delta": -0.0016666666666666496,
+              "delta_pt": -0.167,
+              "band": 0.0033,
+              "pass_one_side": true,
+              "pass_two_side": true,
+              "delta_vs_step0": -0.0016666666666666496,
+              "delta_vs_step0_pt": -0.167,
+              "floor": 0.3167,
+              "on_floor": true
+            },
+            "negation": {
+              "start": 0.9566666666666667,
+              "end": 0.965,
+              "delta": 0.008333333333333304,
+              "delta_pt": 0.833,
+              "band": 0.018333333333333313,
+              "pass_one_side": true,
+              "pass_two_side": true,
+              "delta_vs_step0": 0.010000000000000009,
+              "delta_vs_step0_pt": 1.0,
+              "floor": 0.3633,
+              "on_floor": false
+            },
+            "idiom": {
+              "start": 0.8133333333333334,
+              "end": 0.8116666666666666,
+              "delta": -0.0016666666666667052,
+              "delta_pt": -0.167,
+              "band": 0.06166666666666665,
+              "pass_one_side": true,
+              "pass_two_side": true,
+              "delta_vs_step0": -0.0016666666666667052,
+              "delta_vs_step0_pt": -0.167,
+              "floor": 0.3333,
+              "on_floor": false
+            }
+          },
+          "p1_pass": true,
+          "p1_pass_two_side": false,
+          "p2": {
+            "new": "ownership",
+            "exact": 0.965,
+            "ctrl": 0.9616666666666667,
+            "ratio": 1.0034662045060658,
+            "ratio_pct": 100.3,
+            "line": 0.9,
+            "pass": true,
+            "degenerate": false
+          },
+          "timing": {
+            "train_sec": 427.9156246269995,
+            "n_steps": 1344,
+            "sec_per_step": 0.31838960165699365,
+            "sec_per_step_steady": 0.31761160499809193,
+            "peak_mem_mb": 2535.0849609375
+          },
+          "drift": {
+            "vs_base_end": 0.21855886485659,
+            "vs_prev_end": 0.10280448482568869,
+            "vs_base_start": 0.1720174848925409
+          },
+          "params_trainable": 2318738
+        }
+      }
+    }
+  },
+  "p3": {
+    "42": {
+      "drift_vs_base": [
+        0.1125965393125263,
+        0.17516875220744316,
+        0.22209573580904843
+      ],
+      "delta": [
+        0.1125965393125263,
+        0.06257221289491685,
+        0.04692698360160527
+      ],
+      "sec_per_step": {
+        "1": 0.25512507099847426,
+        "2": 0.33470728500105906,
+        "3": 0.36991158000091673
+      },
+      "peak_mb": {
+        "1": 2081.54052734375,
+        "2": 2317.67041015625,
+        "3": 2532.048828125
+      },
+      "sec_growth_vs_step1": {
+        "2": 1.311934118003874,
+        "3": 1.449922497045102
+      },
+      "mem_growth_vs_step1": {
+        "2": 1.113439964156655,
+        "3": 1.216430232735436
+      }
+    },
+    "43": {
+      "drift_vs_base": [
+        0.11220639945625602,
+        0.1720174848925409,
+        0.21855886485659
+      ],
+      "delta": [
+        0.11220639945625602,
+        0.05981108543628488,
+        0.04654137996404911
+      ],
+      "sec_per_step": {
+        "1": 0.25504100599937374,
+        "2": 0.28335238300132914,
+        "3": 0.31761160499809193
+      },
+      "peak_mb": {
+        "1": 2088.09912109375,
+        "2": 2332.5576171875,
+        "3": 2535.0849609375
+      },
+      "sec_growth_vs_step1": {
+        "2": 1.1110071570295834,
+        "3": 1.2453354461708477
+      },
+      "mem_growth_vs_step1": {
+        "2": 1.1170722661698655,
+        "3": 1.2140635161081903
+      }
+    }
+  },
+  "bg_frac": {
+    "42": {
+      "pronoun": 0.3183,
+      "sentiment": 0.2594,
+      "relation": 0.2861,
+      "person": 0.305,
+      "negation": 0.3217,
+      "idiom": 0.3567,
+      "ownership": 0.3083
+    },
+    "43": {
+      "pronoun": 0.2933,
+      "sentiment": 0.2584,
+      "relation": 0.2694,
+      "person": 0.3167,
+      "negation": 0.3633,
+      "idiom": 0.3333,
+      "ownership": 0.2933
+    }
+  },
+  "p3_shape": "减速/收敛",
+  "cost_overrun": false,
+  "verdict": "流程可反复用",
+  "why": {},
+  "missing": [],
+  "gate_fail": [],
+  "p1_all": true,
+  "p2_all": true
+}
