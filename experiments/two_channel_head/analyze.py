@@ -283,9 +283,12 @@ def main() -> None:
 
     verdict = ""
     reason = []
-    if not (w3_ok and w4["pass"]):
+    if not w4["pass"]:
         verdict = "证据不足"
-        reason.append("W3/W4 未过")
+        reason.append("W4：朴素规则在 train ≥90%，数据集无效")
+    elif not w3_ok:
+        verdict = "证据不足"
+        reason.append("W3：随机标签对照未落回字面基线门槛（见 w3 明细）")
     elif not (g1["pass_42"] and g1["pass_43"]):
         verdict = "证据不足"
         reason.append("G1：生成通道未超过免费规则")
