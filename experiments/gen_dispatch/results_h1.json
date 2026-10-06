@@ -1,0 +1,1362 @@
+{
+ "mode": "h1",
+ "started": "2026-10-07 02:53:11",
+ "engine": {
+  "cards": [
+   "idiom",
+   "negation",
+   "person",
+   "pronoun",
+   "relation",
+   "sentiment"
+  ],
+  "detail": {
+   "negation": "checkpoints/negation_accept_card.pt",
+   "negation_name": "negation",
+   "idiom": "experiments/cumulative_add/cards/ctrl_idiom_s42.pt",
+   "idiom_info": {
+    "rebuilt": false
+   }
+  }
+ },
+ "samples": {
+  "files_used": [
+   "coig_code_dialogue.txt",
+   "coig_cqia_dialogue.txt",
+   "coig_logic_dialogue.txt",
+   "coig_math_dialogue.txt",
+   "coig_other_dialogue.txt",
+   "coig_wiki_dialogue.txt",
+   "dailychat_dialogue.txt",
+   "deepseek_r1_distill_dialogue.txt",
+   "glm_dialogue.txt",
+   "identity_dialogue.txt",
+   "kdconv_dialogue.txt",
+   "lccc_dialogue.txt",
+   "muice_dialogue.txt",
+   "multi_turn_dialogue.txt",
+   "qwen3_235b_distill_dialogue.txt",
+   "zhihu_kol_dialogue.txt"
+  ],
+  "files_dropped": [
+   {
+    "file": "code_alpaca_dialogue.txt",
+    "lines": 287426,
+    "han_chars": 4055,
+    "nonspace_chars": 8182731,
+    "han_ratio": 0.0005,
+    "keep": false
+   },
+   {
+    "file": "gsm8k_cot_dialogue.txt",
+    "lines": 56016,
+    "han_chars": 244002,
+    "nonspace_chars": 3439686,
+    "han_ratio": 0.0709,
+    "keep": false
+   }
+  ],
+  "n_random": 998,
+  "n_enriched": 398,
+  "formula": "汉字占比 = 汉字数 / 非空白字符数（整文件流式）",
+  "threshold": 0.5
+ },
+ "h1": {
+  "tag": "h1",
+  "n": 100,
+  "channel": {
+   "pointer": 99,
+   "reject": 1
+  },
+  "terminal": {
+   "generate": 54,
+   "pointer": 46
+  },
+  "G_true": 0,
+  "P_true": 99,
+  "reject": {
+   "n": 1,
+   "with_text_field": 0,
+   "reason_empty": 0,
+   "false_reject": 0
+  },
+  "text": {
+   "n": 99,
+   "illegal": 0
+  },
+  "h2_contract_fail": 0,
+  "h3": {
+   "n_generated": 0,
+   "structure_problems": 0,
+   "deref_problems": 0
+  },
+  "h1": {
+   "checked": 100,
+   "plan_mismatch": 0,
+   "record_mismatch": 0,
+   "fails": []
+  },
+  "rule_rows": {
+   "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针": 54,
+   "R-CH4 终点=pointer 且指针有据": 45,
+   "R-CH5 终点=pointer 但指针无据：不许编，也不许越权改走生成": 1
+  },
+  "max_naive": {
+   "N1_全生成": {
+    "illegal": 100,
+    "legal_yield": 0,
+    "legal_rate": 0.0
+   },
+   "N2_全指针": {
+    "illegal": 1,
+    "legal_yield": 99,
+    "legal_rate": 0.99
+   },
+   "N3_按type静态": {
+    "plain→generate": {
+     "illegal": 100,
+     "legal_yield": 0
+    },
+    "plain→pointer": {
+     "illegal": 1,
+     "legal_yield": 99
+    }
+   },
+   "N4_词典假卡": {},
+   "N5_echo复述": {
+    "pass": 0,
+    "why": "无 instruction/ref_map 且 evidence 空 ⇒ 契约与 I3 同时不过"
+   },
+   "max_naive_通道合法率": 0.99,
+   "本方_非法输出": 0
+  },
+  "wall_sec": 4.72,
+  "generate_samples": [],
+  "pointer_examples": [
+   {
+    "input": "如约而至的第二季,能不能给广大追剧迷一个完满的解释",
+    "text": "你这句话里的『满』表达了积极；并且有否定成分『不』。",
+    "evidence": [
+     {
+      "card": "sentiment",
+      "span": [
+       21,
+       22
+      ],
+      "class_name": "积极"
+     },
+     {
+      "card": "negation",
+      "span": [
+       10,
+       11
+      ],
+      "class_name": "否定"
+     }
+    ],
+    "terminal": "generate",
+    "plan_step_id": "step:1"
+   },
+   {
+    "input": "- 穿亚麻色系服装赠限定落叶书签",
+    "text": "你这句话里的『落叶书签』表达了积极。",
+    "evidence": [
+     {
+      "card": "sentiment",
+      "span": [
+       12,
+       16
+      ],
+      "class_name": "积极"
+     }
+    ],
+    "terminal": "pointer",
+    "plan_step_id": "step:1"
+   },
+   {
+    "input": "优势:适用于多种金属(包括稀土、过渡金属),可制备一维、二维或三维纳米结构",
+    "text": "你这句话里的『优势:适』表达了积极。",
+    "evidence": [
+     {
+      "card": "sentiment",
+      "span": [
+       0,
+       4
+      ],
+      "class_name": "积极"
+     }
+    ],
+    "terminal": "pointer",
+    "plan_step_id": "step:1"
+   },
+   {
+    "input": "足够15亿人用，还有冗余",
+    "text": "你这句话里的『亿人用』表达了积极。",
+    "evidence": [
+     {
+      "card": "sentiment",
+      "span": [
+       4,
+       7
+      ],
+      "class_name": "积极"
+     }
+    ],
+    "terminal": "pointer",
+    "plan_step_id": "step:1"
+   },
+   {
+    "input": "总结,示例代码应该包括:",
+    "text": "你这句话里的『例』表达了积极。",
+    "evidence": [
+     {
+      "card": "sentiment",
+      "span": [
+       4,
+       5
+      ],
+      "class_name": "积极"
+     }
+    ],
+    "terminal": "pointer",
+    "plan_step_id": "step:1"
+   },
+   {
+    "input": "| 任务描述 | 任务类型 | 说明 |",
+    "text": "你这句话里的『描述 | 任务类型 | 说明』表达了愤怒；并且有否定成分『 任务描述 』。",
+    "evidence": [
+     {
+      "card": "sentiment",
+      "span": [
+       4,
+       18
+      ],
+      "class_name": "愤怒"
+     },
+     {
+      "card": "negation",
+      "span": [
+       1,
+       7
+      ],
+      "class_name": "否定"
+     }
+    ],
+    "terminal": "generate",
+    "plan_step_id": "step:1"
+   }
+  ],
+  "reject_examples": [
+   {
+    "input": "淀粉酶增高程度往往与腮腺肿胀程度成正比",
+    "reason": "R-CH5 终点=pointer 但指针无据：不许编，也不许越权改走生成；G=官方骨架表无可渲染指派（no_legal_render）；P=计划授权调用的卡没有发射任何切片",
+    "terminal": "pointer",
+    "rule": "R-CH5 终点=pointer 但指针无据：不许编，也不许越权改走生成"
+   }
+  ],
+  "problems_examples": [],
+  "rows": [
+   {
+    "i": 0,
+    "input": "如约而至的第二季,能不能给广大追剧迷一个完满的解释",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 1,
+    "input": "- 穿亚麻色系服装赠限定落叶书签",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 2,
+    "input": "优势:适用于多种金属(包括稀土、过渡金属),可制备一维、二维或三维纳米结构",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 3,
+    "input": "足够15亿人用，还有冗余",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 4,
+    "input": "总结,示例代码应该包括:",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 5,
+    "input": "| 任务描述 | 任务类型 | 说明 |",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 6,
+    "input": "交通方面,邹城市区不大,景点之间可能打车或者公交都方便",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 7,
+    "input": "嗯,应该用三角函数和坐标的关系来解决吧",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 8,
+    "input": "比如,是否需要将单位转换",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 9,
+    "input": "然后要分析用户可能的深层需求",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 10,
+    "input": "淀粉酶增高程度往往与腮腺肿胀程度成正比",
+    "channel": "reject",
+    "terminal": "pointer",
+    "G": false,
+    "P": false,
+    "rule": "R-CH5 终点=pointer 但指针无据：不许编，也不许越权改走生成",
+    "plan_step_id": "step:1",
+    "reason": "R-CH5 终点=pointer 但指针无据：不许编，也不许越权改走生成；G=官方骨架表无可渲染指派（no_legal_render）；P=计划授权调用的卡没有发射任何切片"
+   },
+   {
+    "i": 11,
+    "input": "肯定要等新的上市啊",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 12,
+    "input": "- 恢复跨大西洋伙伴关系,支持北约,并在乌克兰危机中发挥领导作用",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 13,
+    "input": "#### 示例代码:读取 `.mdx` 并查词",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 14,
+    "input": "梦婷是去别人家工作了还是去自己要开网店啊",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 15,
+    "input": "向量空间又是什么",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 16,
+    "input": "比如,5辆卡车×6=30,5辆SUV×7=35,合计65",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 17,
+    "input": "这应该是正确的",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 18,
+    "input": "- 术后1周:拆线及功能检查",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 19,
+    "input": "- **高结晶度**:提高材料的强度、硬度、耐热性和化学稳定性(如HDPE)",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 20,
+    "input": "晶体的热学性质源于其周期性结构和原子间的相互作用",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 21,
+    "input": "人民币电子化是大趋势，也是正确方向",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 22,
+    "input": "- 特点:极速轻量,支持批量转换,可自定义压缩级别",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 23,
+    "input": "虽然列不同(6 和 7),说明左右位置不同,但行相同",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 24,
+    "input": "杂货短信是5条,所以“5倍”就是 $ 5 \\times 5 = 25 $ 条",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 25,
+    "input": "这样得到的五位数是77779",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 26,
+    "input": "这可能是一个成熟的市场,但未来是否还有增长空间",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 27,
+    "input": "#### 劳动争议仲裁庭的内容",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 28,
+    "input": "| 人群 | 建议检查频率 |",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 29,
+    "input": "- **光照充足**:赤道地区太阳辐射强,光合作用潜力大",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 30,
+    "input": "分子部分展开:",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 31,
+    "input": "1. **保持口气清新**",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 32,
+    "input": "- **征信预审**:提前确认个人征信无问题,避免贷款被拒导致定金损失",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 33,
+    "input": "比如,题目里明确说四次出海,所以无论是格列佛还是鲁滨孙,只要四次正确即可",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 34,
+    "input": "另外,像德国弗劳恩霍夫协会或者MIT的技术报告也可能有相关内容",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 35,
+    "input": "比如作用力类型,化学吸附是化学键,物理吸附是范德华力",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 36,
+    "input": "而xy的最小值是什么时候呢",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 37,
+    "input": "5.品牌管理流程",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 38,
+    "input": "2. **优化贷款方案**:",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 39,
+    "input": "#### 推荐方法:使用专业数据恢复软件",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 40,
+    "input": "耳:治疗中有出现耳毒性(伴或不伴耳鸣的听力丧失)的报道",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 41,
+    "input": "- **碳酸钙**:随餐服用,需胃酸帮助吸收(胃酸不足者慎用);",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 42,
+    "input": "一杯咖啡,氤氲香气中,凝聚着慢生活的哲学与人与人之间的温情",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 43,
+    "input": "- A 看到只有 B 是黑的,B 看到只有 A 是黑的",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 44,
+    "input": "用户可能还希望传达安全、友好的社区环境",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 45,
+    "input": "或者,对于散射问题,需要考虑散射截面,使用量子散射理论,比如玻恩近似或者分波法",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 46,
+    "input": "首先,我应该回顾一下已知条件",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 47,
+    "input": "- 重启设备(电脑、手机、路由器等)",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 48,
+    "input": "4. **跨学科与综合素养培养受重视**",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 49,
+    "input": "这样的话,左边就是x,右边是1/2 * 5/4",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 50,
+    "input": "眼动心身重建法(EMDR)",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 51,
+    "input": "对的,总和应该是47",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 52,
+    "input": "所以当乘积为2的时候,是质数,这时候选项D(合数)不成立",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 53,
+    "input": "直言推理指的是:关于直言命题的推理",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 54,
+    "input": "- 根据规律,余数为2时对应自然对数操作,即第11项为 $\\ln(11)$",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 55,
+    "input": "6. **数字身份与合规自动化(KYC/AML)**",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 56,
+    "input": "### **一、提升耳机使用体验**",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 57,
+    "input": "玛丽将1500张贴纸按1:1:3的比例分配给苏珊、安德鲁和山姆",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 58,
+    "input": "车窗外,冰岛南岸的暴雪像被撕碎的棉絮,将黑沙滩与玄武岩柱都裹进苍白的混沌",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 59,
+    "input": "2. 计算各顶点坐标的乘积和的反向部分:",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 60,
+    "input": "- **猫**:天生爱干净,会自己舔毛清洁,使用猫砂盆排泄,自理能力强",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 61,
+    "input": "请比较生物分子相互作用研究中的计算模拟和实验分析方法,分析其优缺点",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 62,
+    "input": "问题是要算出到期时得到的利息,然后从四个选项里选正确的答案",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 63,
+    "input": "以下是多肽合成的常用方法,以及评估其成功率的多种手段",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 64,
+    "input": "这个我有些问题，不知道是为什么时不时的断开gcm的连接，过不二分钟又断开",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 65,
+    "input": "不过再仔细检查一下单位是否正确",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 66,
+    "input": "它是哪一年发行的呢",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 67,
+    "input": "#### 1. **“单挑”不是主流战术,更多是文学夸张**",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 68,
+    "input": "大麦质地比较硬,断面有粉质感,没有特殊的气味,品尝时有微微的甜味",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 69,
+    "input": "现在用户问的是近期的示威,可能需要关注最新的触发因素",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 70,
+    "input": "2. **化学检查(试纸条检测)**",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 71,
+    "input": "1. **规则动词实例**:",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 72,
+    "input": "填空题答案是:**18**",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 73,
+    "input": "- 发展是实现共同富裕的基础",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 74,
+    "input": "- 声学模型可用于噪声环境下的语音特征重建",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 75,
+    "input": "这时候600×0.7=420,结果一样",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 76,
+    "input": "- 获得富士玄学焦外",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 77,
+    "input": "然后读的时候,按照中文的读法,十位是1,个位是8,就读成“十八”",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 78,
+    "input": "毕竟之后的道路可能不会让你随时再做转变了",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 79,
+    "input": "忽必烈是把自己建立的元朝凌驾于蒙古帝国之上",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 80,
+    "input": "综上,可能这道题的正确解法是:",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 81,
+    "input": "或者,这里可能用的是柯西不等式的另一种形式",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 82,
+    "input": "### 二、外设投资的长期价值曲线",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 83,
+    "input": "用友大学课程内容主要在A、S",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 84,
+    "input": "- **关注产区天气**:主产区气候报道可预判价格趋势",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 85,
+    "input": "**坠落中:感官的扭曲与超常敏锐**",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 86,
+    "input": "这样生成的列表是[6,7,8,9,10,11,12,13,14,15]",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 87,
+    "input": "不过可能我之前有没有错的地方",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 88,
+    "input": "- 若细胞变圆或脱落,提示可能污染或营养不足",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 89,
+    "input": "| 领域 | 应用实例 |",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 90,
+    "input": "听说痛风患者要避免豌豆,那像黄豆、豆浆这类豆制品能吃吗",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 91,
+    "input": "- **性转变机制**:某些鱼类(如小丑鱼、石斑鱼)的性别转换对环境信号的响应",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 92,
+    "input": "首先,我需要明确题目要求的是增长的百分比",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 93,
+    "input": "# 验证Pass对当前模块的适用性",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 94,
+    "input": "比如,52的5和2,如何得到34",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 95,
+    "input": "- **优点**:引脚少、成本低、支持多设备",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 96,
+    "input": "3. **量子中继与量子互联网**",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 97,
+    "input": "公式是距离=速度×时间",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 98,
+    "input": "- **查看通知/邮件**:平台通常会通过站内信或邮件说明具体缺失的信息",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 99,
+    "input": "结果为480,小于500,排除",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   }
+  ]
+ },
+ "wall_sec": 9.35
+}

@@ -1,0 +1,453 @@
+{
+ "mode": "selfcheck",
+ "started": "2026-10-07 02:52:09",
+ "selfcheck": {
+  "n": 30,
+  "channel": {
+   "reject": 12,
+   "generate": 3,
+   "pointer": 15
+  },
+  "contract_fail": 0,
+  "illegal_text": 0,
+  "G_true": 3,
+  "P_true": 18,
+  "rule_audit": {
+   "ok": true,
+   "hits": [],
+   "source": "def switch_channel(terminal: str, gen_ok: bool, ptr_ok: bool) -> tuple[str, str]:\n    \"\"\"R-CH0–R-CH5：给定计划终点与两条可核对谓词，返回 `(channel, 规则行)`。\n\n    `terminal` 是 `dispatch` 规则表的终止动作种类（`generate` / `pointer` / `reject`）；\n    未知的 `terminal` 值 ⇒ fail-closed 走拒答（判不动不许猜）。\n    \"\"\"\n    if terminal == \"reject\":\n        return \"reject\", \"R-CH0 计划终点=reject\"\n    if terminal == \"generate\":\n        if gen_ok:\n            return \"generate\", \"R-CH1 终点=generate 且可合法渲染\"\n        if ptr_ok:\n            return \"pointer\", \"R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针\"\n        return \"reject\", \"R-CH3 终点=generate 但既不可渲染也无指针据\"\n    if terminal == \"pointer\":\n        if ptr_ok:\n            return \"pointer\", \"R-CH4 终点=pointer 且指针有据\"\n        return \"reject\", \"R-CH5 终点=pointer 但指针无据：不许编，也不许越权改走生成\"\n    return \"reject\", \"R-CH-  计划终点读不懂（判不动）⇒ fail-closed\"\n",
+   "forbidden": [
+    "state_dict",
+    "torch",
+    "nn.",
+    "logit",
+    "softmax",
+    "sigmoid",
+    "embedding",
+    "checkpoint",
+    "weights",
+    ".pt",
+    "learn",
+    "trained",
+    "probability"
+   ]
+  },
+  "h1a_state_space": {
+   "n_states": 4860,
+   "runs": 2,
+   "identical": true,
+   "n_first": 4860,
+   "n_second": 4860
+  },
+  "h1b_dialogue_tables": {
+   "n_states": 4860,
+   "identical": true
+  },
+  "generate_samples": [
+   {
+    "input": "我不喜欢这个方案，太慢了。",
+    "plan": [
+     "[type=plain info=[未查,未查,未查,未查] conf=低 steps=3] ⇒ call：必需位 info[mood]=未查 且 steps=3>0 ⇒ 调用 sentiment | sentiment@(0, 13)",
+     "[type=plain info=[有,有,未查,未查] conf=高 steps=1] ⇒ generate：必需位全=有 且 conf ≥ 中 ⇒ 生成输出 | output.generate@(0, 13)"
+    ],
+    "plan_steps": [
+     {
+      "module_id": "sentiment",
+      "input_span": [
+       0,
+       13
+      ],
+      "params": {
+       "trigger_bit": "mood",
+       "serves": "mood"
+      }
+     },
+     {
+      "module_id": "output.generate",
+      "input_span": [
+       0,
+       13
+      ],
+      "params": {
+       "reason": "必需位全=有 且 conf ≥ 中 ⇒ 生成输出",
+       "bag_cards": "person|pronoun|relation|sentiment|negation|idiom",
+       "skeleton_table": "render.SKELETONS(16)"
+      }
+     }
+    ],
+    "plan_step_id": "step:1",
+    "terminal": "generate",
+    "channel": "generate",
+    "rule": "R-CH1 终点=generate 且可合法渲染",
+    "cards_run": [
+     "sentiment",
+     "negation"
+    ],
+    "instruction": {
+     "skeleton_id": "R02",
+     "assignment": [
+      0,
+      2
+     ]
+    },
+    "text": "我喜欢。",
+    "evidence": [
+     {
+      "source": "span",
+      "ref": 0,
+      "text": "我",
+      "span": [
+       0,
+       1
+      ],
+      "candidate_id": "c0"
+     },
+     {
+      "source": "span",
+      "ref": 2,
+      "text": "喜欢",
+      "span": [
+       2,
+       4
+      ],
+      "candidate_id": "c3"
+     },
+     {
+      "source": "table",
+      "unit_id": "R02#0",
+      "word": "。",
+      "cls": "formal"
+     }
+    ],
+    "ref_map_head": [
+     {
+      "unit_id": "ref:0",
+      "cls": "content",
+      "text": "我",
+      "out": [
+       0,
+       1
+      ],
+      "span": [
+       0,
+       1
+      ]
+     },
+     {
+      "unit_id": "ref:2",
+      "cls": "content",
+      "text": "喜欢",
+      "out": [
+       1,
+       3
+      ],
+      "span": [
+       2,
+       4
+      ]
+     },
+     {
+      "unit_id": "R02#0",
+      "cls": "formal",
+      "text": "。",
+      "out": [
+       3,
+       4
+      ],
+      "span": null
+     }
+    ],
+    "g_stats": {
+     "combos": 15,
+     "cap": false,
+     "skeletons_tried": 15,
+     "why": null
+    },
+    "bag_pos": {
+     "名": 1,
+     "动": 1,
+     "形": 1
+    }
+   },
+   {
+    "input": "我不喜欢这个方案，太慢了。",
+    "plan": [
+     "[type=plain info=[未查,未查,未查,未查] conf=低 steps=3] ⇒ call：必需位 info[mood]=未查 且 steps=3>0 ⇒ 调用 sentiment | sentiment@(0, 13)",
+     "[type=plain info=[有,有,未查,未查] conf=高 steps=1] ⇒ generate：必需位全=有 且 conf ≥ 中 ⇒ 生成输出 | output.generate@(0, 13)"
+    ],
+    "plan_steps": [
+     {
+      "module_id": "sentiment",
+      "input_span": [
+       0,
+       13
+      ],
+      "params": {
+       "trigger_bit": "mood",
+       "serves": "mood"
+      }
+     },
+     {
+      "module_id": "output.generate",
+      "input_span": [
+       0,
+       13
+      ],
+      "params": {
+       "reason": "必需位全=有 且 conf ≥ 中 ⇒ 生成输出",
+       "bag_cards": "person|pronoun|relation|sentiment|negation|idiom",
+       "skeleton_table": "render.SKELETONS(16)"
+      }
+     }
+    ],
+    "plan_step_id": "step:1",
+    "terminal": "generate",
+    "channel": "generate",
+    "rule": "R-CH1 终点=generate 且可合法渲染",
+    "cards_run": [
+     "sentiment",
+     "negation"
+    ],
+    "instruction": {
+     "skeleton_id": "R02",
+     "assignment": [
+      0,
+      2
+     ]
+    },
+    "text": "我喜欢。",
+    "evidence": [
+     {
+      "source": "span",
+      "ref": 0,
+      "text": "我",
+      "span": [
+       0,
+       1
+      ],
+      "candidate_id": "c0"
+     },
+     {
+      "source": "span",
+      "ref": 2,
+      "text": "喜欢",
+      "span": [
+       2,
+       4
+      ],
+      "candidate_id": "c3"
+     },
+     {
+      "source": "table",
+      "unit_id": "R02#0",
+      "word": "。",
+      "cls": "formal"
+     }
+    ],
+    "ref_map_head": [
+     {
+      "unit_id": "ref:0",
+      "cls": "content",
+      "text": "我",
+      "out": [
+       0,
+       1
+      ],
+      "span": [
+       0,
+       1
+      ]
+     },
+     {
+      "unit_id": "ref:2",
+      "cls": "content",
+      "text": "喜欢",
+      "out": [
+       1,
+       3
+      ],
+      "span": [
+       2,
+       4
+      ]
+     },
+     {
+      "unit_id": "R02#0",
+      "cls": "formal",
+      "text": "。",
+      "out": [
+       3,
+       4
+      ],
+      "span": null
+     }
+    ],
+    "g_stats": {
+     "combos": 15,
+     "cap": false,
+     "skeletons_tried": 15,
+     "why": null
+    },
+    "bag_pos": {
+     "名": 1,
+     "动": 1,
+     "形": 1
+    }
+   },
+   {
+    "input": "我不喜欢这个方案，太慢了。",
+    "plan": [
+     "[type=plain info=[未查,未查,未查,未查] conf=低 steps=3] ⇒ call：必需位 info[mood]=未查 且 steps=3>0 ⇒ 调用 sentiment | sentiment@(0, 13)",
+     "[type=plain info=[有,有,未查,未查] conf=高 steps=1] ⇒ generate：必需位全=有 且 conf ≥ 中 ⇒ 生成输出 | output.generate@(0, 13)"
+    ],
+    "plan_steps": [
+     {
+      "module_id": "sentiment",
+      "input_span": [
+       0,
+       13
+      ],
+      "params": {
+       "trigger_bit": "mood",
+       "serves": "mood"
+      }
+     },
+     {
+      "module_id": "output.generate",
+      "input_span": [
+       0,
+       13
+      ],
+      "params": {
+       "reason": "必需位全=有 且 conf ≥ 中 ⇒ 生成输出",
+       "bag_cards": "person|pronoun|relation|sentiment|negation|idiom",
+       "skeleton_table": "render.SKELETONS(16)"
+      }
+     }
+    ],
+    "plan_step_id": "step:1",
+    "terminal": "generate",
+    "channel": "generate",
+    "rule": "R-CH1 终点=generate 且可合法渲染",
+    "cards_run": [
+     "sentiment",
+     "negation"
+    ],
+    "instruction": {
+     "skeleton_id": "R02",
+     "assignment": [
+      0,
+      2
+     ]
+    },
+    "text": "我喜欢。",
+    "evidence": [
+     {
+      "source": "span",
+      "ref": 0,
+      "text": "我",
+      "span": [
+       0,
+       1
+      ],
+      "candidate_id": "c0"
+     },
+     {
+      "source": "span",
+      "ref": 2,
+      "text": "喜欢",
+      "span": [
+       2,
+       4
+      ],
+      "candidate_id": "c3"
+     },
+     {
+      "source": "table",
+      "unit_id": "R02#0",
+      "word": "。",
+      "cls": "formal"
+     }
+    ],
+    "ref_map_head": [
+     {
+      "unit_id": "ref:0",
+      "cls": "content",
+      "text": "我",
+      "out": [
+       0,
+       1
+      ],
+      "span": [
+       0,
+       1
+      ]
+     },
+     {
+      "unit_id": "ref:2",
+      "cls": "content",
+      "text": "喜欢",
+      "out": [
+       1,
+       3
+      ],
+      "span": [
+       2,
+       4
+      ]
+     },
+     {
+      "unit_id": "R02#0",
+      "cls": "formal",
+      "text": "。",
+      "out": [
+       3,
+       4
+      ],
+      "span": null
+     }
+    ],
+    "g_stats": {
+     "combos": 15,
+     "cap": false,
+     "skeletons_tried": 15,
+     "why": null
+    },
+    "bag_pos": {
+     "名": 1,
+     "动": 1,
+     "形": 1
+    }
+   }
+  ],
+  "reject_examples": [
+   {
+    "input": "你说的对，我们明天试试。",
+    "reason": "R-CH5 终点=pointer 但指针无据：不许编，也不许越权改走生成；G=官方骨架表无可渲染指派（no_legal_render）；P=计划授权调用的卡没有发射任何切片",
+    "has_text": false
+   },
+   {
+    "input": "我们跑一次看看效果。",
+    "reason": "R-CH5 终点=pointer 但指针无据：不许编，也不许越权改走生成；G=官方骨架表无可渲染指派（no_legal_render）；P=计划授权调用的卡没有发射任何切片",
+    "has_text": false
+   },
+   {
+    "input": "你觉得好吗？我觉得好。",
+    "reason": "R-CH5 终点=pointer 但指针无据：不许编，也不许越权改走生成；G=官方骨架表无可渲染指派（no_legal_render）；P=计划授权调用的卡没有发射任何切片",
+    "has_text": false
+   },
+   {
+    "input": "我们讨论解决这个问题。",
+    "reason": "R-CH5 终点=pointer 但指针无据：不许编，也不许越权改走生成；G=官方骨架表无可渲染指派（no_legal_render）；P=计划授权调用的卡没有发射任何切片",
+    "has_text": false
+   },
+   {
+    "input": "你说的对，我们明天试试。",
+    "reason": "R-CH5 终点=pointer 但指针无据：不许编，也不许越权改走生成；G=官方骨架表无可渲染指派（no_legal_render）；P=计划授权调用的卡没有发射任何切片",
+    "has_text": false
+   }
+  ],
+  "rule_text": "规则 R-CH（指针 / 生成 / 拒答 的通道开关；手写 if-else，逐行照抄，行序固定）\n  输入：\n    T = dispatch 规则表 decide()（R0–R6 那张 if-else 链）在本状态给出的终止动作\n        ∈ {generate, pointer, reject}；T 的输入 = (声明的 type, 4 位三态, conf, steps)\n    G = 「可合法渲染」谓词：官方骨架表里存在 (骨架, 指派) 使\n        check_structure() == [] 且 render() 出 kind=\"text\" 且 check_deref() == []\n    P = 「指针有据」谓词：计划授权调用过的卡能用「手写模板 + 逐字切片」拼出回复\n        （compose_reply 成功；越界 / 无切片 / 无模板 ⇒ 假）\n  行：\n    R-CH0  T == reject                    ⇒ reject   （text 缺省，reason 必填）\n    R-CH1  T == generate 且 G             ⇒ generate （两道检查 0 问题才出 text）\n    R-CH2  T == generate 且 ¬G 且 P       ⇒ pointer  （降级；reason 记「生成不可行」）\n    R-CH3  T == generate 且 ¬G 且 ¬P      ⇒ reject\n    R-CH4  T == pointer  且 P             ⇒ pointer\n    R-CH5  T == pointer  且 ¬P            ⇒ reject   （指针无据不许编；G 也不许越权升级）\n  行序 = 上表顺序；同一输入两次执行命中同一行。\n"
+ },
+ "wall_sec": 0.25
+}

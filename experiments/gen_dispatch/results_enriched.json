@@ -1,0 +1,5713 @@
+{
+ "mode": "enriched",
+ "started": "2026-10-07 02:52:23",
+ "engine": {
+  "cards": [
+   "idiom",
+   "negation",
+   "person",
+   "pronoun",
+   "relation",
+   "sentiment"
+  ],
+  "detail": {
+   "negation": "checkpoints/negation_accept_card.pt",
+   "negation_name": "negation",
+   "idiom": "experiments/cumulative_add/cards/ctrl_idiom_s42.pt",
+   "idiom_info": {
+    "rebuilt": false
+   }
+  }
+ },
+ "samples": {
+  "files_used": [
+   "coig_code_dialogue.txt",
+   "coig_cqia_dialogue.txt",
+   "coig_logic_dialogue.txt",
+   "coig_math_dialogue.txt",
+   "coig_other_dialogue.txt",
+   "coig_wiki_dialogue.txt",
+   "dailychat_dialogue.txt",
+   "deepseek_r1_distill_dialogue.txt",
+   "glm_dialogue.txt",
+   "identity_dialogue.txt",
+   "kdconv_dialogue.txt",
+   "lccc_dialogue.txt",
+   "muice_dialogue.txt",
+   "multi_turn_dialogue.txt",
+   "qwen3_235b_distill_dialogue.txt",
+   "zhihu_kol_dialogue.txt"
+  ],
+  "files_dropped": [
+   {
+    "file": "code_alpaca_dialogue.txt",
+    "lines": 287426,
+    "han_chars": 4055,
+    "nonspace_chars": 8182731,
+    "han_ratio": 0.0005,
+    "keep": false
+   },
+   {
+    "file": "gsm8k_cot_dialogue.txt",
+    "lines": 56016,
+    "han_chars": 244002,
+    "nonspace_chars": 3439686,
+    "han_ratio": 0.0709,
+    "keep": false
+   }
+  ],
+  "n_random": 998,
+  "n_enriched": 398,
+  "formula": "汉字占比 = 汉字数 / 非空白字符数（整文件流式）",
+  "threshold": 0.5
+ },
+ "enriched": {
+  "tag": "enriched",
+  "n": 398,
+  "channel": {
+   "pointer": 388,
+   "generate": 8,
+   "reject": 2
+  },
+  "terminal": {
+   "generate": 244,
+   "pointer": 154
+  },
+  "G_true": 13,
+  "P_true": 396,
+  "reject": {
+   "n": 2,
+   "with_text_field": 0,
+   "reason_empty": 0,
+   "false_reject": 0
+  },
+  "text": {
+   "n": 396,
+   "illegal": 0
+  },
+  "h2_contract_fail": 0,
+  "h3": {
+   "n_generated": 8,
+   "structure_problems": 0,
+   "deref_problems": 0
+  },
+  "h1": {
+   "checked": 100,
+   "plan_mismatch": 0,
+   "record_mismatch": 0,
+   "fails": []
+  },
+  "rule_rows": {
+   "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针": 236,
+   "R-CH4 终点=pointer 且指针有据": 152,
+   "R-CH1 终点=generate 且可合法渲染": 8,
+   "R-CH5 终点=pointer 但指针无据：不许编，也不许越权改走生成": 2
+  },
+  "max_naive": {
+   "N1_全生成": {
+    "illegal": 385,
+    "legal_yield": 13,
+    "legal_rate": 0.0327
+   },
+   "N2_全指针": {
+    "illegal": 2,
+    "legal_yield": 396,
+    "legal_rate": 0.995
+   },
+   "N3_按type静态": {
+    "plain→generate": {
+     "illegal": 385,
+     "legal_yield": 13
+    },
+    "plain→pointer": {
+     "illegal": 2,
+     "legal_yield": 396
+    }
+   },
+   "N4_词典假卡": {},
+   "N5_echo复述": {
+    "pass": 0,
+    "why": "无 instruction/ref_map 且 evidence 空 ⇒ 契约与 I3 同时不过"
+   },
+   "max_naive_通道合法率": 0.995,
+   "本方_非法输出": 0
+  },
+  "wall_sec": 11.18,
+  "generate_samples": [
+   {
+    "input": "用户关注点不是花哨的图标，炫酷的动画，那些都是锦上添花",
+    "plan": [
+     "[type=plain info=[未查,未查,未查,未查] conf=低 steps=3] ⇒ call：必需位 info[mood]=未查 且 steps=3>0 ⇒ 调用 sentiment | sentiment@(0, 27)",
+     "[type=plain info=[有,有,未查,未查] conf=高 steps=1] ⇒ generate：必需位全=有 且 conf ≥ 中 ⇒ 生成输出 | output.generate@(0, 27)"
+    ],
+    "plan_steps": [
+     {
+      "module_id": "sentiment",
+      "input_span": [
+       0,
+       27
+      ],
+      "params": {
+       "trigger_bit": "mood",
+       "serves": "mood"
+      }
+     },
+     {
+      "module_id": "output.generate",
+      "input_span": [
+       0,
+       27
+      ],
+      "params": {
+       "reason": "必需位全=有 且 conf ≥ 中 ⇒ 生成输出",
+       "bag_cards": "person|pronoun|relation|sentiment|negation|idiom",
+       "skeleton_table": "render.SKELETONS(16)"
+      }
+     }
+    ],
+    "plan_step_id": "step:1",
+    "terminal": "generate",
+    "channel": "generate",
+    "rule": "R-CH1 终点=generate 且可合法渲染",
+    "cards_run": [
+     "sentiment",
+     "negation"
+    ],
+    "instruction": {
+     "skeleton_id": "R02",
+     "assignment": [
+      0,
+      1
+     ]
+    },
+    "text": "点锦上添花。",
+    "evidence": [
+     {
+      "source": "span",
+      "ref": 0,
+      "text": "点",
+      "span": [
+       4,
+       5
+      ],
+      "candidate_id": "c1"
+     },
+     {
+      "source": "span",
+      "ref": 1,
+      "text": "锦上添花",
+      "span": [
+       23,
+       27
+      ],
+      "candidate_id": "c4"
+     },
+     {
+      "source": "table",
+      "unit_id": "R02#0",
+      "word": "。",
+      "cls": "formal"
+     }
+    ],
+    "ref_map_head": [
+     {
+      "unit_id": "ref:0",
+      "cls": "content",
+      "text": "点",
+      "out": [
+       0,
+       1
+      ],
+      "span": [
+       4,
+       5
+      ]
+     },
+     {
+      "unit_id": "ref:1",
+      "cls": "content",
+      "text": "锦上添花",
+      "out": [
+       1,
+       5
+      ],
+      "span": [
+       23,
+       27
+      ]
+     },
+     {
+      "unit_id": "R02#0",
+      "cls": "formal",
+      "text": "。",
+      "out": [
+       5,
+       6
+      ],
+      "span": null
+     }
+    ],
+    "g_stats": {
+     "combos": 10,
+     "cap": false,
+     "skeletons_tried": 10,
+     "why": null
+    },
+    "bag_pos": {
+     "名": 1,
+     "动": 1,
+     "形": 0
+    }
+   },
+   {
+    "input": "- **从微小习惯开始**:自律需要循序渐进",
+    "plan": [
+     "[type=plain info=[未查,未查,未查,未查] conf=低 steps=3] ⇒ call：必需位 info[mood]=未查 且 steps=3>0 ⇒ 调用 sentiment | sentiment@(0, 22)",
+     "[type=plain info=[有,有,未查,未查] conf=高 steps=1] ⇒ generate：必需位全=有 且 conf ≥ 中 ⇒ 生成输出 | output.generate@(0, 22)"
+    ],
+    "plan_steps": [
+     {
+      "module_id": "sentiment",
+      "input_span": [
+       0,
+       22
+      ],
+      "params": {
+       "trigger_bit": "mood",
+       "serves": "mood"
+      }
+     },
+     {
+      "module_id": "output.generate",
+      "input_span": [
+       0,
+       22
+      ],
+      "params": {
+       "reason": "必需位全=有 且 conf ≥ 中 ⇒ 生成输出",
+       "bag_cards": "person|pronoun|relation|sentiment|negation|idiom",
+       "skeleton_table": "render.SKELETONS(16)"
+      }
+     }
+    ],
+    "plan_step_id": "step:1",
+    "terminal": "generate",
+    "channel": "generate",
+    "rule": "R-CH1 终点=generate 且可合法渲染",
+    "cards_run": [
+     "sentiment",
+     "negation"
+    ],
+    "instruction": {
+     "skeleton_id": "R02",
+     "assignment": [
+      0,
+      1
+     ]
+    },
+    "text": "小开始。",
+    "evidence": [
+     {
+      "source": "span",
+      "ref": 0,
+      "text": "小",
+      "span": [
+       6,
+       7
+      ],
+      "candidate_id": "c1"
+     },
+     {
+      "source": "span",
+      "ref": 1,
+      "text": "开始",
+      "span": [
+       9,
+       11
+      ],
+      "candidate_id": "c2"
+     },
+     {
+      "source": "table",
+      "unit_id": "R02#0",
+      "word": "。",
+      "cls": "formal"
+     }
+    ],
+    "ref_map_head": [
+     {
+      "unit_id": "ref:0",
+      "cls": "content",
+      "text": "小",
+      "out": [
+       0,
+       1
+      ],
+      "span": [
+       6,
+       7
+      ]
+     },
+     {
+      "unit_id": "ref:1",
+      "cls": "content",
+      "text": "开始",
+      "out": [
+       1,
+       3
+      ],
+      "span": [
+       9,
+       11
+      ]
+     },
+     {
+      "unit_id": "R02#0",
+      "cls": "formal",
+      "text": "。",
+      "out": [
+       3,
+       4
+      ],
+      "span": null
+     }
+    ],
+    "g_stats": {
+     "combos": 10,
+     "cap": false,
+     "skeletons_tried": 10,
+     "why": null
+    },
+    "bag_pos": {
+     "名": 1,
+     "动": 1,
+     "形": 0
+    }
+   },
+   {
+    "input": "如果它本名就叫Bengal，估计中国也不会画蛇添足加上「国」的",
+    "plan": [
+     "[type=plain info=[未查,未查,未查,未查] conf=低 steps=3] ⇒ call：必需位 info[mood]=未查 且 steps=3>0 ⇒ 调用 sentiment | sentiment@(0, 31)",
+     "[type=plain info=[有,有,未查,未查] conf=高 steps=1] ⇒ generate：必需位全=有 且 conf ≥ 中 ⇒ 生成输出 | output.generate@(0, 31)"
+    ],
+    "plan_steps": [
+     {
+      "module_id": "sentiment",
+      "input_span": [
+       0,
+       31
+      ],
+      "params": {
+       "trigger_bit": "mood",
+       "serves": "mood"
+      }
+     },
+     {
+      "module_id": "output.generate",
+      "input_span": [
+       0,
+       31
+      ],
+      "params": {
+       "reason": "必需位全=有 且 conf ≥ 中 ⇒ 生成输出",
+       "bag_cards": "person|pronoun|relation|sentiment|negation|idiom",
+       "skeleton_table": "render.SKELETONS(16)"
+      }
+     }
+    ],
+    "plan_step_id": "step:1",
+    "terminal": "generate",
+    "channel": "generate",
+    "rule": "R-CH1 终点=generate 且可合法渲染",
+    "cards_run": [
+     "sentiment",
+     "negation"
+    ],
+    "instruction": {
+     "skeleton_id": "R02",
+     "assignment": [
+      0,
+      2
+     ]
+    },
+    "text": "它画蛇添足。",
+    "evidence": [
+     {
+      "source": "span",
+      "ref": 0,
+      "text": "它",
+      "span": [
+       2,
+       3
+      ],
+      "candidate_id": "c1"
+     },
+     {
+      "source": "span",
+      "ref": 2,
+      "text": "画蛇添足",
+      "span": [
+       21,
+       25
+      ],
+      "candidate_id": "c4"
+     },
+     {
+      "source": "table",
+      "unit_id": "R02#0",
+      "word": "。",
+      "cls": "formal"
+     }
+    ],
+    "ref_map_head": [
+     {
+      "unit_id": "ref:0",
+      "cls": "content",
+      "text": "它",
+      "out": [
+       0,
+       1
+      ],
+      "span": [
+       2,
+       3
+      ]
+     },
+     {
+      "unit_id": "ref:2",
+      "cls": "content",
+      "text": "画蛇添足",
+      "out": [
+       1,
+       5
+      ],
+      "span": [
+       21,
+       25
+      ]
+     },
+     {
+      "unit_id": "R02#0",
+      "cls": "formal",
+      "text": "。",
+      "out": [
+       5,
+       6
+      ],
+      "span": null
+     }
+    ],
+    "g_stats": {
+     "combos": 15,
+     "cap": false,
+     "skeletons_tried": 15,
+     "why": null
+    },
+    "bag_pos": {
+     "名": 1,
+     "动": 1,
+     "形": 1
+    }
+   },
+   {
+    "input": "孩子问「为什么古代诗人那么悠闲,不用养家糊口,还能到处旅游写那么多诗",
+    "plan": [
+     "[type=plain info=[未查,未查,未查,未查] conf=低 steps=3] ⇒ call：必需位 info[mood]=未查 且 steps=3>0 ⇒ 调用 sentiment | sentiment@(0, 34)",
+     "[type=plain info=[有,有,未查,未查] conf=高 steps=1] ⇒ generate：必需位全=有 且 conf ≥ 中 ⇒ 生成输出 | output.generate@(0, 34)"
+    ],
+    "plan_steps": [
+     {
+      "module_id": "sentiment",
+      "input_span": [
+       0,
+       34
+      ],
+      "params": {
+       "trigger_bit": "mood",
+       "serves": "mood"
+      }
+     },
+     {
+      "module_id": "output.generate",
+      "input_span": [
+       0,
+       34
+      ],
+      "params": {
+       "reason": "必需位全=有 且 conf ≥ 中 ⇒ 生成输出",
+       "bag_cards": "person|pronoun|relation|sentiment|negation|idiom",
+       "skeleton_table": "render.SKELETONS(16)"
+      }
+     }
+    ],
+    "plan_step_id": "step:1",
+    "terminal": "generate",
+    "channel": "generate",
+    "rule": "R-CH1 终点=generate 且可合法渲染",
+    "cards_run": [
+     "sentiment",
+     "negation"
+    ],
+    "instruction": {
+     "skeleton_id": "R02",
+     "assignment": [
+      0,
+      2
+     ]
+    },
+    "text": "代养家糊口。",
+    "evidence": [
+     {
+      "source": "span",
+      "ref": 0,
+      "text": "代",
+      "span": [
+       8,
+       9
+      ],
+      "candidate_id": "c1"
+     },
+     {
+      "source": "span",
+      "ref": 2,
+      "text": "养家糊口",
+      "span": [
+       18,
+       22
+      ],
+      "candidate_id": "c4"
+     },
+     {
+      "source": "table",
+      "unit_id": "R02#0",
+      "word": "。",
+      "cls": "formal"
+     }
+    ],
+    "ref_map_head": [
+     {
+      "unit_id": "ref:0",
+      "cls": "content",
+      "text": "代",
+      "out": [
+       0,
+       1
+      ],
+      "span": [
+       8,
+       9
+      ]
+     },
+     {
+      "unit_id": "ref:2",
+      "cls": "content",
+      "text": "养家糊口",
+      "out": [
+       1,
+       5
+      ],
+      "span": [
+       18,
+       22
+      ]
+     },
+     {
+      "unit_id": "R02#0",
+      "cls": "formal",
+      "text": "。",
+      "out": [
+       5,
+       6
+      ],
+      "span": null
+     }
+    ],
+    "g_stats": {
+     "combos": 15,
+     "cap": false,
+     "skeletons_tried": 15,
+     "why": null
+    },
+    "bag_pos": {
+     "名": 1,
+     "动": 1,
+     "形": 1
+    }
+   },
+   {
+    "input": "有你喝的就不错了，还敢挑三拣四，明早不带你的份了",
+    "plan": [
+     "[type=plain info=[未查,未查,未查,未查] conf=低 steps=3] ⇒ call：必需位 info[mood]=未查 且 steps=3>0 ⇒ 调用 sentiment | sentiment@(0, 24)",
+     "[type=plain info=[有,有,未查,未查] conf=高 steps=1] ⇒ generate：必需位全=有 且 conf ≥ 中 ⇒ 生成输出 | output.generate@(0, 24)"
+    ],
+    "plan_steps": [
+     {
+      "module_id": "sentiment",
+      "input_span": [
+       0,
+       24
+      ],
+      "params": {
+       "trigger_bit": "mood",
+       "serves": "mood"
+      }
+     },
+     {
+      "module_id": "output.generate",
+      "input_span": [
+       0,
+       24
+      ],
+      "params": {
+       "reason": "必需位全=有 且 conf ≥ 中 ⇒ 生成输出",
+       "bag_cards": "person|pronoun|relation|sentiment|negation|idiom",
+       "skeleton_table": "render.SKELETONS(16)"
+      }
+     }
+    ],
+    "plan_step_id": "step:1",
+    "terminal": "generate",
+    "channel": "generate",
+    "rule": "R-CH1 终点=generate 且可合法渲染",
+    "cards_run": [
+     "sentiment",
+     "negation"
+    ],
+    "instruction": {
+     "skeleton_id": "R02",
+     "assignment": [
+      0,
+      2
+     ]
+    },
+    "text": "你挑三拣四。",
+    "evidence": [
+     {
+      "source": "span",
+      "ref": 0,
+      "text": "你",
+      "span": [
+       1,
+       2
+      ],
+      "candidate_id": "c0"
+     },
+     {
+      "source": "span",
+      "ref": 2,
+      "text": "挑三拣四",
+      "span": [
+       11,
+       15
+      ],
+      "candidate_id": "c5"
+     },
+     {
+      "source": "table",
+      "unit_id": "R02#0",
+      "word": "。",
+      "cls": "formal"
+     }
+    ],
+    "ref_map_head": [
+     {
+      "unit_id": "ref:0",
+      "cls": "content",
+      "text": "你",
+      "out": [
+       0,
+       1
+      ],
+      "span": [
+       1,
+       2
+      ]
+     },
+     {
+      "unit_id": "ref:2",
+      "cls": "content",
+      "text": "挑三拣四",
+      "out": [
+       1,
+       5
+      ],
+      "span": [
+       11,
+       15
+      ]
+     },
+     {
+      "unit_id": "R02#0",
+      "cls": "formal",
+      "text": "。",
+      "out": [
+       5,
+       6
+      ],
+      "span": null
+     }
+    ],
+    "g_stats": {
+     "combos": 15,
+     "cap": false,
+     "skeletons_tried": 15,
+     "why": null
+    },
+    "bag_pos": {
+     "名": 1,
+     "动": 1,
+     "形": 1
+    }
+   },
+   {
+    "input": "如果说，在现实中他真的能这么呼风唤雨，只能为中科大感到遗憾",
+    "plan": [
+     "[type=plain info=[未查,未查,未查,未查] conf=低 steps=3] ⇒ call：必需位 info[mood]=未查 且 steps=3>0 ⇒ 调用 sentiment | sentiment@(0, 29)",
+     "[type=plain info=[有,有,未查,未查] conf=高 steps=1] ⇒ generate：必需位全=有 且 conf ≥ 中 ⇒ 生成输出 | output.generate@(0, 29)"
+    ],
+    "plan_steps": [
+     {
+      "module_id": "sentiment",
+      "input_span": [
+       0,
+       29
+      ],
+      "params": {
+       "trigger_bit": "mood",
+       "serves": "mood"
+      }
+     },
+     {
+      "module_id": "output.generate",
+      "input_span": [
+       0,
+       29
+      ],
+      "params": {
+       "reason": "必需位全=有 且 conf ≥ 中 ⇒ 生成输出",
+       "bag_cards": "person|pronoun|relation|sentiment|negation|idiom",
+       "skeleton_table": "render.SKELETONS(16)"
+      }
+     }
+    ],
+    "plan_step_id": "step:1",
+    "terminal": "generate",
+    "channel": "generate",
+    "rule": "R-CH1 终点=generate 且可合法渲染",
+    "cards_run": [
+     "sentiment",
+     "negation"
+    ],
+    "instruction": {
+     "skeleton_id": "R01",
+     "assignment": [
+      0,
+      1,
+      2
+     ]
+    },
+    "text": "他呼风唤雨遗憾。",
+    "evidence": [
+     {
+      "source": "span",
+      "ref": 0,
+      "text": "他",
+      "span": [
+       8,
+       9
+      ],
+      "candidate_id": "c1"
+     },
+     {
+      "source": "span",
+      "ref": 1,
+      "text": "呼风唤雨",
+      "span": [
+       14,
+       18
+      ],
+      "candidate_id": "c2"
+     },
+     {
+      "source": "span",
+      "ref": 2,
+      "text": "遗憾",
+      "span": [
+       27,
+       29
+      ],
+      "candidate_id": "c6"
+     },
+     {
+      "source": "table",
+      "unit_id": "R01#0",
+      "word": "。",
+      "cls": "formal"
+     }
+    ],
+    "ref_map_head": [
+     {
+      "unit_id": "ref:0",
+      "cls": "content",
+      "text": "他",
+      "out": [
+       0,
+       1
+      ],
+      "span": [
+       8,
+       9
+      ]
+     },
+     {
+      "unit_id": "ref:1",
+      "cls": "content",
+      "text": "呼风唤雨",
+      "out": [
+       1,
+       5
+      ],
+      "span": [
+       14,
+       18
+      ]
+     },
+     {
+      "unit_id": "ref:2",
+      "cls": "content",
+      "text": "遗憾",
+      "out": [
+       5,
+       7
+      ],
+      "span": [
+       27,
+       29
+      ]
+     },
+     {
+      "unit_id": "R01#0",
+      "cls": "formal",
+      "text": "。",
+      "out": [
+       7,
+       8
+      ],
+      "span": null
+     }
+    ],
+    "g_stats": {
+     "combos": 14,
+     "cap": false,
+     "skeletons_tried": 14,
+     "why": null
+    },
+    "bag_pos": {
+     "名": 1,
+     "动": 1,
+     "形": 1
+    }
+   },
+   {
+    "input": "他们不固执己见,而是保持开放和成长的心态",
+    "plan": [
+     "[type=plain info=[未查,未查,未查,未查] conf=低 steps=3] ⇒ call：必需位 info[mood]=未查 且 steps=3>0 ⇒ 调用 sentiment | sentiment@(0, 20)",
+     "[type=plain info=[有,有,未查,未查] conf=高 steps=1] ⇒ generate：必需位全=有 且 conf ≥ 中 ⇒ 生成输出 | output.generate@(0, 20)"
+    ],
+    "plan_steps": [
+     {
+      "module_id": "sentiment",
+      "input_span": [
+       0,
+       20
+      ],
+      "params": {
+       "trigger_bit": "mood",
+       "serves": "mood"
+      }
+     },
+     {
+      "module_id": "output.generate",
+      "input_span": [
+       0,
+       20
+      ],
+      "params": {
+       "reason": "必需位全=有 且 conf ≥ 中 ⇒ 生成输出",
+       "bag_cards": "person|pronoun|relation|sentiment|negation|idiom",
+       "skeleton_table": "render.SKELETONS(16)"
+      }
+     }
+    ],
+    "plan_step_id": "step:1",
+    "terminal": "generate",
+    "channel": "generate",
+    "rule": "R-CH1 终点=generate 且可合法渲染",
+    "cards_run": [
+     "sentiment",
+     "negation"
+    ],
+    "instruction": {
+     "skeleton_id": "R02",
+     "assignment": [
+      0,
+      1
+     ]
+    },
+    "text": "他们固执己见。",
+    "evidence": [
+     {
+      "source": "span",
+      "ref": 0,
+      "text": "他们",
+      "span": [
+       0,
+       2
+      ],
+      "candidate_id": "c0"
+     },
+     {
+      "source": "span",
+      "ref": 1,
+      "text": "固执己见",
+      "span": [
+       3,
+       7
+      ],
+      "candidate_id": "c3"
+     },
+     {
+      "source": "table",
+      "unit_id": "R02#0",
+      "word": "。",
+      "cls": "formal"
+     }
+    ],
+    "ref_map_head": [
+     {
+      "unit_id": "ref:0",
+      "cls": "content",
+      "text": "他们",
+      "out": [
+       0,
+       2
+      ],
+      "span": [
+       0,
+       2
+      ]
+     },
+     {
+      "unit_id": "ref:1",
+      "cls": "content",
+      "text": "固执己见",
+      "out": [
+       2,
+       6
+      ],
+      "span": [
+       3,
+       7
+      ]
+     },
+     {
+      "unit_id": "R02#0",
+      "cls": "formal",
+      "text": "。",
+      "out": [
+       6,
+       7
+      ],
+      "span": null
+     }
+    ],
+    "g_stats": {
+     "combos": 10,
+     "cap": false,
+     "skeletons_tried": 10,
+     "why": null
+    },
+    "bag_pos": {
+     "名": 1,
+     "动": 1,
+     "形": 0
+    }
+   },
+   {
+    "input": "我姐夫一意孤行，一定要带的孩子去墓地看奶奶",
+    "plan": [
+     "[type=plain info=[未查,未查,未查,未查] conf=低 steps=3] ⇒ call：必需位 info[mood]=未查 且 steps=3>0 ⇒ 调用 sentiment | sentiment@(0, 21)",
+     "[type=plain info=[有,有,未查,未查] conf=中 steps=1] ⇒ generate：必需位全=有 且 conf ≥ 中 ⇒ 生成输出 | output.generate@(0, 21)"
+    ],
+    "plan_steps": [
+     {
+      "module_id": "sentiment",
+      "input_span": [
+       0,
+       21
+      ],
+      "params": {
+       "trigger_bit": "mood",
+       "serves": "mood"
+      }
+     },
+     {
+      "module_id": "output.generate",
+      "input_span": [
+       0,
+       21
+      ],
+      "params": {
+       "reason": "必需位全=有 且 conf ≥ 中 ⇒ 生成输出",
+       "bag_cards": "person|pronoun|relation|sentiment|negation|idiom",
+       "skeleton_table": "render.SKELETONS(16)"
+      }
+     }
+    ],
+    "plan_step_id": "step:1",
+    "terminal": "generate",
+    "channel": "generate",
+    "rule": "R-CH1 终点=generate 且可合法渲染",
+    "cards_run": [
+     "sentiment",
+     "negation"
+    ],
+    "instruction": {
+     "skeleton_id": "R01",
+     "assignment": [
+      0,
+      3,
+      4
+     ]
+    },
+    "text": "我一意孤行孤行。",
+    "evidence": [
+     {
+      "source": "span",
+      "ref": 0,
+      "text": "我",
+      "span": [
+       0,
+       1
+      ],
+      "candidate_id": "c0"
+     },
+     {
+      "source": "span",
+      "ref": 3,
+      "text": "一意孤行",
+      "span": [
+       3,
+       7
+      ],
+      "candidate_id": "c4"
+     },
+     {
+      "source": "span",
+      "ref": 4,
+      "text": "孤行",
+      "span": [
+       5,
+       7
+      ],
+      "candidate_id": "c5"
+     },
+     {
+      "source": "table",
+      "unit_id": "R01#0",
+      "word": "。",
+      "cls": "formal"
+     }
+    ],
+    "ref_map_head": [
+     {
+      "unit_id": "ref:0",
+      "cls": "content",
+      "text": "我",
+      "out": [
+       0,
+       1
+      ],
+      "span": [
+       0,
+       1
+      ]
+     },
+     {
+      "unit_id": "ref:3",
+      "cls": "content",
+      "text": "一意孤行",
+      "out": [
+       1,
+       5
+      ],
+      "span": [
+       3,
+       7
+      ]
+     },
+     {
+      "unit_id": "ref:4",
+      "cls": "content",
+      "text": "孤行",
+      "out": [
+       5,
+       7
+      ],
+      "span": [
+       5,
+       7
+      ]
+     },
+     {
+      "unit_id": "R01#0",
+      "cls": "formal",
+      "text": "。",
+      "out": [
+       7,
+       8
+      ],
+      "span": null
+     }
+    ],
+    "g_stats": {
+     "combos": 112,
+     "cap": false,
+     "skeletons_tried": 14,
+     "why": null
+    },
+    "bag_pos": {
+     "名": 3,
+     "动": 1,
+     "形": 1
+    }
+   }
+  ],
+  "pointer_examples": [
+   {
+    "input": "改变的关键是“循序渐进”",
+    "text": "你这句话里的『循序』表达了积极；并且有否定成分『改』。",
+    "evidence": [
+     {
+      "card": "sentiment",
+      "span": [
+       7,
+       9
+      ],
+      "class_name": "积极"
+     },
+     {
+      "card": "negation",
+      "span": [
+       0,
+       1
+      ],
+      "class_name": "否定"
+     }
+    ],
+    "terminal": "generate",
+    "plan_step_id": "step:1"
+   },
+   {
+    "input": "2. **循序渐进**:从低强度开始,逐步增加时长和难度",
+    "text": "你这句话里的『难度』表达了愤怒；并且有否定成分『循序渐进*』。",
+    "evidence": [
+     {
+      "card": "sentiment",
+      "span": [
+       26,
+       28
+      ],
+      "class_name": "愤怒"
+     },
+     {
+      "card": "negation",
+      "span": [
+       5,
+       10
+      ],
+      "class_name": "否定"
+     }
+    ],
+    "terminal": "generate",
+    "plan_step_id": "step:1"
+   },
+   {
+    "input": "比如集体主义和个人主义文化下的行为差异,但基本需求可能相似",
+    "text": "你这句话里的『差异,但基本需求可能相似』表达了积极。",
+    "evidence": [
+     {
+      "card": "sentiment",
+      "span": [
+       17,
+       29
+      ],
+      "class_name": "积极"
+     }
+    ],
+    "terminal": "pointer",
+    "plan_step_id": "step:1"
+   },
+   {
+    "input": "💡【一见钟情の颜值】",
+    "text": "你这句话里的『一见钟』表达了积极。",
+    "evidence": [
+     {
+      "card": "sentiment",
+      "span": [
+       2,
+       5
+      ],
+      "class_name": "积极"
+     }
+    ],
+    "terminal": "pointer",
+    "plan_step_id": "step:1"
+   },
+   {
+    "input": "- **体会**:社会实践不是按部就班的作业,沟通和应变能力更重要",
+    "text": "你这句话里的『不是按部就班的作业,沟通和应变能力』表达了愤怒；并且有否定成分『*体会**:社会实践不』。",
+    "evidence": [
+     {
+      "card": "sentiment",
+      "span": [
+       13,
+       30
+      ],
+      "class_name": "愤怒"
+     },
+     {
+      "card": "negation",
+      "span": [
+       3,
+       14
+      ],
+      "class_name": "否定"
+     }
+    ],
+    "terminal": "generate",
+    "plan_step_id": "step:1"
+   },
+   {
+    "input": "8. **循序渐进,培养习惯**",
+    "text": "你这句话里的『渐进』表达了愤怒；并且有否定成分『 』。",
+    "evidence": [
+     {
+      "card": "sentiment",
+      "span": [
+       7,
+       9
+      ],
+      "class_name": "愤怒"
+     },
+     {
+      "card": "negation",
+      "span": [
+       2,
+       3
+      ],
+      "class_name": "否定"
+     }
+    ],
+    "terminal": "generate",
+    "plan_step_id": "step:1"
+   }
+  ],
+  "reject_examples": [
+   {
+    "input": "刑侦是按部就班解决实际问题",
+    "reason": "R-CH5 终点=pointer 但指针无据：不许编，也不许越权改走生成；G=官方骨架表无可渲染指派（no_legal_render）；P=计划授权调用的卡没有发射任何切片",
+    "terminal": "pointer",
+    "rule": "R-CH5 终点=pointer 但指针无据：不许编，也不许越权改走生成"
+   },
+   {
+    "input": "QQ邮箱中的记事本、阅读器等辅助功能是锦上添花还是能增加粘性",
+    "reason": "R-CH5 终点=pointer 但指针无据：不许编，也不许越权改走生成；G=官方骨架表无可渲染指派（bag_empty）；P=计划授权调用的卡没有发射任何切片",
+    "terminal": "pointer",
+    "rule": "R-CH5 终点=pointer 但指针无据：不许编，也不许越权改走生成"
+   }
+  ],
+  "problems_examples": [],
+  "rows": [
+   {
+    "i": 0,
+    "input": "改变的关键是“循序渐进”",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 1,
+    "input": "2. **循序渐进**:从低强度开始,逐步增加时长和难度",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 2,
+    "input": "比如集体主义和个人主义文化下的行为差异,但基本需求可能相似",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 3,
+    "input": "💡【一见钟情の颜值】",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 4,
+    "input": "- **体会**:社会实践不是按部就班的作业,沟通和应变能力更重要",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 5,
+    "input": "8. **循序渐进,培养习惯**",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 6,
+    "input": "总结起来,一见钟情是生物本能、心理机制和社会因素共同作用的结果",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 7,
+    "input": "隐含对事物“循序渐进”规律的尊重(如健身时过量训练反而受伤)",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 8,
+    "input": "这种掩耳盗铃的做法,往往会给青少年的成长带来安全隐患",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 9,
+    "input": "- 社会鼓励见义勇为,但法律也强调施救应量力而行",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 10,
+    "input": "这部分要强调循序渐进,避免受伤,找到喜欢的运动方式,这样更容易坚持",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": true,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 11,
+    "input": "你说的,知道,他们一见钟情,并迅速跳入婚姻",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": true,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 12,
+    "input": "- 这种转变本身就说明李云龙**不是固执己见的人,而是在成长**",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 13,
+    "input": "透镜有这么多的debuff,看来还是平平淡淡的平面镜才是真呐",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 14,
+    "input": "另外,用户可能有尝试过一些方法但效果不佳,所以需要强调循序渐进和持续实践的重要性",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 15,
+    "input": "他是千千万万从泥巴地里爬起来、靠命拼出来的战士缩影",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 16,
+    "input": "- 面对变化和挑战时能灵活应对,不固执己见",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 17,
+    "input": "不过这个成语正确的应该是“丢三落四”,但可能用户这里用缺三少四来对应",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 18,
+    "input": "设计院水很深,不同的部门天差地别",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 19,
+    "input": "**2. 刚开始重复次数不用太多,建议循序渐进地增加次数",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 20,
+    "input": "**总结**:康复需循序渐进,初期以静态稳定训练为主,逐渐过渡到动态功能训练",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 21,
+    "input": "例如,龟兔赛跑对应“骄兵必败”,守株待兔对应“墨守成规”或“刻舟求剑”",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 22,
+    "input": "6. **设定小目标,循序渐进**",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 23,
+    "input": "平平淡淡也是生活的美丽乐章",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 24,
+    "input": "个人主义则强调个人的独立性、自主性和权利,可能和现代性中的个体解放有关联",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 25,
+    "input": "但用户的问题比较普遍,所以回答应该适用于大多数学校,同时提到因地制宜",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 26,
+    "input": "需要注意的关键点包括使用恰当的表情符号,保持段落简短,避免长篇大论",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 27,
+    "input": "如果平时不怎么运动,突然高强度训练可能有受伤风险,需要循序渐进",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 28,
+    "input": "这些方法需要分步骤,循序渐进,避免让用户感到压力",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 29,
+    "input": "例如“雪中送炭”和“锦上添花”,合并成“雪锦添炭,花中送暖”,不过可能不太对",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 30,
+    "input": "他们都是按部就班的推出新品,不需要像新势力那样为了满足资本,从而抢时间",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 31,
+    "input": "最后,要提醒读者从自身兴趣出发,不必急于求成,循序渐进",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 32,
+    "input": "不过薛大将军真是威武霸气，突厥听到他的大名，胆战心惊之下竟不战而退，真军神也",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 33,
+    "input": "这样用户能按部就班地开始使用Erbie平台",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 34,
+    "input": "另外,可能需要强调循序渐进,不要急于求成",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 35,
+    "input": "所以提升计划应该循序渐进,分阶段进行,逐步提高难度和强度",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 36,
+    "input": "比如中文里的“刻舟求剑”这样的四字成语,有明确的出处和比喻意义",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 37,
+    "input": "3. **循序渐进**:可先单式反复练习,再逐渐串联成套路",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 38,
+    "input": "购房需量力而行,避免因房贷压力牺牲生活质量",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 39,
+    "input": "但只要方法得当、循序渐进,你完全可以逐步理解和掌握",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 40,
+    "input": "提升小孩子的社交能力是一个循序渐进的过程,需要家庭、学校和社会的共同支持",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 41,
+    "input": "被挫折绊倒也要坚强爬起，这样才能成为独当一面的魔女",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 42,
+    "input": "- “对牛弹琴”:沟通无效,对象不配合",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 43,
+    "input": "油皮闭眼入科颜氏/悦木之源,干敏皮建议选温和款,贵妇款量力而行~",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 44,
+    "input": "- **循序渐进**:初学可从每分钟80-100次开始,适应后再提速",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 45,
+    "input": "3. **长期健康意识**:调整饮食习惯需循序渐进,可咨询营养师制定个性化方案",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 46,
+    "input": "这些项目的哪一个将来都能保证你养家糊口，不会穷死，失业流落街头",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 47,
+    "input": "道理这东西,讲对了人是有的放矢,讲错了人就是对牛弹琴",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 48,
+    "input": "至尊宝对她一见钟情,展开热烈追求",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 49,
+    "input": "1. **循序渐进**:每周增加10%的训练量(如组数、时长),避免突然高强度",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 50,
+    "input": "问题很多的，这里只是抛砖引玉随便写写 欢迎评论去积极探讨",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 51,
+    "input": "爱情就像那个屁啊，开始时让你胆战心惊，最后却随着时间慢慢消散了…… 好想那个姑娘",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 52,
+    "input": "\"千万工程\"因地制宜的实践路径,为提升基层服务能力指明方向",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 53,
+    "input": "一句简洁却意味深长的台词,往往比长篇大论更具冲击力",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 54,
+    "input": "同样的，长篇大论和逻辑有没有硬伤是两回事",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 55,
+    "input": "另外,用户可能想知道如何区分真正的独立思考和表面的标新立异",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 56,
+    "input": "健康的关系是“锦上添花”,而不是“雪中送炭”",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 57,
+    "input": "这个过程可能需要循序渐进,避免突然改变造成宝宝的不安",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 58,
+    "input": "相较之下,无尘道人“追魂夺命剑”名副其实,赵半山“千臂如来”也因暗器神技实至名归",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 59,
+    "input": "这些锦上添花的东西，在灾难来临之际往往第一个被毁灭，被抛弃",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 60,
+    "input": "**2. 因地制宜解决问题**",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 61,
+    "input": "消费强大+制造业强大+海量订单，这就是这几个月的运行状态，可谓名副其实的多挣多花",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 62,
+    "input": "最后总结时,强调因地制宜,不能照搬,而是参考经验结合本土情况",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 63,
+    "input": "然而,1999年他带领18位创始人在杭州创立阿里巴巴,起初默默无闻",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 64,
+    "input": "1. 湿气调理需循序渐进,避免急于求成(如过度利尿伤阴)",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 65,
+    "input": "版纳比较好玩，大理丽江走马观花的比较多",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 66,
+    "input": "掩耳盗铃罢了",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 67,
+    "input": "用户关注点不是花哨的图标，炫酷的动画，那些都是锦上添花",
+    "channel": "generate",
+    "terminal": "generate",
+    "G": true,
+    "P": true,
+    "rule": "R-CH1 终点=generate 且可合法渲染",
+    "plan_step_id": "step:1",
+    "reason": "R-CH1 终点=generate 且可合法渲染"
+   },
+   {
+    "i": 68,
+    "input": "需要强调急性期休息、疼痛停止动作、循序渐进、配合日常习惯等",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 69,
+    "input": "**最后提醒**:借贷需谨慎,量力而行,避免过度负债",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 70,
+    "input": "而张三丰的成就部分源于早年游历江湖、博采众长",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 71,
+    "input": "窦建德在七里井大破薛世雄,虽默默无闻,然远胜昆阳",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 72,
+    "input": "可能还需要考虑营养均衡的问题,在恢复期逐步增加蛋白质和维生素的摄入,但要循序渐进",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 73,
+    "input": "九品玄丹对冲击斗圣的萧炎是“雪中送炭”,而对她自己只是“锦上添花”",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 74,
+    "input": "学员恍然大悟:“哦",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 75,
+    "input": "乍一看活动挺多，套餐经常推陈出新",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 76,
+    "input": "- **优点**:无文字依赖,适合非母语孩子;关卡循序渐进,培养耐心和思考",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 77,
+    "input": "例如,个人主义与集体主义的不同可能导致不同的社会问题",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 78,
+    "input": "学校思想政治教育贯穿于从小学到大学的全过程,形成循序渐进、螺旋上升的教育体系",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 79,
+    "input": "所以可能需要因地制宜的建议",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 80,
+    "input": "真的很帅哎~脸红了~心跳了~激动了~心花怒放了~~~",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 81,
+    "input": "是一场名副其实的爆炸",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 82,
+    "input": "告诉你一棵稗子提心吊胆的春天",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 83,
+    "input": "- **因地制宜的混合模式**",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 84,
+    "input": "露珠通常在清晨出现,短暂存在,滋润植物,默默无闻,却对植物的生长有帮助",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 85,
+    "input": "然后,考虑不同的文化背景对此的看法是否有差异,比如集体主义和个人主义社会的不同",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 86,
+    "input": "有的孩子大大咧咧,被老师批评了完全无所谓",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 87,
+    "input": "英雄本色喔~所以小宝长大了要不要当英雄吖",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 88,
+    "input": "调整这样的状态需要一个循序渐进的过程,可以试着从以下几个维度着手:",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 89,
+    "input": "刑侦是按部就班解决实际问题",
+    "channel": "reject",
+    "terminal": "pointer",
+    "G": false,
+    "P": false,
+    "rule": "R-CH5 终点=pointer 但指针无据：不许编，也不许越权改走生成",
+    "plan_step_id": "step:1",
+    "reason": "R-CH5 终点=pointer 但指针无据：不许编，也不许越权改走生成；G=官方骨架表无可渲染指派（no_legal_render）；P=计划授权调用的卡没有发射任何切片"
+   },
+   {
+    "i": 90,
+    "input": "二、精准定位目标客群与市场策略:因地制宜,分层拓展",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 91,
+    "input": "说到底,“性”只是生活中普普通通的一环,没什么可讳莫如深的",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 92,
+    "input": "- **从微小习惯开始**:自律需要循序渐进",
+    "channel": "generate",
+    "terminal": "generate",
+    "G": true,
+    "P": true,
+    "rule": "R-CH1 终点=generate 且可合法渲染",
+    "plan_step_id": "step:1",
+    "reason": "R-CH1 终点=generate 且可合法渲染"
+   },
+   {
+    "i": 93,
+    "input": "- 在个人主义文化中,爱更注重个人幸福、激情与自我实现",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 94,
+    "input": "健康的感情是锦上添花,而非填补人生空缺的必需品",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 95,
+    "input": "### 推荐阅读书单(循序渐进):",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 96,
+    "input": ",知道,他们一见钟情,并迅速跳入婚姻",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 97,
+    "input": "- 文化差异存在:集体主义文化中,爱更强调责任;个人主义文化更侧重自我实现",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 98,
+    "input": "你不要恋爱了就满脑子都是恋爱，姐姐是要做学霸的人，怎会被儿女情长所束缚",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 99,
+    "input": "为个人努力的也知道怎样毁灭个人,这是个人主义的两端",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 100,
+    "input": "- “借东风”实为气象推测,却被描写成设坛作法、呼风唤雨;",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 101,
+    "input": "” | “《守株待兔》是一个寓言故事",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 102,
+    "input": "绕舌根据能力循序渐进，不可贪求过多，否则事倍功半",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 103,
+    "input": "嗯,这个问题是要找一个成语,描述既有移动山脉又能翻江倒海的能力",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 104,
+    "input": "我一直活的我行我素的，怪，我喜欢",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": true,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 105,
+    "input": "这种方法能让阅读更有目标,避免走马观花",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 106,
+    "input": "- **注意**:艾灸应循序渐进,避免过热伤阴,阴虚火旺者慎用",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 107,
+    "input": "### 4. **个人主义 vs. 集体主义**",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 108,
+    "input": ",这是一见钟情,哦",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 109,
+    "input": "如果它本名就叫Bengal，估计中国也不会画蛇添足加上「国」的",
+    "channel": "generate",
+    "terminal": "generate",
+    "G": true,
+    "P": true,
+    "rule": "R-CH1 终点=generate 且可合法渲染",
+    "plan_step_id": "step:1",
+    "reason": "R-CH1 终点=generate 且可合法渲染"
+   },
+   {
+    "i": 110,
+    "input": "来稿者以未来中国为遐想主题，各抒己见",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 111,
+    "input": "要强调动作的正确性和循序渐进的重要性,可能用户之前尝试过但不正确,导致膝盖不适",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 112,
+    "input": "不，看得越多越发觉得自己是井底之蛙",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 113,
+    "input": "守常的当代价值,不在于刻舟求剑式的固执,而在于为瞬息万变的现代生活提供文化坐标系",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 114,
+    "input": "”“你相信一见钟情吗",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 115,
+    "input": "皮肤护理是一个循序渐进的过程,找到适合自己的方式最重要",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 116,
+    "input": "理性借贷,量力而行",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 117,
+    "input": "最后,要强调循序渐进的重要性,避免急于增加重量而导致动作错误",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 118,
+    "input": "- 若能在大平台中发光发热,哪怕默默无闻,也是贡献者",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 119,
+    "input": "你可以平静地听朋友提起他,甚至能真心祝福他的幸福,而内心不再翻江倒海",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 120,
+    "input": "- 不要一次性改变太多,建议循序渐进,比如先增加蔬菜量,再逐步减少精制糖",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 121,
+    "input": "2. 理性购彩,量力而行,建议将购彩视为娱乐而非投资",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 122,
+    "input": "请为《蜡笔小新:呼风唤雨",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 123,
+    "input": "孩子问「为什么古代诗人那么悠闲,不用养家糊口,还能到处旅游写那么多诗",
+    "channel": "generate",
+    "terminal": "generate",
+    "G": true,
+    "P": true,
+    "rule": "R-CH1 终点=generate 且可合法渲染",
+    "plan_step_id": "step:1",
+    "reason": "R-CH1 终点=generate 且可合法渲染"
+   },
+   {
+    "i": 124,
+    "input": "预防的话,可能包括热身、正确姿势、循序渐进这些常见点",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 125,
+    "input": "避免让用户觉得有压力,要强调循序渐进",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 126,
+    "input": "MIT媒体实验室分析显示,接触浪漫题材多1小时/天,一见钟情自我报告率上升19%",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 127,
+    "input": "- 同时,西方社会也在反思极端个人主义带来的问题,强调合作与共情",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 128,
+    "input": "所以有人传说他刚愎自用根本听不进去意见我是绝对相信的",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 129,
+    "input": "人家不是很忙才没顾得上，后来也亡羊补牢了",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 130,
+    "input": "- **因地制宜调整**:根据灾害类型补充物品(如洪水需救生衣,台风需加固胶带)",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 131,
+    "input": "⚠️运动强度要循序渐进,根据自身情况,每天多运动一点点,不要一下子高强度运动",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 132,
+    "input": "我记得在九型人格中,第四型是“个人主义者”或“浪漫主义者”",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 133,
+    "input": "用户可能的深层需求是希望有系统、循序渐进的练习方法,而不是零散的技巧",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 134,
+    "input": "1 循序渐进尝试",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 135,
+    "input": "有模有样旗舰店",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 136,
+    "input": "我第一家店6w借了4w开的流水一样高，拒绝不切实际，一切因地制宜",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 137,
+    "input": "改掉挑食的习惯是一个循序渐进的过程,需要耐心和积极的心态",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 138,
+    "input": "是一见钟情吗",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 139,
+    "input": "别信那啥开跑车就能有人脉，人家看中的只是你的资源，名车名表永远都只是锦上添花",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 140,
+    "input": "对方承诺改掉坏习惯，每次说完依旧我行我素",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 141,
+    "input": "需要警惕的是将这种现象简单归因为个人主义泛滥,而应看到其背后结构性压迫的消解",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 142,
+    "input": "你想通过学习一项技能来自食其力,这是一个非常积极且现实的目标",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 143,
+    "input": "- **循序渐进**:避免同时使用多种猛药(如A醇+高浓度酸),防止屏障受损",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 144,
+    "input": "我父亲养家,他是唯一养家糊口的人,妈家庭主妇",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 145,
+    "input": "27. \"文化棱镜下的自我:集体主义vs个人主义的认知碰撞\"",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 146,
+    "input": "蔺相如接过玉璧,**后退几步,倚柱而立,怒发冲冠**,大声道:",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 147,
+    "input": "以下是为你量身定制的学习路径,从基础到进阶,循序渐进:",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 148,
+    "input": "贪多不烂, 意大利你只去那几个著名城市逛几天完全是走马观花",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 149,
+    "input": "- **调理需循序渐进**:先化湿,再养阴,或两者兼顾但药性平和",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 150,
+    "input": "- **B. 拔苗助长**:人为拔高禾苗会导致根系受损,最终禾苗死亡",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 151,
+    "input": "2. **尝试外出需循序渐进**",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 152,
+    "input": "但不同皮质真的天差地别",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 153,
+    "input": "是否所有\"一见钟情\"都等同于外貌吸引",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 154,
+    "input": "1. **社会观念的多元化与个人主义兴起**",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 155,
+    "input": "- **现代个人主义与风险规避**:",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 156,
+    "input": "(2)产品质量的形成和发展是一个循序渐进的螺旋上升过程",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 157,
+    "input": "- 循序渐进提升训练强度,避免超负荷",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 158,
+    "input": "- **低语**:“原来是这样......”(恍然大悟)",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 159,
+    "input": "所以,这个谜语的答案是:**守株待兔**",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 160,
+    "input": "所以,强调循序渐进和建立支持系统可能很重要",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 161,
+    "input": "噢买嘎重新转出来你确定还记得你的长篇大论吗",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 162,
+    "input": "- 不要因贪图表现或自作聪明而画蛇添足;",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 163,
+    "input": "提升摄影技能是一个循序渐进的过程,选择合适的学习途径能让你事半功倍",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 164,
+    "input": "同样的能量,释放方式不同,结果天差地别",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 165,
+    "input": "我也从来都不相信一见钟情，之前有人给我说一见钟情，我果断拉黑了",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 166,
+    "input": "而如今,个人主义兴起,许多优秀人才选择成为独立的意见领袖",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 167,
+    "input": "在全国统一行政管理的前提下,各地因地制宜建立自己的水权制度管理体系",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 168,
+    "input": "40分钟也够了，配速、时间、距离都循序渐进",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 169,
+    "input": "难道反而手握所谓“科学道理”的信徒就是手握金玉良言，手握真理，从此一劳永逸么",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 170,
+    "input": "两种能源均对碳中和目标至关重要,因地制宜的规划与技术创新将决定其实际效益",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 171,
+    "input": "平平淡淡才最幸福",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 172,
+    "input": "有你喝的就不错了，还敢挑三拣四，明早不带你的份了",
+    "channel": "generate",
+    "terminal": "generate",
+    "G": true,
+    "P": true,
+    "rule": "R-CH1 终点=generate 且可合法渲染",
+    "plan_step_id": "step:1",
+    "reason": "R-CH1 终点=generate 且可合法渲染"
+   },
+   {
+    "i": 173,
+    "input": "它在博采众长、综合提炼的基础上,达到了以我为主、自成一家的目的",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": true,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 174,
+    "input": "❌循序渐进,别一上来就饿狠了",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 175,
+    "input": "有没有像‘灌篮高手’里木暮那样平时默默无闻，但关键时刻发挥作用的‘小人物’",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 176,
+    "input": "首先,得考虑不同国家或地区的具体情况,可能政策需要因地制宜",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 177,
+    "input": "因此,连锁零售网点的各分支点必须拥有一定程度因地制宜的经营自主权",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 178,
+    "input": "- 气血调理需循序渐进,一般1~3个月可见改善,避免急于求成",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 179,
+    "input": "我父亲养家糊口,他是唯一的人,妈家庭主妇",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 180,
+    "input": "还要提到循序渐进,避免受伤,因为他可能刚开始锻炼,容易过度",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 181,
+    "input": "...... 你看，可以有很多方向，你需要掌握的知识可以天差地别",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 182,
+    "input": "”或者“心花怒放",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 183,
+    "input": "另外,不同地区的医疗资源不同,预防措施可能需要因地制宜",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 184,
+    "input": "我们一见钟情",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": true,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 185,
+    "input": "面部神经麻痹的康复是一个循序渐进的过程",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 186,
+    "input": "他终于明白,“刻舟求剑”不是古人的笑话,而是照见自己执念的一面镜子",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 187,
+    "input": "- 西方文化更强调直接表达和个人主义,而中国文化倾向于含蓄、谦逊和集体主义",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 188,
+    "input": "利用搜索引擎、AI助手、专业软件等工具加速信息处理;整合人脉、团队协作,集思广益",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 189,
+    "input": "并且这讨论的是古代，拿当代的 去套（刻舟求剑",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 190,
+    "input": "这样的故事里,可能包含几个成语,比如“触类旁通”、“因地制宜”、“化险为夷”等",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 191,
+    "input": "尤其是刷酸类产品,一定要循序渐进~",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 192,
+    "input": "提高健康素养,要因地制宜,因材施教",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 193,
+    "input": "这里的自由像硬币的两面,一面镌刻着个人主义的勋章,另一面则印着集体责任的赤字",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 194,
+    "input": "我们都还在，有千千万万的人在陪着你，一起伤感",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 195,
+    "input": "2.因地制宜,统筹兼顾,突出重点",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 196,
+    "input": "1. **循序渐进**:先从涂鸦、简笔画开始,逐步过渡到线描和中国画",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 197,
+    "input": "1144万分，抛砖引玉",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 198,
+    "input": "需要解决策略,核心思路,不用长篇大论",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 199,
+    "input": "在这一进程中,个人主义(individualism)成为现代性的重要特征之一",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 200,
+    "input": "从零开始训练,最终成为一名合格的马拉松选手,是一个循序渐进、科学规划的过程",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 201,
+    "input": "可能还需要提醒他循序渐进,不要急于求成,培养习惯需要时间",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 202,
+    "input": "同时,要强调循序渐进,避免让用户感到压力,比如从整理桌面开始,逐步扩展到其他区域",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 203,
+    "input": "1. **分层管理,因地制宜**",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 204,
+    "input": "因此,学习须从基础知识学起,狠下功夫,锲而不舍,循序渐进,逐步提高",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 205,
+    "input": "来给民族主义者和自由派双方都提供点思路，就当抛砖引玉吧",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 206,
+    "input": "提升写作水平是一个循序渐进的过程,需要持续练习、广泛阅读和不断反思",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 207,
+    "input": "避免俗套的一见钟情,强调共同成长和价值观的契合",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 208,
+    "input": "用户提到“默默无闻”的作者,说明他们可能对那些不太知名但内容深刻的作品感兴趣",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 209,
+    "input": "其实,拔苗助长本身是一个错误的做法,会导致禾苗死亡,这个结果应该是必然的",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 210,
+    "input": "- 西方的个人主义强调责任与权利的统一,而非放任自我",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 211,
+    "input": "可能还要区分一见钟情和单纯外貌吸引的不同,用户可能想强调情感深度,而不仅仅是外表",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 212,
+    "input": "个人见解，抛砖引玉",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 213,
+    "input": "一、现代性与个人主义的关联",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 214,
+    "input": "就说卖快餐，好多夫妻店，起早贪黑，能一个月赚一两万都很不错了",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 215,
+    "input": "- 遵循“循序渐进、以不引起症状为原则”",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 216,
+    "input": "然而“规模”又是相对的,应该因地制宜,实事求是去追求规模化",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 217,
+    "input": "“水中捞月”比喻 **虚幻、做不到的事**,就像“守株待兔”一样",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 218,
+    "input": "其特点是让学生在课堂教学中各抒己见,各种思想观点直接交锋,使学生互相启发",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 219,
+    "input": "(四)因地制宜特色专营",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 220,
+    "input": "“穷”，真的是FIRST的主旋律了，也是这个行业大部分默默无闻的电影人的主旋律",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 221,
+    "input": "- 总体规划原则:生态优先、以人为本、因地制宜、可持续发展",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 222,
+    "input": "康复应循序渐进,结合支具保护、物理治疗和骨质疏松管理,以促进功能恢复并预防再发",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 223,
+    "input": "⚠️敏感肌姐妹一定要循序渐进,别急着猛药",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 224,
+    "input": "或者“一见钟情”,但可能不太适合正式场合",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 225,
+    "input": "朋克的反抗是消解性的，喊得再狠也只是个人主义地摆姿态和发泄",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 226,
+    "input": "空气洗是**锦上添花型功能**,而非洗衣机的核心价值",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 227,
+    "input": "他们也追求\"酷\"\"帅\"\"标新立异\",但是相较之下比较粗线条,比较硬朗,比较铁憨憨",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 228,
+    "input": "当有人向你表达“一见钟情”,你理解这背后蕴含的意义是什么",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 229,
+    "input": "篮球本就是团队运动，硬生生被这群科畜搞成了一打五，二打五的个人主义表演",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 230,
+    "input": "水温过低(如冬泳)时,避免突然剧烈运动,应循序渐进,防止心脏负荷过大",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 231,
+    "input": "首先,我得明确“一见钟情”的定义,就是第一次见面就产生强烈的爱慕之情",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 232,
+    "input": "当你感到沮丧或缺乏动力时,找回积极性是一个循序渐进的过程",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 233,
+    "input": "同样是夺位，为什么唐太宗李世民和宋太宗赵光义的口碑天差地别",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 234,
+    "input": "按部就班，脚踏实地，诸葛亮搞不过的",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 235,
+    "input": "职场中的团队协作神话与个人主义价值观形成张力,导致「被迫社交」成为生存策略",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 236,
+    "input": "我虽然没有“体验”过,但我“看见”过千千万万这样的故事",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 237,
+    "input": "嗯,用户问的是有没有一些人们常发现自己多年前固执己见但最终承认错误的观点或话题",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 238,
+    "input": "其实J是对E一见钟情的，导演的镜头语言已经告诉你了哟",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 239,
+    "input": "※ 典型例证:\"提心吊胆\"原指猎人悬挂猎物的内脏,后演变为心理状态的具象化表达",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 240,
+    "input": "首先,“密薪制”成为企业管理基础上的遮羞布,让某些企业可以掩耳盗铃",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 241,
+    "input": "比如在集体主义文化中,可能更强调群体认可的重要性,而个人主义文化则更看重自我肯定",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 242,
+    "input": "- 避免说“随便剪剪”然后又挑三拣四,那是真会让人崩溃的",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 243,
+    "input": "运动时要循序渐进，切忌突然、剧烈地运动，并在运动时可采取佩带腰围等保护措施",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 244,
+    "input": "- **循序渐进**:恢复是一个非线性过程,不可急于求成",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 245,
+    "input": "目前,国内外的各循环产业园区并没有一个统一的类型,而是因地制宜,各具特色",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 246,
+    "input": "> 例如:工作只是为了谋生,没有个人价值的实现;生活按部就班,却缺少激情或追求",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 247,
+    "input": "“血......”我失声低语,胃里翻江倒海",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 248,
+    "input": "总之,帮助朋友建立对疫苗的信心是一个循序渐进的过程",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 249,
+    "input": "就连社会公序良俗也会微调改变 所以很多东西不要固定思维，刻舟求剑",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 250,
+    "input": "然后邂逅的惊喜,可能涉及到相遇的瞬间、心跳加速、一见钟情的感觉",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 251,
+    "input": "这样原本普通的整合运动小兵现在却可以独当一面，这是成长",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 252,
+    "input": "一个个都别长篇大论了",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 253,
+    "input": "- **循序渐进**:成绩提升需长期积累,避免急于求成导致受伤",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 254,
+    "input": "- 个人主义极端化:将自我表达误解为缺乏责任感",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 255,
+    "input": "一些殡葬单位还会我行我素,随意抬高殡葬服务及殡葬用品的价格",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 256,
+    "input": "比如,项羽的刚愎自用和刘邦的善于用人,这些对比可以突出故事的教训",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 257,
+    "input": "⚠️ 温馨提示:借款需量力而行,避免过度负债",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 258,
+    "input": "建立耐受+循序渐进才是王道",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 259,
+    "input": "还要考虑文化差异,不同社会对个人主义和集体主义的看法不同",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 260,
+    "input": "这种 **“创造性转化”** 呼应了红色精神中“实事求是、因地制宜”的创新思维",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 261,
+    "input": "这种对个人主义的暧昧态度,消解了战争叙事常见的集体主义崇高感",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 262,
+    "input": "鲨鱼在禁区翻江倒海,老詹的坦克碾过结界",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 263,
+    "input": "⚠️ 提醒:见义勇为值得赞扬,但救人必须量力而行,尤其未成年人不应贸然下水",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 264,
+    "input": "稳定性好,但可能比较按部就班",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 265,
+    "input": "1. **集体主义 vs 个人主义**",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 266,
+    "input": "- 平板支撑(量力而行,避免塌腰)",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 267,
+    "input": "在XP项目中,计划是持续的、循序渐进的",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 268,
+    "input": "这些方法需要循序渐进的练习,过程中可能会有反复,这恰好说明你的感知系统在重新校准",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 269,
+    "input": "- **循序渐进**:足部肌肉较弱者需从低强度开始,避免急性劳损",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 270,
+    "input": "免不了有点心惊肉跳",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 271,
+    "input": "3. **循序渐进**:足部小肌群易疲劳,初期训练后可能出现酸痛,需逐步增加强度",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 272,
+    "input": "当双方通过多轮讨论验证信息后,会优先服从证据更强的结论,而非固执己见",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 273,
+    "input": "另外,可能存在的误区需要澄清,比如一见钟情是否真的存在,还是只是强烈的吸引力",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 274,
+    "input": "比如“喜出望外”表示非常高兴,“怒不可遏”则是非常生气",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 275,
+    "input": "6. **重建联系,循序渐进**",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 276,
+    "input": "循序渐进避免受伤,特别是新手容易急于求成",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 277,
+    "input": "以下是一套科学、循序渐进的康复锻炼建议:",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 278,
+    "input": "如果说，在现实中他真的能这么呼风唤雨，只能为中科大感到遗憾",
+    "channel": "generate",
+    "terminal": "generate",
+    "G": true,
+    "P": true,
+    "rule": "R-CH1 终点=generate 且可合法渲染",
+    "plan_step_id": "step:1",
+    "reason": "R-CH1 终点=generate 且可合法渲染"
+   },
+   {
+    "i": 279,
+    "input": "从不同的趣闻轶事、故事或者主题开始集思广益想好讲话的主题",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 280,
+    "input": "一是投资的可塑性大,资金不足可因陋就简,以“土”取胜,有条件的可以锦上添花",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 281,
+    "input": "虽然明白学习是个循序渐进的过程,但看不到努力的成效还是让我挺难过的",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 282,
+    "input": "和李嘉诚一样成名副其实的资本家，他将来话语必维护资本家，我们都是他们的羔羊",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 283,
+    "input": "需要强调循序渐进,不能急于求成,避免让老人感到压力过大",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 284,
+    "input": "- 彩票是概率游戏,中奖具有随机性,请量力而行,避免沉迷",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 285,
+    "input": "是在岛上呆久了觉得看谁都像井底之蛙么",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 286,
+    "input": "#### 案例二:日常生活中的“画蛇添足”",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 287,
+    "input": "因此,推行多元化申报,要因地制宜,找准方式",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 288,
+    "input": "QQ邮箱中的记事本、阅读器等辅助功能是锦上添花还是能增加粘性",
+    "channel": "reject",
+    "terminal": "pointer",
+    "G": false,
+    "P": false,
+    "rule": "R-CH5 终点=pointer 但指针无据：不许编，也不许越权改走生成",
+    "plan_step_id": "step:1",
+    "reason": "R-CH5 终点=pointer 但指针无据：不许编，也不许越权改走生成；G=官方骨架表无可渲染指派（bag_empty）；P=计划授权调用的卡没有发射任何切片"
+   },
+   {
+    "i": 289,
+    "input": "4.简介不要长篇大论，要写与小说内容相关，切忌写诗",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 290,
+    "input": "”此乃肺腑之言，有何诈伪",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 291,
+    "input": "画蛇添足这个成语应该是最直接的,因为故事里确实有人给蛇画了脚,结果反而输了比赛",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 292,
+    "input": "(2)集思广益,提出设想",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 293,
+    "input": "这样用户能循序渐进地理解",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 294,
+    "input": "因为我还要养家糊口啊，没空在弱者世界徘徊",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 295,
+    "input": "培养健康的饮食习惯需要循序渐进的方法和科学的知识引导",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 296,
+    "input": "- 运动强度应循序渐进,避免受伤或因过度疲劳加重情绪负担",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 297,
+    "input": "溜达了一圈，真的是恍然大悟兼茅塞顿开",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 298,
+    "input": "3. **分解动作,循序渐进**",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 299,
+    "input": "脚下技术锦上添花，脚下频率不拖后腿",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 300,
+    "input": "而且足球运动员退休一般比较早，还是得靠搞点其他的东西来养家糊口",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 301,
+    "input": "有上海滩，卧虎藏龙，喋血双雄，英雄本色，赌神，龙虎风云等，你还知道其他的作品吗",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 302,
+    "input": "1. **因地制宜**:根据地区气候、作物类型、经营规模选择合适技术",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 303,
+    "input": "坚持健康饮食需要循序渐进,不必追求完美",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 304,
+    "input": "对于女性而言,是应该追求职业发展,自食其力,还是扮演家庭主妇的角色呢",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 305,
+    "input": "**原文关联**:虽非直接出自该故事,但与“画蛇添足”的寓意高度契合",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 306,
+    "input": "- **因地制宜的运营策略**:",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 307,
+    "input": "(扇子一抖,作恍然大悟状)",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 308,
+    "input": "同时强调不要过度投入,量力而行",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 309,
+    "input": "要确保推荐的内容全面,但不过于冗杂,让用户能够循序渐进,不会感到压力太大",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 310,
+    "input": "提高写作文的能力是一个循序渐进的过程,需要积累、练习和反思",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 311,
+    "input": "切不可刻舟求剑，误判目前中美关系的实质和其中蕴藏的风险",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 312,
+    "input": "3.要随时密切关注市场行情和投资环境,因地制宜,比如翡翠,就适合中国市场",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 313,
+    "input": "- **气候资源优越**:昆明“春城”美誉名副其实,全年气候宜人;",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 314,
+    "input": "不妨循序渐进引导,但最终以它们的舒适度为优先考量",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 315,
+    "input": "你起早贪黑靠了个普通211",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 316,
+    "input": "而西方男性在个人主义文化背景下,可能更强调平等伴侣关系,注重情感表达",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 317,
+    "input": "此外,负面评论的持续可能与公众记忆的持久性和部分人群的固执己见有关",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 318,
+    "input": "然后是运动频率和时间,每周3-5次,每次30-60分钟,循序渐进",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 319,
+    "input": "浙江省与海西州扶贫协作的关键在于因地制宜、优势互补",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 320,
+    "input": "不必为了合群而改变自己,也不必为了“特别”而刻意标新立异",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 321,
+    "input": "### 五、推荐学习路径(循序渐进)",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 322,
+    "input": "他们不固执己见,而是保持开放和成长的心态",
+    "channel": "generate",
+    "terminal": "generate",
+    "G": true,
+    "P": true,
+    "rule": "R-CH1 终点=generate 且可合法渲染",
+    "plan_step_id": "step:1",
+    "reason": "R-CH1 终点=generate 且可合法渲染"
+   },
+   {
+    "i": 323,
+    "input": "三要因地制宜,错位发展",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 324,
+    "input": "研讨课的上法要遵循一定的步骤,一般采用下列步骤循序渐进:",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 325,
+    "input": "- 理性购彩,量力而行",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 326,
+    "input": "通过以上方法,既维护朋友关系,又能循序渐进地帮他们找回对生活的掌控感",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 327,
+    "input": "嗯,用户想学习一项技能来自食其力,这个问题看起来挺常见的,但具体该怎么回答呢",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 328,
+    "input": "城市人才引进、发展和保留是一个全流程、循序渐进的整体过程",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 329,
+    "input": "- **循序渐进**:从1-2条开始实践,避免因压力过大放弃",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 330,
+    "input": "“怒发冲冠,凭栏处、潇潇雨歇......待从头、收拾旧山河,朝天阙",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 331,
+    "input": "- 深层肌肉松解应循序渐进,以客户反馈为准,忌“越痛越有效”的误区",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 332,
+    "input": "- **魏惠王时期**虽初期尚有作为,但后期刚愎自用,错失良机",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 333,
+    "input": "运动方面,要循序渐进,避免剧烈运动,尤其是颈部活动",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 334,
+    "input": "还要注意逻辑连贯,从基础到应用,逐步展开,让读者能够循序渐进地理解",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 335,
+    "input": "他是名副其实的“中国改革之星”",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 336,
+    "input": "比赛太猛烈了，看得心惊肉跳，吓死人",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 337,
+    "input": "下面是一个**系统、循序渐进的学习路径**,帮助你从入门到进阶掌握 Qt",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 338,
+    "input": "1. **过度强调个人主义,忽视集体协作**",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 339,
+    "input": "所以现在讨论这道旨对今年有什么样的影响，有点刻舟求剑的意思",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 340,
+    "input": "自秦至清代,二十四节气和七十二候日臻完善,因地制宜的农业气候概念逐渐形成",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 341,
+    "input": "听到你称赞她的皮肤焕发生机,她绝对会心花怒放",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 342,
+    "input": "1. **因地制宜制定方案**",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 343,
+    "input": "乘客人群统一，不会挑三拣四",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 344,
+    "input": "早上眼睁睁地看着早餐却买不了，忘记带钱了，最近经常丢三落四",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 345,
+    "input": "- 培训节奏应循序渐进,避免信息过载;",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 346,
+    "input": "怎么评价汪峰和大张伟这两个同是摇滚出身，发展却天差地别的两个歌手",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 347,
+    "input": "大厂里有不少外包，其实不少外包和大厂正式员工做的工作也差不多，但是工资却天差地别",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 348,
+    "input": "此外,耐心和循序渐进很重要,不要期望立刻改变,而是逐步引入新食物",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 349,
+    "input": "仔猪补料要循序渐进,投饲量可以由少到多,一般经过8-15天之后可使仔猪学会吃食",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 350,
+    "input": "- **个人主义社会**(如欧美):幸福更依赖个人成就、自由选择",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 351,
+    "input": "还有循序渐进,从短时间开始,慢慢延长,尊重孩子的兴趣,别强迫",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 352,
+    "input": "许多栽培管理措施对避免或减少病虫害的发生有一定效果,应因地制宜选择使用",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 353,
+    "input": "有没有哪些话语曾经让你恍然大悟",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 354,
+    "input": "哈哈欢迎大家来吐槽探讨啦集思广益嘛",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 355,
+    "input": "- 个人主义文化则更倾向限制政府权力、强调程序与权利保障",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 356,
+    "input": "小众不是为了标新立异,而是找到和自己灵魂共振的那一缕香气💫",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 357,
+    "input": "很赞成最早实习的创业公司cto给我入职时候的话：成为一名独当一面的程序员吧",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 358,
+    "input": "然后,“因地制宜”指根据当地的具体情况,制定或采取适当的措施",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 359,
+    "input": "5. **循序渐进**:不要一开始就研究分片集群",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 360,
+    "input": "罗斯福读后批注:“哪有此等好事——天下没有不劳而获的东西",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 361,
+    "input": "例:学习知识要循序渐进,打好基础最重要",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 362,
+    "input": "简言之,武器强弱并非绝对,胜负关键在于如何扬长避短、因地制宜",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 363,
+    "input": "- 若需贬义表达,可考虑 **\"标新立异的\"**(语境依赖)",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 364,
+    "input": "- 文化阻尼系数:集体主义与个人主义社会中的衡量标准存在相位差",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 365,
+    "input": "- **渐进式锻炼**:避免过度运动,应循序渐进,防止疼痛加重",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 366,
+    "input": "嗯,用户问的是“掩耳盗铃”这个成语的含义",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 367,
+    "input": "这种“主角光环”让部分读者觉得他“不劳而获”,缺乏真正的成长代价,从而产生反感",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 368,
+    "input": "忙死我了～去养家糊口了",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 369,
+    "input": "**示例**:语言学习需循序渐进,急于求成反而事倍功半",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 370,
+    "input": "大家恍然大悟",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 371,
+    "input": "才可逐步恢复轻度运动,并在医生指导下循序渐进增加强度",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 372,
+    "input": "小王恍然大悟",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 373,
+    "input": "以下是从多个角度解释“一见钟情”为什么会发生:",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 374,
+    "input": "### 六、地域特征:因地制宜,风格多样",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 375,
+    "input": "但这些只是锦上添花的用品,而不是必须使用的",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 376,
+    "input": "不要长篇大论",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 377,
+    "input": "PS： 37wan前些日子为了上市/被收购，拔苗助长的事没少干，数据必然会虚胖",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 378,
+    "input": "你应该先聊一些无关紧要的话题,然后再循序渐进",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 379,
+    "input": "还要注意不同地区的差异性,比如中国的东西部发展不平衡,可能需要因地制宜的策略",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 380,
+    "input": "不要起争执或者固执己见",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 381,
+    "input": "所以联想所谓的投华为,其实是控制码,但是已经大局已定,不需要他来锦上添花了",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 382,
+    "input": "- 不太愿意按部就班,可能忽略基础细节",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 383,
+    "input": "可能用户希望得到鼓励,所以结尾部分可以强调循序渐进,逐步改善,不要急于求成",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 384,
+    "input": "你可以选择正装鞋,为运动裤锦上添花,也可以选择休闲鞋,以维持一致的休闲风格",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 385,
+    "input": "#### 1. **内容过渡策略(循序渐进)**",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 386,
+    "input": "- **循序渐进**:先练纯计算,再过渡到应用题",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 387,
+    "input": "地球资源使用已经超过年预估值了，为什么人类依旧我行我素",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 388,
+    "input": "恍然大悟，要不是汪峰，恐怕摇滚就真的死了吧",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 389,
+    "input": "新手应该循序渐进地增加运动时间和强度",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 390,
+    "input": "同时,要确保推荐的项目由简到难,让用户有一个循序渐进的学习过程",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 391,
+    "input": "因为不配 不改善训练体系管理能力，只想着天上掉紫薇星和守株待兔有什么区别",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 392,
+    "input": "例如,“而真正的语言艺术在于在积累的基础上推陈出新",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 393,
+    "input": "注意事项方面,安全最重要,强调姿势正确、量力而行,避免受伤",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 394,
+    "input": "再想想,“移山填海”可能也是一个选项,但“填海”和题目中的“翻江倒海”不太一样",
+    "channel": "pointer",
+    "terminal": "generate",
+    "G": false,
+    "P": true,
+    "rule": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针",
+    "plan_step_id": "step:1",
+    "reason": "R-CH2 终点=generate 但不可合法渲染 ⇒ 降级指针"
+   },
+   {
+    "i": 395,
+    "input": "- 此时落魂灯可随心念而动,照见因果,甚至逆转魂飞魄散之危",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 396,
+    "input": "选项A是守株待兔",
+    "channel": "pointer",
+    "terminal": "pointer",
+    "G": false,
+    "P": true,
+    "rule": "R-CH4 终点=pointer 且指针有据",
+    "plan_step_id": "step:1",
+    "reason": "R-CH4 终点=pointer 且指针有据"
+   },
+   {
+    "i": 397,
+    "input": "我姐夫一意孤行，一定要带的孩子去墓地看奶奶",
+    "channel": "generate",
+    "terminal": "generate",
+    "G": true,
+    "P": true,
+    "rule": "R-CH1 终点=generate 且可合法渲染",
+    "plan_step_id": "step:1",
+    "reason": "R-CH1 终点=generate 且可合法渲染"
+   }
+  ]
+ },
+ "wall_sec": 15.8
+}

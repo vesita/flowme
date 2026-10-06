@@ -1,0 +1,385 @@
+{
+ "mode": "adv",
+ "started": "2026-10-07 02:52:11",
+ "adv": {
+  "cases": [
+   {
+    "id": "A1",
+    "expect": "题元方向不许互换（互换 ⇒ 拒答）",
+    "pass": true,
+    "detail": {
+     "ok_expected": "text",
+     "swap": {
+      "kind": "reject",
+      "text": "（拒答）题元方向冲突（规则 B）：槽1 要 施事，指派了 '你'（受事）⇒ 拒（字符串全过、命题相反的靶子）；题元方向冲突（规则 B）：槽3 要 受事，指派了 '我'（施事）⇒ 拒（字符串全过、命题相反的靶子）",
+      "evidence": [],
+      "plan_step_id": "",
+      "instruction": {
+       "skeleton_id": "S01",
+       "assignment": [
+        2,
+        1,
+        0
+       ]
+      },
+      "ref_map": [],
+      "reason": "题元方向冲突（规则 B）：槽1 要 施事，指派了 '你'（受事）⇒ 拒（字符串全过、命题相反的靶子）；题元方向冲突（规则 B）：槽3 要 受事，指派了 '我'（施事）⇒ 拒（字符串全过、命题相反的靶子）"
+     }
+    }
+   },
+   {
+    "id": "A2",
+    "expect": "无据逻辑词必须拒",
+    "pass": true,
+    "detail": {
+     "problems": [
+      "词面守卫：逻辑词 '因为' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）",
+      "词面守卫：逻辑词 '要' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）"
+     ],
+     "render": {
+      "kind": "reject",
+      "text": "（拒答）词面守卫：逻辑词 '因为' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）；词面守卫：逻辑词 '要' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）",
+      "evidence": [],
+      "plan_step_id": "",
+      "instruction": {
+       "skeleton_id": "S13",
+       "assignment": [
+        0,
+        1,
+        2,
+        3,
+        4
+       ]
+      },
+      "ref_map": [],
+      "reason": "词面守卫：逻辑词 '因为' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）；词面守卫：逻辑词 '要' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）"
+     }
+    }
+   },
+   {
+    "id": "A3",
+    "expect": "有据逻辑词不误拒（正对照）",
+    "pass": true,
+    "detail": {
+     "problems": []
+    }
+   },
+   {
+    "id": "A4",
+    "expect": "缺块必须拒",
+    "pass": true,
+    "detail": {
+     "render": {
+      "kind": "reject",
+      "text": "（拒答）规则 B 违规：骨架 S01 有 3 个槽，指派了 2 项（缺块/多块 ⇒ 拒）",
+      "evidence": [],
+      "plan_step_id": "",
+      "instruction": {
+       "skeleton_id": "S01",
+       "assignment": [
+        0,
+        1
+       ]
+      },
+      "ref_map": [],
+      "reason": "规则 B 违规：骨架 S01 有 3 个槽，指派了 2 项（缺块/多块 ⇒ 拒）"
+     }
+    }
+   },
+   {
+    "id": "A5",
+    "expect": "类型不符必须拒",
+    "pass": true,
+    "detail": {
+     "render": {
+      "kind": "reject",
+      "text": "（拒答）规则 B 违规（类型不匹配）：槽1 要 名，指派了 '打'（动）；规则 B 违规（类型不匹配）：槽2 要 动，指派了 '我'（名）",
+      "evidence": [],
+      "plan_step_id": "",
+      "instruction": {
+       "skeleton_id": "S01",
+       "assignment": [
+        1,
+        0,
+        2
+       ]
+      },
+      "ref_map": [],
+      "reason": "规则 B 违规（类型不匹配）：槽1 要 名，指派了 '打'（动）；规则 B 违规（类型不匹配）：槽2 要 动，指派了 '我'（名）"
+     }
+    }
+   },
+   {
+    "id": "A6",
+    "expect": "数字改动必须拒",
+    "pass": true,
+    "detail": {
+     "problems": [
+      "evidence 不齐备：袋 0 '2' 不是输入逐字子串（span 给出的是 '3'）",
+      "只复述子集违规：骨架 R02 的指派不随原文 span 升序（换了方向）"
+     ],
+     "render": {
+      "kind": "reject",
+      "text": "（拒答）evidence 不齐备：袋 0 '2' 不是输入逐字子串（span 给出的是 '3'）；只复述子集违规：骨架 R02 的指派不随原文 span 升序（换了方向）",
+      "evidence": [],
+      "plan_step_id": "",
+      "instruction": {
+       "skeleton_id": "R02",
+       "assignment": [
+        0,
+        1
+       ]
+      },
+      "ref_map": [],
+      "reason": "evidence 不齐备：袋 0 '2' 不是输入逐字子串（span 给出的是 '3'）；只复述子集违规：骨架 R02 的指派不随原文 span 升序（换了方向）"
+     }
+    }
+   },
+   {
+    "id": "A7",
+    "expect": "否定片段改动必须拒",
+    "pass": true,
+    "detail": {
+     "problems": [
+      "evidence 不齐备：袋 0 '不' 不是输入逐字子串（span 给出的是 '去'）"
+     ],
+     "render": {
+      "kind": "reject",
+      "text": "（拒答）evidence 不齐备：袋 0 '不' 不是输入逐字子串（span 给出的是 '去'）",
+      "evidence": [],
+      "plan_step_id": "",
+      "instruction": {
+       "skeleton_id": "R02",
+       "assignment": [
+        0,
+        1
+       ]
+      },
+      "ref_map": [],
+      "reason": "evidence 不齐备：袋 0 '不' 不是输入逐字子串（span 给出的是 '去'）"
+     }
+    }
+   },
+   {
+    "id": "A8",
+    "expect": "专名改动必须拒",
+    "pass": true,
+    "detail": {
+     "problems": [
+      "evidence 不齐备：袋 0 '李四' 不是输入逐字子串（span 给出的是 '张三'）"
+     ],
+     "render": {
+      "kind": "reject",
+      "text": "（拒答）evidence 不齐备：袋 0 '李四' 不是输入逐字子串（span 给出的是 '张三'）",
+      "evidence": [],
+      "plan_step_id": "",
+      "instruction": {
+       "skeleton_id": "R02",
+       "assignment": [
+        0,
+        1
+       ]
+      },
+      "ref_map": [],
+      "reason": "evidence 不齐备：袋 0 '李四' 不是输入逐字子串（span 给出的是 '张三'）"
+     }
+    }
+   },
+   {
+    "id": "A9",
+    "expect": "越界 span 必须拒",
+    "pass": true,
+    "detail": {
+     "problems": [
+      "evidence 不齐备：袋 0 区间 (0, 99) 越界"
+     ],
+     "render": {
+      "kind": "reject",
+      "text": "（拒答）evidence 不齐备：袋 0 区间 (0, 99) 越界",
+      "evidence": [],
+      "plan_step_id": "",
+      "instruction": {
+       "skeleton_id": "S01",
+       "assignment": [
+        0,
+        1,
+        2
+       ]
+      },
+      "ref_map": [],
+      "reason": "evidence 不齐备：袋 0 区间 (0, 99) 越界"
+     }
+    }
+   },
+   {
+    "id": "A10",
+    "expect": "骨架 id 不存在必须拒",
+    "pass": true,
+    "detail": {
+     "render": {
+      "kind": "reject",
+      "text": "（拒答）骨架 id 不存在：'S99'（封闭表，不猜）",
+      "evidence": [],
+      "plan_step_id": "",
+      "instruction": {
+       "skeleton_id": "S99",
+       "assignment": [
+        0,
+        1,
+        2
+       ]
+      },
+      "ref_map": [],
+      "reason": "骨架 id 不存在：'S99'（封闭表，不猜）"
+     }
+    }
+   },
+   {
+    "id": "A11",
+    "expect": "同一块指派到两槽必须拒",
+    "pass": true,
+    "detail": {
+     "problems": [
+      "规则 0/B 违规：袋 0 被指派到多个槽（内容词只回溯一次）"
+     ],
+     "render": {
+      "kind": "reject",
+      "text": "（拒答）规则 0/B 违规：袋 0 被指派到多个槽（内容词只回溯一次）",
+      "evidence": [],
+      "plan_step_id": "",
+      "instruction": {
+       "skeleton_id": "S07",
+       "assignment": [
+        0,
+        0,
+        1
+       ]
+      },
+      "ref_map": [],
+      "reason": "规则 0/B 违规：袋 0 被指派到多个槽（内容词只回溯一次）"
+     }
+    }
+   },
+   {
+    "id": "A12",
+    "expect": "只复述子集换方向必须拒",
+    "pass": true,
+    "detail": {
+     "problems": [
+      "只复述子集违规：骨架 R02 的指派不随原文 span 升序（换了方向）"
+     ],
+     "render": {
+      "kind": "reject",
+      "text": "（拒答）只复述子集违规：骨架 R02 的指派不随原文 span 升序（换了方向）",
+      "evidence": [],
+      "plan_step_id": "",
+      "instruction": {
+       "skeleton_id": "R02",
+       "assignment": [
+        0,
+        1
+       ]
+      },
+      "ref_map": [],
+      "reason": "只复述子集违规：骨架 R02 的指派不随原文 span 升序（换了方向）"
+     }
+    }
+   },
+   {
+    "id": "A13",
+    "expect": "type 未声明/不认识必须拒",
+    "pass": true,
+    "detail": {
+     "records": {
+      "none": {
+       "kind": "reject",
+       "evidence": [],
+       "plan_step_id": "step:0",
+       "channel": "reject",
+       "reason": "type=unknown：类型不确定不许猜",
+       "plan": [
+        "[type=unknown info=[未查,未查,未查,未查] conf=低 steps=3] ⇒ reject：type=unknown：类型不确定不许猜 | output.reject@None"
+       ],
+       "type": "unknown",
+       "cards_run": [],
+       "terminal": "reject"
+      },
+      "bogus": {
+       "kind": "reject",
+       "evidence": [],
+       "plan_step_id": "step:0",
+       "channel": "reject",
+       "reason": "type=unknown：类型不确定不许猜",
+       "plan": [
+        "[type=unknown info=[未查,未查,未查,未查] conf=低 steps=3] ⇒ reject：type=unknown：类型不确定不许猜 | output.reject@None"
+       ],
+       "type": "unknown",
+       "cards_run": [],
+       "terminal": "reject"
+      },
+      "known_unsup": {
+       "kind": "reject",
+       "evidence": [],
+       "plan_step_id": "none",
+       "channel": "reject",
+       "reason": "本轮只支持 type=plain，声明了 'candidates'：不猜",
+       "plan": [],
+       "type": "candidates",
+       "cards_run": [],
+       "terminal": "reject"
+      }
+     }
+    },
+    "contract": [
+     [],
+     [],
+     []
+    ]
+   },
+   {
+    "id": "A14",
+    "expect": "空输入必须拒",
+    "pass": true,
+    "detail": {
+     "record": {
+      "kind": "reject",
+      "evidence": [],
+      "plan_step_id": "none",
+      "channel": "reject",
+      "reason": "输入为空",
+      "plan": [],
+      "type": "plain",
+      "cards_run": [],
+      "terminal": "reject"
+     }
+    },
+    "contract": [
+     []
+    ]
+   }
+  ],
+  "all_pass": true,
+  "c6_both_sides": {
+   "n_official_records": 11,
+   "n_official_reject": 11,
+   "raw_reject_violating": 11,
+   "raw_reject_examples": [
+    [
+     "C1 plan_step_id='' 不是非空 str",
+     "C2 拒答记录带 text（= \"（拒答）题元方向冲突（规则 B）：槽1 要 施事，指派了 '你'（受事）⇒ 拒（字符串全过、命题相反的靶子）；题元方向冲突（规则 B）：槽3 要 受事，指派了 '我'（施事）⇒ 拒（字符串全过、命题相反的靶子）\"）：按契约必须缺省"
+    ],
+    [
+     "C1 plan_step_id='' 不是非空 str",
+     "C2 拒答记录带 text（= \"（拒答）词面守卫：逻辑词 '因为' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）；词面守卫：逻辑词 '要' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）\"）：按契约必须缺省"
+    ],
+    [
+     "C1 plan_step_id='' 不是非空 str",
+     "C2 拒答记录带 text（= '（拒答）规则 B 违规：骨架 S01 有 3 个槽，指派了 2 项（缺块/多块 ⇒ 拒）'）：按契约必须缺省"
+    ]
+   ],
+   "sealed_violating": 0,
+   "verdict": "两侧一致（归一后同一谓词 0 违例；原始违例如实报）"
+  }
+ },
+ "wall_sec": 0.0
+}
