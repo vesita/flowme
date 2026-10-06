@@ -198,9 +198,14 @@ def main() -> int:
         verdict = "② 老任务锚定是必需的"
         why = f"T1 不过 且 selonly heldout ≈50%（{sel_h}）⇒ 只给 select 梯度不产生增益"
     elif t1_pass and not t2_within:
+        d_mean = sum(t2[f"s{s}"]["delta_pt"] for s in SEEDS) / len(SEEDS)
+        direction = ("selonly 显著**高于** joint" if d_mean > 0
+                     else "selonly 显著**低于** joint")
         verdict = "③ 证据不足"
-        why = ("T1 过但 T2 不过：select 梯度有增益，但 selonly 低于 joint "
-               "⇒ 两机制都有份（不满足①的『老任务非必需』，也不满足②的『回到 50%』）")
+        why = (f"T1 过但 T2 不过（|Δ| > 2×SE，实测方向：{direction}，"
+               f"逐 seed Δ = { {s: t2[f's{s}']['delta_pt'] for s in SEEDS} } pt）"
+               " ⇒ 按跑前写死规则不落入①（①要求与 joint 差距在噪声内），也不落入②；"
+               "方向若为『高于』则说明老任务锚定不仅非必需、还压制新任务（见 REPORT 说明）")
     else:
         verdict = "③ 证据不足"
         why = f"T1 不过 且 selonly 也不 ≈50%（{sel_h}）"
