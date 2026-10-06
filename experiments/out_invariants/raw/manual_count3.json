@@ -1,0 +1,312 @@
+{
+  "他没有来开会，我特别高兴。": {
+    "text": "他没有来开会，我特别高兴。",
+    "num_segments": 1,
+    "tasks": {
+      "pronoun": [
+        {
+          "step": 1,
+          "class_id": 3,
+          "category": "第三人称",
+          "color": "\u001b[1;97;45m",
+          "confidence": 0.9983,
+          "local_s0": 0,
+          "local_e0": 0,
+          "next_action": "<cont>",
+          "s0": 0,
+          "e0": 0
+        },
+        {
+          "step": 2,
+          "class_id": 1,
+          "category": "第一人称",
+          "color": "\u001b[1;96;44m",
+          "confidence": 0.9973,
+          "local_s0": 7,
+          "local_e0": 7,
+          "next_action": "<eos>",
+          "s0": 7,
+          "e0": 7
+        }
+      ],
+      "sentiment": [
+        {
+          "step": 1,
+          "class_id": 1,
+          "category": "积极/喜悦",
+          "color": "\u001b[1;92;40m",
+          "confidence": 0.8078,
+          "local_s0": 10,
+          "local_e0": 11,
+          "next_action": "<eos>",
+          "s0": 10,
+          "e0": 11
+        }
+      ],
+      "relation": [
+        {
+          "step": 1,
+          "class_id": 2,
+          "category": "反义词",
+          "color": "\u001b[1;91;40m",
+          "confidence": 0.585,
+          "local_s0": 1,
+          "local_e0": 4,
+          "next_action": "<cont>",
+          "s0": 1,
+          "e0": 4,
+          "pair_index": 1,
+          "pair_side": "左"
+        },
+        {
+          "step": 2,
+          "class_id": 2,
+          "category": "反义词",
+          "color": "\u001b[1;91;40m",
+          "confidence": 0.9996,
+          "local_s0": 8,
+          "local_e0": 11,
+          "next_action": "<eos>",
+          "s0": 8,
+          "e0": 11,
+          "pair_index": 1,
+          "pair_side": "右"
+        }
+      ],
+      "person": [],
+      "negation": [
+        {
+          "step": 1,
+          "class_id": 1,
+          "category": "否定",
+          "color": "\u001b[1;95;40m",
+          "confidence": 0.9632,
+          "local_s0": 1,
+          "local_e0": 1,
+          "next_action": "<eos>",
+          "s0": 1,
+          "e0": 1
+        }
+      ]
+    }
+  },
+  "老师让我们区分一目了然和不言而喻。": {
+    "text": "老师让我们区分一目了然和不言而喻。",
+    "num_segments": 1,
+    "tasks": {
+      "pronoun": [
+        {
+          "step": 1,
+          "class_id": 1,
+          "category": "第一人称",
+          "color": "\u001b[1;96;44m",
+          "confidence": 0.8775,
+          "local_s0": 3,
+          "local_e0": 4,
+          "next_action": "<cont>",
+          "s0": 3,
+          "e0": 4
+        }
+      ],
+      "sentiment": [
+        {
+          "step": 1,
+          "class_id": 2,
+          "category": "愤怒/不满",
+          "color": "\u001b[1;91;40m",
+          "confidence": 0.8323,
+          "local_s0": 12,
+          "local_e0": 15,
+          "next_action": "<eos>",
+          "s0": 12,
+          "e0": 15
+        }
+      ],
+      "relation": [
+        {
+          "step": 1,
+          "class_id": 2,
+          "category": "反义词",
+          "color": "\u001b[1;91;40m",
+          "confidence": 0.6354,
+          "local_s0": 7,
+          "local_e0": 10,
+          "next_action": "<cont>",
+          "s0": 7,
+          "e0": 10,
+          "pair_index": 1,
+          "pair_side": "左"
+        },
+        {
+          "step": 2,
+          "class_id": 2,
+          "category": "反义词",
+          "color": "\u001b[1;91;40m",
+          "confidence": 0.9993,
+          "local_s0": 12,
+          "local_e0": 15,
+          "next_action": "<eos>",
+          "s0": 12,
+          "e0": 15,
+          "pair_index": 1,
+          "pair_side": "右"
+        }
+      ],
+      "person": [
+        {
+          "step": 1,
+          "class_id": 1,
+          "category": "人物1",
+          "color": "\u001b[1;96;44m",
+          "confidence": 0.9814,
+          "local_s0": 1,
+          "local_e0": 1,
+          "next_action": "<cont>",
+          "s0": 1,
+          "e0": 1
+        },
+        {
+          "step": 2,
+          "class_id": 2,
+          "category": "人物2",
+          "color": "\u001b[1;93;41m",
+          "confidence": 0.9957,
+          "local_s0": 0,
+          "local_e0": 1,
+          "next_action": "<cont>",
+          "s0": 0,
+          "e0": 1
+        },
+        {
+          "step": 3,
+          "class_id": 3,
+          "category": "人物3",
+          "color": "\u001b[1;97;45m",
+          "confidence": 0.9835,
+          "local_s0": 3,
+          "local_e0": 3,
+          "next_action": "<cont>",
+          "s0": 3,
+          "e0": 3
+        },
+        {
+          "step": 4,
+          "class_id": 4,
+          "category": "人物4",
+          "color": "\u001b[1;92;40m",
+          "confidence": 0.3093,
+          "local_s0": 12,
+          "local_e0": 14,
+          "next_action": "<cont>",
+          "s0": 12,
+          "e0": 14
+        }
+      ],
+      "negation": [
+        {
+          "step": 1,
+          "class_id": 1,
+          "category": "否定",
+          "color": "\u001b[1;95;40m",
+          "confidence": 0.9801,
+          "local_s0": 5,
+          "local_e0": 5,
+          "next_action": "<cont>",
+          "s0": 5,
+          "e0": 5
+        },
+        {
+          "step": 2,
+          "class_id": 1,
+          "category": "否定",
+          "color": "\u001b[1;95;40m",
+          "confidence": 0.9999,
+          "local_s0": 12,
+          "local_e0": 12,
+          "next_action": "<eos>",
+          "s0": 12,
+          "e0": 12
+        }
+      ]
+    }
+  },
+  "会议定在周三上午九点，地点是三号会议室。": {
+    "text": "会议定在周三上午九点，地点是三号会议室。",
+    "num_segments": 1,
+    "tasks": {
+      "pronoun": [
+        {
+          "step": 1,
+          "class_id": 2,
+          "category": "第二人称",
+          "color": "\u001b[1;93;41m",
+          "confidence": 0.5701,
+          "local_s0": 9,
+          "local_e0": 15,
+          "next_action": "<eos>",
+          "s0": 9,
+          "e0": 15
+        }
+      ],
+      "sentiment": [
+        {
+          "step": 1,
+          "class_id": 2,
+          "category": "愤怒/不满",
+          "color": "\u001b[1;91;40m",
+          "confidence": 0.6568,
+          "local_s0": 9,
+          "local_e0": 17,
+          "next_action": "<eos>",
+          "s0": 9,
+          "e0": 17
+        }
+      ],
+      "relation": [
+        {
+          "step": 1,
+          "class_id": 1,
+          "category": "近义词",
+          "color": "\u001b[1;92;40m",
+          "confidence": 0.9994,
+          "local_s0": 1,
+          "local_e0": 11,
+          "next_action": "<cont>",
+          "s0": 1,
+          "e0": 11,
+          "pair_index": 1,
+          "pair_side": "左"
+        },
+        {
+          "step": 2,
+          "class_id": 1,
+          "category": "近义词",
+          "color": "\u001b[1;92;40m",
+          "confidence": 0.9999,
+          "local_s0": 14,
+          "local_e0": 18,
+          "next_action": "<eos>",
+          "s0": 14,
+          "e0": 18,
+          "pair_index": 1,
+          "pair_side": "右"
+        }
+      ],
+      "person": [],
+      "negation": [
+        {
+          "step": 1,
+          "class_id": 1,
+          "category": "否定",
+          "color": "\u001b[1;95;40m",
+          "confidence": 0.9223,
+          "local_s0": 0,
+          "local_e0": 0,
+          "next_action": "<eos>",
+          "s0": 0,
+          "e0": 0
+        }
+      ]
+    }
+  }
+}

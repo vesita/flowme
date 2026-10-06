@@ -1,0 +1,440 @@
+{
+  "text": "这个方案不难，我很喜欢，他没有反对。",
+  "structure": {
+    "predict_返回顶层键": [
+      "num_segments",
+      "tasks",
+      "text"
+    ],
+    "锚点键（引擎产物）": {
+      "step": {
+        "n": 6,
+        "type": "int"
+      },
+      "class_id": {
+        "n": 6,
+        "type": "int"
+      },
+      "category": {
+        "n": 6,
+        "type": "str"
+      },
+      "color": {
+        "n": 6,
+        "type": "str"
+      },
+      "confidence": {
+        "n": 6,
+        "type": "float"
+      },
+      "local_s0": {
+        "n": 6,
+        "type": "int"
+      },
+      "local_e0": {
+        "n": 6,
+        "type": "int"
+      },
+      "next_action": {
+        "n": 6,
+        "type": "str"
+      },
+      "s0": {
+        "n": 6,
+        "type": "int"
+      },
+      "e0": {
+        "n": 6,
+        "type": "int"
+      },
+      "pair_index": {
+        "n": 2,
+        "type": "int"
+      },
+      "pair_side": {
+        "n": 2,
+        "type": "str"
+      }
+    },
+    "各卡实际产出条数": {
+      "pronoun": 2,
+      "sentiment": 1,
+      "relation": 2,
+      "person": 0,
+      "negation": 1
+    }
+  },
+  "interval": {
+    "pronoun": [
+      {
+        "s0": 5,
+        "e0": 5,
+        "闭区间切片": "难",
+        "半开区间切片": ""
+      },
+      {
+        "s0": 12,
+        "e0": 12,
+        "闭区间切片": "他",
+        "半开区间切片": ""
+      }
+    ],
+    "sentiment": [
+      {
+        "s0": 9,
+        "e0": 10,
+        "闭区间切片": "喜欢",
+        "半开区间切片": "喜"
+      }
+    ],
+    "relation": [
+      {
+        "s0": 2,
+        "e0": 10,
+        "闭区间切片": "方案不难，我很喜欢",
+        "半开区间切片": "方案不难，我很喜"
+      },
+      {
+        "s0": 13,
+        "e0": 15,
+        "闭区间切片": "没有反",
+        "半开区间切片": "没有"
+      }
+    ],
+    "negation": [
+      {
+        "s0": 13,
+        "e0": 13,
+        "闭区间切片": "没",
+        "半开区间切片": ""
+      }
+    ]
+  },
+  "dataset_semantics": {
+    "dataset_span_示例": {
+      "label": 3,
+      "word": "崩溃",
+      "start": 7,
+      "end": 9
+    },
+    "半开解释 start:end": "崩溃",
+    "闭解释 start:end+1": "崩溃。",
+    "协议声明（plugin.py:276）": "0-based 半开区间"
+  },
+  "closure": {
+    "引擎锚点键": [
+      "category",
+      "class_id",
+      "color",
+      "confidence",
+      "e0",
+      "local_e0",
+      "local_s0",
+      "next_action",
+      "pair_index",
+      "pair_side",
+      "s0",
+      "step"
+    ],
+    "to_items 产物键": [
+      "end",
+      "label",
+      "score",
+      "start"
+    ],
+    "filter 产物键": [],
+    "pair 产物键": [
+      "end",
+      "label",
+      "score",
+      "start"
+    ],
+    "回喂 to_items（算子产物→适配器）": {
+      "ok": false,
+      "error": "KeyError: 'category'",
+      "traceback_last": "KeyError: 'category'"
+    },
+    "回喂 filter（算子产物→算子）": {
+      "ok": true,
+      "result": [
+        {
+          "label": "否定",
+          "start": 13,
+          "end": 13,
+          "score": 0.9965
+        }
+      ],
+      "len": 1
+    },
+    "回喂 pair（算子产物→算子）": {
+      "ok": true,
+      "result": [
+        {
+          "label": "愤怒/不满",
+          "start": 9,
+          "end": 10,
+          "score": 0.431
+        }
+      ],
+      "len": 1
+    },
+    "回喂引擎 render（算子产物→呈现）": {
+      "ok": false,
+      "error": "KeyError: 's0'",
+      "traceback_last": "KeyError: 's0'"
+    },
+    "引擎锚点直喂 filter（引擎产物→算子）": {
+      "ok": false,
+      "error": "KeyError: 'start'",
+      "traceback_last": "KeyError: 'start'"
+    },
+    "引擎锚点直喂 pair（引擎产物→算子）": {
+      "ok": false,
+      "error": "KeyError: 'start'",
+      "traceback_last": "KeyError: 'start'"
+    },
+    "decide(算子产物)": {
+      "ok": true,
+      "result": "愤怒/不满",
+      "len": 5
+    },
+    "组合真实调用": {
+      "text": "这个方案不难，我很喜欢，他没有反对。",
+      "sentiment_锚点": [
+        {
+          "step": 1,
+          "class_id": 2,
+          "category": "愤怒/不满",
+          "color": "\u001b[1;91;40m",
+          "confidence": 0.431,
+          "local_s0": 9,
+          "local_e0": 10,
+          "next_action": "<eos>",
+          "s0": 9,
+          "e0": 10
+        }
+      ],
+      "negation_锚点": [
+        {
+          "step": 1,
+          "class_id": 1,
+          "category": "否定",
+          "color": "\u001b[1;95;40m",
+          "confidence": 0.9965,
+          "local_s0": 13,
+          "local_e0": 13,
+          "next_action": "<eos>",
+          "s0": 13,
+          "e0": 13
+        }
+      ],
+      "to_items(sentiment)": [
+        {
+          "label": "愤怒/不满",
+          "start": 9,
+          "end": 10,
+          "score": 0.431
+        }
+      ],
+      "pair(sentiment, negation, flip)": [
+        {
+          "label": "愤怒/不满",
+          "start": 9,
+          "end": 10,
+          "score": 0.431
+        }
+      ],
+      "filter(sentiment, negation, overlap)": [],
+      "句级结论": "愤怒/不满"
+    },
+    "组合真实调用3_标签不同源": {
+      "text": "我一点也不欣赏他的做法。",
+      "sentiment_锚点": [
+        {
+          "step": 1,
+          "class_id": 1,
+          "category": "积极/喜悦",
+          "color": "\u001b[1;92;40m",
+          "confidence": 0.8844,
+          "local_s0": 4,
+          "local_e0": 6,
+          "next_action": "<eos>",
+          "s0": 4,
+          "e0": 6
+        }
+      ],
+      "negation_锚点": [
+        {
+          "step": 1,
+          "class_id": 1,
+          "category": "否定",
+          "color": "\u001b[1;95;40m",
+          "confidence": 0.982,
+          "local_s0": 0,
+          "local_e0": 1,
+          "next_action": "<eos>",
+          "s0": 0,
+          "e0": 1
+        }
+      ],
+      "card_display_label": [
+        "积极/喜悦"
+      ],
+      "flip_rule()_默认 apply_to": [
+        "积极"
+      ],
+      "pair_默认规则（引擎原始标签）": [
+        {
+          "label": "积极/喜悦",
+          "start": 4,
+          "end": 6,
+          "score": 0.8844
+        }
+      ],
+      "pair_显式 apply_to=积极/喜悦": [
+        {
+          "label": "愤怒",
+          "start": 4,
+          "end": 6,
+          "score": 0.8844
+        }
+      ],
+      "pair_调用方先 norm() 再喂": [
+        {
+          "label": "愤怒",
+          "start": 4,
+          "end": 6,
+          "score": 0.8844
+        }
+      ]
+    },
+    "组合真实调用2_同分句否定": {
+      "text": "我不喜欢这个方案。",
+      "sentiment_锚点": [
+        {
+          "step": 1,
+          "class_id": 2,
+          "category": "愤怒/不满",
+          "color": "\u001b[1;91;40m",
+          "confidence": 0.686,
+          "local_s0": 1,
+          "local_e0": 3,
+          "next_action": "<eos>",
+          "s0": 1,
+          "e0": 3
+        }
+      ],
+      "negation_锚点": [
+        {
+          "step": 1,
+          "class_id": 1,
+          "category": "否定",
+          "color": "\u001b[1;95;40m",
+          "confidence": 0.9941,
+          "local_s0": 1,
+          "local_e0": 1,
+          "next_action": "<eos>",
+          "s0": 1,
+          "e0": 1
+        }
+      ],
+      "to_items(sentiment)": [
+        {
+          "label": "愤怒/不满",
+          "start": 1,
+          "end": 3,
+          "score": 0.686
+        }
+      ],
+      "pair(带 clause=True)": [
+        {
+          "label": "愤怒/不满",
+          "start": 1,
+          "end": 3,
+          "score": 0.686
+        }
+      ],
+      "pair(不带 clause)": [
+        {
+          "label": "愤怒/不满",
+          "start": 1,
+          "end": 3,
+          "score": 0.686
+        }
+      ],
+      "filter(overlap)": [
+        {
+          "label": "否定",
+          "start": 1,
+          "end": 1,
+          "score": 0.9941
+        }
+      ],
+      "decide": "愤怒/不满"
+    }
+  },
+  "trace": {
+    "predict 返回顶层键": [
+      "num_segments",
+      "tasks",
+      "text"
+    ],
+    "锚点键": [
+      "category",
+      "class_id",
+      "color",
+      "confidence",
+      "e0",
+      "local_e0",
+      "local_s0",
+      "next_action",
+      "pair_index",
+      "pair_side",
+      "s0",
+      "step"
+    ],
+    "engine 上存在但**没有**进返回值的字段": {
+      "module_id": "锚点里没有；只在 result['tasks'] 的字典键上（单条锚点脱离字典即丢失卡名）",
+      "输入": "result['text'] 有整段原文；**没有**该锚点来自哪个 segment、segment 的原文与偏移",
+      "参数": [
+        "tasks（本次实际跑了哪些卡）—— 不在返回值里，靠调用方自己记",
+        "max_chunk_len / segment_policy / max_steps / max_len —— 全部不在返回值里",
+        "base_path / card_paths（用的哪份权重）—— 是 engine 属性，不进产物",
+        "spec 快照（类别体系版本）—— 不进产物",
+        "阈值 / 拒答判据 —— 不存在该概念（无输出即不发射，见 engine.py:164 pred_cls==0 break）"
+      ]
+    },
+    "engine 关键属性": {
+      "base_path": "checkpoints/base_encoder.pt",
+      "card_paths": {
+        "person": "checkpoints/cards/person.pt",
+        "pronoun": "checkpoints/cards/pronoun.pt",
+        "relation": "checkpoints/cards/relation.pt",
+        "sentiment": "checkpoints/cards/sentiment.pt",
+        "negation": "checkpoints/negation_accept_card_e12.pt"
+      },
+      "attached": [
+        "person",
+        "pronoun",
+        "relation",
+        "sentiment",
+        "negation"
+      ]
+    },
+    "锚点里有的字段": [
+      "category",
+      "class_id",
+      "color",
+      "confidence",
+      "e0",
+      "local_e0",
+      "local_s0",
+      "next_action",
+      "pair_index",
+      "pair_side",
+      "s0",
+      "step"
+    ],
+    "算子产物可溯源": "否：item = {label, start, end, score}，来源卡名 / step / class_id / color 全部丢弃"
+  }
+}

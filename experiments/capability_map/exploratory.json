@@ -1,0 +1,134 @@
+{
+  "s42/bypass_cls": {
+    "rho": 0.8999999999999998,
+    "n": 5,
+    "kept": [
+      "pronoun",
+      "sentiment",
+      "relation",
+      "person",
+      "negation"
+    ]
+  },
+  "s42/frozen_cls": {
+    "rho": 0.8999999999999998,
+    "n": 5,
+    "kept": [
+      "pronoun",
+      "sentiment",
+      "relation",
+      "person",
+      "negation"
+    ]
+  },
+  "s42/delta_cls(bypass-frozen)": {
+    "rho": -0.8999999999999998,
+    "n": 5,
+    "kept": [
+      "pronoun",
+      "sentiment",
+      "relation",
+      "person",
+      "negation"
+    ]
+  },
+  "s42/joint_cls": {
+    "rho": 0.46169025843831935,
+    "n": 5,
+    "kept": [
+      "pronoun",
+      "sentiment",
+      "relation",
+      "person",
+      "negation"
+    ]
+  },
+  "s42/probe_exact": {
+    "rho": 0.9999999999999999,
+    "n": 5,
+    "kept": [
+      "pronoun",
+      "sentiment",
+      "relation",
+      "person",
+      "negation"
+    ]
+  },
+  "s42/frozen_exact": {
+    "rho": 0.6,
+    "n": 5,
+    "kept": [
+      "pronoun",
+      "sentiment",
+      "relation",
+      "person",
+      "negation"
+    ]
+  },
+  "s43/bypass_cls": {
+    "rho": 0.9999999999999999,
+    "n": 5,
+    "kept": [
+      "pronoun",
+      "sentiment",
+      "relation",
+      "person",
+      "negation"
+    ]
+  },
+  "s43/frozen_cls": {
+    "rho": 0.9999999999999999,
+    "n": 5,
+    "kept": [
+      "pronoun",
+      "sentiment",
+      "relation",
+      "person",
+      "negation"
+    ]
+  },
+  "s43/delta_cls(bypass-frozen)": {
+    "rho": -0.8999999999999998,
+    "n": 5,
+    "kept": [
+      "pronoun",
+      "sentiment",
+      "relation",
+      "person",
+      "negation"
+    ]
+  },
+  "s43/joint_cls": {
+    "rho": 0.7,
+    "n": 5,
+    "kept": [
+      "pronoun",
+      "sentiment",
+      "relation",
+      "person",
+      "negation"
+    ]
+  },
+  "s43/probe_exact": {
+    "rho": 0.9999999999999999,
+    "n": 5,
+    "kept": [
+      "pronoun",
+      "sentiment",
+      "relation",
+      "person",
+      "negation"
+    ]
+  },
+  "s43/frozen_exact": {
+    "rho": 0.7,
+    "n": 5,
+    "kept": [
+      "pronoun",
+      "sentiment",
+      "relation",
+      "person",
+      "negation"
+    ]
+  }
+}

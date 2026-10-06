@@ -1,0 +1,165 @@
+{
+  "caps": [
+    "pronoun",
+    "sentiment",
+    "relation",
+    "person",
+    "negation"
+  ],
+  "task_samples": {
+    "pronoun": 6000,
+    "sentiment": 32000,
+    "relation": 6000,
+    "person": 6000,
+    "negation": 6000
+  },
+  "default_seed": 20240927,
+  "seeds": [
+    42,
+    43
+  ],
+  "eval": {
+    "pronoun": {
+      "42": {
+        "n_eval": 600,
+        "n_train": 5400,
+        "n_cls": 409,
+        "n_bg": 191,
+        "num_classes": 4,
+        "class_names": [
+          "无代词",
+          "第一人称",
+          "第二人称",
+          "第三人称"
+        ]
+      },
+      "43": {
+        "n_eval": 600,
+        "n_train": 5400,
+        "n_cls": 424,
+        "n_bg": 176,
+        "num_classes": 4,
+        "class_names": [
+          "无代词",
+          "第一人称",
+          "第二人称",
+          "第三人称"
+        ]
+      }
+    },
+    "sentiment": {
+      "42": {
+        "n_eval": 3200,
+        "n_train": 28800,
+        "n_cls": 2370,
+        "n_bg": 830,
+        "num_classes": 4,
+        "class_names": [
+          "中性",
+          "积极",
+          "愤怒",
+          "悲伤"
+        ]
+      },
+      "43": {
+        "n_eval": 3200,
+        "n_train": 28800,
+        "n_cls": 2373,
+        "n_bg": 827,
+        "num_classes": 4,
+        "class_names": [
+          "中性",
+          "积极",
+          "愤怒",
+          "悲伤"
+        ]
+      }
+    },
+    "relation": {
+      "42": {
+        "n_eval": 720,
+        "n_train": 6480,
+        "n_cls": 514,
+        "n_bg": 206,
+        "num_classes": 3,
+        "class_names": [
+          "无关系",
+          "近义词",
+          "反义词"
+        ]
+      },
+      "43": {
+        "n_eval": 720,
+        "n_train": 6480,
+        "n_cls": 526,
+        "n_bg": 194,
+        "num_classes": 3,
+        "class_names": [
+          "无关系",
+          "近义词",
+          "反义词"
+        ]
+      }
+    },
+    "person": {
+      "42": {
+        "n_eval": 600,
+        "n_train": 5400,
+        "n_cls": 417,
+        "n_bg": 183,
+        "num_classes": 8,
+        "class_names": [
+          "无人物",
+          "人物1",
+          "人物2",
+          "人物3",
+          "人物4",
+          "人物5",
+          "人物6",
+          "人物7"
+        ]
+      },
+      "43": {
+        "n_eval": 600,
+        "n_train": 5400,
+        "n_cls": 410,
+        "n_bg": 190,
+        "num_classes": 8,
+        "class_names": [
+          "无人物",
+          "人物1",
+          "人物2",
+          "人物3",
+          "人物4",
+          "人物5",
+          "人物6",
+          "人物7"
+        ]
+      }
+    },
+    "negation": {
+      "42": {
+        "n_eval": 600,
+        "n_train": 5400,
+        "n_cls": 407,
+        "n_bg": 193,
+        "num_classes": 2,
+        "class_names": [
+          "背景",
+          "否定"
+        ]
+      },
+      "43": {
+        "n_eval": 600,
+        "n_train": 5400,
+        "n_cls": 382,
+        "n_bg": 218,
+        "num_classes": 2,
+        "class_names": [
+          "背景",
+          "否定"
+        ]
+      }
+    }
+  }
+}

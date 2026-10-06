@@ -1,0 +1,1154 @@
+{
+  "config": {
+    "base_ckpt": "checkpoints/base_encoder.pt",
+    "seeds": [
+      42,
+      43
+    ],
+    "labels": [
+      "plain",
+      "candidates",
+      "cloze",
+      "multi_turn",
+      "unknown"
+    ],
+    "probe": "零初始化单层逻辑回归 AdamW lr=0.05 wd=1e-4 200ep bs64",
+    "feat": "冻结基座 doc_memory 有效 token mean-pool D=128",
+    "n_train": 2000,
+    "n_test": 600,
+    "n_adv": 225,
+    "n_ka": 15,
+    "majority_baseline": {
+      "id_test": 0.2,
+      "adv": 0.6
+    },
+    "P1_margin": 0.1,
+    "P2_bar": 0.7,
+    "train_data": "id_train.jsonl（与测试/对抗/已知答案文本零重合，见 stats.json）"
+  },
+  "seeds": {
+    "42": {
+      "real": {
+        "id_test": {
+          "acc": 0.9233333333333333,
+          "n": 600,
+          "per_class_recall": {
+            "plain": 0.9083333333333333,
+            "candidates": 0.9333333333333333,
+            "cloze": 0.9416666666666667,
+            "multi_turn": 0.9583333333333334,
+            "unknown": 0.875
+          },
+          "pred_dist": {
+            "plain": 0.19166666666666668,
+            "candidates": 0.19666666666666666,
+            "cloze": 0.22166666666666668,
+            "multi_turn": 0.2,
+            "unknown": 0.19
+          },
+          "confusion": {
+            "plain": {
+              "candidates": 0,
+              "cloze": 3,
+              "multi_turn": 3,
+              "unknown": 5
+            },
+            "candidates": {
+              "plain": 0,
+              "cloze": 7,
+              "multi_turn": 0,
+              "unknown": 1
+            },
+            "cloze": {
+              "plain": 1,
+              "candidates": 3,
+              "multi_turn": 0,
+              "unknown": 3
+            },
+            "multi_turn": {
+              "plain": 1,
+              "candidates": 2,
+              "cloze": 2,
+              "unknown": 0
+            },
+            "unknown": {
+              "plain": 4,
+              "candidates": 1,
+              "cloze": 8,
+              "multi_turn": 2
+            }
+          }
+        },
+        "adv": {
+          "acc": 0.27555555555555555,
+          "n": 225,
+          "per_class_recall": {
+            "plain": 0.08148148148148149,
+            "candidates": null,
+            "cloze": null,
+            "multi_turn": null,
+            "unknown": 0.5666666666666667
+          },
+          "pred_dist": {
+            "plain": 0.04888888888888889,
+            "candidates": 0.23555555555555555,
+            "cloze": 0.18666666666666668,
+            "multi_turn": 0.26666666666666666,
+            "unknown": 0.26222222222222225
+          },
+          "confusion": {
+            "plain": {
+              "candidates": 24,
+              "cloze": 33,
+              "multi_turn": 59,
+              "unknown": 8
+            },
+            "unknown": {
+              "plain": 0,
+              "candidates": 29,
+              "cloze": 9,
+              "multi_turn": 1
+            }
+          }
+        },
+        "known_answer": {
+          "acc": 0.6666666666666666,
+          "n": 15,
+          "per_class_recall": {
+            "plain": 0.6666666666666666,
+            "candidates": 0.0,
+            "cloze": 1.0,
+            "multi_turn": 1.0,
+            "unknown": 0.6666666666666666
+          },
+          "pred_dist": {
+            "plain": 0.13333333333333333,
+            "candidates": 0.06666666666666667,
+            "cloze": 0.2,
+            "multi_turn": 0.2,
+            "unknown": 0.4
+          },
+          "confusion": {
+            "plain": {
+              "candidates": 0,
+              "cloze": 0,
+              "multi_turn": 0,
+              "unknown": 1
+            },
+            "candidates": {
+              "plain": 0,
+              "cloze": 0,
+              "multi_turn": 0,
+              "unknown": 3
+            },
+            "unknown": {
+              "plain": 0,
+              "candidates": 1,
+              "cloze": 0,
+              "multi_turn": 0
+            }
+          },
+          "per_item": [
+            {
+              "id": "ka-00",
+              "true": "plain",
+              "pred": "plain",
+              "ok": true
+            },
+            {
+              "id": "ka-01",
+              "true": "plain",
+              "pred": "unknown",
+              "ok": false
+            },
+            {
+              "id": "ka-02",
+              "true": "plain",
+              "pred": "plain",
+              "ok": true
+            },
+            {
+              "id": "ka-03",
+              "true": "candidates",
+              "pred": "unknown",
+              "ok": false
+            },
+            {
+              "id": "ka-04",
+              "true": "candidates",
+              "pred": "unknown",
+              "ok": false
+            },
+            {
+              "id": "ka-05",
+              "true": "candidates",
+              "pred": "unknown",
+              "ok": false
+            },
+            {
+              "id": "ka-06",
+              "true": "cloze",
+              "pred": "cloze",
+              "ok": true
+            },
+            {
+              "id": "ka-07",
+              "true": "cloze",
+              "pred": "cloze",
+              "ok": true
+            },
+            {
+              "id": "ka-08",
+              "true": "cloze",
+              "pred": "cloze",
+              "ok": true
+            },
+            {
+              "id": "ka-09",
+              "true": "multi_turn",
+              "pred": "multi_turn",
+              "ok": true
+            },
+            {
+              "id": "ka-10",
+              "true": "multi_turn",
+              "pred": "multi_turn",
+              "ok": true
+            },
+            {
+              "id": "ka-11",
+              "true": "multi_turn",
+              "pred": "multi_turn",
+              "ok": true
+            },
+            {
+              "id": "ka-12",
+              "true": "unknown",
+              "pred": "unknown",
+              "ok": true
+            },
+            {
+              "id": "ka-13",
+              "true": "unknown",
+              "pred": "candidates",
+              "ok": false
+            },
+            {
+              "id": "ka-14",
+              "true": "unknown",
+              "pred": "unknown",
+              "ok": true
+            }
+          ]
+        }
+      },
+      "adv_per_rule": {
+        "adv_mixed_cand_cloze": {
+          "acc": 0.8,
+          "n": 45,
+          "per_class_recall": {
+            "plain": null,
+            "candidates": null,
+            "cloze": null,
+            "multi_turn": null,
+            "unknown": 0.8
+          },
+          "pred_dist": {
+            "plain": 0.0,
+            "candidates": 0.0,
+            "cloze": 0.2,
+            "multi_turn": 0.0,
+            "unknown": 0.8
+          },
+          "confusion": {
+            "unknown": {
+              "plain": 0,
+              "candidates": 0,
+              "cloze": 9,
+              "multi_turn": 0
+            }
+          },
+          "pred_as_surface_naive": 0.2
+        },
+        "adv_plain_mentions_candidates": {
+          "acc": 0.1111111111111111,
+          "n": 45,
+          "per_class_recall": {
+            "plain": 0.1111111111111111,
+            "candidates": null,
+            "cloze": null,
+            "multi_turn": null,
+            "unknown": null
+          },
+          "pred_dist": {
+            "plain": 0.1111111111111111,
+            "candidates": 0.4888888888888889,
+            "cloze": 0.3333333333333333,
+            "multi_turn": 0.022222222222222223,
+            "unknown": 0.044444444444444446
+          },
+          "confusion": {
+            "plain": {
+              "candidates": 22,
+              "cloze": 15,
+              "multi_turn": 1,
+              "unknown": 2
+            }
+          },
+          "pred_as_surface_naive": 0.4888888888888889
+        },
+        "adv_plain_quoted_dialogue": {
+          "acc": 0.0,
+          "n": 45,
+          "per_class_recall": {
+            "plain": 0.0,
+            "candidates": null,
+            "cloze": null,
+            "multi_turn": null,
+            "unknown": null
+          },
+          "pred_dist": {
+            "plain": 0.0,
+            "candidates": 0.0,
+            "cloze": 0.0,
+            "multi_turn": 1.0,
+            "unknown": 0.0
+          },
+          "confusion": {
+            "plain": {
+              "candidates": 0,
+              "cloze": 0,
+              "multi_turn": 45,
+              "unknown": 0
+            }
+          },
+          "pred_as_surface_naive": 1.0
+        },
+        "adv_plain_underscore_id": {
+          "acc": 0.13333333333333333,
+          "n": 45,
+          "per_class_recall": {
+            "plain": 0.13333333333333333,
+            "candidates": null,
+            "cloze": null,
+            "multi_turn": null,
+            "unknown": null
+          },
+          "pred_dist": {
+            "plain": 0.13333333333333333,
+            "candidates": 0.044444444444444446,
+            "cloze": 0.4,
+            "multi_turn": 0.28888888888888886,
+            "unknown": 0.13333333333333333
+          },
+          "confusion": {
+            "plain": {
+              "candidates": 2,
+              "cloze": 18,
+              "multi_turn": 13,
+              "unknown": 6
+            }
+          },
+          "pred_as_surface_naive": 0.4
+        },
+        "adv_truncated_candidates": {
+          "acc": 0.3333333333333333,
+          "n": 45,
+          "per_class_recall": {
+            "plain": null,
+            "candidates": null,
+            "cloze": null,
+            "multi_turn": null,
+            "unknown": 0.3333333333333333
+          },
+          "pred_dist": {
+            "plain": 0.0,
+            "candidates": 0.6444444444444445,
+            "cloze": 0.0,
+            "multi_turn": 0.022222222222222223,
+            "unknown": 0.3333333333333333
+          },
+          "confusion": {
+            "unknown": {
+              "plain": 0,
+              "candidates": 29,
+              "cloze": 0,
+              "multi_turn": 1
+            }
+          },
+          "pred_as_surface_naive": 0.6444444444444445
+        }
+      },
+      "control_shuffled_label": {
+        "id_test_acc": 0.13833333333333334,
+        "adv_acc": 0.1511111111111111
+      },
+      "control_random_feature": {
+        "id_test_acc": 0.21666666666666667,
+        "adv_acc": 0.13777777777777778
+      },
+      "exploratory_threshold_sweep": [
+        {
+          "tau": 0.0,
+          "adv_acc": 0.27555555555555555,
+          "id_acc": 0.9233333333333333,
+          "unknown_recall": 0.5666666666666667,
+          "P1_P2_P3_all_pass": false
+        },
+        {
+          "tau": 0.05,
+          "adv_acc": 0.27555555555555555,
+          "id_acc": 0.9233333333333333,
+          "unknown_recall": 0.5666666666666667,
+          "P1_P2_P3_all_pass": false
+        },
+        {
+          "tau": 0.1,
+          "adv_acc": 0.27555555555555555,
+          "id_acc": 0.9233333333333333,
+          "unknown_recall": 0.5666666666666667,
+          "P1_P2_P3_all_pass": false
+        },
+        {
+          "tau": 0.15,
+          "adv_acc": 0.27555555555555555,
+          "id_acc": 0.9233333333333333,
+          "unknown_recall": 0.5666666666666667,
+          "P1_P2_P3_all_pass": false
+        },
+        {
+          "tau": 0.2,
+          "adv_acc": 0.27555555555555555,
+          "id_acc": 0.9233333333333333,
+          "unknown_recall": 0.5666666666666667,
+          "P1_P2_P3_all_pass": false
+        },
+        {
+          "tau": 0.25,
+          "adv_acc": 0.27555555555555555,
+          "id_acc": 0.9233333333333333,
+          "unknown_recall": 0.5666666666666667,
+          "P1_P2_P3_all_pass": false
+        },
+        {
+          "tau": 0.3,
+          "adv_acc": 0.27555555555555555,
+          "id_acc": 0.9233333333333333,
+          "unknown_recall": 0.5666666666666667,
+          "P1_P2_P3_all_pass": false
+        },
+        {
+          "tau": 0.35,
+          "adv_acc": 0.27555555555555555,
+          "id_acc": 0.9233333333333333,
+          "unknown_recall": 0.5666666666666667,
+          "P1_P2_P3_all_pass": false
+        },
+        {
+          "tau": 0.4,
+          "adv_acc": 0.27555555555555555,
+          "id_acc": 0.9233333333333333,
+          "unknown_recall": 0.5666666666666667,
+          "P1_P2_P3_all_pass": false
+        },
+        {
+          "tau": 0.45,
+          "adv_acc": 0.27555555555555555,
+          "id_acc": 0.9233333333333333,
+          "unknown_recall": 0.5666666666666667,
+          "P1_P2_P3_all_pass": false
+        },
+        {
+          "tau": 0.5,
+          "adv_acc": 0.27555555555555555,
+          "id_acc": 0.9233333333333333,
+          "unknown_recall": 0.5666666666666667,
+          "P1_P2_P3_all_pass": false
+        },
+        {
+          "tau": 0.55,
+          "adv_acc": 0.27111111111111114,
+          "id_acc": 0.9233333333333333,
+          "unknown_recall": 0.5777777777777777,
+          "P1_P2_P3_all_pass": false
+        },
+        {
+          "tau": 0.6,
+          "adv_acc": 0.28,
+          "id_acc": 0.9233333333333333,
+          "unknown_recall": 0.6,
+          "P1_P2_P3_all_pass": false
+        },
+        {
+          "tau": 0.65,
+          "adv_acc": 0.29333333333333333,
+          "id_acc": 0.9233333333333333,
+          "unknown_recall": 0.6333333333333333,
+          "P1_P2_P3_all_pass": false
+        },
+        {
+          "tau": 0.7,
+          "adv_acc": 0.29333333333333333,
+          "id_acc": 0.9233333333333333,
+          "unknown_recall": 0.6333333333333333,
+          "P1_P2_P3_all_pass": false
+        },
+        {
+          "tau": 0.75,
+          "adv_acc": 0.29777777777777775,
+          "id_acc": 0.9183333333333333,
+          "unknown_recall": 0.6444444444444445,
+          "P1_P2_P3_all_pass": false
+        },
+        {
+          "tau": 0.8,
+          "adv_acc": 0.3022222222222222,
+          "id_acc": 0.9166666666666666,
+          "unknown_recall": 0.6555555555555556,
+          "P1_P2_P3_all_pass": false
+        },
+        {
+          "tau": 0.85,
+          "adv_acc": 0.3022222222222222,
+          "id_acc": 0.9166666666666666,
+          "unknown_recall": 0.6555555555555556,
+          "P1_P2_P3_all_pass": false
+        },
+        {
+          "tau": 0.9,
+          "adv_acc": 0.30666666666666664,
+          "id_acc": 0.9116666666666666,
+          "unknown_recall": 0.6777777777777778,
+          "P1_P2_P3_all_pass": false
+        },
+        {
+          "tau": 0.95,
+          "adv_acc": 0.31555555555555553,
+          "id_acc": 0.905,
+          "unknown_recall": 0.7,
+          "P1_P2_P3_all_pass": false
+        },
+        {
+          "tau": 1.0,
+          "adv_acc": 0.40444444444444444,
+          "id_acc": 0.515,
+          "unknown_recall": 1.0,
+          "P1_P2_P3_all_pass": false
+        }
+      ],
+      "criteria": {
+        "P1_pass": false,
+        "P2_pass": false,
+        "P3_pass": false,
+        "unknown_recall_adv": 0.5666666666666667,
+        "drop_pt": 64.77777777777777
+      }
+    },
+    "43": {
+      "real": {
+        "id_test": {
+          "acc": 0.91,
+          "n": 600,
+          "per_class_recall": {
+            "plain": 0.875,
+            "candidates": 0.8583333333333333,
+            "cloze": 0.9416666666666667,
+            "multi_turn": 0.975,
+            "unknown": 0.9
+          },
+          "pred_dist": {
+            "plain": 0.18333333333333332,
+            "candidates": 0.17666666666666667,
+            "cloze": 0.23,
+            "multi_turn": 0.20666666666666667,
+            "unknown": 0.20333333333333334
+          },
+          "confusion": {
+            "plain": {
+              "candidates": 0,
+              "cloze": 2,
+              "multi_turn": 5,
+              "unknown": 8
+            },
+            "candidates": {
+              "plain": 0,
+              "cloze": 16,
+              "multi_turn": 0,
+              "unknown": 1
+            },
+            "cloze": {
+              "plain": 1,
+              "candidates": 1,
+              "multi_turn": 0,
+              "unknown": 5
+            },
+            "multi_turn": {
+              "plain": 1,
+              "candidates": 0,
+              "cloze": 2,
+              "unknown": 0
+            },
+            "unknown": {
+              "plain": 3,
+              "candidates": 2,
+              "cloze": 5,
+              "multi_turn": 2
+            }
+          }
+        },
+        "adv": {
+          "acc": 0.32,
+          "n": 225,
+          "per_class_recall": {
+            "plain": 0.05925925925925926,
+            "candidates": null,
+            "cloze": null,
+            "multi_turn": null,
+            "unknown": 0.7111111111111111
+          },
+          "pred_dist": {
+            "plain": 0.035555555555555556,
+            "candidates": 0.18222222222222223,
+            "cloze": 0.16444444444444445,
+            "multi_turn": 0.29777777777777775,
+            "unknown": 0.32
+          },
+          "confusion": {
+            "plain": {
+              "candidates": 19,
+              "cloze": 34,
+              "multi_turn": 66,
+              "unknown": 8
+            },
+            "unknown": {
+              "plain": 0,
+              "candidates": 22,
+              "cloze": 3,
+              "multi_turn": 1
+            }
+          }
+        },
+        "known_answer": {
+          "acc": 0.6666666666666666,
+          "n": 15,
+          "per_class_recall": {
+            "plain": 0.6666666666666666,
+            "candidates": 0.0,
+            "cloze": 1.0,
+            "multi_turn": 1.0,
+            "unknown": 0.6666666666666666
+          },
+          "pred_dist": {
+            "plain": 0.13333333333333333,
+            "candidates": 0.06666666666666667,
+            "cloze": 0.2,
+            "multi_turn": 0.2,
+            "unknown": 0.4
+          },
+          "confusion": {
+            "plain": {
+              "candidates": 0,
+              "cloze": 0,
+              "multi_turn": 0,
+              "unknown": 1
+            },
+            "candidates": {
+              "plain": 0,
+              "cloze": 0,
+              "multi_turn": 0,
+              "unknown": 3
+            },
+            "unknown": {
+              "plain": 0,
+              "candidates": 1,
+              "cloze": 0,
+              "multi_turn": 0
+            }
+          },
+          "per_item": [
+            {
+              "id": "ka-00",
+              "true": "plain",
+              "pred": "plain",
+              "ok": true
+            },
+            {
+              "id": "ka-01",
+              "true": "plain",
+              "pred": "unknown",
+              "ok": false
+            },
+            {
+              "id": "ka-02",
+              "true": "plain",
+              "pred": "plain",
+              "ok": true
+            },
+            {
+              "id": "ka-03",
+              "true": "candidates",
+              "pred": "unknown",
+              "ok": false
+            },
+            {
+              "id": "ka-04",
+              "true": "candidates",
+              "pred": "unknown",
+              "ok": false
+            },
+            {
+              "id": "ka-05",
+              "true": "candidates",
+              "pred": "unknown",
+              "ok": false
+            },
+            {
+              "id": "ka-06",
+              "true": "cloze",
+              "pred": "cloze",
+              "ok": true
+            },
+            {
+              "id": "ka-07",
+              "true": "cloze",
+              "pred": "cloze",
+              "ok": true
+            },
+            {
+              "id": "ka-08",
+              "true": "cloze",
+              "pred": "cloze",
+              "ok": true
+            },
+            {
+              "id": "ka-09",
+              "true": "multi_turn",
+              "pred": "multi_turn",
+              "ok": true
+            },
+            {
+              "id": "ka-10",
+              "true": "multi_turn",
+              "pred": "multi_turn",
+              "ok": true
+            },
+            {
+              "id": "ka-11",
+              "true": "multi_turn",
+              "pred": "multi_turn",
+              "ok": true
+            },
+            {
+              "id": "ka-12",
+              "true": "unknown",
+              "pred": "unknown",
+              "ok": true
+            },
+            {
+              "id": "ka-13",
+              "true": "unknown",
+              "pred": "candidates",
+              "ok": false
+            },
+            {
+              "id": "ka-14",
+              "true": "unknown",
+              "pred": "unknown",
+              "ok": true
+            }
+          ]
+        }
+      },
+      "adv_per_rule": {
+        "adv_mixed_cand_cloze": {
+          "acc": 0.9333333333333333,
+          "n": 45,
+          "per_class_recall": {
+            "plain": null,
+            "candidates": null,
+            "cloze": null,
+            "multi_turn": null,
+            "unknown": 0.9333333333333333
+          },
+          "pred_dist": {
+            "plain": 0.0,
+            "candidates": 0.0,
+            "cloze": 0.06666666666666667,
+            "multi_turn": 0.0,
+            "unknown": 0.9333333333333333
+          },
+          "confusion": {
+            "unknown": {
+              "plain": 0,
+              "candidates": 0,
+              "cloze": 3,
+              "multi_turn": 0
+            }
+          },
+          "pred_as_surface_naive": 0.06666666666666667
+        },
+        "adv_plain_mentions_candidates": {
+          "acc": 0.06666666666666667,
+          "n": 45,
+          "per_class_recall": {
+            "plain": 0.06666666666666667,
+            "candidates": null,
+            "cloze": null,
+            "multi_turn": null,
+            "unknown": null
+          },
+          "pred_dist": {
+            "plain": 0.06666666666666667,
+            "candidates": 0.4,
+            "cloze": 0.4,
+            "multi_turn": 0.1111111111111111,
+            "unknown": 0.022222222222222223
+          },
+          "confusion": {
+            "plain": {
+              "candidates": 18,
+              "cloze": 18,
+              "multi_turn": 5,
+              "unknown": 1
+            }
+          },
+          "pred_as_surface_naive": 0.4
+        },
+        "adv_plain_quoted_dialogue": {
+          "acc": 0.0,
+          "n": 45,
+          "per_class_recall": {
+            "plain": 0.0,
+            "candidates": null,
+            "cloze": null,
+            "multi_turn": null,
+            "unknown": null
+          },
+          "pred_dist": {
+            "plain": 0.0,
+            "candidates": 0.0,
+            "cloze": 0.0,
+            "multi_turn": 1.0,
+            "unknown": 0.0
+          },
+          "confusion": {
+            "plain": {
+              "candidates": 0,
+              "cloze": 0,
+              "multi_turn": 45,
+              "unknown": 0
+            }
+          },
+          "pred_as_surface_naive": 1.0
+        },
+        "adv_plain_underscore_id": {
+          "acc": 0.1111111111111111,
+          "n": 45,
+          "per_class_recall": {
+            "plain": 0.1111111111111111,
+            "candidates": null,
+            "cloze": null,
+            "multi_turn": null,
+            "unknown": null
+          },
+          "pred_dist": {
+            "plain": 0.1111111111111111,
+            "candidates": 0.022222222222222223,
+            "cloze": 0.35555555555555557,
+            "multi_turn": 0.35555555555555557,
+            "unknown": 0.15555555555555556
+          },
+          "confusion": {
+            "plain": {
+              "candidates": 1,
+              "cloze": 16,
+              "multi_turn": 16,
+              "unknown": 7
+            }
+          },
+          "pred_as_surface_naive": 0.35555555555555557
+        },
+        "adv_truncated_candidates": {
+          "acc": 0.4888888888888889,
+          "n": 45,
+          "per_class_recall": {
+            "plain": null,
+            "candidates": null,
+            "cloze": null,
+            "multi_turn": null,
+            "unknown": 0.4888888888888889
+          },
+          "pred_dist": {
+            "plain": 0.0,
+            "candidates": 0.4888888888888889,
+            "cloze": 0.0,
+            "multi_turn": 0.022222222222222223,
+            "unknown": 0.4888888888888889
+          },
+          "confusion": {
+            "unknown": {
+              "plain": 0,
+              "candidates": 22,
+              "cloze": 0,
+              "multi_turn": 1
+            }
+          },
+          "pred_as_surface_naive": 0.4888888888888889
+        }
+      },
+      "control_shuffled_label": {
+        "id_test_acc": 0.19,
+        "adv_acc": 0.08444444444444445
+      },
+      "control_random_feature": {
+        "id_test_acc": 0.23166666666666666,
+        "adv_acc": 0.19111111111111112
+      },
+      "exploratory_threshold_sweep": [
+        {
+          "tau": 0.0,
+          "adv_acc": 0.32,
+          "id_acc": 0.91,
+          "unknown_recall": 0.7111111111111111,
+          "P1_P2_P3_all_pass": false
+        },
+        {
+          "tau": 0.05,
+          "adv_acc": 0.32,
+          "id_acc": 0.91,
+          "unknown_recall": 0.7111111111111111,
+          "P1_P2_P3_all_pass": false
+        },
+        {
+          "tau": 0.1,
+          "adv_acc": 0.32,
+          "id_acc": 0.91,
+          "unknown_recall": 0.7111111111111111,
+          "P1_P2_P3_all_pass": false
+        },
+        {
+          "tau": 0.15,
+          "adv_acc": 0.32,
+          "id_acc": 0.91,
+          "unknown_recall": 0.7111111111111111,
+          "P1_P2_P3_all_pass": false
+        },
+        {
+          "tau": 0.2,
+          "adv_acc": 0.32,
+          "id_acc": 0.91,
+          "unknown_recall": 0.7111111111111111,
+          "P1_P2_P3_all_pass": false
+        },
+        {
+          "tau": 0.25,
+          "adv_acc": 0.32,
+          "id_acc": 0.91,
+          "unknown_recall": 0.7111111111111111,
+          "P1_P2_P3_all_pass": false
+        },
+        {
+          "tau": 0.3,
+          "adv_acc": 0.32,
+          "id_acc": 0.91,
+          "unknown_recall": 0.7111111111111111,
+          "P1_P2_P3_all_pass": false
+        },
+        {
+          "tau": 0.35,
+          "adv_acc": 0.32,
+          "id_acc": 0.91,
+          "unknown_recall": 0.7111111111111111,
+          "P1_P2_P3_all_pass": false
+        },
+        {
+          "tau": 0.4,
+          "adv_acc": 0.32,
+          "id_acc": 0.91,
+          "unknown_recall": 0.7111111111111111,
+          "P1_P2_P3_all_pass": false
+        },
+        {
+          "tau": 0.45,
+          "adv_acc": 0.32,
+          "id_acc": 0.91,
+          "unknown_recall": 0.7111111111111111,
+          "P1_P2_P3_all_pass": false
+        },
+        {
+          "tau": 0.5,
+          "adv_acc": 0.32,
+          "id_acc": 0.91,
+          "unknown_recall": 0.7111111111111111,
+          "P1_P2_P3_all_pass": false
+        },
+        {
+          "tau": 0.55,
+          "adv_acc": 0.3244444444444444,
+          "id_acc": 0.9083333333333333,
+          "unknown_recall": 0.7222222222222222,
+          "P1_P2_P3_all_pass": false
+        },
+        {
+          "tau": 0.6,
+          "adv_acc": 0.3244444444444444,
+          "id_acc": 0.9066666666666666,
+          "unknown_recall": 0.7222222222222222,
+          "P1_P2_P3_all_pass": false
+        },
+        {
+          "tau": 0.65,
+          "adv_acc": 0.3244444444444444,
+          "id_acc": 0.9066666666666666,
+          "unknown_recall": 0.7222222222222222,
+          "P1_P2_P3_all_pass": false
+        },
+        {
+          "tau": 0.7,
+          "adv_acc": 0.3288888888888889,
+          "id_acc": 0.905,
+          "unknown_recall": 0.7444444444444445,
+          "P1_P2_P3_all_pass": false
+        },
+        {
+          "tau": 0.75,
+          "adv_acc": 0.3288888888888889,
+          "id_acc": 0.9016666666666666,
+          "unknown_recall": 0.7444444444444445,
+          "P1_P2_P3_all_pass": false
+        },
+        {
+          "tau": 0.8,
+          "adv_acc": 0.3333333333333333,
+          "id_acc": 0.895,
+          "unknown_recall": 0.7555555555555555,
+          "P1_P2_P3_all_pass": false
+        },
+        {
+          "tau": 0.85,
+          "adv_acc": 0.3333333333333333,
+          "id_acc": 0.8916666666666667,
+          "unknown_recall": 0.7777777777777778,
+          "P1_P2_P3_all_pass": false
+        },
+        {
+          "tau": 0.9,
+          "adv_acc": 0.3511111111111111,
+          "id_acc": 0.8816666666666667,
+          "unknown_recall": 0.8222222222222222,
+          "P1_P2_P3_all_pass": false
+        },
+        {
+          "tau": 0.95,
+          "adv_acc": 0.3511111111111111,
+          "id_acc": 0.875,
+          "unknown_recall": 0.8333333333333334,
+          "P1_P2_P3_all_pass": false
+        },
+        {
+          "tau": 1.0,
+          "adv_acc": 0.40444444444444444,
+          "id_acc": 0.5133333333333333,
+          "unknown_recall": 1.0,
+          "P1_P2_P3_all_pass": false
+        }
+      ],
+      "criteria": {
+        "P1_pass": false,
+        "P2_pass": true,
+        "P3_pass": false,
+        "unknown_recall_adv": 0.7111111111111111,
+        "drop_pt": 59.00000000000001
+      }
+    }
+  },
+  "aggregate": {
+    "id_test_acc": {
+      "mean": 0.9166666666666667,
+      "values": [
+        0.9233333333333333,
+        0.91
+      ],
+      "range": 0.013333333333333308
+    },
+    "adv_acc": {
+      "mean": 0.2977777777777778,
+      "values": [
+        0.27555555555555555,
+        0.32
+      ],
+      "range": 0.04444444444444445
+    },
+    "unknown_recall_adv": {
+      "mean": 0.6388888888888888,
+      "values": [
+        0.5666666666666667,
+        0.7111111111111111
+      ],
+      "range": 0.1444444444444445
+    },
+    "known_answer_acc": {
+      "mean": 0.6666666666666666,
+      "values": [
+        0.6666666666666666,
+        0.6666666666666666
+      ],
+      "range": 0.0
+    },
+    "ctrl_shuffle_id": {
+      "mean": 0.16416666666666668,
+      "values": [
+        0.13833333333333334,
+        0.19
+      ],
+      "range": 0.051666666666666666
+    },
+    "ctrl_shuffle_adv": {
+      "mean": 0.11777777777777779,
+      "values": [
+        0.1511111111111111,
+        0.08444444444444445
+      ],
+      "range": 0.06666666666666667
+    },
+    "ctrl_randfeat_id": {
+      "mean": 0.22416666666666668,
+      "values": [
+        0.21666666666666667,
+        0.23166666666666666
+      ],
+      "range": 0.014999999999999986
+    },
+    "ctrl_randfeat_adv": {
+      "mean": 0.16444444444444445,
+      "values": [
+        0.13777777777777778,
+        0.19111111111111112
+      ],
+      "range": 0.053333333333333344
+    }
+  },
+  "verdict": {
+    "judged": "不变量不成立（诊断：模型判不了类型）",
+    "per_seed_criteria": {
+      "P1_pass": [
+        false,
+        false
+      ],
+      "P2_pass": [
+        false,
+        true
+      ],
+      "P3_pass": [
+        false,
+        false
+      ]
+    },
+    "rule": "README §5：P1/P2/P3 全部在两 seed 通过 ⇒ 成立；任一判据在两 seed 都不通过 ⇒ 不成立；其余 ⇒ 证据不足",
+    "majority_baseline": {
+      "id_test": 0.2,
+      "adv": 0.6
+    },
+    "exploratory_threshold_note": "未预注册的探索：是否存在置信度阈值使 P1∧P2∧P3 同时成立 —— seed 42: none; seed 43: none"
+  }
+}

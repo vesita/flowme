@@ -1,0 +1,226 @@
+{
+  "seed": 43,
+  "conditions": {
+    "A": {
+      "pronoun": {
+        "cls_acc": 0.9929245283018868,
+        "span_hit": 0.9976415094339622,
+        "bg_fp": 0.0,
+        "n_cls": 424,
+        "n_bg": 176,
+        "exact_match": 0.96,
+        "slice_precision": 0.9850230414746544,
+        "slice_recall": 0.981630309988519
+      },
+      "sentiment": {
+        "cls_acc": 0.7728613569321534,
+        "span_hit": 0.8929624947324062,
+        "bg_fp": 0.0,
+        "n_cls": 2373,
+        "n_bg": 827,
+        "exact_match": 0.7715625,
+        "slice_precision": 0.7163865546218487,
+        "slice_recall": 0.6836407377706496
+      },
+      "relation": {
+        "cls_acc": 0.9657794676806084,
+        "span_hit": 1.0,
+        "bg_fp": 0.8608247422680413,
+        "n_cls": 526,
+        "n_bg": 194,
+        "exact_match": 0.7416666666666667,
+        "slice_precision": 0.7376453488372093,
+        "slice_recall": 0.964828897338403,
+        "pair_exact": 0.9638783269961977,
+        "pair_order": 1.0,
+        "pair_odd": 0.0,
+        "n_pair": 526
+      },
+      "person": {
+        "cls_acc": 1.0,
+        "span_hit": 0.9975609756097561,
+        "bg_fp": 0.0,
+        "n_cls": 410,
+        "n_bg": 190,
+        "exact_match": 0.32166666666666666,
+        "slice_precision": 0.5536522301228184,
+        "slice_recall": 0.5319875776397516,
+        "id_acc": 0.6867647058823529,
+        "first_mention_acc": 0.813216453135536,
+        "repeat_mention_acc": 0.3500897666068223,
+        "cluster_f1": 0.3573446327683616,
+        "n_measurable": 2040
+      }
+    },
+    "B": {
+      "pronoun": {
+        "cls_acc": 0.9929245283018868,
+        "span_hit": 0.9976415094339622,
+        "bg_fp": 0.0,
+        "n_cls": 424,
+        "n_bg": 176,
+        "exact_match": 0.96,
+        "slice_precision": 0.9850230414746544,
+        "slice_recall": 0.981630309988519
+      },
+      "sentiment": {
+        "cls_acc": 0.7728613569321534,
+        "span_hit": 0.8929624947324062,
+        "bg_fp": 0.0,
+        "n_cls": 2373,
+        "n_bg": 827,
+        "exact_match": 0.7715625,
+        "slice_precision": 0.7163865546218487,
+        "slice_recall": 0.6836407377706496
+      },
+      "relation": {
+        "cls_acc": 0.9657794676806084,
+        "span_hit": 1.0,
+        "bg_fp": 0.8608247422680413,
+        "n_cls": 526,
+        "n_bg": 194,
+        "exact_match": 0.7416666666666667,
+        "slice_precision": 0.7376453488372093,
+        "slice_recall": 0.964828897338403,
+        "pair_exact": 0.9638783269961977,
+        "pair_order": 1.0,
+        "pair_odd": 0.0,
+        "n_pair": 526
+      },
+      "person": {
+        "cls_acc": 1.0,
+        "span_hit": 0.9975609756097561,
+        "bg_fp": 0.0,
+        "n_cls": 410,
+        "n_bg": 190,
+        "exact_match": 0.32166666666666666,
+        "slice_precision": 0.5536522301228184,
+        "slice_recall": 0.5319875776397516,
+        "id_acc": 0.6867647058823529,
+        "first_mention_acc": 0.813216453135536,
+        "repeat_mention_acc": 0.3500897666068223,
+        "cluster_f1": 0.3573446327683616,
+        "n_measurable": 2040
+      },
+      "negation": {
+        "cls_acc": 0.8926701570680629,
+        "span_hit": 0.806282722513089,
+        "bg_fp": 0.07339449541284404,
+        "n_cls": 382,
+        "n_bg": 218,
+        "exact_match": 0.8016666666666666,
+        "slice_precision": 0.8443271767810027,
+        "slice_recall": 0.7511737089201878
+      }
+    },
+    "C": {
+      "pronoun": {
+        "cls_acc": 0.9245283018867925,
+        "span_hit": 0.7924528301886793,
+        "bg_fp": 0.0,
+        "n_cls": 424,
+        "n_bg": 176,
+        "exact_match": 0.7183333333333334,
+        "slice_precision": 0.7735849056603774,
+        "slice_recall": 0.894374282433984
+      },
+      "sentiment": {
+        "cls_acc": 0.6021913190054783,
+        "span_hit": 0.7926675094816688,
+        "bg_fp": 0.0,
+        "n_cls": 2373,
+        "n_bg": 827,
+        "exact_match": 0.6071875,
+        "slice_precision": 0.4979096989966555,
+        "slice_recall": 0.47754611066559743
+      },
+      "relation": {
+        "cls_acc": 0.6159695817490495,
+        "span_hit": 0.7053231939163498,
+        "bg_fp": 0.24742268041237114,
+        "n_cls": 526,
+        "n_bg": 194,
+        "exact_match": 0.5208333333333334,
+        "slice_precision": 0.7122395833333334,
+        "slice_recall": 0.5199619771863118,
+        "pair_exact": 0.435361216730038,
+        "pair_order": 0.9581749049429658,
+        "pair_odd": 0.039923954372623575,
+        "n_pair": 526
+      },
+      "person": {
+        "cls_acc": 1.0,
+        "span_hit": 0.9975609756097561,
+        "bg_fp": 0.5157894736842106,
+        "n_cls": 410,
+        "n_bg": 190,
+        "exact_match": 0.15333333333333332,
+        "slice_precision": 0.4163065399020455,
+        "slice_recall": 0.44875776397515527,
+        "id_acc": 0.6800452232899944,
+        "first_mention_acc": 0.7950502706883217,
+        "repeat_mention_acc": 0.36764705882352944,
+        "cluster_f1": 0.3698854337152209,
+        "n_measurable": 1769
+      }
+    }
+  },
+  "p1": {
+    "pronoun": {
+      "A": 0.96,
+      "B": 0.96,
+      "C": 0.7183333333333334,
+      "delta_B-A": 0.0,
+      "noise_band": 0.0283,
+      "within_band": true,
+      "metrics_equal": true,
+      "pred_identical": true,
+      "C_differs_n": 424
+    },
+    "sentiment": {
+      "A": 0.7715625,
+      "B": 0.7715625,
+      "C": 0.6071875,
+      "delta_B-A": 0.0,
+      "noise_band": 0.0041,
+      "within_band": true,
+      "metrics_equal": true,
+      "pred_identical": true,
+      "C_differs_n": 2373
+    },
+    "relation": {
+      "A": 0.7416666666666667,
+      "B": 0.7416666666666667,
+      "C": 0.5208333333333334,
+      "delta_B-A": 0.0,
+      "noise_band": 0.0139,
+      "within_band": true,
+      "metrics_equal": true,
+      "pred_identical": true,
+      "C_differs_n": 693
+    },
+    "person": {
+      "A": 0.32166666666666666,
+      "B": 0.32166666666666666,
+      "C": 0.15333333333333332,
+      "delta_B-A": 0.0,
+      "noise_band": 0.0033,
+      "within_band": true,
+      "metrics_equal": true,
+      "pred_identical": true,
+      "C_differs_n": 508
+    }
+  },
+  "branch_card": "experiments/core_branch/cards/negation_block2_s43.pt",
+  "branch_kind": "block2",
+  "negation": {
+    "cls_acc": 0.8926701570680629,
+    "span_hit": 0.806282722513089,
+    "bg_fp": 0.07339449541284404,
+    "n_cls": 382,
+    "n_bg": 218,
+    "exact_match": 0.8016666666666666,
+    "slice_precision": 0.8443271767810027,
+    "slice_recall": 0.7511737089201878
+  }
+}

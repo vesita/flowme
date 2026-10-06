@@ -1,0 +1,283 @@
+{
+  "band": {
+    "pronoun": 0.0283,
+    "sentiment": 0.0041,
+    "relation": 0.0139,
+    "person": 0.0033
+  },
+  "p2_line": {
+    "42": 0.87,
+    "43": 0.831
+  },
+  "seeds": {
+    "42": {
+      "baseline": {
+        "pronoun": 0.9533333333333334,
+        "sentiment": 0.79375,
+        "relation": 0.9638888888888889,
+        "person": 0.31
+      },
+      "anchor_scratch_joint": {
+        "pronoun": 0.9333333333333333,
+        "sentiment": 0.71,
+        "relation": 0.7986111111111112,
+        "person": 0.31333333333333335,
+        "negation": 0.9666666666666667
+      },
+      "arms": {
+        "J0": {
+          "exact": {
+            "pronoun": 0.9666666666666667,
+            "sentiment": 0.9165625,
+            "relation": 0.9930555555555556,
+            "person": 0.32,
+            "negation": 0.98
+          },
+          "delta_vs_frozen": {
+            "pronoun": 0.013333333333333308,
+            "sentiment": 0.12281249999999999,
+            "relation": 0.029166666666666674,
+            "person": 0.010000000000000009
+          },
+          "p1": false,
+          "p2": true,
+          "pass": false
+        },
+        "J1": {
+          "exact": {
+            "pronoun": 0.9616666666666667,
+            "sentiment": 0.881875,
+            "relation": 0.9958333333333333,
+            "person": 0.31833333333333336,
+            "negation": 0.965
+          },
+          "delta_vs_frozen": {
+            "pronoun": 0.008333333333333304,
+            "sentiment": 0.08812500000000001,
+            "relation": 0.03194444444444444,
+            "person": 0.00833333333333336
+          },
+          "p1": false,
+          "p2": true,
+          "pass": false
+        },
+        "J2": {
+          "exact": {
+            "pronoun": 0.965,
+            "sentiment": 0.9040625,
+            "relation": 0.9944444444444445,
+            "person": 0.31833333333333336,
+            "negation": 0.955
+          },
+          "delta_vs_frozen": {
+            "pronoun": 0.011666666666666603,
+            "sentiment": 0.11031250000000004,
+            "relation": 0.030555555555555558,
+            "person": 0.00833333333333336
+          },
+          "p1": false,
+          "p2": true,
+          "pass": false
+        },
+        "J3": {
+          "exact": {
+            "pronoun": 0.98,
+            "sentiment": 0.9146875,
+            "relation": 0.9930555555555556,
+            "person": 0.31666666666666665,
+            "negation": 0.9816666666666667
+          },
+          "delta_vs_frozen": {
+            "pronoun": 0.026666666666666616,
+            "sentiment": 0.12093750000000003,
+            "relation": 0.029166666666666674,
+            "person": 0.006666666666666654
+          },
+          "p1": false,
+          "p2": true,
+          "pass": false
+        },
+        "J1c": {
+          "exact": {
+            "pronoun": 0.935,
+            "sentiment": 0.7459375,
+            "relation": 0.9375,
+            "person": 0.315,
+            "negation": 0.9366666666666666
+          },
+          "delta_vs_frozen": {
+            "pronoun": -0.018333333333333313,
+            "sentiment": -0.047812499999999925,
+            "relation": -0.026388888888888906,
+            "person": 0.0050000000000000044
+          },
+          "p1": false,
+          "p2": true,
+          "pass": false
+        },
+        "F": {
+          "exact": {
+            "pronoun": 0.9333333333333333,
+            "sentiment": 0.71,
+            "relation": 0.7986111111111112,
+            "person": 0.31333333333333335,
+            "negation": 0.9666666666666667
+          },
+          "delta_vs_frozen": {
+            "pronoun": -0.020000000000000018,
+            "sentiment": -0.08374999999999999,
+            "relation": -0.16527777777777775,
+            "person": 0.003333333333333355
+          },
+          "p1": false,
+          "p2": true,
+          "pass": false
+        },
+        "J1l4": {
+          "exact": {
+            "pronoun": 0.97,
+            "sentiment": 0.8534375,
+            "relation": 0.9986111111111111,
+            "person": 0.315,
+            "negation": 0.9333333333333333
+          },
+          "delta_vs_frozen": {
+            "pronoun": 0.016666666666666607,
+            "sentiment": 0.059687500000000004,
+            "relation": 0.03472222222222221,
+            "person": 0.0050000000000000044
+          },
+          "p1": false,
+          "p2": true,
+          "pass": false
+        },
+        "J1l16": {
+          "exact": {
+            "pronoun": 0.97,
+            "sentiment": 0.83,
+            "relation": 0.9930555555555556,
+            "person": 0.31666666666666665,
+            "negation": 0.9033333333333333
+          },
+          "delta_vs_frozen": {
+            "pronoun": 0.016666666666666607,
+            "sentiment": 0.036250000000000004,
+            "relation": 0.029166666666666674,
+            "person": 0.006666666666666654
+          },
+          "p1": false,
+          "p2": true,
+          "pass": false
+        }
+      }
+    },
+    "43": {
+      "baseline": {
+        "pronoun": 0.98,
+        "sentiment": 0.8146875,
+        "relation": 0.9652777777777778,
+        "person": 0.3233333333333333
+      },
+      "anchor_scratch_joint": {
+        "pronoun": 0.93,
+        "sentiment": 0.7034375,
+        "relation": 0.9194444444444444,
+        "person": 0.32166666666666666,
+        "negation": 0.9233333333333333
+      },
+      "arms": {
+        "J0": {
+          "exact": {
+            "pronoun": 0.98,
+            "sentiment": 0.9321875,
+            "relation": 0.9930555555555556,
+            "person": 0.325,
+            "negation": 0.9666666666666667
+          },
+          "delta_vs_frozen": {
+            "pronoun": 0.0,
+            "sentiment": 0.11749999999999994,
+            "relation": 0.02777777777777779,
+            "person": 0.0016666666666667052
+          },
+          "p1": false,
+          "p2": true,
+          "pass": false
+        },
+        "J1": {
+          "exact": {
+            "pronoun": 0.9866666666666667,
+            "sentiment": 0.885,
+            "relation": 0.9944444444444445,
+            "person": 0.3233333333333333,
+            "negation": 0.9366666666666666
+          },
+          "delta_vs_frozen": {
+            "pronoun": 0.00666666666666671,
+            "sentiment": 0.0703125,
+            "relation": 0.029166666666666674,
+            "person": 0.0
+          },
+          "p1": false,
+          "p2": true,
+          "pass": false
+        },
+        "J2": {
+          "exact": {
+            "pronoun": 0.9866666666666667,
+            "sentiment": 0.9159375,
+            "relation": 0.9986111111111111,
+            "person": 0.3233333333333333,
+            "negation": 0.9366666666666666
+          },
+          "delta_vs_frozen": {
+            "pronoun": 0.00666666666666671,
+            "sentiment": 0.10124999999999995,
+            "relation": 0.033333333333333326,
+            "person": 0.0
+          },
+          "p1": false,
+          "p2": true,
+          "pass": false
+        },
+        "J3": {
+          "exact": {
+            "pronoun": 0.985,
+            "sentiment": 0.9325,
+            "relation": 0.9902777777777778,
+            "person": 0.3233333333333333,
+            "negation": 0.9633333333333334
+          },
+          "delta_vs_frozen": {
+            "pronoun": 0.0050000000000000044,
+            "sentiment": 0.11781249999999999,
+            "relation": 0.025000000000000022,
+            "person": 0.0
+          },
+          "p1": false,
+          "p2": true,
+          "pass": false
+        },
+        "J1c": {
+          "exact": {
+            "pronoun": 0.9366666666666666,
+            "sentiment": 0.685625,
+            "relation": 0.8986111111111111,
+            "person": 0.32,
+            "negation": 0.9083333333333333
+          },
+          "delta_vs_frozen": {
+            "pronoun": -0.043333333333333335,
+            "sentiment": -0.12906249999999997,
+            "relation": -0.06666666666666665,
+            "person": -0.0033333333333332993
+          },
+          "p1": false,
+          "p2": true,
+          "pass": false
+        }
+      }
+    }
+  },
+  "selftest4_ok": false
+}

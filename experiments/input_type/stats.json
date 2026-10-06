@@ -1,0 +1,48 @@
+{
+  "split_seed": 20240927,
+  "n_train": 2000,
+  "n_test": 600,
+  "n_adv": 225,
+  "n_known": 15,
+  "train_label_dist": {
+    "plain": 400,
+    "candidates": 400,
+    "cloze": 400,
+    "multi_turn": 400,
+    "unknown": 400
+  },
+  "test_label_dist": {
+    "plain": 120,
+    "candidates": 120,
+    "cloze": 120,
+    "multi_turn": 120,
+    "unknown": 120
+  },
+  "adv_label_dist": {
+    "plain": 135,
+    "unknown": 90
+  },
+  "adv_rule_dist": {
+    "adv_plain_mentions_candidates": 45,
+    "adv_plain_underscore_id": 45,
+    "adv_plain_quoted_dialogue": 45,
+    "adv_truncated_candidates": 45,
+    "adv_mixed_cand_cloze": 45
+  },
+  "adv_majority_baseline": 0.6,
+  "test_majority_baseline": 0.2,
+  "unknown_subrule_dist_train": {
+    "unknown_garbage": 81,
+    "unknown_trunc_F1": 155,
+    "unknown_stub": 59,
+    "unknown_mix_F1": 105
+  },
+  "dup_check": {
+    "train∩test": 0,
+    "train∩adv": 0,
+    "test∩adv": 0,
+    "adv∩ka": 0
+  },
+  "naive_eq_true_in_id_test_nonunknown": true,
+  "naive_ne_true_in_adv": true
+}

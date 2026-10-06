@@ -1,0 +1,785 @@
+{
+  "prereg": "experiments/out_invariants/PREREG.md",
+  "base": "checkpoints/base_encoder.pt",
+  "cards_dir": "checkpoints/cards",
+  "weights": {
+    "pronoun": "checkpoints/cards/pronoun.pt",
+    "sentiment": "checkpoints/cards/sentiment.pt",
+    "relation": "checkpoints/cards/relation.pt",
+    "person": "checkpoints/cards/person.pt",
+    "negation": "checkpoints/negation_accept_card_e12.pt"
+  },
+  "device": "cuda",
+  "attached": [
+    "person",
+    "pronoun",
+    "relation",
+    "sentiment",
+    "negation"
+  ],
+  "card_paths": {
+    "person": "checkpoints/cards/person.pt",
+    "pronoun": "checkpoints/cards/pronoun.pt",
+    "relation": "checkpoints/cards/relation.pt",
+    "sentiment": "checkpoints/cards/sentiment.pt",
+    "negation": "checkpoints/negation_accept_card_e12.pt"
+  },
+  "val_seed": 42,
+  "build_samples": 6000,
+  "group_sizes": {
+    "pronoun": {
+      "A": 191,
+      "B1": 200,
+      "B2": 200,
+      "B3": 200,
+      "B": 600
+    },
+    "sentiment": {
+      "A": 149,
+      "B1": 200,
+      "B2": 135,
+      "B3": 200,
+      "B": 535
+    },
+    "relation": {
+      "A": 200,
+      "B1": 200,
+      "B2": 200,
+      "B3": 200,
+      "B": 600
+    },
+    "person": {
+      "A": 183,
+      "B1": 200,
+      "B2": 200,
+      "B3": 200,
+      "B": 600
+    },
+    "negation": {
+      "A": 193,
+      "B1": 200,
+      "B2": 200,
+      "B3": 200,
+      "B": 600
+    }
+  },
+  "table": {
+    "pronoun": {
+      "n_A": 191,
+      "n_B": 600,
+      "fire_A": 0.0052,
+      "fire_B": 0.96,
+      "delta": 0.9548,
+      "fire_B1": 0.975,
+      "fire_B2": 1.0,
+      "fire_B3": 0.905,
+      "P1_pass": false,
+      "P3_pass": false
+    },
+    "sentiment": {
+      "n_A": 149,
+      "n_B": 535,
+      "fire_A": 0.0,
+      "fire_B": 0.9589,
+      "delta": 0.9589,
+      "fire_B1": 0.965,
+      "fire_B2": 0.9704,
+      "fire_B3": 0.945,
+      "P1_pass": false,
+      "P3_pass": false
+    },
+    "relation": {
+      "n_A": 200,
+      "n_B": 600,
+      "fire_A": 0.83,
+      "fire_B": 0.765,
+      "delta": -0.065,
+      "fire_B1": 0.63,
+      "fire_B2": 0.96,
+      "fire_B3": 0.705,
+      "P1_pass": true,
+      "P3_pass": true
+    },
+    "person": {
+      "n_A": 183,
+      "n_B": 600,
+      "fire_A": 0.0,
+      "fire_B": 0.1033,
+      "delta": 0.1033,
+      "fire_B1": 0.015,
+      "fire_B2": 0.215,
+      "fire_B3": 0.08,
+      "P1_pass": false,
+      "P3_pass": true
+    },
+    "negation": {
+      "n_A": 193,
+      "n_B": 600,
+      "fire_A": 0.0881,
+      "fire_B": 0.725,
+      "delta": 0.6369,
+      "fire_B1": 0.57,
+      "fire_B2": 0.835,
+      "fire_B3": 0.77,
+      "P1_pass": false,
+      "P3_pass": true
+    }
+  },
+  "P1_all": false,
+  "P3_all": false,
+  "worst_card": "sentiment",
+  "worst_delta": 0.9589,
+  "determinism": {
+    "mismatches": 0,
+    "ok": true,
+    "samples_checked": 6786
+  },
+  "known_answers": {
+    "L1": {
+      "empty_is_not_fire": true,
+      "single_is_fire": true
+    },
+    "L1_ok": true,
+    "L2": [
+      {
+        "id": "pronoun_fire",
+        "card": "pronoun",
+        "expect_fire": true,
+        "got_fire": true,
+        "ok": true,
+        "n_anchors": 3
+      },
+      {
+        "id": "sentiment_fire",
+        "card": "sentiment",
+        "expect_fire": true,
+        "got_fire": true,
+        "ok": true,
+        "n_anchors": 1
+      },
+      {
+        "id": "relation_fire",
+        "card": "relation",
+        "expect_fire": true,
+        "got_fire": true,
+        "ok": true,
+        "n_anchors": 2
+      },
+      {
+        "id": "person_fire",
+        "card": "person",
+        "expect_fire": true,
+        "got_fire": true,
+        "ok": true,
+        "n_anchors": 5
+      },
+      {
+        "id": "negation_fire",
+        "card": "negation",
+        "expect_fire": true,
+        "got_fire": true,
+        "ok": true,
+        "n_anchors": 1
+      },
+      {
+        "id": "pronoun_no",
+        "card": "pronoun",
+        "expect_fire": false,
+        "got_fire": true,
+        "ok": false,
+        "n_anchors": 1
+      },
+      {
+        "id": "sentiment_no",
+        "card": "sentiment",
+        "expect_fire": false,
+        "got_fire": true,
+        "ok": false,
+        "n_anchors": 1
+      },
+      {
+        "id": "relation_no",
+        "card": "relation",
+        "expect_fire": false,
+        "got_fire": true,
+        "ok": false,
+        "n_anchors": 2
+      },
+      {
+        "id": "person_no",
+        "card": "person",
+        "expect_fire": false,
+        "got_fire": false,
+        "ok": true,
+        "n_anchors": 0
+      },
+      {
+        "id": "negation_no",
+        "card": "negation",
+        "expect_fire": false,
+        "got_fire": true,
+        "ok": false,
+        "n_anchors": 1
+      }
+    ],
+    "L2_ok": false,
+    "L2_fire_all_ok": true,
+    "L2_score": "6/10"
+  },
+  "calibration": {
+    "pronoun": {
+      "A": {
+        "<0.5": {
+          "n": 0,
+          "share_of_group": 0.0,
+          "mean_conf": null
+        },
+        "0.5": {
+          "n": 0,
+          "share_of_group": 0.0,
+          "mean_conf": null
+        },
+        "0.6": {
+          "n": 0,
+          "share_of_group": 0.0,
+          "mean_conf": null
+        },
+        "0.7": {
+          "n": 0,
+          "share_of_group": 0.0,
+          "mean_conf": null
+        },
+        "0.8": {
+          "n": 0,
+          "share_of_group": 0.0,
+          "mean_conf": null
+        },
+        "0.9": {
+          "n": 1,
+          "share_of_group": 0.0052,
+          "mean_conf": 0.9682
+        },
+        "no_fire": {
+          "n": 190,
+          "share_of_group": 0.9948,
+          "mean_conf": null
+        }
+      },
+      "B": {
+        "<0.5": {
+          "n": 29,
+          "share_of_group": 0.0483,
+          "mean_conf": 0.4527
+        },
+        "0.5": {
+          "n": 42,
+          "share_of_group": 0.07,
+          "mean_conf": 0.5401
+        },
+        "0.6": {
+          "n": 42,
+          "share_of_group": 0.07,
+          "mean_conf": 0.6446
+        },
+        "0.7": {
+          "n": 51,
+          "share_of_group": 0.085,
+          "mean_conf": 0.752
+        },
+        "0.8": {
+          "n": 85,
+          "share_of_group": 0.1417,
+          "mean_conf": 0.8563
+        },
+        "0.9": {
+          "n": 327,
+          "share_of_group": 0.545,
+          "mean_conf": 0.9794
+        },
+        "no_fire": {
+          "n": 24,
+          "share_of_group": 0.04,
+          "mean_conf": null
+        }
+      }
+    },
+    "sentiment": {
+      "A": {
+        "<0.5": {
+          "n": 0,
+          "share_of_group": 0.0,
+          "mean_conf": null
+        },
+        "0.5": {
+          "n": 0,
+          "share_of_group": 0.0,
+          "mean_conf": null
+        },
+        "0.6": {
+          "n": 0,
+          "share_of_group": 0.0,
+          "mean_conf": null
+        },
+        "0.7": {
+          "n": 0,
+          "share_of_group": 0.0,
+          "mean_conf": null
+        },
+        "0.8": {
+          "n": 0,
+          "share_of_group": 0.0,
+          "mean_conf": null
+        },
+        "0.9": {
+          "n": 0,
+          "share_of_group": 0.0,
+          "mean_conf": null
+        },
+        "no_fire": {
+          "n": 149,
+          "share_of_group": 1.0,
+          "mean_conf": null
+        }
+      },
+      "B": {
+        "<0.5": {
+          "n": 52,
+          "share_of_group": 0.0972,
+          "mean_conf": 0.4551
+        },
+        "0.5": {
+          "n": 78,
+          "share_of_group": 0.1458,
+          "mean_conf": 0.5459
+        },
+        "0.6": {
+          "n": 90,
+          "share_of_group": 0.1682,
+          "mean_conf": 0.6474
+        },
+        "0.7": {
+          "n": 82,
+          "share_of_group": 0.1533,
+          "mean_conf": 0.7529
+        },
+        "0.8": {
+          "n": 77,
+          "share_of_group": 0.1439,
+          "mean_conf": 0.8553
+        },
+        "0.9": {
+          "n": 134,
+          "share_of_group": 0.2505,
+          "mean_conf": 0.9541
+        },
+        "no_fire": {
+          "n": 22,
+          "share_of_group": 0.0411,
+          "mean_conf": null
+        }
+      }
+    },
+    "relation": {
+      "A": {
+        "<0.5": {
+          "n": 0,
+          "share_of_group": 0.0,
+          "mean_conf": null
+        },
+        "0.5": {
+          "n": 3,
+          "share_of_group": 0.015,
+          "mean_conf": 0.5624
+        },
+        "0.6": {
+          "n": 0,
+          "share_of_group": 0.0,
+          "mean_conf": null
+        },
+        "0.7": {
+          "n": 1,
+          "share_of_group": 0.005,
+          "mean_conf": 0.7434
+        },
+        "0.8": {
+          "n": 2,
+          "share_of_group": 0.01,
+          "mean_conf": 0.8361
+        },
+        "0.9": {
+          "n": 160,
+          "share_of_group": 0.8,
+          "mean_conf": 0.9993
+        },
+        "no_fire": {
+          "n": 34,
+          "share_of_group": 0.17,
+          "mean_conf": null
+        }
+      },
+      "B": {
+        "<0.5": {
+          "n": 0,
+          "share_of_group": 0.0,
+          "mean_conf": null
+        },
+        "0.5": {
+          "n": 0,
+          "share_of_group": 0.0,
+          "mean_conf": null
+        },
+        "0.6": {
+          "n": 2,
+          "share_of_group": 0.0033,
+          "mean_conf": 0.6656
+        },
+        "0.7": {
+          "n": 1,
+          "share_of_group": 0.0017,
+          "mean_conf": 0.7625
+        },
+        "0.8": {
+          "n": 2,
+          "share_of_group": 0.0033,
+          "mean_conf": 0.8288
+        },
+        "0.9": {
+          "n": 454,
+          "share_of_group": 0.7567,
+          "mean_conf": 0.9993
+        },
+        "no_fire": {
+          "n": 141,
+          "share_of_group": 0.235,
+          "mean_conf": null
+        }
+      }
+    },
+    "person": {
+      "A": {
+        "<0.5": {
+          "n": 0,
+          "share_of_group": 0.0,
+          "mean_conf": null
+        },
+        "0.5": {
+          "n": 0,
+          "share_of_group": 0.0,
+          "mean_conf": null
+        },
+        "0.6": {
+          "n": 0,
+          "share_of_group": 0.0,
+          "mean_conf": null
+        },
+        "0.7": {
+          "n": 0,
+          "share_of_group": 0.0,
+          "mean_conf": null
+        },
+        "0.8": {
+          "n": 0,
+          "share_of_group": 0.0,
+          "mean_conf": null
+        },
+        "0.9": {
+          "n": 0,
+          "share_of_group": 0.0,
+          "mean_conf": null
+        },
+        "no_fire": {
+          "n": 183,
+          "share_of_group": 1.0,
+          "mean_conf": null
+        }
+      },
+      "B": {
+        "<0.5": {
+          "n": 0,
+          "share_of_group": 0.0,
+          "mean_conf": null
+        },
+        "0.5": {
+          "n": 3,
+          "share_of_group": 0.005,
+          "mean_conf": 0.5404
+        },
+        "0.6": {
+          "n": 5,
+          "share_of_group": 0.0083,
+          "mean_conf": 0.6618
+        },
+        "0.7": {
+          "n": 5,
+          "share_of_group": 0.0083,
+          "mean_conf": 0.7359
+        },
+        "0.8": {
+          "n": 7,
+          "share_of_group": 0.0117,
+          "mean_conf": 0.8583
+        },
+        "0.9": {
+          "n": 42,
+          "share_of_group": 0.07,
+          "mean_conf": 0.9763
+        },
+        "no_fire": {
+          "n": 538,
+          "share_of_group": 0.8967,
+          "mean_conf": null
+        }
+      }
+    },
+    "negation": {
+      "A": {
+        "<0.5": {
+          "n": 0,
+          "share_of_group": 0.0,
+          "mean_conf": null
+        },
+        "0.5": {
+          "n": 8,
+          "share_of_group": 0.0415,
+          "mean_conf": 0.5583
+        },
+        "0.6": {
+          "n": 2,
+          "share_of_group": 0.0104,
+          "mean_conf": 0.6485
+        },
+        "0.7": {
+          "n": 1,
+          "share_of_group": 0.0052,
+          "mean_conf": 0.7486
+        },
+        "0.8": {
+          "n": 5,
+          "share_of_group": 0.0259,
+          "mean_conf": 0.8603
+        },
+        "0.9": {
+          "n": 1,
+          "share_of_group": 0.0052,
+          "mean_conf": 0.9947
+        },
+        "no_fire": {
+          "n": 176,
+          "share_of_group": 0.9119,
+          "mean_conf": null
+        }
+      },
+      "B": {
+        "<0.5": {
+          "n": 0,
+          "share_of_group": 0.0,
+          "mean_conf": null
+        },
+        "0.5": {
+          "n": 17,
+          "share_of_group": 0.0283,
+          "mean_conf": 0.5465
+        },
+        "0.6": {
+          "n": 35,
+          "share_of_group": 0.0583,
+          "mean_conf": 0.6578
+        },
+        "0.7": {
+          "n": 45,
+          "share_of_group": 0.075,
+          "mean_conf": 0.757
+        },
+        "0.8": {
+          "n": 82,
+          "share_of_group": 0.1367,
+          "mean_conf": 0.852
+        },
+        "0.9": {
+          "n": 256,
+          "share_of_group": 0.4267,
+          "mean_conf": 0.9662
+        },
+        "no_fire": {
+          "n": 165,
+          "share_of_group": 0.275,
+          "mean_conf": null
+        }
+      }
+    }
+  },
+  "threshold_scan_EXPLORATORY": {
+    "pronoun": {
+      "t>=0.0": {
+        "fire_A": 0.0052,
+        "fire_B": 0.96
+      },
+      "t>=0.5": {
+        "fire_A": 0.0052,
+        "fire_B": 0.9117
+      },
+      "t>=0.6": {
+        "fire_A": 0.0052,
+        "fire_B": 0.8417
+      },
+      "t>=0.7": {
+        "fire_A": 0.0052,
+        "fire_B": 0.7717
+      },
+      "t>=0.8": {
+        "fire_A": 0.0052,
+        "fire_B": 0.6867
+      },
+      "t>=0.9": {
+        "fire_A": 0.0052,
+        "fire_B": 0.545
+      },
+      "t>=0.95": {
+        "fire_A": 0.0052,
+        "fire_B": 0.4517
+      },
+      "t>=0.99": {
+        "fire_A": 0.0,
+        "fire_B": 0.3233
+      }
+    },
+    "sentiment": {
+      "t>=0.0": {
+        "fire_A": 0.0,
+        "fire_B": 0.9589
+      },
+      "t>=0.5": {
+        "fire_A": 0.0,
+        "fire_B": 0.8617
+      },
+      "t>=0.6": {
+        "fire_A": 0.0,
+        "fire_B": 0.7159
+      },
+      "t>=0.7": {
+        "fire_A": 0.0,
+        "fire_B": 0.5477
+      },
+      "t>=0.8": {
+        "fire_A": 0.0,
+        "fire_B": 0.3944
+      },
+      "t>=0.9": {
+        "fire_A": 0.0,
+        "fire_B": 0.2505
+      },
+      "t>=0.95": {
+        "fire_A": 0.0,
+        "fire_B": 0.1495
+      },
+      "t>=0.99": {
+        "fire_A": 0.0,
+        "fire_B": 0.0131
+      }
+    },
+    "relation": {
+      "t>=0.0": {
+        "fire_A": 0.83,
+        "fire_B": 0.765
+      },
+      "t>=0.5": {
+        "fire_A": 0.83,
+        "fire_B": 0.765
+      },
+      "t>=0.6": {
+        "fire_A": 0.815,
+        "fire_B": 0.765
+      },
+      "t>=0.7": {
+        "fire_A": 0.815,
+        "fire_B": 0.7617
+      },
+      "t>=0.8": {
+        "fire_A": 0.81,
+        "fire_B": 0.76
+      },
+      "t>=0.9": {
+        "fire_A": 0.8,
+        "fire_B": 0.7567
+      },
+      "t>=0.95": {
+        "fire_A": 0.8,
+        "fire_B": 0.755
+      },
+      "t>=0.99": {
+        "fire_A": 0.795,
+        "fire_B": 0.7533
+      }
+    },
+    "person": {
+      "t>=0.0": {
+        "fire_A": 0.0,
+        "fire_B": 0.1033
+      },
+      "t>=0.5": {
+        "fire_A": 0.0,
+        "fire_B": 0.1033
+      },
+      "t>=0.6": {
+        "fire_A": 0.0,
+        "fire_B": 0.0983
+      },
+      "t>=0.7": {
+        "fire_A": 0.0,
+        "fire_B": 0.09
+      },
+      "t>=0.8": {
+        "fire_A": 0.0,
+        "fire_B": 0.0817
+      },
+      "t>=0.9": {
+        "fire_A": 0.0,
+        "fire_B": 0.07
+      },
+      "t>=0.95": {
+        "fire_A": 0.0,
+        "fire_B": 0.0633
+      },
+      "t>=0.99": {
+        "fire_A": 0.0,
+        "fire_B": 0.0183
+      }
+    },
+    "negation": {
+      "t>=0.0": {
+        "fire_A": 0.0881,
+        "fire_B": 0.725
+      },
+      "t>=0.5": {
+        "fire_A": 0.0881,
+        "fire_B": 0.725
+      },
+      "t>=0.6": {
+        "fire_A": 0.0466,
+        "fire_B": 0.6967
+      },
+      "t>=0.7": {
+        "fire_A": 0.0363,
+        "fire_B": 0.6383
+      },
+      "t>=0.8": {
+        "fire_A": 0.0311,
+        "fire_B": 0.5633
+      },
+      "t>=0.9": {
+        "fire_A": 0.0052,
+        "fire_B": 0.4267
+      },
+      "t>=0.95": {
+        "fire_A": 0.0052,
+        "fire_B": 0.2983
+      },
+      "t>=0.99": {
+        "fire_A": 0.0052,
+        "fire_B": 0.145
+      }
+    }
+  },
+  "verdict": "证据不足",
+  "elapsed_sec": 58.8
+}
