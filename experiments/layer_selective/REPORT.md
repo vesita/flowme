@@ -96,7 +96,7 @@ uv run python experiments/layer_selective/selftest.py                       # 01
 systemd-run --user --unit=dtseek-ls-smoke --collect --property=WorkingDirectory=/home/vesita/coding/my/DTSeek \
   --setenv=HSA_OVERRIDE_GFX_VERSION=10.3.0 --setenv=PYTHONUNBUFFERED=1 --setenv=PYTHONDONTWRITEBYTECODE=1 \
   bash experiments/layer_selective/run_all.sh smoke    # ALL 100 步探跑：loss/drift/eval 与 core_select_only 100 步探跑逐位相同
-systemd-run --user --unit=dtseek-ls-real ... run_all.sh real   # 五臂 × 2 seed 真标签（01:16:01 → 01:26:xx）
+systemd-run --user --unit=dtseek-ls-real ... run_all.sh real   # 五臂 × 2 seed 真标签（01:16:01 → 01:24:22）
 systemd-run --user --unit=dtseek-ls-rand ... run_all.sh rand   # 五臂 × 2 seed 随机标签（→ 01:35:25 ALL DONE）
 uv run python experiments/layer_selective/analyze.py                      # X0–X5 + 判定 → results/summary.json
 ```
@@ -106,6 +106,9 @@ uv run python experiments/layer_selective/analyze.py                      # X0�
   `dtseek-ls-rand.service`（inv `4d364b27…`，→01:35:25 ALL DONE，8min27.2s 墙 / 12min55s CPU / 6.3G / swap 1.4G）；均 `--collect` + `PYTHONUNBUFFERED=1` + `PYTHONDONTWRITEBYTECODE=1`，**无 `setsid nohup`**；开训前查过 `ps` 与 `systemctl --user is-active 'dtseek*'`（空闲），**未杀任何进程**。
 - **日志**：`logs/layer_selective_{F,ALL,EMB,TOP,ADPT}_s{42,43}[_rand].log`（20）+ `layer_selective_selftest.log` + `layer_selective_analyze.log`；单元 stdout 在 `journalctl --user -u dtseek-ls-*`。
 - **产物**：`experiments/layer_selective/results/*.json`（10 主跑 + 10 rand + 1 探跑 + `selftest.json` + **`summary.json`（X0–X5 + 判定）**）、`weights/*.pt`（21）。
+- **判据常量同源（实测）**：`PREREG.md` mtime 01:08:22 早于自检 01:13:48 与全量首跑 01:16:01；
+  `analyze.py`（判据的**实现**）落盘 01:16:59，其中 X0 目标 / 四带 / 52.83 逐字来自 PREREG §3（18 个常量 grep 对账 18/18 一致），
+  X1/X3 门槛由 `ALL − 2×SE` / `F − 2×SE` 现算 ⇒ 70.7716 / 65.5716 / 89.7316 / 89.6516，与 PREREG 写死的 70.77 / 65.57 / 89.73 / 89.65 一致；**跑后未改门槛**。
 - **只读自证（实测）**：数据 md5 跑前跑后一致；`run_all.sh` 内 `find -newermt PREREG` 对 `select_rerank/select_pool/select_semantic_joint/core_select_only/capability_map/src/training/tests` 的命中**全部来自其它会话**（`src/dtseek/tasks/render.py`、`tests/test_render.py`、`dev-notes/20-*.md`、他人 `__pycache__`），本代理写入仅限 `experiments/layer_selective/`、`logs/layer_selective_*`、`/tmp`；`git status` 只见新增未跟踪目录；**本代理未执行任何 git 写操作**（commit/stash/checkout/restore/clean 均未跑）。
 
 **遗留与不确定（实测 / 推断分开）**：
