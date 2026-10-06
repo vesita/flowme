@@ -176,7 +176,8 @@ class MultiTaskEngine:
             anchors.append({
                 "step": step + 1,
                 "class_id": pred_cls,
-                "category": classes[pred_cls].display,
+                "class_name": classes[pred_cls].name,
+                "display": classes[pred_cls].display,
                 "color": classes[pred_cls].color,
                 "confidence": round(float(cls_prob[pred_cls].item()), 4),
                 "local_s0": s0,

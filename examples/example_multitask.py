@@ -32,7 +32,7 @@ def show(engine: MultiTaskEngine, line: str, tasks: list[str] | None = None):
             snip = res["text"][a["s0"]:a["e0"] + 1]
             pair = f" 第{a['pair_index']}对·{a['pair_side']}" if "pair_index" in a else ""
             print(f"  Step {a['step']}: {a['color']}[{a['s0']+1}:{a['e0']+1}]{RESET} "
-                  f"{a['category']:12s} 置信度={a['confidence']:.3f} "
+                  f"{a['display']:12s} 置信度={a['confidence']:.3f} "
                   f"'{snip}' {a['next_action']}{pair}")
     print()
 

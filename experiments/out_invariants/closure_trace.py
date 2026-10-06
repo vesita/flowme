@@ -136,7 +136,8 @@ def main() -> int:
     combo3 = {
         "text": TEXT3,
         "sentiment_锚点": s3, "negation_锚点": n3,
-        "card_display_label": [a["category"] for a in s3],
+        "card_class_name": [a["class_name"] for a in s3],
+        "card_display_label": [a["display"] for a in s3],
         "flip_rule()_默认 apply_to": list(flip_rule()["apply_to"]),
         "pair_默认规则（引擎原始标签）": pair(to_items(s3), to_items(n3), flip_rule(),
                                              mode="adjacent", window=8, clause=True, text=TEXT3),
@@ -146,7 +147,10 @@ def main() -> int:
         "pair_调用方先 norm() 再喂": pair(norm(to_items(s3)), norm(to_items(n3)), flip_rule(),
                                           mode="adjacent", window=8, clause=True, text=TEXT3),
     }
-    closure["组合真实调用3_标签不同源"] = combo3
+    # category→class_name 契约修正后：to_items 默认已取规范名 ⇒ 变体1 直接生效，
+    # norm() 成 no-op ⇒ 变体3 与变体1 相同；而变体2 的旧写法 apply_to=("积极/喜悦",)
+    # 从此**永不匹配** —— 它正是那个"静默失效的旧补丁"，保留在此作为对照。
+    closure["组合真实调用3_契约修正后"] = combo3
 
     closure["组合真实调用2_同分句否定"] = combo2
 

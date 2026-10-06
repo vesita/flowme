@@ -790,7 +790,18 @@
     }
   },
   "p3_shape": "减速/收敛",
-  "cost_overrun": false,
+  "cost_overrun": true,
+  "cost_detail": {
+    "sec_growth_vs_step1@step3": [
+      1.4499,
+      1.2453
+    ],
+    "mem_growth_vs_step1@step3": [
+      1.2164,
+      1.2141
+    ]
+  },
+  "p1_two_all": false,
   "verdict": "流程可反复用",
   "why": {},
   "missing": [],

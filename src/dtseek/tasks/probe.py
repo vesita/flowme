@@ -118,9 +118,9 @@ def run_probe(engine: MultiTaskEngine, task: str,
             failures.append({
                 "key": case["key"], "carrier": case["carrier"], "text": case["text"],
                 "want": want, "want_name": spec.classes[want].display,
-                "got_names": [a["category"] for a in anchors] or ["（未触发）"],
+                "got_names": [a["class_name"] for a in anchors] or ["（未触发）"],
                 "expected": [f"{w}[{s}:{e}]" for w, s, e in expected_spans],
-                "got": [f"{a['category']}[{a['s0']}:{a['e0']}]" for a in anchors],
+                "got": [f"{a['class_name']}[{a['s0']}:{a['e0']}]" for a in anchors],
                 "ok_class": cls_ok, "ok_span": span_ok,
             })
 

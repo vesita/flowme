@@ -170,6 +170,7 @@
   }
  },
  "cards": {
+  "base": "/home/vesita/coding/my/DTSeek/checkpoints/base_encoder.pt",
   "sentiment": "/home/vesita/coding/my/DTSeek/checkpoints/cards/sentiment.pt",
   "negation": "/home/vesita/coding/my/DTSeek/checkpoints/negation_accept_card.pt"
  }

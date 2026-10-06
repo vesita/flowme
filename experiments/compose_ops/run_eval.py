@@ -55,16 +55,11 @@ def overlap(a: dict, b: tuple[int, int]) -> bool:
     return a["start"] <= b[1] and b[0] <= a["end"]
 
 
-def norm(items: list[dict]) -> list[dict]:
-    """卡片的 display 名带副标题（“积极/喜悦”），规则与标注都用规范名 → 截首段。"""
-    return [{**i, "label": i["label"].split("/", 1)[0]} for i in items]
-
-
 def run_case(eng: MultiTaskEngine, case: dict) -> dict:
     text = case["text"]
     res = eng.predict(text, tasks=["sentiment", "negation"])
-    sent = norm(to_items(res["tasks"].get("sentiment", [])))
-    neg = norm(to_items(res["tasks"].get("negation", [])))
+    sent = to_items(res["tasks"].get("sentiment", []))
+    neg = to_items(res["tasks"].get("negation", []))
     cue = (case["cue_start"], case["cue_end"])
 
     kept = filter(sent, neg, mode="adjacent", window=WINDOW, clause=True,

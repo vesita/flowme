@@ -150,7 +150,7 @@ def main() -> int:
                 anchors = r1["tasks"][k]
                 out.append({"text": t, "fire": fire(anchors), "n": len(anchors),
                             "max_conf": max((a["confidence"] for a in anchors), default=None),
-                            "cats": sorted({a["category"] for a in anchors})})
+                            "cats": sorted({a["class_name"] for a in anchors})})
             rows[k][gname] = out
 
     # ---- 汇总 -------------------------------------------------------------

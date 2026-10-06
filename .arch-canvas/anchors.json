@@ -16,5 +16,14 @@
       "scripts/ab_test_ndb.py": "6061:qmzzkn"
     },
     "at": 1790510659744
+  },
+  "framework.mmd": {
+    "refs": {
+      "experiments/cumulative_add/train_cumulative.py": "23222:1ljmx6b",
+      "experiments/core_keep/train_core_keep.py": "22786:1hvv1e3",
+      "src/dtseek/decoder/robust_ar_model.py": "4167:7bqnqu",
+      "src/dtseek/tasks/plugin.py": "14430:675la2"
+    },
+    "at": 1791260797778
   }
 }

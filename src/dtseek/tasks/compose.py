@@ -66,7 +66,7 @@ NEGATED_CLASS: dict[str, str] = {
 # ---------------------------------------------------------------------------
 # 基础：结构转换 / 距离 / 分句
 # ---------------------------------------------------------------------------
-def to_items(anchors: list[dict], *, label_key: str = "category",
+def to_items(anchors: list[dict], *, label_key: str = "class_name",
              start_key: str = "s0", end_key: str = "e0",
              score_key: str = "confidence") -> list[dict]:
     """引擎锚点（或任何同名结构）→ 算子用的 item 列表。空输入 → 空列表。"""

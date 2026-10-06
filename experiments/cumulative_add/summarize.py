@@ -187,12 +187,21 @@ def main(argv=None) -> int:
     res["p3_shape"] = shape
 
     # 代价失控（PREREG：相对步 1 增长 >20%，两 seed 同号）
-    def _cost_bad(s: str) -> bool:
-        vals = list(res["p3"][str(s)]["sec_growth_vs_step1"].values()) + \
-               list(res["p3"][str(s)]["mem_growth_vs_step1"].values())
-        return len(vals) > 0 and all(g is not None and g > 1.20 for g in vals)
-    cost_bad = all(_cost_bad(s) for s in SEEDS)
+    # PREREG §4 P3 写死：步时 **或** 峰值显存，某一步相对步 1 增长 >20% 且两 seed 同号
+    cost_bad, cost_detail = False, {}
+    for kind in ("sec_growth_vs_step1", "mem_growth_vs_step1"):
+        for i in (2, 3):
+            vals = [res["p3"][str(s)][kind].get(i) for s in SEEDS]
+            if all(v is not None and v > 1.20 for v in vals):
+                cost_bad = True
+                cost_detail[f"{kind}@step{i}"] = [round(v, 4) for v in vals]
     res["cost_overrun"] = bool(cost_bad)
+    res["cost_detail"] = cost_detail
+    # 双侧读法（§14：字面 |Δ| ≤ 带，与单侧并列报）
+    res["p1_two_all"] = all(
+        res["seeds"][str(s)]["steps"].get(str(step), {}).get("p1_pass_two_side", False)
+        for s in SEEDS for step in (1, 2, 3)
+        if str(step) in res["seeds"][str(s)]["steps"])
 
     # ---------------- 判定 ----------------
     if missing or gate_fail:
@@ -276,7 +285,9 @@ def main(argv=None) -> int:
                   f"{'—' if dl is None else f'{dl:.4f}'} | {st['params_trainable']:,} |")
 
     print(f"\n漂移形状（δ2 vs δ3，两 seed 同号）：{res['p3_shape']}")
-    print(f"代价失控（>20%×步1，两 seed 同号）：{res['cost_overrun']}")
+    print(f"代价失控（步时或峰值显存 >20%×步1，两 seed 同号）：{res['cost_overrun']} "
+          f"{json.dumps(res.get('cost_detail', {}), ensure_ascii=False)}")
+    print(f"P1 双侧读法（|Δ|≤带，§14 次读法）：{res['p1_two_all']}")
     print(f"P1={res['p1_all']} P2={res['p2_all']} gate_fail={gate_fail} missing={missing}")
     print(f"\n### 判定：{verdict}")
     if why:

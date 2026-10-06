@@ -1,0 +1,84 @@
+%% arch-canvas —— 由「架构画布」面板与 AI 共同维护（`%%!` 开头的是格式说明，不是图的内容）
+%%! @summary <一句话> 这张图讲的是什么 —— 会随每一步注入给 AI
+%%! @pos <节点id> <x> <y> 是画布坐标注释，@link <节点id> <图名> 是下钻到另一张图
+%%! @file <节点id> <路径> 是这个节点对应的源码文件（可带 #符号），一个节点可多条
+%%! 以上对 Mermaid 渲染都无任何影响，可忽略或手改
+%% @summary "DTSeek 基本框架：冷启动训核 → 温启动联合加卡；语言输出卡：有限 MDP 决策机 + 按卡选型的指针/生成输出"
+%% @file gate "experiments/cumulative_add/train_cumulative.py"
+%% @file joint "experiments/core_keep/train_core_keep.py"
+%% @file ptr "src/dtseek/decoder/robust_ar_model.py"
+%% @file rec "src/dtseek/tasks/plugin.py"
+flowchart TD
+  subgraph s1["阶段一 · 冷启动"]
+    core["共享认知核 base_encoder"]
+    heads["各卡的头<br/>在**冻结核**上单独训"]
+    cost1["代价：核冻结 ⇒ 各卡上限被核锁住<br/>单任务训练会把核训窄（迁移 −6.7~−22.7pt）"]
+  end
+  subgraph s2["阶段二 · 温启动联合（基本框架）"]
+    init["起点：核←已训核<br/>老头←各已收敛卡<br/>新头←随机"]
+    gate{"门禁：已有卡的<br/>pred/exact 逐位不变？"}
+    joint["旧任务 + 新任务**同批梯度**<br/>核可训；老头冻结最省且持平"]
+    outck["产出：升级后的核 + 全部头<br/>**版本化**"]
+    void["该步作废（权重没接对）"]
+  end
+  subgraph ev["实测"]
+    e1["老卡 Δ 全部 ≥0（sentiment +12pt）"]
+    e2["新卡 negation 0.937~0.982"]
+    e3["老头一步不训也涨 +12pt ⇒ 增益来自核"]
+    e4["三步连加：30/30 不退化、漂移减速累积"]
+    e5["❌ 从头联合 −8~−16pt；❌ 蒸馏/replay 负资产"]
+  end
+  subgraph plan["调度层 · 显式、不训练"]
+    inp["输入：调用方声明 type<br/>模型判不了（对抗集 29.78% #60; 多数类 60%）"]
+    rule["规则表：type → 调用计划 Plan<br/>同一输入计划逐字可复现"]
+    mdp["决策机 = 有限 MDP（手写状态机）<br/>**手写**：state / action 空间 + 规则策略<br/>**经验估**：转移概率 P(s'|s,a) ← 卡的实际输出<br/>**可判代理**：奖励 = 组合增益/证据覆盖/拒答正确/调用成本<br/>状态必须“算出来”不能“模型判出来”；OOD 不可估 ⇒ 先由调用方声明 type 挡住"]
+  end
+  subgraph cards["卡片层"]
+    old["现有 tagging 卡<br/>pronoun sentiment relation person<br/>negation idiom ownership"]
+    add["要补的卡<br/>意图/言语行为 · 槽位抽取<br/>安全拒答 · 事实一致性"]
+    dead["❌ 选择族当前不可用<br/>reply_pick / cloze_fill 与盲猜不可区分"]
+  end
+  subgraph outm["输出层"]
+    ptr["指针型：发射**区间**<br/>分析与分类首选 · 结构性零幻觉 · 受输入限制"]
+    gen["生成型：发射**字**<br/>回复与改写首选 · 必须带 evidence"]
+    rec["统一记录<br/>{kind, text, evidence, plan_step_id}"]
+    sel["按卡选型，不是全局二选一<br/>两者不冲突：同一记录用 kind 区分"]
+  end
+  subgraph inv["不变量 · 实测状态"]
+    i1["元决策不交给模型<br/>路由 9.19% / 类型 29.78% / 拒答 ~96% 误开火"]
+    i2["闭合性 ❌　可溯源 ❌　拒答 ❌　确定性 ✅"]
+    i3["加卡判据：老卡 pred/exact 逐位一致<br/>（不是 logits 逐位：ROCm 有 1e-6 级不确定性）"]
+    consume["跨型消费规则<br/>指针型输出可被任何下游消费<br/>生成型输出必须带 evidence 才可被下游消费"]
+  end
+  s1["s1"]
+  s2["s2"]
+  plan["plan"]
+  cards["cards"]
+  outm["outm"]
+  inv["inv"]
+  core --> heads
+  heads -.-> cost1
+  init --> gate
+  gate -->|"是"| joint
+  gate -->|"否"| void
+  joint --> outck
+  outck -.->|"下一步加卡"| init
+  s1 --> s2
+  joint -.-> e1
+  joint -.-> e2
+  joint -.-> e3
+  joint -.-> e4
+  joint -.-> e5
+  inp --> rule
+  s2 --> plan
+  rule --> cards
+  ptr --> rec
+  gen --> rec
+  cards --> outm
+  inv -.-> outm
+  inv -.-> plan
+  rule --> mdp
+  mdp --> cards
+  ptr --> sel
+  gen --> sel
+  consume -.-> sel

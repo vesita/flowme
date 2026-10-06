@@ -15,7 +15,11 @@
         "n": 6,
         "type": "int"
       },
-      "category": {
+      "class_name": {
+        "n": 6,
+        "type": "str"
+      },
+      "display": {
         "n": 6,
         "type": "str"
       },
@@ -123,10 +127,11 @@
   },
   "closure": {
     "引擎锚点键": [
-      "category",
       "class_id",
+      "class_name",
       "color",
       "confidence",
+      "display",
       "e0",
       "local_e0",
       "local_s0",
@@ -151,8 +156,8 @@
     ],
     "回喂 to_items（算子产物→适配器）": {
       "ok": false,
-      "error": "KeyError: 'category'",
-      "traceback_last": "KeyError: 'category'"
+      "error": "KeyError: 'class_name'",
+      "traceback_last": "KeyError: 'class_name'"
     },
     "回喂 filter（算子产物→算子）": {
       "ok": true,
@@ -170,7 +175,7 @@
       "ok": true,
       "result": [
         {
-          "label": "愤怒/不满",
+          "label": "愤怒",
           "start": 9,
           "end": 10,
           "score": 0.431
@@ -195,8 +200,8 @@
     },
     "decide(算子产物)": {
       "ok": true,
-      "result": "愤怒/不满",
-      "len": 5
+      "result": "愤怒",
+      "len": 2
     },
     "组合真实调用": {
       "text": "这个方案不难，我很喜欢，他没有反对。",
@@ -204,7 +209,8 @@
         {
           "step": 1,
           "class_id": 2,
-          "category": "愤怒/不满",
+          "class_name": "愤怒",
+          "display": "愤怒/不满",
           "color": "\u001b[1;91;40m",
           "confidence": 0.431,
           "local_s0": 9,
@@ -218,7 +224,8 @@
         {
           "step": 1,
           "class_id": 1,
-          "category": "否定",
+          "class_name": "否定",
+          "display": "否定",
           "color": "\u001b[1;95;40m",
           "confidence": 0.9965,
           "local_s0": 13,
@@ -230,7 +237,7 @@
       ],
       "to_items(sentiment)": [
         {
-          "label": "愤怒/不满",
+          "label": "愤怒",
           "start": 9,
           "end": 10,
           "score": 0.431
@@ -238,22 +245,23 @@
       ],
       "pair(sentiment, negation, flip)": [
         {
-          "label": "愤怒/不满",
+          "label": "愤怒",
           "start": 9,
           "end": 10,
           "score": 0.431
         }
       ],
       "filter(sentiment, negation, overlap)": [],
-      "句级结论": "愤怒/不满"
+      "句级结论": "愤怒"
     },
-    "组合真实调用3_标签不同源": {
+    "组合真实调用3_契约修正后": {
       "text": "我一点也不欣赏他的做法。",
       "sentiment_锚点": [
         {
           "step": 1,
           "class_id": 1,
-          "category": "积极/喜悦",
+          "class_name": "积极",
+          "display": "积极/喜悦",
           "color": "\u001b[1;92;40m",
           "confidence": 0.8844,
           "local_s0": 4,
@@ -267,7 +275,8 @@
         {
           "step": 1,
           "class_id": 1,
-          "category": "否定",
+          "class_name": "否定",
+          "display": "否定",
           "color": "\u001b[1;95;40m",
           "confidence": 0.982,
           "local_s0": 0,
@@ -277,6 +286,9 @@
           "e0": 1
         }
       ],
+      "card_class_name": [
+        "积极"
+      ],
       "card_display_label": [
         "积极/喜悦"
       ],
@@ -285,7 +297,7 @@
       ],
       "pair_默认规则（引擎原始标签）": [
         {
-          "label": "积极/喜悦",
+          "label": "愤怒",
           "start": 4,
           "end": 6,
           "score": 0.8844
@@ -293,7 +305,7 @@
       ],
       "pair_显式 apply_to=积极/喜悦": [
         {
-          "label": "愤怒",
+          "label": "积极",
           "start": 4,
           "end": 6,
           "score": 0.8844
@@ -314,7 +326,8 @@
         {
           "step": 1,
           "class_id": 2,
-          "category": "愤怒/不满",
+          "class_name": "愤怒",
+          "display": "愤怒/不满",
           "color": "\u001b[1;91;40m",
           "confidence": 0.686,
           "local_s0": 1,
@@ -328,7 +341,8 @@
         {
           "step": 1,
           "class_id": 1,
-          "category": "否定",
+          "class_name": "否定",
+          "display": "否定",
           "color": "\u001b[1;95;40m",
           "confidence": 0.9941,
           "local_s0": 1,
@@ -340,7 +354,7 @@
       ],
       "to_items(sentiment)": [
         {
-          "label": "愤怒/不满",
+          "label": "愤怒",
           "start": 1,
           "end": 3,
           "score": 0.686
@@ -348,7 +362,7 @@
       ],
       "pair(带 clause=True)": [
         {
-          "label": "愤怒/不满",
+          "label": "愤怒",
           "start": 1,
           "end": 3,
           "score": 0.686
@@ -356,7 +370,7 @@
       ],
       "pair(不带 clause)": [
         {
-          "label": "愤怒/不满",
+          "label": "愤怒",
           "start": 1,
           "end": 3,
           "score": 0.686
@@ -370,7 +384,7 @@
           "score": 0.9941
         }
       ],
-      "decide": "愤怒/不满"
+      "decide": "愤怒"
     }
   },
   "trace": {
@@ -380,10 +394,11 @@
       "text"
     ],
     "锚点键": [
-      "category",
       "class_id",
+      "class_name",
       "color",
       "confidence",
+      "display",
       "e0",
       "local_e0",
       "local_s0",
@@ -422,10 +437,11 @@
       ]
     },
     "锚点里有的字段": [
-      "category",
       "class_id",
+      "class_name",
       "color",
       "confidence",
+      "display",
       "e0",
       "local_e0",
       "local_s0",

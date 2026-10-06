@@ -1,5 +1,5 @@
 {
-  "note": "任务卡插件化重构的等价性基线：不得改动下面任何一项。2026-09-28 更新：语料入口修复（clean_v3）与 relation 任务背景池语体分布修复（跨文件均匀轮转 + fail-closed 门禁拦截英文代码污染）。",
+  "note": "任务卡插件化重构的等价性基线：不得改动下面任何一项。2026-09-28 更新：语料入口修复（clean_v3）与 relation 任务背景池语体分布修复（跨文件均匀轮转 + fail-closed 门禁拦截英文代码污染）。 2026-10-06：锚点类别字段 category → class_name（规范名）+ display，契约级修正",
   "hidden_dim": 64,
   "max_steps": 4,
   "task_specs": {
