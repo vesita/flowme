@@ -59,11 +59,17 @@ DATA = HERE / "data"
 SPLIT_SEED = 20240927
 
 #: 提案臂源句池 / 行数目标（PREREG §3）
-POOL_N = {"train": 12000, "test": 3000, "adv": 2500}
+#: 池规模是供给参数：PREREG 原值 train 12000 / test 3000，实测 punct_edge 分层供给不足
+#: （train 池 12000 句只产 292 条，配额要 400；test 池 3000 句产 91 条，配额要 80），
+#: 按「保构造语义与判据、只调供给」改为 train 20000 / test 4000（adv 2500 不变）。
+#: 集规模 N_ROWS、负例配额 NEG_QUOTA/ADV_QUOTA、D1–D6/P1–P3 判据均未动。
+POOL_N = {"train": 20000, "test": 4000, "adv": 2500}
 N_ROWS = {"train": 8000, "test": 1600, "adv": 1200}
 #: 注入对照臂源句池（每句 1 正 + 1 负 ⇒ 行数 = 池 × 2；不足则从溢出池补齐，仍与提案池不相交）
 CTRL_POOL_N = {"train": 4000, "test": 800, "adv": 600}
-OVERFLOW_N = 3000
+#: 溢出池（供给缓冲，只补不减）：注入臂三集共用。实测对抗集正例=同义改写在
+#: 600+3000 句上只产 602 条（要 600，贴边），原值 OVERFLOW_N=3000 → 8000 留余量。
+OVERFLOW_N = 8000
 
 #: 负例分层配额（PREREG §3）
 NEG_QUOTA = {"neural_err": 0.40, "crosscat": 0.25, "boundary": 0.15,
@@ -490,12 +496,21 @@ def make_row(split: str, idx: int, sent: str, full: str, c: dict, s: int, e: int
 # ---------------------------------------------------------------------------
 # 提案臂：一个池 → 提案 → P1 准入 → P2–P5 打标 → 配额下采样
 # ---------------------------------------------------------------------------
+_ROW_TOK = NanoCharTokenizer()
+
+
+def row_too_long(text: str, max_len: int = MAX_LEN) -> bool:
+    """逐行截断守卫（与训练同口径 encode）：编码后长度 > max_len ⇒ 会静默截断，该行不进池。"""
+    return len(_ROW_TOK.encode(text, max_length=max_len + 64, padding=False)["input_ids"]) > max_len
+
+
 def build_pool(name: str, pool: list[str], neural_all: list[list[tuple[int, int, str]]],
                n_pos: int, n_neg: int, quota: dict[str, float],
                kinds: list[str], rng: random.Random) -> tuple[list[dict], dict]:
     admitted: list[dict] = []
     n_proposed = n_p1 = 0
     n_p1_drop = n_relocate_drop = 0
+    n_trunc_drop = 0
     for si, sent in enumerate(pool):
         gold = gold_of(sent)
         if not gold:
@@ -519,7 +534,26 @@ def build_pool(name: str, pool: list[str], neural_all: list[list[tuple[int, int,
                 continue
             n_p1 += 1
             lab, preds = label_of(full, c["text"], ns, ne, c["cat"], gold_full)
-            admitted.append(make_row(name, 0, sent, full, c, ns, ne, lab, preds, ops))
+            row = make_row(name, 0, sent, full, c, ns, ne, lab, preds, ops)
+            if row_too_long(row["text"]):
+                n_trunc_drop += 1       # 截断守卫：进训练会被截断的行直接丢弃（计数上报）
+                continue
+            admitted.append(row)
+
+    # 行文本去重：同一句里两个同文同类别候选（如「他说他很累」的两个「他」）会渲染成
+    # 同一行文本 ⇒ 训练里就是同一条样本重复。先查标签是否冲突（冲突 = 数据缺陷，抛错），
+    # 再保留首条。相同文本而标签不同的情形在此 fail-closed。
+    by_text: dict[str, dict] = {}
+    n_dup_drop = 0
+    for r in admitted:
+        prev = by_text.get(r["text"])
+        if prev is None:
+            by_text[r["text"]] = r
+            continue
+        check(prev["label"] == r["label"],
+              f"{name} 同文本标签冲突：{r['id']} label={prev['label']}≠{r['label']}")
+        n_dup_drop += 1
+    admitted = list(by_text.values())
 
     pos = [r for r in admitted if r["label"] == 1]
     neg = [r for r in admitted if r["label"] == 0]
@@ -554,6 +588,8 @@ def build_pool(name: str, pool: list[str], neural_all: list[list[tuple[int, int,
         "p1_dropped_not_in_full": n_relocate_drop,
         "p1_admitted": n_p1,
         "p1_admit_rate": round(n_p1 / max(1, n_proposed), 4),
+        "trunc_dropped": n_trunc_drop,
+        "dup_dropped": n_dup_drop,
         "pool_pos": len(pos), "pool_neg": len(neg),
         "accept_rate": round(len(pos) / max(1, len(pos) + len(neg)), 4),
         "neg_kept_by_kind": dict(Counter(r["kind"] for r in neg_rows)),
@@ -623,6 +659,18 @@ def perturb(frag: str, full: str, rule: str, rng: random.Random) -> tuple[str, s
 
 
 def _perturb_once(frag: str, full: str, rule: str, rng: random.Random) -> str | None:
+    if rule == "paraphrase":
+        # 对抗集正例：同义改写（复刻 anchored_select.rule_paraphrase 的口径 ——
+        # 换入词与换出词都不得出现在上下文里，语义等价 = 口径判断，人工给定 SYN 表）
+        order = list(SYN)
+        rng.shuffle(order)
+        for a, b in order:
+            for x, y in ((a, b), (b, a)):
+                if x in frag:
+                    out = frag.replace(x, y, 1)
+                    if out != frag and out not in full and y not in full:
+                        return out
+        return None
     if rule == "word_swap":
         for p in range(0, max(1, len(frag) - 1)):
             cands = [w for w in WORD_BANK if w not in full and w not in frag]
@@ -667,14 +715,21 @@ def _perturb_once(frag: str, full: str, rule: str, rng: random.Random) -> str | 
 
 
 def build_ctrl(name: str, sent_iter, cats: list[str], rng: random.Random,
-               adv: bool, target: int) -> list[dict]:
-    """注入对照臂：每句 1 正（逐字片段 / 对抗集=同义改写）+ 1 负（注入扰动）。"""
+               adv: bool, target: int, used: set[str]) -> tuple[list[dict], int]:
+    """注入对照臂：每句 1 正（逐字片段 / 对抗集=同义改写）+ 1 负（注入扰动）。
+
+    `used` 是三集共用的已用源句集合 —— 溢出池被三集共用，不加去重会让
+    ctrl 三集之间出现同输入句（PREREG §3「构建后实测输入句两两重叠任一非 0 ⇒ 抛错」）。
+    返回 (行, 截断守卫丢弃的句子数)。
+    """
     rows: list[dict] = []
-    neg_rules = ["reorder", "unrelated"] if adv else ["word_swap", "antonym", "unrelated"]
+    # 对抗集负例只用 reorder（anchored_select 对抗集 = 同义改写正 + 同词表换位置负）
+    neg_rules = ["reorder"] if adv else ["word_swap", "antonym", "unrelated"]
     pos_rule = "paraphrase" if adv else "verbatim"
     n_target = target // 2
     cat_ptr = 0
     guard = 0
+    n_trunc_drop = 0
     while len(rows) < target:
         guard += 1
         if guard > target * 40:
@@ -682,21 +737,33 @@ def build_ctrl(name: str, sent_iter, cats: list[str], rng: random.Random,
         sent = next(sent_iter, None)
         if sent is None:
             break
+        if sent in used:              # 溢出池三集共用：同源句只准一个集用
+            continue
         full, ops, _ = restructure(sent, rng)
-        fp = pick_fragment(full, rng)
+        # 对抗集：正例要撞上 SYN 词、负例 reorder 要 ≥10 字 ⇒ 同句多试几个窗口；
+        # 普通集正例 = 逐字片段，一个窗口即可。
+        fp: tuple[int, int] | None = None
+        ptxt: str | None = None
+        pos_actual: str | None = None
+        for _ in range(8 if adv else 1):
+            cand_fp = pick_fragment(full, rng, 10 if adv else 8, 18)
+            if cand_fp is None:
+                break
+            fs, fe = cand_fp
+            frag = full[fs:fe]
+            if not adv:
+                fp, ptxt, pos_actual = cand_fp, frag, "verbatim"
+                break
+            out = _perturb_once(frag, full, "paraphrase", rng)   # 不做回退：非同义改写不算正例
+            if out is not None:
+                fp, ptxt, pos_actual = cand_fp, out, "paraphrase"
+                break
         if fp is None:
             continue
         fs, fe = fp
         frag = full[fs:fe]
-        if adv:
-            got = perturb(frag, full, "paraphrase", rng)
-            if got is None:
-                continue
-            ptxt, pos_actual = got, "paraphrase"
-            if ptxt in full:                       # 对抗集正例 = 改写，逐字片段不算
-                continue
-        else:
-            ptxt, pos_actual = frag, "verbatim"
+        if adv and (ptxt is None or ptxt in full):   # 对抗集正例 = 改写，逐字片段不算
+            continue
         neg_rule = neg_rules[len(rows) // 2 % len(neg_rules)]
         got = perturb(frag, full, neg_rule, rng)
         if got is None:
@@ -706,9 +773,10 @@ def build_ctrl(name: str, sent_iter, cats: list[str], rng: random.Random,
         neg_ok = ntxt not in full
         if not pos_ok or not neg_ok:
             continue
+        pair: list[dict] = []
         for (txt, lab, rul) in ((ptxt, 1, pos_actual), (ntxt, 0, neg_actual)):
             ps, pe = cand_field_pos(full, txt)
-            rows.append({
+            pair.append({
                 "id": f"{name}-{len(rows):05d}", "split": name, "label": lab,
                 "source": "injected", "kind": rul, "preds": {},
                 "input": sent, "full": full, "candidate": txt,
@@ -719,11 +787,16 @@ def build_ctrl(name: str, sent_iter, cats: list[str], rng: random.Random,
                 "lex_match": txt in full,
             })
             cat_ptr += 1
+        if any(row_too_long(r["text"]) for r in pair):
+            n_trunc_drop += 1   # 截断守卫：成对丢弃（保住 1:1），换下一句
+            continue
+        rows.extend(pair)
+        used.add(sent)
     check(len(rows) == target,
           f"ctrl/{name} 只造出 {len(rows)} 行，目标 {target}（源句池不够或 perturb 失败过多）")
     for i, r in enumerate(rows):
         r["id"] = f"{name}-{i:05d}"
-    return rows
+    return rows, n_trunc_drop
 
 
 # ---------------------------------------------------------------------------
@@ -903,7 +976,8 @@ def main() -> None:
         ctrl_pools[k] = shuffled[at:at + CTRL_POOL_N[k]]
         at += CTRL_POOL_N[k]
     overflow = shuffled[at:]
-    check(len(overflow) == OVERFLOW_N, f"溢出池 {len(overflow)} != {OVERFLOW_N}")
+    # collect_sentences 按文件整批写入，可能多收几句 ⇒ 溢出池只要不小于下限即可
+    check(len(overflow) >= OVERFLOW_N, f"溢出池 {len(overflow)} < {OVERFLOW_N}")
     names = list(pools) + [f"ctrl_{k}" for k in ctrl_pools] + ["overflow"]
     all_pools = {**pools, **{f"ctrl_{k}": v for k, v in ctrl_pools.items()}, "overflow": overflow}
     for i, a in enumerate(names):
@@ -948,6 +1022,8 @@ def main() -> None:
 
     ctrl: dict[str, list[dict]] = {}
     used_ctrl: dict[str, list[str]] = {}
+    used_ctrl_inputs: set[str] = set()   # 三集共用：源句不跨集复用
+    ctrl_trunc: dict[str, int] = {}      # 截断守卫丢弃的句数（成对丢，保 1:1）
     for k, key in (("train", "train"), ("test", "test"), ("adversarial", "adv")):
         pool = ctrl_pools[key]
         it = mk_iter(pool, overflow)
@@ -955,13 +1031,14 @@ def main() -> None:
         # 记录实际用掉的句子（含溢出），仅用于统计
         it2 = iter(pool + overflow)
         target = N_ROWS[key]
-        ctrl[k] = build_ctrl(k, it2, cats[k], rng, adv=(key == "adv"), target=target)
+        ctrl[k], ctrl_trunc[k] = build_ctrl(k, it2, cats[k], rng, adv=(key == "adv"),
+                                            target=target, used=used_ctrl_inputs)
         used_ctrl[k] = []
         # 重放一遍拿实际用到的句子数：从 build_ctrl 内部不好取，改用行里的 input 去重
         used_ctrl[k] = sorted({r["input"] for r in ctrl[k]})
         print(f"  ctrl/{k}: {len(ctrl[k])} 行 | "
               f"正负 {dict(Counter(r['label'] for r in ctrl[k]))} | "
-              f"用句 {len(used_ctrl[k])} | 朴素规则 "
+              f"用句 {len(used_ctrl[k])} | 截断守卫丢弃 {ctrl_trunc[k]} 句 | 朴素规则 "
               f"{naive_battery(ctrl[k])['max_naive']}", flush=True)
 
     print("[5/6] 自然 held-out 集 + 守卫断言...", flush=True)
@@ -1005,6 +1082,8 @@ def main() -> None:
         "corpus_files_used": files,
         "pools": {k: len(v) for k, v in all_pools.items()},
         "ctrl_sentences_used": {k: len(v) for k, v in used_ctrl.items()},
+        "ctrl_trunc_dropped": ctrl_trunc,
+        "proposal_trunc_dropped": {k: metas[k]["trunc_dropped"] for k in metas},
         "proposal": {k: report(k, prop[k]) for k in split_names},
         "control": {f"ctrl_{k}": report(f"ctrl_{k}", v, require_anchor=False)
                     for k, v in ctrl.items()},
