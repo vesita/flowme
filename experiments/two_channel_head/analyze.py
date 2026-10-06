@@ -65,7 +65,7 @@ def main() -> None:
     print("## 主表 · 指针通道（test n=2500，SE=1.00pt；adv 同 n）\n")
     print("| 臂 | seed | test acc | ±SE | 余量/SE | adv acc | ±SE | shifted_pos | heldout_pair |")
     print("|---|---|---|---|---|---|---|---|---|")
-    for a in "ABCD":
+    for a in "ACD":
         for s in SEEDS:
             m = R[f"{a}_s{s}"]["meta"]["eval"]
             print(f"| {a} | {s} | {m['ptr_test']['acc']:.4f} | {m['ptr_test']['se']:.4f} "
