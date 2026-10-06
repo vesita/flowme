@@ -590,6 +590,11 @@ def build_pool(name: str, pool: list[str], neural_all: list[list[tuple[int, int,
         "p1_admit_rate": round(n_p1 / max(1, n_proposed), 4),
         "trunc_dropped": n_trunc_drop,
         "dup_dropped": n_dup_drop,
+        "pool_rows": len(admitted),
+        "pool_distinct_candidate_rate": round(
+            len({r["candidate"] for r in admitted}) / max(1, len(admitted)), 4),
+        "pool_distinct_input_rate": round(
+            len({r["input"] for r in admitted}) / max(1, len(admitted)), 4),
         "pool_pos": len(pos), "pool_neg": len(neg),
         "accept_rate": round(len(pos) / max(1, len(pos) + len(neg)), 4),
         "neg_kept_by_kind": dict(Counter(r["kind"] for r in neg_rows)),
@@ -658,6 +663,9 @@ def perturb(frag: str, full: str, rule: str, rng: random.Random) -> tuple[str, s
     return None
 
 
+NEG_INSERT = ["不", "没", "从不", "并不"]
+
+
 def _perturb_once(frag: str, full: str, rule: str, rng: random.Random) -> str | None:
     if rule == "paraphrase":
         # 对抗集正例：同义改写（复刻 anchored_select.rule_paraphrase 的口径 ——
@@ -690,12 +698,20 @@ def _perturb_once(frag: str, full: str, rule: str, rng: random.Random) -> str | 
             for (x, y) in ((a, b), (b, a)):
                 if x in frag:
                     return frag.replace(x, y, 1)
+        # 反义不成 ⇒ 插入否定把命题翻成矛盾（anchored_select.rule_negate 口径；
+        # 没有这条兜底，antonym 槽位会全部回退成 word_swap —— 实测 antonym=71/4000）
+        for p in range(len(frag) - 1, -1, -1):
+            ins = rng.choice(NEG_INSERT)
+            out = frag[:p] + ins + frag[p:]
+            if abs(len(out) - len(frag)) <= 2:
+                return out
+        for ins in ("并不", "没有"):
+            if frag + ins:
+                return frag + ins
         return None
     if rule == "unrelated":
-        fp = pick_fragment(full, rng)
-        if fp is None:
-            return None
-        return full[fp[0]:fp[1]]
+        # 需要「另一句」的片段；调用方（build_ctrl）自带 donor 句，这里不实现
+        return None
     if rule == "reorder":
         if len(frag) < 10:
             return None
@@ -765,10 +781,31 @@ def build_ctrl(name: str, sent_iter, cats: list[str], rng: random.Random,
         if adv and (ptxt is None or ptxt in full):   # 对抗集正例 = 改写，逐字片段不算
             continue
         neg_rule = neg_rules[len(rows) // 2 % len(neg_rules)]
-        got = perturb(frag, full, neg_rule, rng)
-        if got is None:
-            continue
-        ntxt, neg_actual = got
+        if neg_rule == "unrelated":
+            # anchored_select 口径：无关片段取自**另一句**语料。原实现从本句取 ⇒ 与
+            # 「负例不得在上下文里」的守卫自相矛盾、恒失败，实测 unrelated 0/4000。
+            ntxt, neg_actual = None, "unrelated"
+            for _ in range(6):
+                dsent = next(sent_iter, None)
+                if dsent is None:
+                    break
+                if dsent == sent or dsent in used:
+                    continue
+                dfull, _dops, _dmap = restructure(dsent, rng)
+                dfp = pick_fragment(dfull, rng, 8, 18)
+                if dfp is None:
+                    continue
+                donor = dfull[dfp[0]:dfp[1]]
+                if donor not in full and donor != frag:
+                    ntxt = donor
+                    break
+            if ntxt is None:
+                continue
+        else:
+            got = perturb(frag, full, neg_rule, rng)
+            if got is None:
+                continue
+            ntxt, neg_actual = got
         pos_ok = (ptxt in full) if not adv else (ptxt not in full)
         neg_ok = ntxt not in full
         if not pos_ok or not neg_ok:
