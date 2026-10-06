@@ -1,0 +1,205 @@
+{
+ "n_sentences": 120,
+ "per_card": {
+  "negation": {
+   "anchors": 79,
+   "valid": 28,
+   "valid_rate": 0.3544,
+   "empty_span_s0_eq_e0": 44,
+   "filter_failures": {
+    "F1_out_of_bounds": 44,
+    "F2_empty": 44,
+    "F4_has_punct": 7
+   },
+   "lexicon_hit_among_valid": 6,
+   "lexicon_hit_rate": 0.2143,
+   "max_span_len": 8,
+   "bad_examples": [
+    {
+     "surface": "哈",
+     "class": "否定",
+     "input": "哈哈哈好像也是喔我们暑假聚呀"
+    },
+    {
+     "surface": "庆一直",
+     "class": "否定",
+     "input": "为了积攒这几天的能量我国庆一直胡吃海喝来着"
+    },
+    {
+     "surface": "是在等它",
+     "class": "否定",
+     "input": "我就是在等它长长了还是气质高冷型适合我哈哈哈哈"
+    },
+    {
+     "surface": "你",
+     "class": "否定",
+     "input": "你要挑战极限"
+    },
+    {
+     "surface": "沪一",
+     "class": "否定",
+     "input": "我以为我们江浙沪一带是南方，现在想想还是算了吧"
+    }
+   ]
+  },
+  "person": {
+   "anchors": 9,
+   "valid": 5,
+   "valid_rate": 0.5556,
+   "empty_span_s0_eq_e0": 4,
+   "filter_failures": {
+    "F1_out_of_bounds": 4,
+    "F2_empty": 4
+   },
+   "lexicon_hit_among_valid": 1,
+   "lexicon_hit_rate": 0.2,
+   "max_span_len": 5,
+   "bad_examples": [
+    {
+     "surface": "你才得早睡",
+     "class": "人物1",
+     "input": "你才得早睡呢"
+    },
+    {
+     "surface": "那个送",
+     "class": "人物2",
+     "input": "死了记得把你家那个送我"
+    },
+    {
+     "surface": "天",
+     "class": "人物1",
+     "input": "明天给你们讲"
+    },
+    {
+     "surface": "应该",
+     "class": "人物1",
+     "input": "应该见过哈哈"
+    }
+   ]
+  },
+  "pronoun": {
+   "anchors": 134,
+   "valid": 34,
+   "valid_rate": 0.2537,
+   "empty_span_s0_eq_e0": 92,
+   "filter_failures": {
+    "F1_out_of_bounds": 92,
+    "F2_empty": 92,
+    "F4_has_punct": 8
+   },
+   "lexicon_hit_among_valid": 5,
+   "lexicon_hit_rate": 0.1471,
+   "max_span_len": 10,
+   "bad_examples": [
+    {
+     "surface": "我让",
+     "class": "第三人称",
+     "input": "我让它发挥最大的价值"
+    },
+    {
+     "surface": "美",
+     "class": "第三人称",
+     "input": "美美哒看到寄几的背影了"
+    },
+    {
+     "surface": "因为开",
+     "class": "第二人称",
+     "input": "脸大不是因为开心，是本来就这么大"
+    },
+    {
+     "surface": "昕昕生日快",
+     "class": "第三人称",
+     "input": "昕昕生日快乐娜娜快快乐乐的喔"
+    },
+    {
+     "surface": "午吃早",
+     "class": "第三人称",
+     "input": "中午吃早茶啊"
+    }
+   ]
+  },
+  "relation": {
+   "anchors": 208,
+   "valid": 152,
+   "valid_rate": 0.7308,
+   "empty_span_s0_eq_e0": 15,
+   "filter_failures": {
+    "F1_out_of_bounds": 15,
+    "F2_empty": 15,
+    "F4_has_punct": 41
+   },
+   "lexicon_hit_among_valid": 0,
+   "lexicon_hit_rate": 0.0,
+   "max_span_len": 10,
+   "bad_examples": [
+    {
+     "surface": "让它",
+     "class": "反义词",
+     "input": "我让它发挥最大的价值"
+    },
+    {
+     "surface": "挥",
+     "class": "反义词",
+     "input": "我让它发挥最大的价值"
+    },
+    {
+     "surface": "你才得",
+     "class": "反义词",
+     "input": "你才得早睡呢"
+    },
+    {
+     "surface": "学理",
+     "class": "反义词",
+     "input": "据我的经验学理工大多洗澡不勤"
+    },
+    {
+     "surface": "洗澡",
+     "class": "反义词",
+     "input": "据我的经验学理工大多洗澡不勤"
+    }
+   ]
+  },
+  "sentiment": {
+   "anchors": 117,
+   "valid": 95,
+   "valid_rate": 0.812,
+   "empty_span_s0_eq_e0": 10,
+   "filter_failures": {
+    "F1_out_of_bounds": 10,
+    "F2_empty": 10,
+    "F4_has_punct": 12
+   },
+   "lexicon_hit_among_valid": 0,
+   "lexicon_hit_rate": 0.0,
+   "max_span_len": 13,
+   "bad_examples": [
+    {
+     "surface": "发挥最",
+     "class": "愤怒",
+     "input": "我让它发挥最大的价值"
+    },
+    {
+     "surface": "睡",
+     "class": "悲伤",
+     "input": "你才得早睡呢"
+    },
+    {
+     "surface": "北京还是兰",
+     "class": "愤怒",
+     "input": "北京还是兰州呢"
+    },
+    {
+     "surface": "我的经验学理工大多洗澡",
+     "class": "愤怒",
+     "input": "据我的经验学理工大多洗澡不勤"
+    },
+    {
+     "surface": "快",
+     "class": "积极",
+     "input": "啊现在这么快了"
+    }
+   ]
+  }
+ },
+ "note": "后验诊断，不进 G1–G4 判据；person 的词典只含姓名+人称代词（称谓未纳入）⇒ person 命中率是下界"
+}

@@ -1,0 +1,106 @@
+{
+ "official_module": "src/dtseek/tasks/render.py",
+ "official_table_limit": 40,
+ "official_validate": [],
+ "X1_official_coverage_on_real_cards": {
+  "n": 120,
+  "official_covered": 0,
+  "coverage": 0.0,
+  "uncovered": 102,
+  "no_bag_at_all": 18,
+  "per_skeleton": {},
+  "official_skeletons": 16,
+  "all_need_verb": true
+ },
+ "X2_skeleton_signature_crosswalk": {
+  "n_ok": 36,
+  "signature_matched": 0,
+  "signature_unmatched": 36,
+  "same_id_but_different_signature": 36,
+  "examples": [
+   {
+    "my": "S02",
+    "sig": [
+     "名",
+     "形"
+    ],
+    "text": "我让发挥最。"
+   },
+   {
+    "my": "S02",
+    "sig": [
+     "名",
+     "形"
+    ],
+    "text": "你睡。"
+   },
+   {
+    "my": "S11",
+    "sig": [
+     "名"
+    ],
+    "text": "那个送吗？"
+   },
+   {
+    "my": "S02",
+    "sig": [
+     "名",
+     "形"
+    ],
+    "text": "我糟。"
+   },
+   {
+    "my": "S02",
+    "sig": [
+     "名",
+     "形"
+    ],
+    "text": "美背影。"
+   }
+  ]
+ },
+ "X3_direction_on_official_layer": {
+  "cases": [
+   {
+    "input": "我打你。",
+    "correct": {
+     "kind": "text",
+     "text": "我打你。",
+     "reason": ""
+    },
+    "swapped": {
+     "kind": "reject",
+     "text": "（拒答）题元方向冲突（规则 B）：槽1 要 施事，指派了 '你'（受事）⇒ 拒（字符串全过、命题相反的靶子）；题元方向冲突（规则 B）：槽3 要 受事，指派了 '我'（施事）⇒ 拒（字符串全过、命题相反的靶子）",
+     "reason": "题元方向冲突（规则 B）：槽1 要 施事，指派了 '你'（受事）⇒ 拒（字符串全过、命题相反的靶子）；题元方向冲突（规则 B）：槽3 要 受事，指派了 '我'（施事）⇒ 拒（字符串全过、命题相反的靶子）"
+    }
+   },
+   {
+    "input": "你打我。",
+    "correct": {
+     "kind": "text",
+     "text": "你打我。",
+     "reason": ""
+    },
+    "swapped": {
+     "kind": "reject",
+     "text": "（拒答）题元方向冲突（规则 B）：槽1 要 施事，指派了 '我'（受事）⇒ 拒（字符串全过、命题相反的靶子）；题元方向冲突（规则 B）：槽3 要 受事，指派了 '你'（施事）⇒ 拒（字符串全过、命题相反的靶子）",
+     "reason": "题元方向冲突（规则 B）：槽1 要 施事，指派了 '我'（受事）⇒ 拒（字符串全过、命题相反的靶子）；题元方向冲突（规则 B）：槽3 要 受事，指派了 '你'（施事）⇒ 拒（字符串全过、命题相反的靶子）"
+    }
+   }
+  ],
+  "correct_ok": true,
+  "swap_rejected": true,
+  "swap_has_text_field": true
+ },
+ "X4_logic_word_guard_on_official_layer": {
+  "skeleton": "S13",
+  "pattern": "因为[1][2]，[3][4]要[5]。",
+  "no_evidence": [
+   "词面守卫：逻辑词 '因为' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）",
+   "词面守卫：逻辑词 '要' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）"
+  ],
+  "with_evidence": [],
+  "rejects_without": true,
+  "accepts_with": true
+ }
+}

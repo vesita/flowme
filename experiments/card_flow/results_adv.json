@@ -1,0 +1,254 @@
+{
+ "prereg_mtime": 1791307423.43799,
+ "run_start": 1791307675.075325,
+ "skeletons": {
+  "n_skeletons": 25,
+  "logic_gated": {
+   "S18": [
+    "但"
+   ],
+   "S19": [
+    "所以"
+   ],
+   "S20": [
+    "因为"
+   ],
+   "S21": [
+    "要"
+   ]
+  }
+ },
+ "adversarial": {
+  "n_cases": 17,
+  "must_reject": 13,
+  "reject_hit": 13,
+  "must_ok": 4,
+  "ok_hit": 4,
+  "g1_reject_rate": 1.0,
+  "g1_false_reject": 0,
+  "mismatch": [],
+  "cases": [
+   {
+    "id": "A1-themed-swap",
+    "expect": {
+     "status": "reject",
+     "reason": "theme_conflict"
+    },
+    "status": "reject",
+    "reason": "theme_conflict",
+    "stage": "deref",
+    "text": null,
+    "input": "我打你。",
+    "has_text_field": false
+   },
+   {
+    "id": "A1-themed-ok",
+    "expect": {
+     "status": "ok",
+     "text": "我打你。"
+    },
+    "status": "ok",
+    "reason": null,
+    "stage": null,
+    "text": "我打你。",
+    "input": "我打你。",
+    "has_text_field": true
+   },
+   {
+    "id": "A2-unthemed-swap",
+    "expect": {
+     "status": "reject",
+     "reason": "reorder_unjustified"
+    },
+    "status": "reject",
+    "reason": "reorder_unjustified",
+    "stage": "deref",
+    "text": null,
+    "input": "我打你。",
+    "has_text_field": false
+   },
+   {
+    "id": "A3-themed-swap",
+    "expect": {
+     "status": "reject",
+     "reason": "theme_conflict"
+    },
+    "status": "reject",
+    "reason": "theme_conflict",
+    "stage": "deref",
+    "text": null,
+    "input": "你打我。",
+    "has_text_field": false
+   },
+   {
+    "id": "A3-themed-ok",
+    "expect": {
+     "status": "ok",
+     "text": "你打我。"
+    },
+    "status": "ok",
+    "reason": null,
+    "stage": null,
+    "text": "你打我。",
+    "input": "你打我。",
+    "has_text_field": true
+   },
+   {
+    "id": "A3-unthemed-swap",
+    "expect": {
+     "status": "reject",
+     "reason": "reorder_unjustified"
+    },
+    "status": "reject",
+    "reason": "reorder_unjustified",
+    "stage": "deref",
+    "text": null,
+    "input": "你打我。",
+    "has_text_field": false
+   },
+   {
+    "id": "A4-因为无据",
+    "expect": {
+     "status": "reject",
+     "reason": "logic_no_evidence"
+    },
+    "status": "reject",
+    "reason": "logic_no_evidence",
+    "stage": "deref",
+    "text": null,
+    "input": "我难过，你高兴。",
+    "has_text_field": false
+   },
+   {
+    "id": "A5-但有据",
+    "expect": {
+     "status": "ok",
+     "text": "我难过，但你高兴。"
+    },
+    "status": "ok",
+    "reason": null,
+    "stage": null,
+    "text": "我难过，但你高兴。",
+    "input": "我难过，但你高兴。",
+    "has_text_field": true
+   },
+   {
+    "id": "A9-要无据",
+    "expect": {
+     "status": "reject",
+     "reason": "logic_no_evidence"
+    },
+    "status": "reject",
+    "reason": "logic_no_evidence",
+    "stage": "deref",
+    "text": null,
+    "input": "我打你。",
+    "has_text_field": false
+   },
+   {
+    "id": "A6-数字改动",
+    "expect": {
+     "status": "reject",
+     "reason": "span_not_verbatim"
+    },
+    "status": "reject",
+    "reason": "span_not_verbatim",
+    "stage": "deref",
+    "text": null,
+    "input": "我3点难过。",
+    "has_text_field": false
+   },
+   {
+    "id": "A7-专名改动",
+    "expect": {
+     "status": "reject",
+     "reason": "span_not_verbatim"
+    },
+    "status": "reject",
+    "reason": "span_not_verbatim",
+    "stage": "deref",
+    "text": null,
+    "input": "张伟和王强。",
+    "has_text_field": false
+   },
+   {
+    "id": "A8-否定丢失",
+    "expect": {
+     "status": "reject",
+     "reason": "ref_render_mismatch"
+    },
+    "status": "reject",
+    "reason": "ref_render_mismatch",
+    "stage": "deref",
+    "text": null,
+    "input": "我不难过。",
+    "has_text_field": false
+   },
+   {
+    "id": "A10-缺块",
+    "expect": {
+     "status": "reject",
+     "reason": "schema_missing_slot"
+    },
+    "status": "reject",
+    "reason": "schema_missing_slot",
+    "stage": "deref",
+    "text": null,
+    "input": "我难过。",
+    "has_text_field": false
+   },
+   {
+    "id": "A11-类型不符",
+    "expect": {
+     "status": "reject",
+     "reason": "type_mismatch"
+    },
+    "status": "reject",
+    "reason": "type_mismatch",
+    "stage": "deref",
+    "text": null,
+    "input": "我难过。",
+    "has_text_field": false
+   },
+   {
+    "id": "A12-越界",
+    "expect": {
+     "status": "reject",
+     "reason": "span_not_verbatim"
+    },
+    "status": "reject",
+    "reason": "span_not_verbatim",
+    "stage": "deref",
+    "text": null,
+    "input": "我难过。",
+    "has_text_field": false
+   },
+   {
+    "id": "A13-注入",
+    "expect": {
+     "status": "reject",
+     "reason": "unmapped_output"
+    },
+    "status": "reject",
+    "reason": "unmapped_output",
+    "stage": "deref",
+    "text": null,
+    "input": "我难过。",
+    "has_text_field": false
+   },
+   {
+    "id": "A14-正例",
+    "expect": {
+     "status": "ok",
+     "text": "我难过。"
+    },
+    "status": "ok",
+    "reason": null,
+    "stage": null,
+    "text": "我难过。",
+    "input": "我难过。",
+    "has_text_field": true
+   }
+  ]
+ }
+}
