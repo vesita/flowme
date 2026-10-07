@@ -1,0 +1,5415 @@
+{
+ "meta": {
+  "script": "experiments/verb_card/run_verb_card.py",
+  "pos_types": [
+   "名",
+   "动",
+   "形"
+  ],
+  "pos_types_all": [
+   "名",
+   "动",
+   "形",
+   "否",
+   "数"
+  ],
+  "n_fixtures": 20,
+  "sec": 23.9
+ },
+ "counts": {
+  "P1_含动槽_生成链": [
+   "S01",
+   "S02",
+   "S03",
+   "S04",
+   "S05",
+   "S06",
+   "S07",
+   "S08",
+   "S09",
+   "S10",
+   "S11",
+   "S12",
+   "S13",
+   "R01",
+   "R02",
+   "R03",
+   "CF21"
+  ],
+  "P1_n": 17,
+  "P2_含动槽_cardflow": [
+   "CFS12",
+   "CFS13",
+   "CFS14",
+   "CFS15",
+   "CFS16",
+   "CFS21",
+   "CFS22"
+  ],
+  "P2_n": 7,
+  "P3_含否数槽": [
+   "CFS04",
+   "CFS05",
+   "CFS10",
+   "CFS15",
+   "CFS16",
+   "CFS22",
+   "CFS26",
+   "CFS23",
+   "CFS24"
+  ],
+  "P3_n": 9,
+  "official_16": [
+   "S01",
+   "S02",
+   "S03",
+   "S04",
+   "S05",
+   "S06",
+   "S07",
+   "S08",
+   "S09",
+   "S10",
+   "S11",
+   "S12",
+   "S13",
+   "R01",
+   "R02",
+   "R03"
+  ],
+  "前提对账_cardflow25": {
+   "动": 7,
+   "否": 7,
+   "数": 2,
+   "计数和": 16,
+   "去重并集": 13,
+   "card_flow 总数": 25
+  }
+ },
+ "w0_floors": {
+  "t1_lexicon_size": 563,
+  "verb_lexicon_size": 107,
+  "gold_note": "gold = fixtures.py 人工判定的动词 span（20 条夹具）",
+  "modes": {
+   "none": {
+    "prf": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 26,
+     "P": 0.0,
+     "R": 0.0,
+     "F1": 0.0,
+     "per_fixture": [
+      {
+       "fid": "F01",
+       "gold": [
+        [
+         2,
+         4
+        ]
+       ],
+       "pred": []
+      },
+      {
+       "fid": "F02",
+       "gold": [
+        [
+         1,
+         3
+        ]
+       ],
+       "pred": []
+      },
+      {
+       "fid": "F03",
+       "gold": [
+        [
+         1,
+         3
+        ],
+        [
+         5,
+         7
+        ]
+       ],
+       "pred": []
+      },
+      {
+       "fid": "F04",
+       "gold": [
+        [
+         2,
+         4
+        ]
+       ],
+       "pred": []
+      },
+      {
+       "fid": "F05",
+       "gold": [
+        [
+         5,
+         7
+        ]
+       ],
+       "pred": []
+      },
+      {
+       "fid": "F06",
+       "gold": [
+        [
+         5,
+         7
+        ]
+       ],
+       "pred": []
+      },
+      {
+       "fid": "F07",
+       "gold": [
+        [
+         2,
+         4
+        ],
+        [
+         4,
+         6
+        ]
+       ],
+       "pred": []
+      },
+      {
+       "fid": "F08",
+       "gold": [
+        [
+         2,
+         4
+        ],
+        [
+         4,
+         6
+        ],
+        [
+         13,
+         15
+        ]
+       ],
+       "pred": []
+      },
+      {
+       "fid": "F09",
+       "gold": [
+        [
+         0,
+         2
+        ],
+        [
+         2,
+         4
+        ],
+        [
+         11,
+         13
+        ]
+       ],
+       "pred": []
+      },
+      {
+       "fid": "F10",
+       "gold": [
+        [
+         2,
+         4
+        ],
+        [
+         4,
+         6
+        ],
+        [
+         13,
+         15
+        ]
+       ],
+       "pred": []
+      },
+      {
+       "fid": "F11",
+       "gold": [
+        [
+         1,
+         3
+        ]
+       ],
+       "pred": []
+      },
+      {
+       "fid": "F12",
+       "gold": [
+        [
+         1,
+         3
+        ]
+       ],
+       "pred": []
+      },
+      {
+       "fid": "F13",
+       "gold": [
+        [
+         2,
+         4
+        ],
+        [
+         4,
+         6
+        ]
+       ],
+       "pred": []
+      },
+      {
+       "fid": "F14",
+       "gold": [
+        [
+         3,
+         5
+        ]
+       ],
+       "pred": []
+      },
+      {
+       "fid": "F15",
+       "gold": [
+        [
+         3,
+         5
+        ]
+       ],
+       "pred": []
+      },
+      {
+       "fid": "F20",
+       "gold": [],
+       "pred": []
+      },
+      {
+       "fid": "F21",
+       "gold": [],
+       "pred": []
+      },
+      {
+       "fid": "F22",
+       "gold": [
+        [
+         2,
+         4
+        ]
+       ],
+       "pred": []
+      },
+      {
+       "fid": "F23",
+       "gold": [
+        [
+         2,
+         4
+        ]
+       ],
+       "pred": []
+      },
+      {
+       "fid": "F24",
+       "gold": [],
+       "pred": []
+      }
+     ]
+    },
+    "unlock_on_fixtures": {
+     "tierA_无题元": {
+      "n_rows": 24,
+      "n_text": 0,
+      "n_unlocked": 0,
+      "gates_sum": {
+       "rule_a": 0,
+       "slot_schema": 0,
+       "item": 0,
+       "contract": 0,
+       "structure": 0,
+       "deref": 0
+      },
+      "audit_violations": 0,
+      "verb_gold_spans_used": []
+     },
+     "tierB_夹具题元": {
+      "n_rows": 24,
+      "n_text": 0,
+      "n_unlocked": 0,
+      "gates_sum": {
+       "rule_a": 0,
+       "slot_schema": 0,
+       "item": 0,
+       "contract": 0,
+       "structure": 0,
+       "deref": 0
+      },
+      "audit_violations": 0,
+      "verb_gold_spans_used": []
+     }
+    },
+    "unlock_total_P1P2_tierB": 0,
+    "unlock_total_P1P2_tierA": 0
+   },
+   "T1": {
+    "prf": {
+     "tp": 2,
+     "fp": 18,
+     "fn": 24,
+     "P": 0.1,
+     "R": 0.0769,
+     "F1": 0.087,
+     "per_fixture": [
+      {
+       "fid": "F01",
+       "gold": [
+        [
+         2,
+         4
+        ]
+       ],
+       "pred": [
+        [
+         0,
+         2
+        ]
+       ]
+      },
+      {
+       "fid": "F02",
+       "gold": [
+        [
+         1,
+         3
+        ]
+       ],
+       "pred": [
+        [
+         0,
+         1
+        ]
+       ]
+      },
+      {
+       "fid": "F03",
+       "gold": [
+        [
+         1,
+         3
+        ],
+        [
+         5,
+         7
+        ]
+       ],
+       "pred": [
+        [
+         0,
+         1
+        ]
+       ]
+      },
+      {
+       "fid": "F04",
+       "gold": [
+        [
+         2,
+         4
+        ]
+       ],
+       "pred": [
+        [
+         0,
+         2
+        ]
+       ]
+      },
+      {
+       "fid": "F05",
+       "gold": [
+        [
+         5,
+         7
+        ]
+       ],
+       "pred": [
+        [
+         0,
+         2
+        ]
+       ]
+      },
+      {
+       "fid": "F06",
+       "gold": [
+        [
+         5,
+         7
+        ]
+       ],
+       "pred": [
+        [
+         0,
+         2
+        ]
+       ]
+      },
+      {
+       "fid": "F07",
+       "gold": [
+        [
+         2,
+         4
+        ],
+        [
+         4,
+         6
+        ]
+       ],
+       "pred": [
+        [
+         0,
+         2
+        ]
+       ]
+      },
+      {
+       "fid": "F08",
+       "gold": [
+        [
+         2,
+         4
+        ],
+        [
+         4,
+         6
+        ],
+        [
+         13,
+         15
+        ]
+       ],
+       "pred": [
+        [
+         0,
+         2
+        ]
+       ]
+      },
+      {
+       "fid": "F09",
+       "gold": [
+        [
+         0,
+         2
+        ],
+        [
+         2,
+         4
+        ],
+        [
+         11,
+         13
+        ]
+       ],
+       "pred": [
+        [
+         0,
+         2
+        ]
+       ]
+      },
+      {
+       "fid": "F10",
+       "gold": [
+        [
+         2,
+         4
+        ],
+        [
+         4,
+         6
+        ],
+        [
+         13,
+         15
+        ]
+       ],
+       "pred": [
+        [
+         2,
+         4
+        ]
+       ]
+      },
+      {
+       "fid": "F11",
+       "gold": [
+        [
+         1,
+         3
+        ]
+       ],
+       "pred": [
+        [
+         0,
+         1
+        ]
+       ]
+      },
+      {
+       "fid": "F12",
+       "gold": [
+        [
+         1,
+         3
+        ]
+       ],
+       "pred": [
+        [
+         0,
+         1
+        ]
+       ]
+      },
+      {
+       "fid": "F13",
+       "gold": [
+        [
+         2,
+         4
+        ],
+        [
+         4,
+         6
+        ]
+       ],
+       "pred": [
+        [
+         0,
+         2
+        ]
+       ]
+      },
+      {
+       "fid": "F14",
+       "gold": [
+        [
+         3,
+         5
+        ]
+       ],
+       "pred": [
+        [
+         0,
+         2
+        ]
+       ]
+      },
+      {
+       "fid": "F15",
+       "gold": [
+        [
+         3,
+         5
+        ]
+       ],
+       "pred": [
+        [
+         0,
+         2
+        ]
+       ]
+      },
+      {
+       "fid": "F20",
+       "gold": [],
+       "pred": [
+        [
+         0,
+         1
+        ]
+       ]
+      },
+      {
+       "fid": "F21",
+       "gold": [],
+       "pred": [
+        [
+         0,
+         1
+        ]
+       ]
+      },
+      {
+       "fid": "F22",
+       "gold": [
+        [
+         2,
+         4
+        ]
+       ],
+       "pred": [
+        [
+         0,
+         1
+        ]
+       ]
+      },
+      {
+       "fid": "F23",
+       "gold": [
+        [
+         2,
+         4
+        ]
+       ],
+       "pred": [
+        [
+         0,
+         1
+        ]
+       ]
+      },
+      {
+       "fid": "F24",
+       "gold": [],
+       "pred": [
+        [
+         0,
+         1
+        ]
+       ]
+      }
+     ]
+    },
+    "unlock_on_fixtures": {
+     "tierA_无题元": {
+      "n_rows": 24,
+      "n_text": 3,
+      "n_unlocked": 3,
+      "gates_sum": {
+       "rule_a": 0,
+       "slot_schema": 0,
+       "item": 0,
+       "contract": 0,
+       "structure": 0,
+       "deref": 0
+      },
+      "audit_violations": 0,
+      "verb_gold_spans_used": [
+       [
+        0,
+        1
+       ],
+       [
+        0,
+        2
+       ]
+      ]
+     },
+     "tierB_夹具题元": {
+      "n_rows": 24,
+      "n_text": 18,
+      "n_unlocked": 18,
+      "gates_sum": {
+       "rule_a": 0,
+       "slot_schema": 0,
+       "item": 0,
+       "contract": 0,
+       "structure": 0,
+       "deref": 0
+      },
+      "audit_violations": 0,
+      "verb_gold_spans_used": [
+       [
+        0,
+        1
+       ],
+       [
+        0,
+        2
+       ]
+      ]
+     }
+    },
+    "unlock_total_P1P2_tierB": 18,
+    "unlock_total_P1P2_tierA": 3
+   },
+   "T2": {
+    "prf": {
+     "tp": 0,
+     "fp": 20,
+     "fn": 26,
+     "P": 0.0,
+     "R": 0.0,
+     "F1": 0.0,
+     "per_fixture": [
+      {
+       "fid": "F01",
+       "gold": [
+        [
+         2,
+         4
+        ]
+       ],
+       "pred": [
+        [
+         5,
+         6
+        ]
+       ]
+      },
+      {
+       "fid": "F02",
+       "gold": [
+        [
+         1,
+         3
+        ]
+       ],
+       "pred": [
+        [
+         2,
+         3
+        ]
+       ]
+      },
+      {
+       "fid": "F03",
+       "gold": [
+        [
+         1,
+         3
+        ],
+        [
+         5,
+         7
+        ]
+       ],
+       "pred": [
+        [
+         6,
+         7
+        ]
+       ]
+      },
+      {
+       "fid": "F04",
+       "gold": [
+        [
+         2,
+         4
+        ]
+       ],
+       "pred": [
+        [
+         3,
+         4
+        ]
+       ]
+      },
+      {
+       "fid": "F05",
+       "gold": [
+        [
+         5,
+         7
+        ]
+       ],
+       "pred": [
+        [
+         6,
+         7
+        ]
+       ]
+      },
+      {
+       "fid": "F06",
+       "gold": [
+        [
+         5,
+         7
+        ]
+       ],
+       "pred": [
+        [
+         6,
+         7
+        ]
+       ]
+      },
+      {
+       "fid": "F07",
+       "gold": [
+        [
+         2,
+         4
+        ],
+        [
+         4,
+         6
+        ]
+       ],
+       "pred": [
+        [
+         7,
+         8
+        ]
+       ]
+      },
+      {
+       "fid": "F08",
+       "gold": [
+        [
+         2,
+         4
+        ],
+        [
+         4,
+         6
+        ],
+        [
+         13,
+         15
+        ]
+       ],
+       "pred": [
+        [
+         14,
+         15
+        ]
+       ]
+      },
+      {
+       "fid": "F09",
+       "gold": [
+        [
+         0,
+         2
+        ],
+        [
+         2,
+         4
+        ],
+        [
+         11,
+         13
+        ]
+       ],
+       "pred": [
+        [
+         12,
+         13
+        ]
+       ]
+      },
+      {
+       "fid": "F10",
+       "gold": [
+        [
+         2,
+         4
+        ],
+        [
+         4,
+         6
+        ],
+        [
+         13,
+         15
+        ]
+       ],
+       "pred": [
+        [
+         14,
+         15
+        ]
+       ]
+      },
+      {
+       "fid": "F11",
+       "gold": [
+        [
+         1,
+         3
+        ]
+       ],
+       "pred": [
+        [
+         4,
+         5
+        ]
+       ]
+      },
+      {
+       "fid": "F12",
+       "gold": [
+        [
+         1,
+         3
+        ]
+       ],
+       "pred": [
+        [
+         2,
+         3
+        ]
+       ]
+      },
+      {
+       "fid": "F13",
+       "gold": [
+        [
+         2,
+         4
+        ],
+        [
+         4,
+         6
+        ]
+       ],
+       "pred": [
+        [
+         7,
+         8
+        ]
+       ]
+      },
+      {
+       "fid": "F14",
+       "gold": [
+        [
+         3,
+         5
+        ]
+       ],
+       "pred": [
+        [
+         4,
+         5
+        ]
+       ]
+      },
+      {
+       "fid": "F15",
+       "gold": [
+        [
+         3,
+         5
+        ]
+       ],
+       "pred": [
+        [
+         4,
+         5
+        ]
+       ]
+      },
+      {
+       "fid": "F20",
+       "gold": [],
+       "pred": [
+        [
+         3,
+         4
+        ]
+       ]
+      },
+      {
+       "fid": "F21",
+       "gold": [],
+       "pred": [
+        [
+         7,
+         8
+        ]
+       ]
+      },
+      {
+       "fid": "F22",
+       "gold": [
+        [
+         2,
+         4
+        ]
+       ],
+       "pred": [
+        [
+         3,
+         4
+        ]
+       ]
+      },
+      {
+       "fid": "F23",
+       "gold": [
+        [
+         2,
+         4
+        ]
+       ],
+       "pred": [
+        [
+         4,
+         5
+        ]
+       ]
+      },
+      {
+       "fid": "F24",
+       "gold": [],
+       "pred": [
+        [
+         4,
+         5
+        ]
+       ]
+      }
+     ]
+    },
+    "unlock_on_fixtures": {
+     "tierA_无题元": {
+      "n_rows": 24,
+      "n_text": 2,
+      "n_unlocked": 2,
+      "gates_sum": {
+       "rule_a": 0,
+       "slot_schema": 0,
+       "item": 0,
+       "contract": 0,
+       "structure": 0,
+       "deref": 0
+      },
+      "audit_violations": 0,
+      "verb_gold_spans_used": [
+       [
+        2,
+        3
+       ],
+       [
+        4,
+        5
+       ]
+      ]
+     },
+     "tierB_夹具题元": {
+      "n_rows": 24,
+      "n_text": 17,
+      "n_unlocked": 17,
+      "gates_sum": {
+       "rule_a": 0,
+       "slot_schema": 0,
+       "item": 0,
+       "contract": 0,
+       "structure": 0,
+       "deref": 0
+      },
+      "audit_violations": 0,
+      "verb_gold_spans_used": [
+       [
+        2,
+        3
+       ],
+       [
+        3,
+        4
+       ],
+       [
+        4,
+        5
+       ],
+       [
+        5,
+        6
+       ],
+       [
+        6,
+        7
+       ]
+      ]
+     }
+    },
+    "unlock_total_P1P2_tierB": 17,
+    "unlock_total_P1P2_tierA": 2
+   },
+   "T3": {
+    "prf": {
+     "tp": 0,
+     "fp": 20,
+     "fn": 26,
+     "P": 0.0,
+     "R": 0.0,
+     "F1": 0.0,
+     "per_fixture": [
+      {
+       "fid": "F01",
+       "gold": [
+        [
+         2,
+         4
+        ]
+       ],
+       "pred": [
+        [
+         0,
+         1
+        ]
+       ]
+      },
+      {
+       "fid": "F02",
+       "gold": [
+        [
+         1,
+         3
+        ]
+       ],
+       "pred": [
+        [
+         0,
+         1
+        ]
+       ]
+      },
+      {
+       "fid": "F03",
+       "gold": [
+        [
+         1,
+         3
+        ],
+        [
+         5,
+         7
+        ]
+       ],
+       "pred": [
+        [
+         0,
+         1
+        ]
+       ]
+      },
+      {
+       "fid": "F04",
+       "gold": [
+        [
+         2,
+         4
+        ]
+       ],
+       "pred": [
+        [
+         0,
+         1
+        ]
+       ]
+      },
+      {
+       "fid": "F05",
+       "gold": [
+        [
+         5,
+         7
+        ]
+       ],
+       "pred": [
+        [
+         0,
+         1
+        ]
+       ]
+      },
+      {
+       "fid": "F06",
+       "gold": [
+        [
+         5,
+         7
+        ]
+       ],
+       "pred": [
+        [
+         0,
+         1
+        ]
+       ]
+      },
+      {
+       "fid": "F07",
+       "gold": [
+        [
+         2,
+         4
+        ],
+        [
+         4,
+         6
+        ]
+       ],
+       "pred": [
+        [
+         0,
+         1
+        ]
+       ]
+      },
+      {
+       "fid": "F08",
+       "gold": [
+        [
+         2,
+         4
+        ],
+        [
+         4,
+         6
+        ],
+        [
+         13,
+         15
+        ]
+       ],
+       "pred": [
+        [
+         0,
+         1
+        ]
+       ]
+      },
+      {
+       "fid": "F09",
+       "gold": [
+        [
+         0,
+         2
+        ],
+        [
+         2,
+         4
+        ],
+        [
+         11,
+         13
+        ]
+       ],
+       "pred": [
+        [
+         0,
+         1
+        ]
+       ]
+      },
+      {
+       "fid": "F10",
+       "gold": [
+        [
+         2,
+         4
+        ],
+        [
+         4,
+         6
+        ],
+        [
+         13,
+         15
+        ]
+       ],
+       "pred": [
+        [
+         0,
+         1
+        ]
+       ]
+      },
+      {
+       "fid": "F11",
+       "gold": [
+        [
+         1,
+         3
+        ]
+       ],
+       "pred": [
+        [
+         0,
+         1
+        ]
+       ]
+      },
+      {
+       "fid": "F12",
+       "gold": [
+        [
+         1,
+         3
+        ]
+       ],
+       "pred": [
+        [
+         0,
+         1
+        ]
+       ]
+      },
+      {
+       "fid": "F13",
+       "gold": [
+        [
+         2,
+         4
+        ],
+        [
+         4,
+         6
+        ]
+       ],
+       "pred": [
+        [
+         0,
+         1
+        ]
+       ]
+      },
+      {
+       "fid": "F14",
+       "gold": [
+        [
+         3,
+         5
+        ]
+       ],
+       "pred": [
+        [
+         0,
+         1
+        ]
+       ]
+      },
+      {
+       "fid": "F15",
+       "gold": [
+        [
+         3,
+         5
+        ]
+       ],
+       "pred": [
+        [
+         0,
+         1
+        ]
+       ]
+      },
+      {
+       "fid": "F20",
+       "gold": [],
+       "pred": [
+        [
+         0,
+         1
+        ]
+       ]
+      },
+      {
+       "fid": "F21",
+       "gold": [],
+       "pred": [
+        [
+         0,
+         1
+        ]
+       ]
+      },
+      {
+       "fid": "F22",
+       "gold": [
+        [
+         2,
+         4
+        ]
+       ],
+       "pred": [
+        [
+         0,
+         1
+        ]
+       ]
+      },
+      {
+       "fid": "F23",
+       "gold": [
+        [
+         2,
+         4
+        ]
+       ],
+       "pred": [
+        [
+         0,
+         1
+        ]
+       ]
+      },
+      {
+       "fid": "F24",
+       "gold": [],
+       "pred": [
+        [
+         0,
+         1
+        ]
+       ]
+      }
+     ]
+    },
+    "unlock_on_fixtures": {
+     "tierA_无题元": {
+      "n_rows": 24,
+      "n_text": 3,
+      "n_unlocked": 3,
+      "gates_sum": {
+       "rule_a": 0,
+       "slot_schema": 0,
+       "item": 0,
+       "contract": 0,
+       "structure": 0,
+       "deref": 0
+      },
+      "audit_violations": 0,
+      "verb_gold_spans_used": [
+       [
+        0,
+        1
+       ]
+      ]
+     },
+     "tierB_夹具题元": {
+      "n_rows": 24,
+      "n_text": 18,
+      "n_unlocked": 18,
+      "gates_sum": {
+       "rule_a": 0,
+       "slot_schema": 0,
+       "item": 0,
+       "contract": 0,
+       "structure": 0,
+       "deref": 0
+      },
+      "audit_violations": 0,
+      "verb_gold_spans_used": [
+       [
+        0,
+        1
+       ]
+      ]
+     }
+    },
+    "unlock_total_P1P2_tierB": 18,
+    "unlock_total_P1P2_tierA": 3
+   },
+   "verb": {
+    "prf": {
+     "tp": 26,
+     "fp": 0,
+     "fn": 0,
+     "P": 1.0,
+     "R": 1.0,
+     "F1": 1.0,
+     "per_fixture": [
+      {
+       "fid": "F01",
+       "gold": [
+        [
+         2,
+         4
+        ]
+       ],
+       "pred": [
+        [
+         2,
+         4
+        ]
+       ]
+      },
+      {
+       "fid": "F02",
+       "gold": [
+        [
+         1,
+         3
+        ]
+       ],
+       "pred": [
+        [
+         1,
+         3
+        ]
+       ]
+      },
+      {
+       "fid": "F03",
+       "gold": [
+        [
+         1,
+         3
+        ],
+        [
+         5,
+         7
+        ]
+       ],
+       "pred": [
+        [
+         1,
+         3
+        ],
+        [
+         5,
+         7
+        ]
+       ]
+      },
+      {
+       "fid": "F04",
+       "gold": [
+        [
+         2,
+         4
+        ]
+       ],
+       "pred": [
+        [
+         2,
+         4
+        ]
+       ]
+      },
+      {
+       "fid": "F05",
+       "gold": [
+        [
+         5,
+         7
+        ]
+       ],
+       "pred": [
+        [
+         5,
+         7
+        ]
+       ]
+      },
+      {
+       "fid": "F06",
+       "gold": [
+        [
+         5,
+         7
+        ]
+       ],
+       "pred": [
+        [
+         5,
+         7
+        ]
+       ]
+      },
+      {
+       "fid": "F07",
+       "gold": [
+        [
+         2,
+         4
+        ],
+        [
+         4,
+         6
+        ]
+       ],
+       "pred": [
+        [
+         2,
+         4
+        ],
+        [
+         4,
+         6
+        ]
+       ]
+      },
+      {
+       "fid": "F08",
+       "gold": [
+        [
+         2,
+         4
+        ],
+        [
+         4,
+         6
+        ],
+        [
+         13,
+         15
+        ]
+       ],
+       "pred": [
+        [
+         2,
+         4
+        ],
+        [
+         4,
+         6
+        ],
+        [
+         13,
+         15
+        ]
+       ]
+      },
+      {
+       "fid": "F09",
+       "gold": [
+        [
+         0,
+         2
+        ],
+        [
+         2,
+         4
+        ],
+        [
+         11,
+         13
+        ]
+       ],
+       "pred": [
+        [
+         0,
+         2
+        ],
+        [
+         2,
+         4
+        ],
+        [
+         11,
+         13
+        ]
+       ]
+      },
+      {
+       "fid": "F10",
+       "gold": [
+        [
+         2,
+         4
+        ],
+        [
+         4,
+         6
+        ],
+        [
+         13,
+         15
+        ]
+       ],
+       "pred": [
+        [
+         2,
+         4
+        ],
+        [
+         4,
+         6
+        ],
+        [
+         13,
+         15
+        ]
+       ]
+      },
+      {
+       "fid": "F11",
+       "gold": [
+        [
+         1,
+         3
+        ]
+       ],
+       "pred": [
+        [
+         1,
+         3
+        ]
+       ]
+      },
+      {
+       "fid": "F12",
+       "gold": [
+        [
+         1,
+         3
+        ]
+       ],
+       "pred": [
+        [
+         1,
+         3
+        ]
+       ]
+      },
+      {
+       "fid": "F13",
+       "gold": [
+        [
+         2,
+         4
+        ],
+        [
+         4,
+         6
+        ]
+       ],
+       "pred": [
+        [
+         2,
+         4
+        ],
+        [
+         4,
+         6
+        ]
+       ]
+      },
+      {
+       "fid": "F14",
+       "gold": [
+        [
+         3,
+         5
+        ]
+       ],
+       "pred": [
+        [
+         3,
+         5
+        ]
+       ]
+      },
+      {
+       "fid": "F15",
+       "gold": [
+        [
+         3,
+         5
+        ]
+       ],
+       "pred": [
+        [
+         3,
+         5
+        ]
+       ]
+      },
+      {
+       "fid": "F20",
+       "gold": [],
+       "pred": []
+      },
+      {
+       "fid": "F21",
+       "gold": [],
+       "pred": []
+      },
+      {
+       "fid": "F22",
+       "gold": [
+        [
+         2,
+         4
+        ]
+       ],
+       "pred": [
+        [
+         2,
+         4
+        ]
+       ]
+      },
+      {
+       "fid": "F23",
+       "gold": [
+        [
+         2,
+         4
+        ]
+       ],
+       "pred": [
+        [
+         2,
+         4
+        ]
+       ]
+      },
+      {
+       "fid": "F24",
+       "gold": [],
+       "pred": []
+      }
+     ]
+    },
+    "unlock_on_fixtures": {
+     "tierA_无题元": {
+      "n_rows": 24,
+      "n_text": 4,
+      "n_unlocked": 4,
+      "gates_sum": {
+       "rule_a": 0,
+       "slot_schema": 0,
+       "item": 0,
+       "contract": 0,
+       "structure": 0,
+       "deref": 0
+      },
+      "audit_violations": 0,
+      "verb_gold_spans_used": [
+       [
+        1,
+        3
+       ],
+       [
+        2,
+        4
+       ],
+       [
+        3,
+        5
+       ],
+       [
+        4,
+        6
+       ]
+      ]
+     },
+     "tierB_夹具题元": {
+      "n_rows": 24,
+      "n_text": 24,
+      "n_unlocked": 24,
+      "gates_sum": {
+       "rule_a": 0,
+       "slot_schema": 0,
+       "item": 0,
+       "contract": 0,
+       "structure": 0,
+       "deref": 0
+      },
+      "audit_violations": 0,
+      "verb_gold_spans_used": [
+       [
+        0,
+        2
+       ],
+       [
+        1,
+        3
+       ],
+       [
+        2,
+        4
+       ],
+       [
+        3,
+        5
+       ],
+       [
+        4,
+        6
+       ],
+       [
+        5,
+        7
+       ],
+       [
+        11,
+        13
+       ],
+       [
+        13,
+        15
+       ]
+      ]
+     }
+    },
+    "unlock_total_P1P2_tierB": 24,
+    "unlock_total_P1P2_tierA": 4
+   }
+  }
+ },
+ "w1_unlock": {
+  "none": {
+   "tierA": {
+    "S01": {
+     "sid": "S01",
+     "kind": "no_candidate",
+     "reason": [
+      "动"
+     ]
+    },
+    "S02": {
+     "sid": "S02",
+     "kind": "no_candidate",
+     "reason": [
+      "动"
+     ]
+    },
+    "S03": {
+     "sid": "S03",
+     "kind": "no_candidate",
+     "reason": [
+      "动"
+     ]
+    },
+    "CFS13": {
+     "sid": "CFS13",
+     "kind": "no_candidate",
+     "reason": [
+      "动"
+     ]
+    },
+    "CFS14": {
+     "sid": "CFS14",
+     "kind": "no_candidate",
+     "reason": [
+      "动"
+     ]
+    },
+    "S04": {
+     "sid": "S04",
+     "kind": "no_candidate",
+     "reason": [
+      "动"
+     ]
+    },
+    "S09": {
+     "sid": "S09",
+     "kind": "no_candidate",
+     "reason": [
+      "动"
+     ]
+    },
+    "CFS12": {
+     "sid": "CFS12",
+     "kind": "no_candidate",
+     "reason": [
+      "动"
+     ]
+    },
+    "S05": {
+     "sid": "S05",
+     "kind": "no_candidate",
+     "reason": [
+      "动",
+      "动"
+     ]
+    },
+    "S06": {
+     "sid": "S06",
+     "kind": "no_candidate",
+     "reason": [
+      "动"
+     ]
+    },
+    "S07": {
+     "sid": "S07",
+     "kind": "no_candidate",
+     "reason": [
+      "动"
+     ]
+    },
+    "S08": {
+     "sid": "S08",
+     "kind": "no_candidate",
+     "reason": [
+      "动"
+     ]
+    },
+    "S10": {
+     "sid": "S10",
+     "kind": "no_candidate",
+     "reason": [
+      "动",
+      "动"
+     ]
+    },
+    "S11": {
+     "sid": "S11",
+     "kind": "no_candidate",
+     "reason": [
+      "动",
+      "动",
+      "动"
+     ]
+    },
+    "S12": {
+     "sid": "S12",
+     "kind": "no_candidate",
+     "reason": [
+      "动",
+      "动"
+     ]
+    },
+    "S13": {
+     "sid": "S13",
+     "kind": "no_candidate",
+     "reason": [
+      "动",
+      "动"
+     ]
+    },
+    "R01": {
+     "sid": "R01",
+     "kind": "no_candidate",
+     "reason": [
+      "动"
+     ]
+    },
+    "R02": {
+     "sid": "R02",
+     "kind": "no_candidate",
+     "reason": [
+      "动"
+     ]
+    },
+    "R03": {
+     "sid": "R03",
+     "kind": "no_candidate",
+     "reason": [
+      "动",
+      "动"
+     ]
+    },
+    "CFS21": {
+     "sid": "CFS21",
+     "kind": "no_candidate",
+     "reason": [
+      "动"
+     ]
+    },
+    "CF21": {
+     "sid": "CF21",
+     "kind": "no_candidate",
+     "reason": [
+      "动"
+     ]
+    },
+    "CFS15": {
+     "sid": "CFS15",
+     "kind": "no_candidate",
+     "reason": [
+      "动"
+     ]
+    },
+    "CFS22": {
+     "sid": "CFS22",
+     "kind": "no_candidate",
+     "reason": [
+      "动"
+     ]
+    },
+    "CFS16": {
+     "sid": "CFS16",
+     "kind": "no_candidate",
+     "reason": [
+      "动"
+     ]
+    }
+   },
+   "tierB": {
+    "S01": {
+     "sid": "S01",
+     "kind": "no_candidate",
+     "reason": [
+      "动"
+     ]
+    },
+    "S02": {
+     "sid": "S02",
+     "kind": "no_candidate",
+     "reason": [
+      "动"
+     ]
+    },
+    "S03": {
+     "sid": "S03",
+     "kind": "no_candidate",
+     "reason": [
+      "动"
+     ]
+    },
+    "CFS13": {
+     "sid": "CFS13",
+     "kind": "no_candidate",
+     "reason": [
+      "动"
+     ]
+    },
+    "CFS14": {
+     "sid": "CFS14",
+     "kind": "no_candidate",
+     "reason": [
+      "动"
+     ]
+    },
+    "S04": {
+     "sid": "S04",
+     "kind": "no_candidate",
+     "reason": [
+      "动"
+     ]
+    },
+    "S09": {
+     "sid": "S09",
+     "kind": "no_candidate",
+     "reason": [
+      "动"
+     ]
+    },
+    "CFS12": {
+     "sid": "CFS12",
+     "kind": "no_candidate",
+     "reason": [
+      "动"
+     ]
+    },
+    "S05": {
+     "sid": "S05",
+     "kind": "no_candidate",
+     "reason": [
+      "动",
+      "动"
+     ]
+    },
+    "S06": {
+     "sid": "S06",
+     "kind": "no_candidate",
+     "reason": [
+      "动"
+     ]
+    },
+    "S07": {
+     "sid": "S07",
+     "kind": "no_candidate",
+     "reason": [
+      "动"
+     ]
+    },
+    "S08": {
+     "sid": "S08",
+     "kind": "no_candidate",
+     "reason": [
+      "动"
+     ]
+    },
+    "S10": {
+     "sid": "S10",
+     "kind": "no_candidate",
+     "reason": [
+      "动",
+      "动"
+     ]
+    },
+    "S11": {
+     "sid": "S11",
+     "kind": "no_candidate",
+     "reason": [
+      "动",
+      "动",
+      "动"
+     ]
+    },
+    "S12": {
+     "sid": "S12",
+     "kind": "no_candidate",
+     "reason": [
+      "动",
+      "动"
+     ]
+    },
+    "S13": {
+     "sid": "S13",
+     "kind": "no_candidate",
+     "reason": [
+      "动",
+      "动"
+     ]
+    },
+    "R01": {
+     "sid": "R01",
+     "kind": "no_candidate",
+     "reason": [
+      "动"
+     ]
+    },
+    "R02": {
+     "sid": "R02",
+     "kind": "no_candidate",
+     "reason": [
+      "动"
+     ]
+    },
+    "R03": {
+     "sid": "R03",
+     "kind": "no_candidate",
+     "reason": [
+      "动",
+      "动"
+     ]
+    },
+    "CFS21": {
+     "sid": "CFS21",
+     "kind": "no_candidate",
+     "reason": [
+      "动"
+     ]
+    },
+    "CF21": {
+     "sid": "CF21",
+     "kind": "no_candidate",
+     "reason": [
+      "动"
+     ]
+    },
+    "CFS15": {
+     "sid": "CFS15",
+     "kind": "no_candidate",
+     "reason": [
+      "动"
+     ]
+    },
+    "CFS22": {
+     "sid": "CFS22",
+     "kind": "no_candidate",
+     "reason": [
+      "动"
+     ]
+    },
+    "CFS16": {
+     "sid": "CFS16",
+     "kind": "no_candidate",
+     "reason": [
+      "动"
+     ]
+    }
+   }
+  },
+  "T1": {
+   "tierA": {
+    "S01": {
+     "sid": "S01",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'你们' 只能进「只复述、不换方向」的骨架子集（不猜方向）；无角色标签 ⇒ fail-closed：'你' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "S02": {
+     "sid": "S02",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'你们' 只能进「只复述、不换方向」的骨架子集（不猜方向）；无角色标签 ⇒ fail-closed：'你' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "S03": {
+     "sid": "S03",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'你们' 只能进「只复述、不换方向」的骨架子集（不猜方向）；无角色标签 ⇒ fail-closed：'你' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "CFS13": {
+     "sid": "CFS13",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'你们' 只能进「只复述、不换方向」的骨架子集（不猜方向）；无角色标签 ⇒ fail-closed：'你' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "CFS14": {
+     "sid": "CFS14",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'你们' 只能进「只复述、不换方向」的骨架子集（不猜方向）；无角色标签 ⇒ fail-closed：'你' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "S04": {
+     "sid": "S04",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'我' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "S09": {
+     "sid": "S09",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'我' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "CFS12": {
+     "sid": "CFS12",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'我' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "S05": {
+     "sid": "S05",
+     "kind": "no_candidate",
+     "reason": []
+    },
+    "S06": {
+     "sid": "S06",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'我们' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "S07": {
+     "sid": "S07",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'你们' 只能进「只复述、不换方向」的骨架子集（不猜方向）；无角色标签 ⇒ fail-closed：'你' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "S08": {
+     "sid": "S08",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'你们' 只能进「只复述、不换方向」的骨架子集（不猜方向）；无角色标签 ⇒ fail-closed：'你' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "S10": {
+     "sid": "S10",
+     "kind": "no_candidate",
+     "reason": []
+    },
+    "S11": {
+     "sid": "S11",
+     "kind": "no_candidate",
+     "reason": []
+    },
+    "S12": {
+     "sid": "S12",
+     "kind": "no_candidate",
+     "reason": []
+    },
+    "S13": {
+     "sid": "S13",
+     "kind": "no_candidate",
+     "reason": []
+    },
+    "R01": {
+     "sid": "R01",
+     "kind": "text",
+     "text": "我我开心。",
+     "assign": [
+      "[1]=我(名)",
+      "[2]=我(动)",
+      "[3]=开心(形)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       0,
+       1
+      ]
+     ]
+    },
+    "R02": {
+     "sid": "R02",
+     "kind": "text",
+     "text": "我我。",
+     "assign": [
+      "[1]=我(名)",
+      "[2]=我(动)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       0,
+       1
+      ]
+     ]
+    },
+    "R03": {
+     "sid": "R03",
+     "kind": "no_candidate",
+     "reason": []
+    },
+    "CFS21": {
+     "sid": "CFS21",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'我们' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "CF21": {
+     "sid": "CF21",
+     "kind": "text",
+     "text": "我要我们。",
+     "assign": [
+      "[1]=我(名)",
+      "[2]=我们(动)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       0,
+       2
+      ]
+     ]
+    },
+    "CFS15": {
+     "sid": "CFS15",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'我' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "CFS22": {
+     "sid": "CFS22",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'我' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "CFS16": {
+     "sid": "CFS16",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'你' 只能进「只复述、不换方向」的骨架子集（不猜方向）；无角色标签 ⇒ fail-closed：'我' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    }
+   },
+   "tierB": {
+    "S01": {
+     "sid": "S01",
+     "kind": "text",
+     "text": "我们我们你们。",
+     "assign": [
+      "[1]=我们(名/施事)",
+      "[2]=我们(动/施事)",
+      "[3]=你们(名/受事)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       0,
+       2
+      ]
+     ]
+    },
+    "S02": {
+     "sid": "S02",
+     "kind": "text",
+     "text": "我们我们你们吗？",
+     "assign": [
+      "[1]=我们(名/施事)",
+      "[2]=我们(动/施事)",
+      "[3]=你们(名/受事)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       0,
+       2
+      ]
+     ]
+    },
+    "S03": {
+     "sid": "S03",
+     "kind": "text",
+     "text": "我们我们你们！",
+     "assign": [
+      "[1]=我们(名/施事)",
+      "[2]=我们(动/施事)",
+      "[3]=你们(名/受事)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       0,
+       2
+      ]
+     ]
+    },
+    "CFS13": {
+     "sid": "CFS13",
+     "kind": "text",
+     "text": "我们我们你们。",
+     "assign": [
+      "[1]=我们(名/施事)",
+      "[2]=我们(动/施事)",
+      "[3]=你们(名/受事)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       0,
+       2
+      ]
+     ]
+    },
+    "CFS14": {
+     "sid": "CFS14",
+     "kind": "text",
+     "text": "我们我们你们吗？",
+     "assign": [
+      "[1]=我们(名/施事)",
+      "[2]=我们(动/施事)",
+      "[3]=你们(名/受事)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       0,
+       2
+      ]
+     ]
+    },
+    "S04": {
+     "sid": "S04",
+     "kind": "text",
+     "text": "我我。",
+     "assign": [
+      "[1]=我(名/施事)",
+      "[2]=我(动/施事)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       0,
+       1
+      ]
+     ]
+    },
+    "S09": {
+     "sid": "S09",
+     "kind": "text",
+     "text": "我我吗？",
+     "assign": [
+      "[1]=我(名/施事)",
+      "[2]=我(动/施事)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       0,
+       1
+      ]
+     ]
+    },
+    "CFS12": {
+     "sid": "CFS12",
+     "kind": "text",
+     "text": "我我。",
+     "assign": [
+      "[1]=我(名/施事)",
+      "[2]=我(动/施事)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       0,
+       1
+      ]
+     ]
+    },
+    "S05": {
+     "sid": "S05",
+     "kind": "no_candidate",
+     "reason": []
+    },
+    "S06": {
+     "sid": "S06",
+     "kind": "text",
+     "text": "我们我们。",
+     "assign": [
+      "[1]=我(名/施事)",
+      "[2]=我们(动)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       0,
+       2
+      ]
+     ]
+    },
+    "S07": {
+     "sid": "S07",
+     "kind": "text",
+     "text": "我们和你们我们。",
+     "assign": [
+      "[1]=我们(名/施事)",
+      "[2]=你们(名/受事)",
+      "[3]=我们(动/施事)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       0,
+       2
+      ]
+     ]
+    },
+    "S08": {
+     "sid": "S08",
+     "kind": "text",
+     "text": "我们与你们我们。",
+     "assign": [
+      "[1]=我们(名/施事)",
+      "[2]=你们(名/受事)",
+      "[3]=我们(动/施事)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       0,
+       2
+      ]
+     ]
+    },
+    "S10": {
+     "sid": "S10",
+     "kind": "no_candidate",
+     "reason": []
+    },
+    "S11": {
+     "sid": "S11",
+     "kind": "no_candidate",
+     "reason": []
+    },
+    "S12": {
+     "sid": "S12",
+     "kind": "no_candidate",
+     "reason": []
+    },
+    "S13": {
+     "sid": "S13",
+     "kind": "no_candidate",
+     "reason": []
+    },
+    "R01": {
+     "sid": "R01",
+     "kind": "text",
+     "text": "我我开心。",
+     "assign": [
+      "[1]=我(名)",
+      "[2]=我(动)",
+      "[3]=开心(形)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       0,
+       1
+      ]
+     ]
+    },
+    "R02": {
+     "sid": "R02",
+     "kind": "text",
+     "text": "我我。",
+     "assign": [
+      "[1]=我(名)",
+      "[2]=我(动)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       0,
+       1
+      ]
+     ]
+    },
+    "R03": {
+     "sid": "R03",
+     "kind": "no_candidate",
+     "reason": []
+    },
+    "CFS21": {
+     "sid": "CFS21",
+     "kind": "text",
+     "text": "我们要我们。",
+     "assign": [
+      "[1]=我们(名/施事)",
+      "[2]=我们(动/施事)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       0,
+       2
+      ]
+     ]
+    },
+    "CF21": {
+     "sid": "CF21",
+     "kind": "text",
+     "text": "我要我们。",
+     "assign": [
+      "[1]=我(名)",
+      "[2]=我们(动)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       0,
+       2
+      ]
+     ]
+    },
+    "CFS15": {
+     "sid": "CFS15",
+     "kind": "text",
+     "text": "我不我。",
+     "assign": [
+      "[1]=我(名/施事)",
+      "[2]=不(否)",
+      "[3]=我(动/施事)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       0,
+       1
+      ]
+     ]
+    },
+    "CFS22": {
+     "sid": "CFS22",
+     "kind": "text",
+     "text": "我不我吗？",
+     "assign": [
+      "[1]=我(名/施事)",
+      "[2]=不(否)",
+      "[3]=我(动/施事)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       0,
+       1
+      ]
+     ]
+    },
+    "CFS16": {
+     "sid": "CFS16",
+     "kind": "text",
+     "text": "我不我你。",
+     "assign": [
+      "[1]=我(名/施事)",
+      "[2]=不(否)",
+      "[3]=我(动/施事)",
+      "[4]=你(名/受事)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       0,
+       1
+      ]
+     ]
+    }
+   }
+  },
+  "T2": {
+   "tierA": {
+    "S01": {
+     "sid": "S01",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'你们' 只能进「只复述、不换方向」的骨架子集（不猜方向）；无角色标签 ⇒ fail-closed：'你' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "S02": {
+     "sid": "S02",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'你们' 只能进「只复述、不换方向」的骨架子集（不猜方向）；无角色标签 ⇒ fail-closed：'你' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "S03": {
+     "sid": "S03",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'你们' 只能进「只复述、不换方向」的骨架子集（不猜方向）；无角色标签 ⇒ fail-closed：'你' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "CFS13": {
+     "sid": "CFS13",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'你们' 只能进「只复述、不换方向」的骨架子集（不猜方向）；无角色标签 ⇒ fail-closed：'你' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "CFS14": {
+     "sid": "CFS14",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'你们' 只能进「只复述、不换方向」的骨架子集（不猜方向）；无角色标签 ⇒ fail-closed：'你' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "S04": {
+     "sid": "S04",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'我' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "S09": {
+     "sid": "S09",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'我' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "CFS12": {
+     "sid": "CFS12",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'我' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "S05": {
+     "sid": "S05",
+     "kind": "no_candidate",
+     "reason": []
+    },
+    "S06": {
+     "sid": "S06",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'我们' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "S07": {
+     "sid": "S07",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'你们' 只能进「只复述、不换方向」的骨架子集（不猜方向）；无角色标签 ⇒ fail-closed：'你' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "S08": {
+     "sid": "S08",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'你们' 只能进「只复述、不换方向」的骨架子集（不猜方向）；无角色标签 ⇒ fail-closed：'你' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "S10": {
+     "sid": "S10",
+     "kind": "no_candidate",
+     "reason": []
+    },
+    "S11": {
+     "sid": "S11",
+     "kind": "no_candidate",
+     "reason": []
+    },
+    "S12": {
+     "sid": "S12",
+     "kind": "no_candidate",
+     "reason": []
+    },
+    "S13": {
+     "sid": "S13",
+     "kind": "no_candidate",
+     "reason": []
+    },
+    "R01": {
+     "sid": "R01",
+     "kind": "reject",
+     "reason": "只复述子集违规：骨架 R01 的指派不随原文 span 升序（换了方向）"
+    },
+    "R02": {
+     "sid": "R02",
+     "kind": "text",
+     "text": "我习。",
+     "assign": [
+      "[1]=我(名)",
+      "[2]=习(动)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       2,
+       3
+      ]
+     ]
+    },
+    "R03": {
+     "sid": "R03",
+     "kind": "no_candidate",
+     "reason": []
+    },
+    "CFS21": {
+     "sid": "CFS21",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'我们' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "CF21": {
+     "sid": "CF21",
+     "kind": "text",
+     "text": "我要习。",
+     "assign": [
+      "[1]=我(名)",
+      "[2]=习(动)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       4,
+       5
+      ]
+     ]
+    },
+    "CFS15": {
+     "sid": "CFS15",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'我' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "CFS22": {
+     "sid": "CFS22",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'我' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "CFS16": {
+     "sid": "CFS16",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'你' 只能进「只复述、不换方向」的骨架子集（不猜方向）；无角色标签 ⇒ fail-closed：'我' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    }
+   },
+   "tierB": {
+    "S01": {
+     "sid": "S01",
+     "kind": "text",
+     "text": "我们们你们。",
+     "assign": [
+      "[1]=我们(名/施事)",
+      "[2]=们(动)",
+      "[3]=你们(名/受事)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       5,
+       6
+      ]
+     ]
+    },
+    "S02": {
+     "sid": "S02",
+     "kind": "text",
+     "text": "我们们你们吗？",
+     "assign": [
+      "[1]=我们(名/施事)",
+      "[2]=们(动)",
+      "[3]=你们(名/受事)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       5,
+       6
+      ]
+     ]
+    },
+    "S03": {
+     "sid": "S03",
+     "kind": "text",
+     "text": "我们们你们！",
+     "assign": [
+      "[1]=我们(名/施事)",
+      "[2]=们(动)",
+      "[3]=你们(名/受事)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       5,
+       6
+      ]
+     ]
+    },
+    "CFS13": {
+     "sid": "CFS13",
+     "kind": "text",
+     "text": "我们们你们。",
+     "assign": [
+      "[1]=我们(名/施事)",
+      "[2]=们(动)",
+      "[3]=你们(名/受事)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       5,
+       6
+      ]
+     ]
+    },
+    "CFS14": {
+     "sid": "CFS14",
+     "kind": "text",
+     "text": "我们们你们吗？",
+     "assign": [
+      "[1]=我们(名/施事)",
+      "[2]=们(动)",
+      "[3]=你们(名/受事)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       5,
+       6
+      ]
+     ]
+    },
+    "S04": {
+     "sid": "S04",
+     "kind": "text",
+     "text": "我习。",
+     "assign": [
+      "[1]=我(名/施事)",
+      "[2]=习(动)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       2,
+       3
+      ]
+     ]
+    },
+    "S09": {
+     "sid": "S09",
+     "kind": "text",
+     "text": "我习吗？",
+     "assign": [
+      "[1]=我(名/施事)",
+      "[2]=习(动)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       2,
+       3
+      ]
+     ]
+    },
+    "CFS12": {
+     "sid": "CFS12",
+     "kind": "text",
+     "text": "我习。",
+     "assign": [
+      "[1]=我(名/施事)",
+      "[2]=习(动)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       2,
+       3
+      ]
+     ]
+    },
+    "S05": {
+     "sid": "S05",
+     "kind": "no_candidate",
+     "reason": []
+    },
+    "S06": {
+     "sid": "S06",
+     "kind": "text",
+     "text": "我们习。",
+     "assign": [
+      "[1]=我(名/施事)",
+      "[2]=习(动)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       3,
+       4
+      ]
+     ]
+    },
+    "S07": {
+     "sid": "S07",
+     "kind": "text",
+     "text": "我们和你们论。",
+     "assign": [
+      "[1]=我们(名/施事)",
+      "[2]=你们(名/受事)",
+      "[3]=论(动)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       6,
+       7
+      ]
+     ]
+    },
+    "S08": {
+     "sid": "S08",
+     "kind": "text",
+     "text": "我们与你们论。",
+     "assign": [
+      "[1]=我们(名/施事)",
+      "[2]=你们(名/受事)",
+      "[3]=论(动)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       6,
+       7
+      ]
+     ]
+    },
+    "S10": {
+     "sid": "S10",
+     "kind": "no_candidate",
+     "reason": []
+    },
+    "S11": {
+     "sid": "S11",
+     "kind": "no_candidate",
+     "reason": []
+    },
+    "S12": {
+     "sid": "S12",
+     "kind": "no_candidate",
+     "reason": []
+    },
+    "S13": {
+     "sid": "S13",
+     "kind": "no_candidate",
+     "reason": []
+    },
+    "R01": {
+     "sid": "R01",
+     "kind": "reject",
+     "reason": "只复述子集违规：骨架 R01 的指派不随原文 span 升序（换了方向）"
+    },
+    "R02": {
+     "sid": "R02",
+     "kind": "text",
+     "text": "我习。",
+     "assign": [
+      "[1]=我(名)",
+      "[2]=习(动)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       2,
+       3
+      ]
+     ]
+    },
+    "R03": {
+     "sid": "R03",
+     "kind": "no_candidate",
+     "reason": []
+    },
+    "CFS21": {
+     "sid": "CFS21",
+     "kind": "text",
+     "text": "我们要习。",
+     "assign": [
+      "[1]=我们(名/施事)",
+      "[2]=习(动)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       4,
+       5
+      ]
+     ]
+    },
+    "CF21": {
+     "sid": "CF21",
+     "kind": "text",
+     "text": "我要习。",
+     "assign": [
+      "[1]=我(名)",
+      "[2]=习(动)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       4,
+       5
+      ]
+     ]
+    },
+    "CFS15": {
+     "sid": "CFS15",
+     "kind": "text",
+     "text": "我不习。",
+     "assign": [
+      "[1]=我(名/施事)",
+      "[2]=不(否)",
+      "[3]=习(动)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       3,
+       4
+      ]
+     ]
+    },
+    "CFS22": {
+     "sid": "CFS22",
+     "kind": "text",
+     "text": "我不习吗？",
+     "assign": [
+      "[1]=我(名/施事)",
+      "[2]=不(否)",
+      "[3]=习(动)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       3,
+       4
+      ]
+     ]
+    },
+    "CFS16": {
+     "sid": "CFS16",
+     "kind": "text",
+     "text": "我不你你。",
+     "assign": [
+      "[1]=我(名/施事)",
+      "[2]=不(否)",
+      "[3]=你(动/受事)",
+      "[4]=你(名/受事)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       4,
+       5
+      ]
+     ]
+    }
+   }
+  },
+  "T3": {
+   "tierA": {
+    "S01": {
+     "sid": "S01",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'你们' 只能进「只复述、不换方向」的骨架子集（不猜方向）；无角色标签 ⇒ fail-closed：'你' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "S02": {
+     "sid": "S02",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'你们' 只能进「只复述、不换方向」的骨架子集（不猜方向）；无角色标签 ⇒ fail-closed：'你' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "S03": {
+     "sid": "S03",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'你们' 只能进「只复述、不换方向」的骨架子集（不猜方向）；无角色标签 ⇒ fail-closed：'你' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "CFS13": {
+     "sid": "CFS13",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'你们' 只能进「只复述、不换方向」的骨架子集（不猜方向）；无角色标签 ⇒ fail-closed：'你' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "CFS14": {
+     "sid": "CFS14",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'你们' 只能进「只复述、不换方向」的骨架子集（不猜方向）；无角色标签 ⇒ fail-closed：'你' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "S04": {
+     "sid": "S04",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'我' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "S09": {
+     "sid": "S09",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'我' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "CFS12": {
+     "sid": "CFS12",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'我' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "S05": {
+     "sid": "S05",
+     "kind": "no_candidate",
+     "reason": []
+    },
+    "S06": {
+     "sid": "S06",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'我们' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "S07": {
+     "sid": "S07",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'你们' 只能进「只复述、不换方向」的骨架子集（不猜方向）；无角色标签 ⇒ fail-closed：'你' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "S08": {
+     "sid": "S08",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'你们' 只能进「只复述、不换方向」的骨架子集（不猜方向）；无角色标签 ⇒ fail-closed：'你' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "S10": {
+     "sid": "S10",
+     "kind": "no_candidate",
+     "reason": []
+    },
+    "S11": {
+     "sid": "S11",
+     "kind": "no_candidate",
+     "reason": []
+    },
+    "S12": {
+     "sid": "S12",
+     "kind": "no_candidate",
+     "reason": []
+    },
+    "S13": {
+     "sid": "S13",
+     "kind": "no_candidate",
+     "reason": []
+    },
+    "R01": {
+     "sid": "R01",
+     "kind": "text",
+     "text": "我我开心。",
+     "assign": [
+      "[1]=我(名)",
+      "[2]=我(动)",
+      "[3]=开心(形)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       0,
+       1
+      ]
+     ]
+    },
+    "R02": {
+     "sid": "R02",
+     "kind": "text",
+     "text": "我我。",
+     "assign": [
+      "[1]=我(名)",
+      "[2]=我(动)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       0,
+       1
+      ]
+     ]
+    },
+    "R03": {
+     "sid": "R03",
+     "kind": "no_candidate",
+     "reason": []
+    },
+    "CFS21": {
+     "sid": "CFS21",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'我们' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "CF21": {
+     "sid": "CF21",
+     "kind": "text",
+     "text": "我要我。",
+     "assign": [
+      "[1]=我(名)",
+      "[2]=我(动)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       0,
+       1
+      ]
+     ]
+    },
+    "CFS15": {
+     "sid": "CFS15",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'我' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "CFS22": {
+     "sid": "CFS22",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'我' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "CFS16": {
+     "sid": "CFS16",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'你' 只能进「只复述、不换方向」的骨架子集（不猜方向）；无角色标签 ⇒ fail-closed：'我' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    }
+   },
+   "tierB": {
+    "S01": {
+     "sid": "S01",
+     "kind": "text",
+     "text": "我们我你们。",
+     "assign": [
+      "[1]=我们(名/施事)",
+      "[2]=我(动)",
+      "[3]=你们(名/受事)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       0,
+       1
+      ]
+     ]
+    },
+    "S02": {
+     "sid": "S02",
+     "kind": "text",
+     "text": "我们我你们吗？",
+     "assign": [
+      "[1]=我们(名/施事)",
+      "[2]=我(动)",
+      "[3]=你们(名/受事)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       0,
+       1
+      ]
+     ]
+    },
+    "S03": {
+     "sid": "S03",
+     "kind": "text",
+     "text": "我们我你们！",
+     "assign": [
+      "[1]=我们(名/施事)",
+      "[2]=我(动)",
+      "[3]=你们(名/受事)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       0,
+       1
+      ]
+     ]
+    },
+    "CFS13": {
+     "sid": "CFS13",
+     "kind": "text",
+     "text": "我们我你们。",
+     "assign": [
+      "[1]=我们(名/施事)",
+      "[2]=我(动)",
+      "[3]=你们(名/受事)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       0,
+       1
+      ]
+     ]
+    },
+    "CFS14": {
+     "sid": "CFS14",
+     "kind": "text",
+     "text": "我们我你们吗？",
+     "assign": [
+      "[1]=我们(名/施事)",
+      "[2]=我(动)",
+      "[3]=你们(名/受事)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       0,
+       1
+      ]
+     ]
+    },
+    "S04": {
+     "sid": "S04",
+     "kind": "text",
+     "text": "我我。",
+     "assign": [
+      "[1]=我(名/施事)",
+      "[2]=我(动/施事)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       0,
+       1
+      ]
+     ]
+    },
+    "S09": {
+     "sid": "S09",
+     "kind": "text",
+     "text": "我我吗？",
+     "assign": [
+      "[1]=我(名/施事)",
+      "[2]=我(动/施事)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       0,
+       1
+      ]
+     ]
+    },
+    "CFS12": {
+     "sid": "CFS12",
+     "kind": "text",
+     "text": "我我。",
+     "assign": [
+      "[1]=我(名/施事)",
+      "[2]=我(动/施事)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       0,
+       1
+      ]
+     ]
+    },
+    "S05": {
+     "sid": "S05",
+     "kind": "no_candidate",
+     "reason": []
+    },
+    "S06": {
+     "sid": "S06",
+     "kind": "text",
+     "text": "我们我。",
+     "assign": [
+      "[1]=我(名/施事)",
+      "[2]=我(动/施事)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       0,
+       1
+      ]
+     ]
+    },
+    "S07": {
+     "sid": "S07",
+     "kind": "text",
+     "text": "我们和你们我。",
+     "assign": [
+      "[1]=我们(名/施事)",
+      "[2]=你们(名/受事)",
+      "[3]=我(动)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       0,
+       1
+      ]
+     ]
+    },
+    "S08": {
+     "sid": "S08",
+     "kind": "text",
+     "text": "我们与你们我。",
+     "assign": [
+      "[1]=我们(名/施事)",
+      "[2]=你们(名/受事)",
+      "[3]=我(动)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       0,
+       1
+      ]
+     ]
+    },
+    "S10": {
+     "sid": "S10",
+     "kind": "no_candidate",
+     "reason": []
+    },
+    "S11": {
+     "sid": "S11",
+     "kind": "no_candidate",
+     "reason": []
+    },
+    "S12": {
+     "sid": "S12",
+     "kind": "no_candidate",
+     "reason": []
+    },
+    "S13": {
+     "sid": "S13",
+     "kind": "no_candidate",
+     "reason": []
+    },
+    "R01": {
+     "sid": "R01",
+     "kind": "text",
+     "text": "我我开心。",
+     "assign": [
+      "[1]=我(名)",
+      "[2]=我(动)",
+      "[3]=开心(形)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       0,
+       1
+      ]
+     ]
+    },
+    "R02": {
+     "sid": "R02",
+     "kind": "text",
+     "text": "我我。",
+     "assign": [
+      "[1]=我(名)",
+      "[2]=我(动)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       0,
+       1
+      ]
+     ]
+    },
+    "R03": {
+     "sid": "R03",
+     "kind": "no_candidate",
+     "reason": []
+    },
+    "CFS21": {
+     "sid": "CFS21",
+     "kind": "text",
+     "text": "我们要我。",
+     "assign": [
+      "[1]=我们(名/施事)",
+      "[2]=我(动)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       0,
+       1
+      ]
+     ]
+    },
+    "CF21": {
+     "sid": "CF21",
+     "kind": "text",
+     "text": "我要我。",
+     "assign": [
+      "[1]=我(名)",
+      "[2]=我(动)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       0,
+       1
+      ]
+     ]
+    },
+    "CFS15": {
+     "sid": "CFS15",
+     "kind": "text",
+     "text": "我不我。",
+     "assign": [
+      "[1]=我(名/施事)",
+      "[2]=不(否)",
+      "[3]=我(动/施事)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       0,
+       1
+      ]
+     ]
+    },
+    "CFS22": {
+     "sid": "CFS22",
+     "kind": "text",
+     "text": "我不我吗？",
+     "assign": [
+      "[1]=我(名/施事)",
+      "[2]=不(否)",
+      "[3]=我(动/施事)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       0,
+       1
+      ]
+     ]
+    },
+    "CFS16": {
+     "sid": "CFS16",
+     "kind": "text",
+     "text": "我不我你。",
+     "assign": [
+      "[1]=我(名/施事)",
+      "[2]=不(否)",
+      "[3]=我(动/施事)",
+      "[4]=你(名/受事)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       0,
+       1
+      ]
+     ]
+    }
+   }
+  },
+  "verb": {
+   "tierA": {
+    "S01": {
+     "sid": "S01",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'你们' 只能进「只复述、不换方向」的骨架子集（不猜方向）；无角色标签 ⇒ fail-closed：'你' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "S02": {
+     "sid": "S02",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'你们' 只能进「只复述、不换方向」的骨架子集（不猜方向）；无角色标签 ⇒ fail-closed：'你' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "S03": {
+     "sid": "S03",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'你们' 只能进「只复述、不换方向」的骨架子集（不猜方向）；无角色标签 ⇒ fail-closed：'你' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "CFS13": {
+     "sid": "CFS13",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'你们' 只能进「只复述、不换方向」的骨架子集（不猜方向）；无角色标签 ⇒ fail-closed：'你' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "CFS14": {
+     "sid": "CFS14",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'你们' 只能进「只复述、不换方向」的骨架子集（不猜方向）；无角色标签 ⇒ fail-closed：'你' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "S04": {
+     "sid": "S04",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'我' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "S09": {
+     "sid": "S09",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'我' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "CFS12": {
+     "sid": "CFS12",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'我' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "S05": {
+     "sid": "S05",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'你' 只能进「只复述、不换方向」的骨架子集（不猜方向）；无角色标签 ⇒ fail-closed：'我' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "S06": {
+     "sid": "S06",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'我们' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "S07": {
+     "sid": "S07",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'你们' 只能进「只复述、不换方向」的骨架子集（不猜方向）；无角色标签 ⇒ fail-closed：'你' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "S08": {
+     "sid": "S08",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'你们' 只能进「只复述、不换方向」的骨架子集（不猜方向）；无角色标签 ⇒ fail-closed：'你' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "S10": {
+     "sid": "S10",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'我们' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "S11": {
+     "sid": "S11",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'下周' 只能进「只复述、不换方向」的骨架子集（不猜方向）；无角色标签 ⇒ fail-closed：'我' 只能进「只复述、不换方向」的骨架子集（不猜方向）；无角色标签 ⇒ fail-closed：'我们' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "S12": {
+     "sid": "S12",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'下周' 只能进「只复述、不换方向」的骨架子集（不猜方向）；无角色标签 ⇒ fail-closed：'我' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "S13": {
+     "sid": "S13",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'下周' 只能进「只复述、不换方向」的骨架子集（不猜方向）；无角色标签 ⇒ fail-closed：'我' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "R01": {
+     "sid": "R01",
+     "kind": "text",
+     "text": "我学习开心。",
+     "assign": [
+      "[1]=我(名)",
+      "[2]=学习(动)",
+      "[3]=开心(形)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       1,
+       3
+      ]
+     ]
+    },
+    "R02": {
+     "sid": "R02",
+     "kind": "text",
+     "text": "我学习。",
+     "assign": [
+      "[1]=我(名)",
+      "[2]=学习(动)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       1,
+       3
+      ]
+     ]
+    },
+    "R03": {
+     "sid": "R03",
+     "kind": "text",
+     "text": "我们讨论研究开心。",
+     "assign": [
+      "[1]=我们(名)",
+      "[2]=讨论(动)",
+      "[3]=研究(动)",
+      "[4]=开心(形)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       2,
+       4
+      ],
+      [
+       4,
+       6
+      ]
+     ]
+    },
+    "CFS21": {
+     "sid": "CFS21",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'我们' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "CF21": {
+     "sid": "CF21",
+     "kind": "text",
+     "text": "我们要学习。",
+     "assign": [
+      "[1]=我们(名)",
+      "[2]=学习(动)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       3,
+       5
+      ]
+     ]
+    },
+    "CFS15": {
+     "sid": "CFS15",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'我' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "CFS22": {
+     "sid": "CFS22",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'我' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    },
+    "CFS16": {
+     "sid": "CFS16",
+     "kind": "reject",
+     "reason": "无角色标签 ⇒ fail-closed：'你' 只能进「只复述、不换方向」的骨架子集（不猜方向）；无角色标签 ⇒ fail-closed：'我' 只能进「只复述、不换方向」的骨架子集（不猜方向）"
+    }
+   },
+   "tierB": {
+    "S01": {
+     "sid": "S01",
+     "kind": "text",
+     "text": "我们讨论你们。",
+     "assign": [
+      "[1]=我们(名/施事)",
+      "[2]=讨论(动)",
+      "[3]=你们(名/受事)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       2,
+       4
+      ]
+     ]
+    },
+    "S02": {
+     "sid": "S02",
+     "kind": "text",
+     "text": "我们讨论你们吗？",
+     "assign": [
+      "[1]=我们(名/施事)",
+      "[2]=讨论(动)",
+      "[3]=你们(名/受事)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       2,
+       4
+      ]
+     ]
+    },
+    "S03": {
+     "sid": "S03",
+     "kind": "text",
+     "text": "我们讨论你们！",
+     "assign": [
+      "[1]=我们(名/施事)",
+      "[2]=讨论(动)",
+      "[3]=你们(名/受事)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       2,
+       4
+      ]
+     ]
+    },
+    "CFS13": {
+     "sid": "CFS13",
+     "kind": "text",
+     "text": "我们讨论你们。",
+     "assign": [
+      "[1]=我们(名/施事)",
+      "[2]=讨论(动)",
+      "[3]=你们(名/受事)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       2,
+       4
+      ]
+     ]
+    },
+    "CFS14": {
+     "sid": "CFS14",
+     "kind": "text",
+     "text": "我们讨论你们吗？",
+     "assign": [
+      "[1]=我们(名/施事)",
+      "[2]=讨论(动)",
+      "[3]=你们(名/受事)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       2,
+       4
+      ]
+     ]
+    },
+    "S04": {
+     "sid": "S04",
+     "kind": "text",
+     "text": "我学习。",
+     "assign": [
+      "[1]=我(名/施事)",
+      "[2]=学习(动)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       1,
+       3
+      ]
+     ]
+    },
+    "S09": {
+     "sid": "S09",
+     "kind": "text",
+     "text": "我学习吗？",
+     "assign": [
+      "[1]=我(名/施事)",
+      "[2]=学习(动)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       1,
+       3
+      ]
+     ]
+    },
+    "CFS12": {
+     "sid": "CFS12",
+     "kind": "text",
+     "text": "我学习。",
+     "assign": [
+      "[1]=我(名/施事)",
+      "[2]=学习(动)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       1,
+       3
+      ]
+     ]
+    },
+    "S05": {
+     "sid": "S05",
+     "kind": "text",
+     "text": "我学习，你讨论。",
+     "assign": [
+      "[1]=我(名/施事)",
+      "[2]=学习(动)",
+      "[3]=你(名/施事)",
+      "[4]=讨论(动)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       1,
+       3
+      ],
+      [
+       5,
+       7
+      ]
+     ]
+    },
+    "S06": {
+     "sid": "S06",
+     "kind": "text",
+     "text": "我们学习。",
+     "assign": [
+      "[1]=我(名/施事)",
+      "[2]=学习(动)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       2,
+       4
+      ]
+     ]
+    },
+    "S07": {
+     "sid": "S07",
+     "kind": "text",
+     "text": "我们和你们讨论。",
+     "assign": [
+      "[1]=我们(名/施事)",
+      "[2]=你们(名/受事)",
+      "[3]=讨论(动)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       5,
+       7
+      ]
+     ]
+    },
+    "S08": {
+     "sid": "S08",
+     "kind": "text",
+     "text": "我们与你们讨论。",
+     "assign": [
+      "[1]=我们(名/施事)",
+      "[2]=你们(名/受事)",
+      "[3]=讨论(动)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       5,
+       7
+      ]
+     ]
+    },
+    "S10": {
+     "sid": "S10",
+     "kind": "text",
+     "text": "我们讨论研究开心。",
+     "assign": [
+      "[1]=我们(名/施事)",
+      "[2]=讨论(动)",
+      "[3]=研究(动)",
+      "[4]=开心(形)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       2,
+       4
+      ],
+      [
+       4,
+       6
+      ]
+     ]
+    },
+    "S11": {
+     "sid": "S11",
+     "kind": "text",
+     "text": "我们讨论研究开心，我下周要学习。",
+     "assign": [
+      "[1]=我们(名/施事)",
+      "[2]=讨论(动)",
+      "[3]=研究(动)",
+      "[4]=开心(形)",
+      "[5]=我(名/施事)",
+      "[6]=下周(名/时)",
+      "[7]=学习(动)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       2,
+       4
+      ],
+      [
+       4,
+       6
+      ],
+      [
+       13,
+       15
+      ]
+     ]
+    },
+    "S12": {
+     "sid": "S12",
+     "kind": "text",
+     "text": "讨论开心，我下周要学习。",
+     "assign": [
+      "[1]=讨论(动)",
+      "[2]=开心(形)",
+      "[3]=我(名/施事)",
+      "[4]=下周(名/时)",
+      "[5]=学习(动)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       0,
+       2
+      ],
+      [
+       11,
+       13
+      ]
+     ]
+    },
+    "S13": {
+     "sid": "S13",
+     "kind": "text",
+     "text": "因为讨论开心，我下周要学习。",
+     "assign": [
+      "[1]=讨论(动)",
+      "[2]=开心(形)",
+      "[3]=我(名/施事)",
+      "[4]=下周(名/时)",
+      "[5]=学习(动)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       2,
+       4
+      ],
+      [
+       13,
+       15
+      ]
+     ]
+    },
+    "R01": {
+     "sid": "R01",
+     "kind": "text",
+     "text": "我学习开心。",
+     "assign": [
+      "[1]=我(名)",
+      "[2]=学习(动)",
+      "[3]=开心(形)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       1,
+       3
+      ]
+     ]
+    },
+    "R02": {
+     "sid": "R02",
+     "kind": "text",
+     "text": "我学习。",
+     "assign": [
+      "[1]=我(名)",
+      "[2]=学习(动)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       1,
+       3
+      ]
+     ]
+    },
+    "R03": {
+     "sid": "R03",
+     "kind": "text",
+     "text": "我们讨论研究开心。",
+     "assign": [
+      "[1]=我们(名)",
+      "[2]=讨论(动)",
+      "[3]=研究(动)",
+      "[4]=开心(形)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       2,
+       4
+      ],
+      [
+       4,
+       6
+      ]
+     ]
+    },
+    "CFS21": {
+     "sid": "CFS21",
+     "kind": "text",
+     "text": "我们要学习。",
+     "assign": [
+      "[1]=我们(名/施事)",
+      "[2]=学习(动)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       3,
+       5
+      ]
+     ]
+    },
+    "CF21": {
+     "sid": "CF21",
+     "kind": "text",
+     "text": "我们要学习。",
+     "assign": [
+      "[1]=我们(名)",
+      "[2]=学习(动)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       3,
+       5
+      ]
+     ]
+    },
+    "CFS15": {
+     "sid": "CFS15",
+     "kind": "text",
+     "text": "我不学习。",
+     "assign": [
+      "[1]=我(名/施事)",
+      "[2]=不(否)",
+      "[3]=学习(动)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       2,
+       4
+      ]
+     ]
+    },
+    "CFS22": {
+     "sid": "CFS22",
+     "kind": "text",
+     "text": "我不学习吗？",
+     "assign": [
+      "[1]=我(名/施事)",
+      "[2]=不(否)",
+      "[3]=学习(动)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       2,
+       4
+      ]
+     ]
+    },
+    "CFS16": {
+     "sid": "CFS16",
+     "kind": "text",
+     "text": "我不讨论你。",
+     "assign": [
+      "[1]=我(名/施事)",
+      "[2]=不(否)",
+      "[3]=讨论(动)",
+      "[4]=你(名/受事)"
+     ],
+     "gates": {
+      "rule_a": 0,
+      "slot_schema": 0,
+      "item": 0,
+      "contract": 0,
+      "structure": 0,
+      "deref": 0
+     },
+     "audit": 0,
+     "verbs": [
+      [
+       2,
+       4
+      ]
+     ]
+    }
+   }
+  }
+ },
+ "w1_corpus": {
+  "n": 120,
+  "skeletons": [
+   "S01",
+   "S02",
+   "S03",
+   "S04",
+   "S05",
+   "S06",
+   "S07",
+   "S08",
+   "S09",
+   "S10",
+   "S11",
+   "S12",
+   "S13",
+   "R01",
+   "R02",
+   "R03",
+   "CF21"
+  ],
+  "modes": {
+   "none": {
+    "sentences_with_ge1_unlocked": 0,
+    "unlocked_pairs": 0,
+    "possible_pairs": 2040,
+    "verb_spans_used": 0,
+    "sec": 0.03
+   },
+   "T1": {
+    "sentences_with_ge1_unlocked": 30,
+    "unlocked_pairs": 41,
+    "possible_pairs": 2040,
+    "verb_spans_used": 10,
+    "sec": 0.07
+   },
+   "T2": {
+    "sentences_with_ge1_unlocked": 45,
+    "unlocked_pairs": 51,
+    "possible_pairs": 2040,
+    "verb_spans_used": 23,
+    "sec": 0.06
+   },
+   "T3": {
+    "sentences_with_ge1_unlocked": 18,
+    "unlocked_pairs": 24,
+    "possible_pairs": 2040,
+    "verb_spans_used": 1,
+    "sec": 0.05
+   },
+   "verb": {
+    "sentences_with_ge1_unlocked": 10,
+    "unlocked_pairs": 13,
+    "possible_pairs": 2040,
+    "verb_spans_used": 9,
+    "sec": 0.04
+   }
+  }
+ },
+ "w2": {
+  "p3_before": {
+   "CFS04": [
+    "reject",
+    1
+   ],
+   "CFS05": [
+    "reject",
+    1
+   ],
+   "CFS10": [
+    "reject",
+    1
+   ],
+   "CFS15": [
+    "reject",
+    1
+   ],
+   "CFS16": [
+    "reject",
+    1
+   ],
+   "CFS22": [
+    "reject",
+    1
+   ],
+   "CFS26": [
+    "reject",
+    1
+   ],
+   "CFS23": [
+    "reject",
+    1
+   ],
+   "CFS24": [
+    "reject",
+    1
+   ]
+  },
+  "p3_after": {
+   "CFS04": [
+    "text",
+    0
+   ],
+   "CFS05": [
+    "text",
+    0
+   ],
+   "CFS10": [
+    "text",
+    0
+   ],
+   "CFS15": [
+    "text",
+    0
+   ],
+   "CFS16": [
+    "text",
+    0
+   ],
+   "CFS22": [
+    "text",
+    0
+   ],
+   "CFS26": [
+    "text",
+    0
+   ],
+   "CFS23": [
+    "text",
+    0
+   ],
+   "CFS24": [
+    "text",
+    0
+   ]
+  },
+  "render_ok_before": 0,
+  "render_ok_after": 9,
+  "schema_clean_after": 9,
+  "text_after": {
+   "CFS04": "我不开心。",
+   "CFS05": "我不开心吗？",
+   "CFS10": "我不开心，你难过。",
+   "CFS15": "我不学习。",
+   "CFS16": "我不讨论你。",
+   "CFS22": "我不学习吗？",
+   "CFS26": "我不开心！",
+   "CFS23": "我18开心。",
+   "CFS24": "我18开心吗？"
+  },
+  "gates_after": [
+   {
+    "rule_a": 0,
+    "slot_schema": 0,
+    "item": 0,
+    "contract": 0,
+    "structure": 0,
+    "deref": 0
+   },
+   {
+    "rule_a": 0,
+    "slot_schema": 0,
+    "item": 0,
+    "contract": 0,
+    "structure": 0,
+    "deref": 0
+   },
+   {
+    "rule_a": 0,
+    "slot_schema": 0,
+    "item": 0,
+    "contract": 0,
+    "structure": 0,
+    "deref": 0
+   },
+   {
+    "rule_a": 0,
+    "slot_schema": 0,
+    "item": 0,
+    "contract": 0,
+    "structure": 0,
+    "deref": 0
+   },
+   {
+    "rule_a": 0,
+    "slot_schema": 0,
+    "item": 0,
+    "contract": 0,
+    "structure": 0,
+    "deref": 0
+   },
+   {
+    "rule_a": 0,
+    "slot_schema": 0,
+    "item": 0,
+    "contract": 0,
+    "structure": 0,
+    "deref": 0
+   },
+   {
+    "rule_a": 0,
+    "slot_schema": 0,
+    "item": 0,
+    "contract": 0,
+    "structure": 0,
+    "deref": 0
+   },
+   {
+    "rule_a": 0,
+    "slot_schema": 0,
+    "item": 0,
+    "contract": 0,
+    "structure": 0,
+    "deref": 0
+   },
+   {
+    "rule_a": 0,
+    "slot_schema": 0,
+    "item": 0,
+    "contract": 0,
+    "structure": 0,
+    "deref": 0
+   }
+  ],
+  "audit_after": [
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ]
+ },
+ "w3_gates": {
+  "rule_a": 0,
+  "slot_schema": 0,
+  "item": 0,
+  "contract": 0,
+  "structure": 0,
+  "deref": 0,
+  "all_zero": true
+ },
+ "w4_trace": {
+  "violations": 0,
+  "checked_rows": 10289,
+  "all_zero": true
+ },
+ "w5": {
+  "official16_byte_diff": 0,
+  "official16_diff_ids": [],
+  "cf21_byte_diff": 0,
+  "pytest": {
+   "returncode": 0,
+   "tail": "258 passed in 21.80s",
+   "failed": 0,
+   "passed": 258,
+   "baseline": 258
+  }
+ },
+ "w6": {
+  "git_status_porcelain": [
+   " M src/dtseek/tasks/render.py",
+   "?? experiments/entity_identity/PREREG.md",
+   "?? experiments/entity_identity/REPORT.md",
+   "?? experiments/entity_identity/check_e01.py",
+   "?? experiments/entity_identity/e0_literal_rules.py",
+   "?? experiments/entity_identity/e0_results.json",
+   "?? experiments/entity_identity/eval_old_cards.py",
+   "?? experiments/entity_identity/gen_data.py",
+   "?? experiments/verb_card/"
+  ],
+  "src_diff_numstat": [
+   "22\t7\tsrc/dtseek/tasks/render.py"
+  ],
+  "changed_src_files": [
+   "src/dtseek/tasks/render.py"
+  ],
+  "only_render_py": true,
+  "tracked_modified": [
+   " M src/dtseek/tasks/render.py"
+  ],
+  "untracked": [
+   "?? experiments/entity_identity/PREREG.md",
+   "?? experiments/entity_identity/REPORT.md",
+   "?? experiments/entity_identity/check_e01.py",
+   "?? experiments/entity_identity/e0_literal_rules.py",
+   "?? experiments/entity_identity/e0_results.json",
+   "?? experiments/entity_identity/eval_old_cards.py",
+   "?? experiments/entity_identity/gen_data.py",
+   "?? experiments/verb_card/"
+  ],
+  "pytest": "258 passed in 21.80s",
+  "note_老卡Δ": "未碰 card_flow / 其他 experiments 的任何源文件；真卡 GPU 路径未跑（推断：render.py 改动只影响门禁类型域，`POS_TYPES` 对外取值域未动）"
+ },
+ "deterministic": true,
+ "verdict": {
+  "value": "可用",
+  "tierA_P1": 4,
+  "tierA_P2": 0,
+  "tierB_P1": 17,
+  "tierB_P2": 7,
+  "tierB_P1P2_total": 24,
+  "corpus_verb": 10,
+  "corpus_base": 0,
+  "corpus_floors": {
+   "T1": 30,
+   "T2": 45,
+   "T3": 18
+  },
+  "verb_F1": 1.0,
+  "best_floor_F1": 0.087,
+  "substantive": true,
+  "w1_pass": true,
+  "w2_pass": true,
+  "w3_pass": true,
+  "w4_pass": true,
+  "w5_pass": true
+ }
+}

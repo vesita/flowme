@@ -17,7 +17,8 @@
   （词典谓词 `is_content_word`），且字面必须能整体分解进 形式词（们/吗/和/与 + 标点）
   ∪ 逻辑词表；词典外的实义词 / 专名也过不了分解。
 - **规则 B（槽位带类型 + 题元）**：`slot_schema_problems()` + `check_structure()` ——
-  槽位类型 ∈ {名,动,形}、名槽题元 ∈ {施事,受事,时}，指派必须类型匹配、题元一致。
+  槽位类型 ∈ {名,动,形,否,数}（门禁查 `POS_TYPES_ALL`；对外取值域 `POS_TYPES` 仍是
+  {名,动,形}，见下）、名槽题元 ∈ {施事,受事,时}，指派必须类型匹配、题元一致。
 
 词面守卫（§7.7 未解决的两条）：数字 / 否定 / 情态 / 专名 / 因果-转折连词
 必须**逐字（输入有据）或显式（意图卡声明）**，否则拒答 —— `word_face_problems()`。
@@ -47,6 +48,7 @@ __all__ = [
     "FORMAL_WORDS",
     "LOGIC_WORDS",
     "POS_TYPES",
+    "POS_TYPES_ALL",
     "SKELETONS",
     "SKELETON_CF",
     "SKELETON_OFFICIAL",
@@ -68,8 +70,20 @@ __all__ = [
 
 # ---- 词表（手写闭集，可枚举） ------------------------------------------------
 
-#: 槽位 / 袋块的**类型**取值域（§7.7 规则 B：名 / 动 / 形）。
+#: 槽位 / 袋块的**类型**取值域（§7.7 规则 B：名 / 动 / 形）。**对外取值域，保持 P13 取值不动**：
+#: 既有读方拿它当「有哪些类型」去迭代并索引 `CONTENT_LEXICON[pos]`
+#: （`experiments/gen_dispatch/pipeline.py::type_pos`），或当白名单筛候选
+#: （`experiments/pointer_explain/ptr_explain.py`）⇒ 直接扩它会改它们的默认行为
+#: （实测：`POS_TYPES` 加 否/数 ⇒ pytest 3 failed，`KeyError: '否'`；证据见
+#: `experiments/verb_card/report.md`）。
 POS_TYPES: tuple[str, ...] = ("名", "动", "形")
+
+#: **门禁域**（P25）：`slot_schema_problems()` / `item_problems()` 查这张表
+#: = `POS_TYPES` ∪ {否, 数}。`否`（否定标记）/ `数`（数字串）的候选已有抽取式产出
+#: （`experiments/verb_card/`）⇒ card_flow 表里那 9 条含 `否`/`数` 槽的骨架可过门禁，
+#: 而 `POS_TYPES` 不动 ⇒ 既有读方逐字不变（等价性实测：官方 16 条渲染逐字不变 +
+#: 全库 pytest 258 passed，见 `experiments/verb_card/report.md`）。
+POS_TYPES_ALL: tuple[str, ...] = POS_TYPES + ("否", "数")
 
 #: **题元**取值域（§7.7 规则 B：施事 / 受事 / 时）。`None` = 未标（fail-closed，见下）。
 THETAS: tuple[str, ...] = ("施事", "受事", "时")
@@ -214,7 +228,8 @@ _SKELETON_LIST: tuple[Skeleton, ...] = (
 
 #: 迁移族（**P13 卡片契约统一**）：`experiments/card_flow/skeletons.py` 的 25 条里
 #: 语义归并进官方 3 条（S13→S01 / S14→S02 / S12→S04）、废弃 9 条（含 `否`/`数` 槽，
-#: 不在 `POS_TYPES` ⇒ 过不了 `slot_schema_problems` 门禁）、其余 **13 条**落在这里，
+#: P13 时过不了 `slot_schema_problems` 门禁；P25 起门禁域 `POS_TYPES_ALL` 已含这两类
+#: ⇒ 可再过门禁，见 `experiments/verb_card/`）、其余 **13 条**落在这里，
 #: id 改到 **`CF##` 命名空间**（`##` = 原 card_flow 编号）⇒ 与官方族 id 不相交，
 #: 从结构上杜绝「同 id 不同签名」。逐 id 的 `旧 → 新` 见 `experiments/card_contract/migration.py`。
 #:
@@ -372,8 +387,8 @@ def slot_schema_problems(skeleton: Skeleton) -> list[str]:
             f"规则 B 违规：骨架 {skeleton.sid} 的 pattern 槽位引用 {refs} "
             f"与 {len(skeleton.slots)} 个槽位不是一一对应")
     for k, slot in enumerate(skeleton.slots, 1):
-        if slot.pos not in POS_TYPES:
-            probs.append(f"规则 B 违规：骨架 {skeleton.sid} 槽{k} 类型 {slot.pos!r} 不在 {POS_TYPES}")
+        if slot.pos not in POS_TYPES_ALL:
+            probs.append(f"规则 B 违规：骨架 {skeleton.sid} 槽{k} 类型 {slot.pos!r} 不在 {POS_TYPES_ALL}")
             continue
         if slot.pos == "名":
             if skeleton.direction_safe and slot.theta is not None:
@@ -400,8 +415,8 @@ def item_problems(item: BagItem, input_text: str) -> list[str]:
         probs.append(
             f"evidence 不齐备：袋 {item.ref} {item.text!r} 不是输入逐字子串"
             f"（span 给出的是 {input_text[start:end]!r}）")
-    if item.pos is not None and item.pos not in POS_TYPES:
-        probs.append(f"evidence 不齐备：袋 {item.ref} 类型 {item.pos!r} 不在 {POS_TYPES}")
+    if item.pos is not None and item.pos not in POS_TYPES_ALL:
+        probs.append(f"evidence 不齐备：袋 {item.ref} 类型 {item.pos!r} 不在 {POS_TYPES_ALL}")
     if item.theta is not None and item.theta not in THETAS:
         probs.append(f"evidence 不齐备：袋 {item.ref} 题元 {item.theta!r} 不在 {THETAS}")
     if not item.screened or not item.candidate_id:

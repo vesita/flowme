@@ -1,0 +1,344 @@
+{
+ "official16_byte_diff": 0,
+ "official16_diff_ids": [],
+ "cf21_byte_diff": 0,
+ "p3_before": {
+  "CFS04": [
+   "reject",
+   1
+  ],
+  "CFS05": [
+   "reject",
+   1
+  ],
+  "CFS10": [
+   "reject",
+   1
+  ],
+  "CFS15": [
+   "reject",
+   1
+  ],
+  "CFS16": [
+   "reject",
+   1
+  ],
+  "CFS22": [
+   "reject",
+   1
+  ],
+  "CFS26": [
+   "reject",
+   1
+  ],
+  "CFS23": [
+   "reject",
+   1
+  ],
+  "CFS24": [
+   "reject",
+   1
+  ]
+ },
+ "p3_after": {
+  "CFS04": [
+   "text",
+   0
+  ],
+  "CFS05": [
+   "text",
+   0
+  ],
+  "CFS10": [
+   "text",
+   0
+  ],
+  "CFS15": [
+   "text",
+   0
+  ],
+  "CFS16": [
+   "text",
+   0
+  ],
+  "CFS22": [
+   "text",
+   0
+  ],
+  "CFS26": [
+   "text",
+   0
+  ],
+  "CFS23": [
+   "text",
+   0
+  ],
+  "CFS24": [
+   "text",
+   0
+  ]
+ },
+ "p3_render_ok_before": 0,
+ "p3_render_ok_after": 9,
+ "p3_schema_clean_after": 9,
+ "pos_types_before": [
+  "名",
+  "动",
+  "形"
+ ],
+ "pos_types_after": [
+  "名",
+  "动",
+  "形"
+ ],
+ "sha_changed": {
+  "src/dtseek/tasks/render.py": [
+   "3442f1ea7cb030b2",
+   "18c28cebd6a7683b"
+  ]
+ },
+ "gates_after": [
+  {
+   "rule_a": 0,
+   "slot_schema": 0,
+   "item": 0,
+   "contract": 0,
+   "structure": 0,
+   "deref": 0
+  },
+  {
+   "rule_a": 0,
+   "slot_schema": 0,
+   "item": 0,
+   "contract": 0,
+   "structure": 0,
+   "deref": 0
+  },
+  {
+   "rule_a": 0,
+   "slot_schema": 0,
+   "item": 0,
+   "contract": 0,
+   "structure": 0,
+   "deref": 0
+  },
+  {
+   "rule_a": 0,
+   "slot_schema": 0,
+   "item": 0,
+   "contract": 0,
+   "structure": 0,
+   "deref": 0
+  },
+  {
+   "rule_a": 0,
+   "slot_schema": 0,
+   "item": 0,
+   "contract": 0,
+   "structure": 0,
+   "deref": 0
+  },
+  {
+   "rule_a": 0,
+   "slot_schema": 0,
+   "item": 0,
+   "contract": 0,
+   "structure": 0,
+   "deref": 0
+  },
+  {
+   "rule_a": 0,
+   "slot_schema": 0,
+   "item": 0,
+   "contract": 0,
+   "structure": 0,
+   "deref": 0
+  },
+  {
+   "rule_a": 0,
+   "slot_schema": 0,
+   "item": 0,
+   "contract": 0,
+   "structure": 0,
+   "deref": 0
+  },
+  {
+   "rule_a": 0,
+   "slot_schema": 0,
+   "item": 0,
+   "contract": 0,
+   "structure": 0,
+   "deref": 0
+  },
+  {
+   "rule_a": 0,
+   "slot_schema": 0,
+   "item": 0,
+   "contract": 0,
+   "structure": 0,
+   "deref": 0
+  },
+  {
+   "rule_a": 0,
+   "slot_schema": 0,
+   "item": 0,
+   "contract": 0,
+   "structure": 0,
+   "deref": 0
+  },
+  {
+   "rule_a": 0,
+   "slot_schema": 0,
+   "item": 0,
+   "contract": 0,
+   "structure": 0,
+   "deref": 0
+  },
+  {
+   "rule_a": 0,
+   "slot_schema": 0,
+   "item": 0,
+   "contract": 0,
+   "structure": 0,
+   "deref": 0
+  },
+  {
+   "rule_a": 0,
+   "slot_schema": 0,
+   "item": 0,
+   "contract": 0,
+   "structure": 0,
+   "deref": 0
+  },
+  {
+   "rule_a": 0,
+   "slot_schema": 0,
+   "item": 0,
+   "contract": 0,
+   "structure": 0,
+   "deref": 0
+  },
+  {
+   "rule_a": 0,
+   "slot_schema": 0,
+   "item": 0,
+   "contract": 0,
+   "structure": 0,
+   "deref": 0
+  }
+ ],
+ "audit_after": [
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0
+ ],
+ "p3_gates_after": [
+  {
+   "rule_a": 0,
+   "slot_schema": 0,
+   "item": 0,
+   "contract": 0,
+   "structure": 0,
+   "deref": 0
+  },
+  {
+   "rule_a": 0,
+   "slot_schema": 0,
+   "item": 0,
+   "contract": 0,
+   "structure": 0,
+   "deref": 0
+  },
+  {
+   "rule_a": 0,
+   "slot_schema": 0,
+   "item": 0,
+   "contract": 0,
+   "structure": 0,
+   "deref": 0
+  },
+  {
+   "rule_a": 0,
+   "slot_schema": 0,
+   "item": 0,
+   "contract": 0,
+   "structure": 0,
+   "deref": 0
+  },
+  {
+   "rule_a": 0,
+   "slot_schema": 0,
+   "item": 0,
+   "contract": 0,
+   "structure": 0,
+   "deref": 0
+  },
+  {
+   "rule_a": 0,
+   "slot_schema": 0,
+   "item": 0,
+   "contract": 0,
+   "structure": 0,
+   "deref": 0
+  },
+  {
+   "rule_a": 0,
+   "slot_schema": 0,
+   "item": 0,
+   "contract": 0,
+   "structure": 0,
+   "deref": 0
+  },
+  {
+   "rule_a": 0,
+   "slot_schema": 0,
+   "item": 0,
+   "contract": 0,
+   "structure": 0,
+   "deref": 0
+  },
+  {
+   "rule_a": 0,
+   "slot_schema": 0,
+   "item": 0,
+   "contract": 0,
+   "structure": 0,
+   "deref": 0
+  }
+ ],
+ "p3_audit_after": [
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0
+ ],
+ "p3_text_after": {
+  "CFS04": "我不开心。",
+  "CFS05": "我不开心吗？",
+  "CFS10": "我不开心，你难过。",
+  "CFS15": "我不学习。",
+  "CFS16": "我不讨论你。",
+  "CFS22": "我不学习吗？",
+  "CFS26": "我不开心！",
+  "CFS23": "我18开心。",
+  "CFS24": "我18开心吗？"
+ }
+}

@@ -1,0 +1,4512 @@
+{
+ "tag": "after",
+ "pos_types": [
+  "名",
+  "动",
+  "形"
+ ],
+ "official16": {
+  "S01": {
+   "fid": "F01",
+   "input": "我们讨论你们",
+   "kind": "text",
+   "schema": [],
+   "rule_a": [],
+   "validate": [],
+   "text": "我们讨论你们。",
+   "instruction": {
+    "skeleton_id": "S01",
+    "assignment": [
+     1,
+     2,
+     4
+    ]
+   },
+   "evidence": [
+    {
+     "source": "span",
+     "ref": 1,
+     "text": "我们",
+     "span": [
+      0,
+      2
+     ],
+     "candidate_id": "c1"
+    },
+    {
+     "source": "span",
+     "ref": 2,
+     "text": "讨论",
+     "span": [
+      2,
+      4
+     ],
+     "candidate_id": "verb:2:4"
+    },
+    {
+     "source": "span",
+     "ref": 4,
+     "text": "你们",
+     "span": [
+      4,
+      6
+     ],
+     "candidate_id": "c3"
+    },
+    {
+     "source": "table",
+     "unit_id": "S01#0",
+     "word": "。",
+     "cls": "formal"
+    }
+   ],
+   "ref_map": [
+    {
+     "unit_id": "ref:1",
+     "cls": "content",
+     "text": "我们",
+     "ref": 1,
+     "span": [
+      0,
+      2
+     ],
+     "out": [
+      0,
+      2
+     ]
+    },
+    {
+     "unit_id": "ref:2",
+     "cls": "content",
+     "text": "讨论",
+     "ref": 2,
+     "span": [
+      2,
+      4
+     ],
+     "out": [
+      2,
+      4
+     ]
+    },
+    {
+     "unit_id": "ref:4",
+     "cls": "content",
+     "text": "你们",
+     "ref": 4,
+     "span": [
+      4,
+      6
+     ],
+     "out": [
+      4,
+      6
+     ]
+    },
+    {
+     "unit_id": "S01#0",
+     "cls": "formal",
+     "text": "。",
+     "ref": "S01",
+     "span": null,
+     "out": [
+      6,
+      7
+     ]
+    }
+   ],
+   "gates": {
+    "rule_a": 0,
+    "slot_schema": 0,
+    "item": 0,
+    "contract": 0,
+    "structure": 0,
+    "deref": 0
+   },
+   "audit": []
+  },
+  "S02": {
+   "fid": "F01",
+   "input": "我们讨论你们",
+   "kind": "text",
+   "schema": [],
+   "rule_a": [],
+   "validate": [],
+   "text": "我们讨论你们吗？",
+   "instruction": {
+    "skeleton_id": "S02",
+    "assignment": [
+     1,
+     2,
+     4
+    ]
+   },
+   "evidence": [
+    {
+     "source": "span",
+     "ref": 1,
+     "text": "我们",
+     "span": [
+      0,
+      2
+     ],
+     "candidate_id": "c1"
+    },
+    {
+     "source": "span",
+     "ref": 2,
+     "text": "讨论",
+     "span": [
+      2,
+      4
+     ],
+     "candidate_id": "verb:2:4"
+    },
+    {
+     "source": "span",
+     "ref": 4,
+     "text": "你们",
+     "span": [
+      4,
+      6
+     ],
+     "candidate_id": "c3"
+    },
+    {
+     "source": "table",
+     "unit_id": "S02#0",
+     "word": "吗",
+     "cls": "formal"
+    },
+    {
+     "source": "table",
+     "unit_id": "S02#1",
+     "word": "？",
+     "cls": "formal"
+    }
+   ],
+   "ref_map": [
+    {
+     "unit_id": "ref:1",
+     "cls": "content",
+     "text": "我们",
+     "ref": 1,
+     "span": [
+      0,
+      2
+     ],
+     "out": [
+      0,
+      2
+     ]
+    },
+    {
+     "unit_id": "ref:2",
+     "cls": "content",
+     "text": "讨论",
+     "ref": 2,
+     "span": [
+      2,
+      4
+     ],
+     "out": [
+      2,
+      4
+     ]
+    },
+    {
+     "unit_id": "ref:4",
+     "cls": "content",
+     "text": "你们",
+     "ref": 4,
+     "span": [
+      4,
+      6
+     ],
+     "out": [
+      4,
+      6
+     ]
+    },
+    {
+     "unit_id": "S02#0",
+     "cls": "formal",
+     "text": "吗",
+     "ref": "S02",
+     "span": null,
+     "out": [
+      6,
+      7
+     ]
+    },
+    {
+     "unit_id": "S02#1",
+     "cls": "formal",
+     "text": "？",
+     "ref": "S02",
+     "span": null,
+     "out": [
+      7,
+      8
+     ]
+    }
+   ],
+   "gates": {
+    "rule_a": 0,
+    "slot_schema": 0,
+    "item": 0,
+    "contract": 0,
+    "structure": 0,
+    "deref": 0
+   },
+   "audit": []
+  },
+  "S03": {
+   "fid": "F01",
+   "input": "我们讨论你们",
+   "kind": "text",
+   "schema": [],
+   "rule_a": [],
+   "validate": [],
+   "text": "我们讨论你们！",
+   "instruction": {
+    "skeleton_id": "S03",
+    "assignment": [
+     1,
+     2,
+     4
+    ]
+   },
+   "evidence": [
+    {
+     "source": "span",
+     "ref": 1,
+     "text": "我们",
+     "span": [
+      0,
+      2
+     ],
+     "candidate_id": "c1"
+    },
+    {
+     "source": "span",
+     "ref": 2,
+     "text": "讨论",
+     "span": [
+      2,
+      4
+     ],
+     "candidate_id": "verb:2:4"
+    },
+    {
+     "source": "span",
+     "ref": 4,
+     "text": "你们",
+     "span": [
+      4,
+      6
+     ],
+     "candidate_id": "c3"
+    },
+    {
+     "source": "table",
+     "unit_id": "S03#0",
+     "word": "！",
+     "cls": "formal"
+    }
+   ],
+   "ref_map": [
+    {
+     "unit_id": "ref:1",
+     "cls": "content",
+     "text": "我们",
+     "ref": 1,
+     "span": [
+      0,
+      2
+     ],
+     "out": [
+      0,
+      2
+     ]
+    },
+    {
+     "unit_id": "ref:2",
+     "cls": "content",
+     "text": "讨论",
+     "ref": 2,
+     "span": [
+      2,
+      4
+     ],
+     "out": [
+      2,
+      4
+     ]
+    },
+    {
+     "unit_id": "ref:4",
+     "cls": "content",
+     "text": "你们",
+     "ref": 4,
+     "span": [
+      4,
+      6
+     ],
+     "out": [
+      4,
+      6
+     ]
+    },
+    {
+     "unit_id": "S03#0",
+     "cls": "formal",
+     "text": "！",
+     "ref": "S03",
+     "span": null,
+     "out": [
+      6,
+      7
+     ]
+    }
+   ],
+   "gates": {
+    "rule_a": 0,
+    "slot_schema": 0,
+    "item": 0,
+    "contract": 0,
+    "structure": 0,
+    "deref": 0
+   },
+   "audit": []
+  },
+  "S04": {
+   "fid": "F02",
+   "input": "我学习",
+   "kind": "text",
+   "schema": [],
+   "rule_a": [],
+   "validate": [],
+   "text": "我学习。",
+   "instruction": {
+    "skeleton_id": "S04",
+    "assignment": [
+     0,
+     1
+    ]
+   },
+   "evidence": [
+    {
+     "source": "span",
+     "ref": 0,
+     "text": "我",
+     "span": [
+      0,
+      1
+     ],
+     "candidate_id": "c0"
+    },
+    {
+     "source": "span",
+     "ref": 1,
+     "text": "学习",
+     "span": [
+      1,
+      3
+     ],
+     "candidate_id": "verb:1:3"
+    },
+    {
+     "source": "table",
+     "unit_id": "S04#0",
+     "word": "。",
+     "cls": "formal"
+    }
+   ],
+   "ref_map": [
+    {
+     "unit_id": "ref:0",
+     "cls": "content",
+     "text": "我",
+     "ref": 0,
+     "span": [
+      0,
+      1
+     ],
+     "out": [
+      0,
+      1
+     ]
+    },
+    {
+     "unit_id": "ref:1",
+     "cls": "content",
+     "text": "学习",
+     "ref": 1,
+     "span": [
+      1,
+      3
+     ],
+     "out": [
+      1,
+      3
+     ]
+    },
+    {
+     "unit_id": "S04#0",
+     "cls": "formal",
+     "text": "。",
+     "ref": "S04",
+     "span": null,
+     "out": [
+      3,
+      4
+     ]
+    }
+   ],
+   "gates": {
+    "rule_a": 0,
+    "slot_schema": 0,
+    "item": 0,
+    "contract": 0,
+    "structure": 0,
+    "deref": 0
+   },
+   "audit": []
+  },
+  "S05": {
+   "fid": "F03",
+   "input": "我学习，你讨论",
+   "kind": "text",
+   "schema": [],
+   "rule_a": [],
+   "validate": [],
+   "text": "我学习，你讨论。",
+   "instruction": {
+    "skeleton_id": "S05",
+    "assignment": [
+     0,
+     1,
+     2,
+     3
+    ]
+   },
+   "evidence": [
+    {
+     "source": "span",
+     "ref": 0,
+     "text": "我",
+     "span": [
+      0,
+      1
+     ],
+     "candidate_id": "c0"
+    },
+    {
+     "source": "span",
+     "ref": 1,
+     "text": "学习",
+     "span": [
+      1,
+      3
+     ],
+     "candidate_id": "verb:1:3"
+    },
+    {
+     "source": "table",
+     "unit_id": "S05#0",
+     "word": "，",
+     "cls": "formal"
+    },
+    {
+     "source": "span",
+     "ref": 2,
+     "text": "你",
+     "span": [
+      4,
+      5
+     ],
+     "candidate_id": "c1"
+    },
+    {
+     "source": "span",
+     "ref": 3,
+     "text": "讨论",
+     "span": [
+      5,
+      7
+     ],
+     "candidate_id": "verb:5:7"
+    },
+    {
+     "source": "table",
+     "unit_id": "S05#1",
+     "word": "。",
+     "cls": "formal"
+    }
+   ],
+   "ref_map": [
+    {
+     "unit_id": "ref:0",
+     "cls": "content",
+     "text": "我",
+     "ref": 0,
+     "span": [
+      0,
+      1
+     ],
+     "out": [
+      0,
+      1
+     ]
+    },
+    {
+     "unit_id": "ref:1",
+     "cls": "content",
+     "text": "学习",
+     "ref": 1,
+     "span": [
+      1,
+      3
+     ],
+     "out": [
+      1,
+      3
+     ]
+    },
+    {
+     "unit_id": "S05#0",
+     "cls": "formal",
+     "text": "，",
+     "ref": "S05",
+     "span": null,
+     "out": [
+      3,
+      4
+     ]
+    },
+    {
+     "unit_id": "ref:2",
+     "cls": "content",
+     "text": "你",
+     "ref": 2,
+     "span": [
+      4,
+      5
+     ],
+     "out": [
+      4,
+      5
+     ]
+    },
+    {
+     "unit_id": "ref:3",
+     "cls": "content",
+     "text": "讨论",
+     "ref": 3,
+     "span": [
+      5,
+      7
+     ],
+     "out": [
+      5,
+      7
+     ]
+    },
+    {
+     "unit_id": "S05#1",
+     "cls": "formal",
+     "text": "。",
+     "ref": "S05",
+     "span": null,
+     "out": [
+      7,
+      8
+     ]
+    }
+   ],
+   "gates": {
+    "rule_a": 0,
+    "slot_schema": 0,
+    "item": 0,
+    "contract": 0,
+    "structure": 0,
+    "deref": 0
+   },
+   "audit": []
+  },
+  "S06": {
+   "fid": "F04",
+   "input": "我们学习",
+   "kind": "text",
+   "schema": [],
+   "rule_a": [],
+   "validate": [],
+   "text": "我们学习。",
+   "instruction": {
+    "skeleton_id": "S06",
+    "assignment": [
+     0,
+     2
+    ]
+   },
+   "evidence": [
+    {
+     "source": "span",
+     "ref": 0,
+     "text": "我",
+     "span": [
+      0,
+      1
+     ],
+     "candidate_id": "c0"
+    },
+    {
+     "source": "table",
+     "unit_id": "S06#0",
+     "word": "们",
+     "cls": "formal"
+    },
+    {
+     "source": "span",
+     "ref": 2,
+     "text": "学习",
+     "span": [
+      2,
+      4
+     ],
+     "candidate_id": "verb:2:4"
+    },
+    {
+     "source": "table",
+     "unit_id": "S06#1",
+     "word": "。",
+     "cls": "formal"
+    }
+   ],
+   "ref_map": [
+    {
+     "unit_id": "ref:0",
+     "cls": "content",
+     "text": "我",
+     "ref": 0,
+     "span": [
+      0,
+      1
+     ],
+     "out": [
+      0,
+      1
+     ]
+    },
+    {
+     "unit_id": "S06#0",
+     "cls": "formal",
+     "text": "们",
+     "ref": "S06",
+     "span": null,
+     "out": [
+      1,
+      2
+     ]
+    },
+    {
+     "unit_id": "ref:2",
+     "cls": "content",
+     "text": "学习",
+     "ref": 2,
+     "span": [
+      2,
+      4
+     ],
+     "out": [
+      2,
+      4
+     ]
+    },
+    {
+     "unit_id": "S06#1",
+     "cls": "formal",
+     "text": "。",
+     "ref": "S06",
+     "span": null,
+     "out": [
+      4,
+      5
+     ]
+    }
+   ],
+   "gates": {
+    "rule_a": 0,
+    "slot_schema": 0,
+    "item": 0,
+    "contract": 0,
+    "structure": 0,
+    "deref": 0
+   },
+   "audit": []
+  },
+  "S07": {
+   "fid": "F05",
+   "input": "我们和你们讨论",
+   "kind": "text",
+   "schema": [],
+   "rule_a": [],
+   "validate": [],
+   "text": "我们和你们讨论。",
+   "instruction": {
+    "skeleton_id": "S07",
+    "assignment": [
+     1,
+     3,
+     4
+    ]
+   },
+   "evidence": [
+    {
+     "source": "span",
+     "ref": 1,
+     "text": "我们",
+     "span": [
+      0,
+      2
+     ],
+     "candidate_id": "c1"
+    },
+    {
+     "source": "table",
+     "unit_id": "S07#0",
+     "word": "和",
+     "cls": "formal"
+    },
+    {
+     "source": "span",
+     "ref": 3,
+     "text": "你们",
+     "span": [
+      3,
+      5
+     ],
+     "candidate_id": "c3"
+    },
+    {
+     "source": "span",
+     "ref": 4,
+     "text": "讨论",
+     "span": [
+      5,
+      7
+     ],
+     "candidate_id": "verb:5:7"
+    },
+    {
+     "source": "table",
+     "unit_id": "S07#1",
+     "word": "。",
+     "cls": "formal"
+    }
+   ],
+   "ref_map": [
+    {
+     "unit_id": "ref:1",
+     "cls": "content",
+     "text": "我们",
+     "ref": 1,
+     "span": [
+      0,
+      2
+     ],
+     "out": [
+      0,
+      2
+     ]
+    },
+    {
+     "unit_id": "S07#0",
+     "cls": "formal",
+     "text": "和",
+     "ref": "S07",
+     "span": null,
+     "out": [
+      2,
+      3
+     ]
+    },
+    {
+     "unit_id": "ref:3",
+     "cls": "content",
+     "text": "你们",
+     "ref": 3,
+     "span": [
+      3,
+      5
+     ],
+     "out": [
+      3,
+      5
+     ]
+    },
+    {
+     "unit_id": "ref:4",
+     "cls": "content",
+     "text": "讨论",
+     "ref": 4,
+     "span": [
+      5,
+      7
+     ],
+     "out": [
+      5,
+      7
+     ]
+    },
+    {
+     "unit_id": "S07#1",
+     "cls": "formal",
+     "text": "。",
+     "ref": "S07",
+     "span": null,
+     "out": [
+      7,
+      8
+     ]
+    }
+   ],
+   "gates": {
+    "rule_a": 0,
+    "slot_schema": 0,
+    "item": 0,
+    "contract": 0,
+    "structure": 0,
+    "deref": 0
+   },
+   "audit": []
+  },
+  "S08": {
+   "fid": "F06",
+   "input": "我们与你们讨论",
+   "kind": "text",
+   "schema": [],
+   "rule_a": [],
+   "validate": [],
+   "text": "我们与你们讨论。",
+   "instruction": {
+    "skeleton_id": "S08",
+    "assignment": [
+     1,
+     3,
+     4
+    ]
+   },
+   "evidence": [
+    {
+     "source": "span",
+     "ref": 1,
+     "text": "我们",
+     "span": [
+      0,
+      2
+     ],
+     "candidate_id": "c1"
+    },
+    {
+     "source": "table",
+     "unit_id": "S08#0",
+     "word": "与",
+     "cls": "formal"
+    },
+    {
+     "source": "span",
+     "ref": 3,
+     "text": "你们",
+     "span": [
+      3,
+      5
+     ],
+     "candidate_id": "c3"
+    },
+    {
+     "source": "span",
+     "ref": 4,
+     "text": "讨论",
+     "span": [
+      5,
+      7
+     ],
+     "candidate_id": "verb:5:7"
+    },
+    {
+     "source": "table",
+     "unit_id": "S08#1",
+     "word": "。",
+     "cls": "formal"
+    }
+   ],
+   "ref_map": [
+    {
+     "unit_id": "ref:1",
+     "cls": "content",
+     "text": "我们",
+     "ref": 1,
+     "span": [
+      0,
+      2
+     ],
+     "out": [
+      0,
+      2
+     ]
+    },
+    {
+     "unit_id": "S08#0",
+     "cls": "formal",
+     "text": "与",
+     "ref": "S08",
+     "span": null,
+     "out": [
+      2,
+      3
+     ]
+    },
+    {
+     "unit_id": "ref:3",
+     "cls": "content",
+     "text": "你们",
+     "ref": 3,
+     "span": [
+      3,
+      5
+     ],
+     "out": [
+      3,
+      5
+     ]
+    },
+    {
+     "unit_id": "ref:4",
+     "cls": "content",
+     "text": "讨论",
+     "ref": 4,
+     "span": [
+      5,
+      7
+     ],
+     "out": [
+      5,
+      7
+     ]
+    },
+    {
+     "unit_id": "S08#1",
+     "cls": "formal",
+     "text": "。",
+     "ref": "S08",
+     "span": null,
+     "out": [
+      7,
+      8
+     ]
+    }
+   ],
+   "gates": {
+    "rule_a": 0,
+    "slot_schema": 0,
+    "item": 0,
+    "contract": 0,
+    "structure": 0,
+    "deref": 0
+   },
+   "audit": []
+  },
+  "S09": {
+   "fid": "F02",
+   "input": "我学习",
+   "kind": "text",
+   "schema": [],
+   "rule_a": [],
+   "validate": [],
+   "text": "我学习吗？",
+   "instruction": {
+    "skeleton_id": "S09",
+    "assignment": [
+     0,
+     1
+    ]
+   },
+   "evidence": [
+    {
+     "source": "span",
+     "ref": 0,
+     "text": "我",
+     "span": [
+      0,
+      1
+     ],
+     "candidate_id": "c0"
+    },
+    {
+     "source": "span",
+     "ref": 1,
+     "text": "学习",
+     "span": [
+      1,
+      3
+     ],
+     "candidate_id": "verb:1:3"
+    },
+    {
+     "source": "table",
+     "unit_id": "S09#0",
+     "word": "吗",
+     "cls": "formal"
+    },
+    {
+     "source": "table",
+     "unit_id": "S09#1",
+     "word": "？",
+     "cls": "formal"
+    }
+   ],
+   "ref_map": [
+    {
+     "unit_id": "ref:0",
+     "cls": "content",
+     "text": "我",
+     "ref": 0,
+     "span": [
+      0,
+      1
+     ],
+     "out": [
+      0,
+      1
+     ]
+    },
+    {
+     "unit_id": "ref:1",
+     "cls": "content",
+     "text": "学习",
+     "ref": 1,
+     "span": [
+      1,
+      3
+     ],
+     "out": [
+      1,
+      3
+     ]
+    },
+    {
+     "unit_id": "S09#0",
+     "cls": "formal",
+     "text": "吗",
+     "ref": "S09",
+     "span": null,
+     "out": [
+      3,
+      4
+     ]
+    },
+    {
+     "unit_id": "S09#1",
+     "cls": "formal",
+     "text": "？",
+     "ref": "S09",
+     "span": null,
+     "out": [
+      4,
+      5
+     ]
+    }
+   ],
+   "gates": {
+    "rule_a": 0,
+    "slot_schema": 0,
+    "item": 0,
+    "contract": 0,
+    "structure": 0,
+    "deref": 0
+   },
+   "audit": []
+  },
+  "S10": {
+   "fid": "F07",
+   "input": "我们讨论研究开心",
+   "kind": "text",
+   "schema": [],
+   "rule_a": [],
+   "validate": [],
+   "text": "我们讨论研究开心。",
+   "instruction": {
+    "skeleton_id": "S10",
+    "assignment": [
+     1,
+     2,
+     3,
+     4
+    ]
+   },
+   "evidence": [
+    {
+     "source": "span",
+     "ref": 1,
+     "text": "我们",
+     "span": [
+      0,
+      2
+     ],
+     "candidate_id": "c1"
+    },
+    {
+     "source": "span",
+     "ref": 2,
+     "text": "讨论",
+     "span": [
+      2,
+      4
+     ],
+     "candidate_id": "verb:2:4"
+    },
+    {
+     "source": "span",
+     "ref": 3,
+     "text": "研究",
+     "span": [
+      4,
+      6
+     ],
+     "candidate_id": "verb:4:6"
+    },
+    {
+     "source": "span",
+     "ref": 4,
+     "text": "开心",
+     "span": [
+      6,
+      8
+     ],
+     "candidate_id": "c2"
+    },
+    {
+     "source": "table",
+     "unit_id": "S10#0",
+     "word": "。",
+     "cls": "formal"
+    }
+   ],
+   "ref_map": [
+    {
+     "unit_id": "ref:1",
+     "cls": "content",
+     "text": "我们",
+     "ref": 1,
+     "span": [
+      0,
+      2
+     ],
+     "out": [
+      0,
+      2
+     ]
+    },
+    {
+     "unit_id": "ref:2",
+     "cls": "content",
+     "text": "讨论",
+     "ref": 2,
+     "span": [
+      2,
+      4
+     ],
+     "out": [
+      2,
+      4
+     ]
+    },
+    {
+     "unit_id": "ref:3",
+     "cls": "content",
+     "text": "研究",
+     "ref": 3,
+     "span": [
+      4,
+      6
+     ],
+     "out": [
+      4,
+      6
+     ]
+    },
+    {
+     "unit_id": "ref:4",
+     "cls": "content",
+     "text": "开心",
+     "ref": 4,
+     "span": [
+      6,
+      8
+     ],
+     "out": [
+      6,
+      8
+     ]
+    },
+    {
+     "unit_id": "S10#0",
+     "cls": "formal",
+     "text": "。",
+     "ref": "S10",
+     "span": null,
+     "out": [
+      8,
+      9
+     ]
+    }
+   ],
+   "gates": {
+    "rule_a": 0,
+    "slot_schema": 0,
+    "item": 0,
+    "contract": 0,
+    "structure": 0,
+    "deref": 0
+   },
+   "audit": []
+  },
+  "S11": {
+   "fid": "F08",
+   "input": "我们讨论研究开心，我下周要学习",
+   "kind": "text",
+   "schema": [],
+   "rule_a": [],
+   "validate": [],
+   "text": "我们讨论研究开心，我下周要学习。",
+   "instruction": {
+    "skeleton_id": "S11",
+    "assignment": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ]
+   },
+   "evidence": [
+    {
+     "source": "span",
+     "ref": 1,
+     "text": "我们",
+     "span": [
+      0,
+      2
+     ],
+     "candidate_id": "c1"
+    },
+    {
+     "source": "span",
+     "ref": 2,
+     "text": "讨论",
+     "span": [
+      2,
+      4
+     ],
+     "candidate_id": "verb:2:4"
+    },
+    {
+     "source": "span",
+     "ref": 3,
+     "text": "研究",
+     "span": [
+      4,
+      6
+     ],
+     "candidate_id": "verb:4:6"
+    },
+    {
+     "source": "span",
+     "ref": 4,
+     "text": "开心",
+     "span": [
+      6,
+      8
+     ],
+     "candidate_id": "c2"
+    },
+    {
+     "source": "table",
+     "unit_id": "S11#0",
+     "word": "，",
+     "cls": "formal"
+    },
+    {
+     "source": "span",
+     "ref": 5,
+     "text": "我",
+     "span": [
+      9,
+      10
+     ],
+     "candidate_id": "c3"
+    },
+    {
+     "source": "span",
+     "ref": 6,
+     "text": "下周",
+     "span": [
+      10,
+      12
+     ],
+     "candidate_id": "lexnoun:10:12"
+    },
+    {
+     "source": "table",
+     "unit_id": "S11#1",
+     "word": "要",
+     "cls": "logic"
+    },
+    {
+     "source": "span",
+     "ref": 7,
+     "text": "学习",
+     "span": [
+      13,
+      15
+     ],
+     "candidate_id": "verb:13:15"
+    },
+    {
+     "source": "table",
+     "unit_id": "S11#2",
+     "word": "。",
+     "cls": "formal"
+    }
+   ],
+   "ref_map": [
+    {
+     "unit_id": "ref:1",
+     "cls": "content",
+     "text": "我们",
+     "ref": 1,
+     "span": [
+      0,
+      2
+     ],
+     "out": [
+      0,
+      2
+     ]
+    },
+    {
+     "unit_id": "ref:2",
+     "cls": "content",
+     "text": "讨论",
+     "ref": 2,
+     "span": [
+      2,
+      4
+     ],
+     "out": [
+      2,
+      4
+     ]
+    },
+    {
+     "unit_id": "ref:3",
+     "cls": "content",
+     "text": "研究",
+     "ref": 3,
+     "span": [
+      4,
+      6
+     ],
+     "out": [
+      4,
+      6
+     ]
+    },
+    {
+     "unit_id": "ref:4",
+     "cls": "content",
+     "text": "开心",
+     "ref": 4,
+     "span": [
+      6,
+      8
+     ],
+     "out": [
+      6,
+      8
+     ]
+    },
+    {
+     "unit_id": "S11#0",
+     "cls": "formal",
+     "text": "，",
+     "ref": "S11",
+     "span": null,
+     "out": [
+      8,
+      9
+     ]
+    },
+    {
+     "unit_id": "ref:5",
+     "cls": "content",
+     "text": "我",
+     "ref": 5,
+     "span": [
+      9,
+      10
+     ],
+     "out": [
+      9,
+      10
+     ]
+    },
+    {
+     "unit_id": "ref:6",
+     "cls": "content",
+     "text": "下周",
+     "ref": 6,
+     "span": [
+      10,
+      12
+     ],
+     "out": [
+      10,
+      12
+     ]
+    },
+    {
+     "unit_id": "S11#1",
+     "cls": "logic",
+     "text": "要",
+     "ref": "S11",
+     "span": null,
+     "out": [
+      12,
+      13
+     ]
+    },
+    {
+     "unit_id": "ref:7",
+     "cls": "content",
+     "text": "学习",
+     "ref": 7,
+     "span": [
+      13,
+      15
+     ],
+     "out": [
+      13,
+      15
+     ]
+    },
+    {
+     "unit_id": "S11#2",
+     "cls": "formal",
+     "text": "。",
+     "ref": "S11",
+     "span": null,
+     "out": [
+      15,
+      16
+     ]
+    }
+   ],
+   "gates": {
+    "rule_a": 0,
+    "slot_schema": 0,
+    "item": 0,
+    "contract": 0,
+    "structure": 0,
+    "deref": 0
+   },
+   "audit": []
+  },
+  "S12": {
+   "fid": "F09",
+   "input": "讨论研究开心，我下周要学习",
+   "kind": "text",
+   "schema": [],
+   "rule_a": [],
+   "validate": [],
+   "text": "讨论开心，我下周要学习。",
+   "instruction": {
+    "skeleton_id": "S12",
+    "assignment": [
+     0,
+     2,
+     3,
+     4,
+     5
+    ]
+   },
+   "evidence": [
+    {
+     "source": "span",
+     "ref": 0,
+     "text": "讨论",
+     "span": [
+      0,
+      2
+     ],
+     "candidate_id": "verb:0:2"
+    },
+    {
+     "source": "span",
+     "ref": 2,
+     "text": "开心",
+     "span": [
+      4,
+      6
+     ],
+     "candidate_id": "c0"
+    },
+    {
+     "source": "table",
+     "unit_id": "S12#0",
+     "word": "，",
+     "cls": "formal"
+    },
+    {
+     "source": "span",
+     "ref": 3,
+     "text": "我",
+     "span": [
+      7,
+      8
+     ],
+     "candidate_id": "c1"
+    },
+    {
+     "source": "span",
+     "ref": 4,
+     "text": "下周",
+     "span": [
+      8,
+      10
+     ],
+     "candidate_id": "lexnoun:8:10"
+    },
+    {
+     "source": "table",
+     "unit_id": "S12#1",
+     "word": "要",
+     "cls": "logic"
+    },
+    {
+     "source": "span",
+     "ref": 5,
+     "text": "学习",
+     "span": [
+      11,
+      13
+     ],
+     "candidate_id": "verb:11:13"
+    },
+    {
+     "source": "table",
+     "unit_id": "S12#2",
+     "word": "。",
+     "cls": "formal"
+    }
+   ],
+   "ref_map": [
+    {
+     "unit_id": "ref:0",
+     "cls": "content",
+     "text": "讨论",
+     "ref": 0,
+     "span": [
+      0,
+      2
+     ],
+     "out": [
+      0,
+      2
+     ]
+    },
+    {
+     "unit_id": "ref:2",
+     "cls": "content",
+     "text": "开心",
+     "ref": 2,
+     "span": [
+      4,
+      6
+     ],
+     "out": [
+      2,
+      4
+     ]
+    },
+    {
+     "unit_id": "S12#0",
+     "cls": "formal",
+     "text": "，",
+     "ref": "S12",
+     "span": null,
+     "out": [
+      4,
+      5
+     ]
+    },
+    {
+     "unit_id": "ref:3",
+     "cls": "content",
+     "text": "我",
+     "ref": 3,
+     "span": [
+      7,
+      8
+     ],
+     "out": [
+      5,
+      6
+     ]
+    },
+    {
+     "unit_id": "ref:4",
+     "cls": "content",
+     "text": "下周",
+     "ref": 4,
+     "span": [
+      8,
+      10
+     ],
+     "out": [
+      6,
+      8
+     ]
+    },
+    {
+     "unit_id": "S12#1",
+     "cls": "logic",
+     "text": "要",
+     "ref": "S12",
+     "span": null,
+     "out": [
+      8,
+      9
+     ]
+    },
+    {
+     "unit_id": "ref:5",
+     "cls": "content",
+     "text": "学习",
+     "ref": 5,
+     "span": [
+      11,
+      13
+     ],
+     "out": [
+      9,
+      11
+     ]
+    },
+    {
+     "unit_id": "S12#2",
+     "cls": "formal",
+     "text": "。",
+     "ref": "S12",
+     "span": null,
+     "out": [
+      11,
+      12
+     ]
+    }
+   ],
+   "gates": {
+    "rule_a": 0,
+    "slot_schema": 0,
+    "item": 0,
+    "contract": 0,
+    "structure": 0,
+    "deref": 0
+   },
+   "audit": []
+  },
+  "S13": {
+   "fid": "F10",
+   "input": "因为讨论研究开心，我下周要学习",
+   "kind": "text",
+   "schema": [],
+   "rule_a": [],
+   "validate": [],
+   "text": "因为讨论开心，我下周要学习。",
+   "instruction": {
+    "skeleton_id": "S13",
+    "assignment": [
+     0,
+     2,
+     3,
+     4,
+     5
+    ]
+   },
+   "evidence": [
+    {
+     "source": "table",
+     "unit_id": "S13#0",
+     "word": "因为",
+     "cls": "logic"
+    },
+    {
+     "source": "span",
+     "ref": 0,
+     "text": "讨论",
+     "span": [
+      2,
+      4
+     ],
+     "candidate_id": "verb:2:4"
+    },
+    {
+     "source": "span",
+     "ref": 2,
+     "text": "开心",
+     "span": [
+      6,
+      8
+     ],
+     "candidate_id": "c0"
+    },
+    {
+     "source": "table",
+     "unit_id": "S13#1",
+     "word": "，",
+     "cls": "formal"
+    },
+    {
+     "source": "span",
+     "ref": 3,
+     "text": "我",
+     "span": [
+      9,
+      10
+     ],
+     "candidate_id": "c1"
+    },
+    {
+     "source": "span",
+     "ref": 4,
+     "text": "下周",
+     "span": [
+      10,
+      12
+     ],
+     "candidate_id": "lexnoun:10:12"
+    },
+    {
+     "source": "table",
+     "unit_id": "S13#2",
+     "word": "要",
+     "cls": "logic"
+    },
+    {
+     "source": "span",
+     "ref": 5,
+     "text": "学习",
+     "span": [
+      13,
+      15
+     ],
+     "candidate_id": "verb:13:15"
+    },
+    {
+     "source": "table",
+     "unit_id": "S13#3",
+     "word": "。",
+     "cls": "formal"
+    }
+   ],
+   "ref_map": [
+    {
+     "unit_id": "S13#0",
+     "cls": "logic",
+     "text": "因为",
+     "ref": "S13",
+     "span": null,
+     "out": [
+      0,
+      2
+     ]
+    },
+    {
+     "unit_id": "ref:0",
+     "cls": "content",
+     "text": "讨论",
+     "ref": 0,
+     "span": [
+      2,
+      4
+     ],
+     "out": [
+      2,
+      4
+     ]
+    },
+    {
+     "unit_id": "ref:2",
+     "cls": "content",
+     "text": "开心",
+     "ref": 2,
+     "span": [
+      6,
+      8
+     ],
+     "out": [
+      4,
+      6
+     ]
+    },
+    {
+     "unit_id": "S13#1",
+     "cls": "formal",
+     "text": "，",
+     "ref": "S13",
+     "span": null,
+     "out": [
+      6,
+      7
+     ]
+    },
+    {
+     "unit_id": "ref:3",
+     "cls": "content",
+     "text": "我",
+     "ref": 3,
+     "span": [
+      9,
+      10
+     ],
+     "out": [
+      7,
+      8
+     ]
+    },
+    {
+     "unit_id": "ref:4",
+     "cls": "content",
+     "text": "下周",
+     "ref": 4,
+     "span": [
+      10,
+      12
+     ],
+     "out": [
+      8,
+      10
+     ]
+    },
+    {
+     "unit_id": "S13#2",
+     "cls": "logic",
+     "text": "要",
+     "ref": "S13",
+     "span": null,
+     "out": [
+      10,
+      11
+     ]
+    },
+    {
+     "unit_id": "ref:5",
+     "cls": "content",
+     "text": "学习",
+     "ref": 5,
+     "span": [
+      13,
+      15
+     ],
+     "out": [
+      11,
+      13
+     ]
+    },
+    {
+     "unit_id": "S13#3",
+     "cls": "formal",
+     "text": "。",
+     "ref": "S13",
+     "span": null,
+     "out": [
+      13,
+      14
+     ]
+    }
+   ],
+   "gates": {
+    "rule_a": 0,
+    "slot_schema": 0,
+    "item": 0,
+    "contract": 0,
+    "structure": 0,
+    "deref": 0
+   },
+   "audit": []
+  },
+  "R01": {
+   "fid": "F11",
+   "input": "我学习开心",
+   "kind": "text",
+   "schema": [],
+   "rule_a": [],
+   "validate": [],
+   "text": "我学习开心。",
+   "instruction": {
+    "skeleton_id": "R01",
+    "assignment": [
+     0,
+     1,
+     2
+    ]
+   },
+   "evidence": [
+    {
+     "source": "span",
+     "ref": 0,
+     "text": "我",
+     "span": [
+      0,
+      1
+     ],
+     "candidate_id": "c0"
+    },
+    {
+     "source": "span",
+     "ref": 1,
+     "text": "学习",
+     "span": [
+      1,
+      3
+     ],
+     "candidate_id": "verb:1:3"
+    },
+    {
+     "source": "span",
+     "ref": 2,
+     "text": "开心",
+     "span": [
+      3,
+      5
+     ],
+     "candidate_id": "c1"
+    },
+    {
+     "source": "table",
+     "unit_id": "R01#0",
+     "word": "。",
+     "cls": "formal"
+    }
+   ],
+   "ref_map": [
+    {
+     "unit_id": "ref:0",
+     "cls": "content",
+     "text": "我",
+     "ref": 0,
+     "span": [
+      0,
+      1
+     ],
+     "out": [
+      0,
+      1
+     ]
+    },
+    {
+     "unit_id": "ref:1",
+     "cls": "content",
+     "text": "学习",
+     "ref": 1,
+     "span": [
+      1,
+      3
+     ],
+     "out": [
+      1,
+      3
+     ]
+    },
+    {
+     "unit_id": "ref:2",
+     "cls": "content",
+     "text": "开心",
+     "ref": 2,
+     "span": [
+      3,
+      5
+     ],
+     "out": [
+      3,
+      5
+     ]
+    },
+    {
+     "unit_id": "R01#0",
+     "cls": "formal",
+     "text": "。",
+     "ref": "R01",
+     "span": null,
+     "out": [
+      5,
+      6
+     ]
+    }
+   ],
+   "gates": {
+    "rule_a": 0,
+    "slot_schema": 0,
+    "item": 0,
+    "contract": 0,
+    "structure": 0,
+    "deref": 0
+   },
+   "audit": []
+  },
+  "R02": {
+   "fid": "F12",
+   "input": "我学习",
+   "kind": "text",
+   "schema": [],
+   "rule_a": [],
+   "validate": [],
+   "text": "我学习。",
+   "instruction": {
+    "skeleton_id": "R02",
+    "assignment": [
+     0,
+     1
+    ]
+   },
+   "evidence": [
+    {
+     "source": "span",
+     "ref": 0,
+     "text": "我",
+     "span": [
+      0,
+      1
+     ],
+     "candidate_id": "c0"
+    },
+    {
+     "source": "span",
+     "ref": 1,
+     "text": "学习",
+     "span": [
+      1,
+      3
+     ],
+     "candidate_id": "verb:1:3"
+    },
+    {
+     "source": "table",
+     "unit_id": "R02#0",
+     "word": "。",
+     "cls": "formal"
+    }
+   ],
+   "ref_map": [
+    {
+     "unit_id": "ref:0",
+     "cls": "content",
+     "text": "我",
+     "ref": 0,
+     "span": [
+      0,
+      1
+     ],
+     "out": [
+      0,
+      1
+     ]
+    },
+    {
+     "unit_id": "ref:1",
+     "cls": "content",
+     "text": "学习",
+     "ref": 1,
+     "span": [
+      1,
+      3
+     ],
+     "out": [
+      1,
+      3
+     ]
+    },
+    {
+     "unit_id": "R02#0",
+     "cls": "formal",
+     "text": "。",
+     "ref": "R02",
+     "span": null,
+     "out": [
+      3,
+      4
+     ]
+    }
+   ],
+   "gates": {
+    "rule_a": 0,
+    "slot_schema": 0,
+    "item": 0,
+    "contract": 0,
+    "structure": 0,
+    "deref": 0
+   },
+   "audit": []
+  },
+  "R03": {
+   "fid": "F13",
+   "input": "我们讨论研究开心",
+   "kind": "text",
+   "schema": [],
+   "rule_a": [],
+   "validate": [],
+   "text": "我们讨论研究开心。",
+   "instruction": {
+    "skeleton_id": "R03",
+    "assignment": [
+     1,
+     2,
+     3,
+     4
+    ]
+   },
+   "evidence": [
+    {
+     "source": "span",
+     "ref": 1,
+     "text": "我们",
+     "span": [
+      0,
+      2
+     ],
+     "candidate_id": "c1"
+    },
+    {
+     "source": "span",
+     "ref": 2,
+     "text": "讨论",
+     "span": [
+      2,
+      4
+     ],
+     "candidate_id": "verb:2:4"
+    },
+    {
+     "source": "span",
+     "ref": 3,
+     "text": "研究",
+     "span": [
+      4,
+      6
+     ],
+     "candidate_id": "verb:4:6"
+    },
+    {
+     "source": "span",
+     "ref": 4,
+     "text": "开心",
+     "span": [
+      6,
+      8
+     ],
+     "candidate_id": "c2"
+    },
+    {
+     "source": "table",
+     "unit_id": "R03#0",
+     "word": "。",
+     "cls": "formal"
+    }
+   ],
+   "ref_map": [
+    {
+     "unit_id": "ref:1",
+     "cls": "content",
+     "text": "我们",
+     "ref": 1,
+     "span": [
+      0,
+      2
+     ],
+     "out": [
+      0,
+      2
+     ]
+    },
+    {
+     "unit_id": "ref:2",
+     "cls": "content",
+     "text": "讨论",
+     "ref": 2,
+     "span": [
+      2,
+      4
+     ],
+     "out": [
+      2,
+      4
+     ]
+    },
+    {
+     "unit_id": "ref:3",
+     "cls": "content",
+     "text": "研究",
+     "ref": 3,
+     "span": [
+      4,
+      6
+     ],
+     "out": [
+      4,
+      6
+     ]
+    },
+    {
+     "unit_id": "ref:4",
+     "cls": "content",
+     "text": "开心",
+     "ref": 4,
+     "span": [
+      6,
+      8
+     ],
+     "out": [
+      6,
+      8
+     ]
+    },
+    {
+     "unit_id": "R03#0",
+     "cls": "formal",
+     "text": "。",
+     "ref": "R03",
+     "span": null,
+     "out": [
+      8,
+      9
+     ]
+    }
+   ],
+   "gates": {
+    "rule_a": 0,
+    "slot_schema": 0,
+    "item": 0,
+    "contract": 0,
+    "structure": 0,
+    "deref": 0
+   },
+   "audit": []
+  }
+ },
+ "cf21": {
+  "fid": "F15",
+  "input": "我们要学习",
+  "kind": "text",
+  "schema": [],
+  "rule_a": [],
+  "validate": [],
+  "text": "我们要学习。",
+  "instruction": {
+   "skeleton_id": "CF21",
+   "assignment": [
+    1,
+    2
+   ]
+  },
+  "evidence": [
+   {
+    "source": "span",
+    "ref": 1,
+    "text": "我们",
+    "span": [
+     0,
+     2
+    ],
+    "candidate_id": "c1"
+   },
+   {
+    "source": "table",
+    "unit_id": "CF21#0",
+    "word": "要",
+    "cls": "logic"
+   },
+   {
+    "source": "span",
+    "ref": 2,
+    "text": "学习",
+    "span": [
+     3,
+     5
+    ],
+    "candidate_id": "verb:3:5"
+   },
+   {
+    "source": "table",
+    "unit_id": "CF21#1",
+    "word": "。",
+    "cls": "formal"
+   }
+  ],
+  "ref_map": [
+   {
+    "unit_id": "ref:1",
+    "cls": "content",
+    "text": "我们",
+    "ref": 1,
+    "span": [
+     0,
+     2
+    ],
+    "out": [
+     0,
+     2
+    ]
+   },
+   {
+    "unit_id": "CF21#0",
+    "cls": "logic",
+    "text": "要",
+    "ref": "CF21",
+    "span": null,
+    "out": [
+     2,
+     3
+    ]
+   },
+   {
+    "unit_id": "ref:2",
+    "cls": "content",
+    "text": "学习",
+    "ref": 2,
+    "span": [
+     3,
+     5
+    ],
+    "out": [
+     3,
+     5
+    ]
+   },
+   {
+    "unit_id": "CF21#1",
+    "cls": "formal",
+    "text": "。",
+    "ref": "CF21",
+    "span": null,
+    "out": [
+     5,
+     6
+    ]
+   }
+  ],
+  "gates": {
+   "rule_a": 0,
+   "slot_schema": 0,
+   "item": 0,
+   "contract": 0,
+   "structure": 0,
+   "deref": 0
+  },
+  "audit": []
+ },
+ "p2_cardflow7": {
+  "CFS12": {
+   "fid": "F02",
+   "input": "我学习",
+   "kind": "text",
+   "schema": [],
+   "rule_a": [],
+   "validate": [],
+   "text": "我学习。",
+   "instruction": {
+    "skeleton_id": "CFS12",
+    "assignment": [
+     0,
+     1
+    ]
+   },
+   "evidence": [
+    {
+     "source": "span",
+     "ref": 0,
+     "text": "我",
+     "span": [
+      0,
+      1
+     ],
+     "candidate_id": "c0"
+    },
+    {
+     "source": "span",
+     "ref": 1,
+     "text": "学习",
+     "span": [
+      1,
+      3
+     ],
+     "candidate_id": "verb:1:3"
+    },
+    {
+     "source": "table",
+     "unit_id": "CFS12#0",
+     "word": "。",
+     "cls": "formal"
+    }
+   ],
+   "ref_map": [
+    {
+     "unit_id": "ref:0",
+     "cls": "content",
+     "text": "我",
+     "ref": 0,
+     "span": [
+      0,
+      1
+     ],
+     "out": [
+      0,
+      1
+     ]
+    },
+    {
+     "unit_id": "ref:1",
+     "cls": "content",
+     "text": "学习",
+     "ref": 1,
+     "span": [
+      1,
+      3
+     ],
+     "out": [
+      1,
+      3
+     ]
+    },
+    {
+     "unit_id": "CFS12#0",
+     "cls": "formal",
+     "text": "。",
+     "ref": "CFS12",
+     "span": null,
+     "out": [
+      3,
+      4
+     ]
+    }
+   ],
+   "gates": {
+    "rule_a": 0,
+    "slot_schema": 0,
+    "item": 0,
+    "contract": 0,
+    "structure": 0,
+    "deref": 0
+   },
+   "audit": []
+  },
+  "CFS13": {
+   "fid": "F01",
+   "input": "我们讨论你们",
+   "kind": "text",
+   "schema": [],
+   "rule_a": [],
+   "validate": [],
+   "text": "我们讨论你们。",
+   "instruction": {
+    "skeleton_id": "CFS13",
+    "assignment": [
+     1,
+     2,
+     4
+    ]
+   },
+   "evidence": [
+    {
+     "source": "span",
+     "ref": 1,
+     "text": "我们",
+     "span": [
+      0,
+      2
+     ],
+     "candidate_id": "c1"
+    },
+    {
+     "source": "span",
+     "ref": 2,
+     "text": "讨论",
+     "span": [
+      2,
+      4
+     ],
+     "candidate_id": "verb:2:4"
+    },
+    {
+     "source": "span",
+     "ref": 4,
+     "text": "你们",
+     "span": [
+      4,
+      6
+     ],
+     "candidate_id": "c3"
+    },
+    {
+     "source": "table",
+     "unit_id": "CFS13#0",
+     "word": "。",
+     "cls": "formal"
+    }
+   ],
+   "ref_map": [
+    {
+     "unit_id": "ref:1",
+     "cls": "content",
+     "text": "我们",
+     "ref": 1,
+     "span": [
+      0,
+      2
+     ],
+     "out": [
+      0,
+      2
+     ]
+    },
+    {
+     "unit_id": "ref:2",
+     "cls": "content",
+     "text": "讨论",
+     "ref": 2,
+     "span": [
+      2,
+      4
+     ],
+     "out": [
+      2,
+      4
+     ]
+    },
+    {
+     "unit_id": "ref:4",
+     "cls": "content",
+     "text": "你们",
+     "ref": 4,
+     "span": [
+      4,
+      6
+     ],
+     "out": [
+      4,
+      6
+     ]
+    },
+    {
+     "unit_id": "CFS13#0",
+     "cls": "formal",
+     "text": "。",
+     "ref": "CFS13",
+     "span": null,
+     "out": [
+      6,
+      7
+     ]
+    }
+   ],
+   "gates": {
+    "rule_a": 0,
+    "slot_schema": 0,
+    "item": 0,
+    "contract": 0,
+    "structure": 0,
+    "deref": 0
+   },
+   "audit": []
+  },
+  "CFS14": {
+   "fid": "F01",
+   "input": "我们讨论你们",
+   "kind": "text",
+   "schema": [],
+   "rule_a": [],
+   "validate": [],
+   "text": "我们讨论你们吗？",
+   "instruction": {
+    "skeleton_id": "CFS14",
+    "assignment": [
+     1,
+     2,
+     4
+    ]
+   },
+   "evidence": [
+    {
+     "source": "span",
+     "ref": 1,
+     "text": "我们",
+     "span": [
+      0,
+      2
+     ],
+     "candidate_id": "c1"
+    },
+    {
+     "source": "span",
+     "ref": 2,
+     "text": "讨论",
+     "span": [
+      2,
+      4
+     ],
+     "candidate_id": "verb:2:4"
+    },
+    {
+     "source": "span",
+     "ref": 4,
+     "text": "你们",
+     "span": [
+      4,
+      6
+     ],
+     "candidate_id": "c3"
+    },
+    {
+     "source": "table",
+     "unit_id": "CFS14#0",
+     "word": "吗",
+     "cls": "formal"
+    },
+    {
+     "source": "table",
+     "unit_id": "CFS14#1",
+     "word": "？",
+     "cls": "formal"
+    }
+   ],
+   "ref_map": [
+    {
+     "unit_id": "ref:1",
+     "cls": "content",
+     "text": "我们",
+     "ref": 1,
+     "span": [
+      0,
+      2
+     ],
+     "out": [
+      0,
+      2
+     ]
+    },
+    {
+     "unit_id": "ref:2",
+     "cls": "content",
+     "text": "讨论",
+     "ref": 2,
+     "span": [
+      2,
+      4
+     ],
+     "out": [
+      2,
+      4
+     ]
+    },
+    {
+     "unit_id": "ref:4",
+     "cls": "content",
+     "text": "你们",
+     "ref": 4,
+     "span": [
+      4,
+      6
+     ],
+     "out": [
+      4,
+      6
+     ]
+    },
+    {
+     "unit_id": "CFS14#0",
+     "cls": "formal",
+     "text": "吗",
+     "ref": "CFS14",
+     "span": null,
+     "out": [
+      6,
+      7
+     ]
+    },
+    {
+     "unit_id": "CFS14#1",
+     "cls": "formal",
+     "text": "？",
+     "ref": "CFS14",
+     "span": null,
+     "out": [
+      7,
+      8
+     ]
+    }
+   ],
+   "gates": {
+    "rule_a": 0,
+    "slot_schema": 0,
+    "item": 0,
+    "contract": 0,
+    "structure": 0,
+    "deref": 0
+   },
+   "audit": []
+  },
+  "CFS15": {
+   "fid": "F22",
+   "input": "我不学习",
+   "kind": "text",
+   "schema": [],
+   "rule_a": [],
+   "validate": [],
+   "text": "我不学习。",
+   "instruction": {
+    "skeleton_id": "CFS15",
+    "assignment": [
+     0,
+     1,
+     2
+    ]
+   },
+   "evidence": [
+    {
+     "source": "span",
+     "ref": 0,
+     "text": "我",
+     "span": [
+      0,
+      1
+     ],
+     "candidate_id": "c0"
+    },
+    {
+     "source": "span",
+     "ref": 1,
+     "text": "不",
+     "span": [
+      1,
+      2
+     ],
+     "candidate_id": "c1"
+    },
+    {
+     "source": "span",
+     "ref": 2,
+     "text": "学习",
+     "span": [
+      2,
+      4
+     ],
+     "candidate_id": "verb:2:4"
+    },
+    {
+     "source": "table",
+     "unit_id": "CFS15#0",
+     "word": "。",
+     "cls": "formal"
+    }
+   ],
+   "ref_map": [
+    {
+     "unit_id": "ref:0",
+     "cls": "content",
+     "text": "我",
+     "ref": 0,
+     "span": [
+      0,
+      1
+     ],
+     "out": [
+      0,
+      1
+     ]
+    },
+    {
+     "unit_id": "ref:1",
+     "cls": "content",
+     "text": "不",
+     "ref": 1,
+     "span": [
+      1,
+      2
+     ],
+     "out": [
+      1,
+      2
+     ]
+    },
+    {
+     "unit_id": "ref:2",
+     "cls": "content",
+     "text": "学习",
+     "ref": 2,
+     "span": [
+      2,
+      4
+     ],
+     "out": [
+      2,
+      4
+     ]
+    },
+    {
+     "unit_id": "CFS15#0",
+     "cls": "formal",
+     "text": "。",
+     "ref": "CFS15",
+     "span": null,
+     "out": [
+      4,
+      5
+     ]
+    }
+   ],
+   "gates": {
+    "rule_a": 0,
+    "slot_schema": 0,
+    "item": 0,
+    "contract": 0,
+    "structure": 0,
+    "deref": 0
+   },
+   "audit": []
+  },
+  "CFS16": {
+   "fid": "F23",
+   "input": "我不讨论你",
+   "kind": "text",
+   "schema": [],
+   "rule_a": [],
+   "validate": [],
+   "text": "我不讨论你。",
+   "instruction": {
+    "skeleton_id": "CFS16",
+    "assignment": [
+     0,
+     1,
+     2,
+     3
+    ]
+   },
+   "evidence": [
+    {
+     "source": "span",
+     "ref": 0,
+     "text": "我",
+     "span": [
+      0,
+      1
+     ],
+     "candidate_id": "c0"
+    },
+    {
+     "source": "span",
+     "ref": 1,
+     "text": "不",
+     "span": [
+      1,
+      2
+     ],
+     "candidate_id": "c1"
+    },
+    {
+     "source": "span",
+     "ref": 2,
+     "text": "讨论",
+     "span": [
+      2,
+      4
+     ],
+     "candidate_id": "verb:2:4"
+    },
+    {
+     "source": "span",
+     "ref": 3,
+     "text": "你",
+     "span": [
+      4,
+      5
+     ],
+     "candidate_id": "c2"
+    },
+    {
+     "source": "table",
+     "unit_id": "CFS16#0",
+     "word": "。",
+     "cls": "formal"
+    }
+   ],
+   "ref_map": [
+    {
+     "unit_id": "ref:0",
+     "cls": "content",
+     "text": "我",
+     "ref": 0,
+     "span": [
+      0,
+      1
+     ],
+     "out": [
+      0,
+      1
+     ]
+    },
+    {
+     "unit_id": "ref:1",
+     "cls": "content",
+     "text": "不",
+     "ref": 1,
+     "span": [
+      1,
+      2
+     ],
+     "out": [
+      1,
+      2
+     ]
+    },
+    {
+     "unit_id": "ref:2",
+     "cls": "content",
+     "text": "讨论",
+     "ref": 2,
+     "span": [
+      2,
+      4
+     ],
+     "out": [
+      2,
+      4
+     ]
+    },
+    {
+     "unit_id": "ref:3",
+     "cls": "content",
+     "text": "你",
+     "ref": 3,
+     "span": [
+      4,
+      5
+     ],
+     "out": [
+      4,
+      5
+     ]
+    },
+    {
+     "unit_id": "CFS16#0",
+     "cls": "formal",
+     "text": "。",
+     "ref": "CFS16",
+     "span": null,
+     "out": [
+      5,
+      6
+     ]
+    }
+   ],
+   "gates": {
+    "rule_a": 0,
+    "slot_schema": 0,
+    "item": 0,
+    "contract": 0,
+    "structure": 0,
+    "deref": 0
+   },
+   "audit": []
+  },
+  "CFS21": {
+   "fid": "F14",
+   "input": "我们要学习",
+   "kind": "text",
+   "schema": [],
+   "rule_a": [],
+   "validate": [],
+   "text": "我们要学习。",
+   "instruction": {
+    "skeleton_id": "CFS21",
+    "assignment": [
+     1,
+     2
+    ]
+   },
+   "evidence": [
+    {
+     "source": "span",
+     "ref": 1,
+     "text": "我们",
+     "span": [
+      0,
+      2
+     ],
+     "candidate_id": "c1"
+    },
+    {
+     "source": "table",
+     "unit_id": "CFS21#0",
+     "word": "要",
+     "cls": "logic"
+    },
+    {
+     "source": "span",
+     "ref": 2,
+     "text": "学习",
+     "span": [
+      3,
+      5
+     ],
+     "candidate_id": "verb:3:5"
+    },
+    {
+     "source": "table",
+     "unit_id": "CFS21#1",
+     "word": "。",
+     "cls": "formal"
+    }
+   ],
+   "ref_map": [
+    {
+     "unit_id": "ref:1",
+     "cls": "content",
+     "text": "我们",
+     "ref": 1,
+     "span": [
+      0,
+      2
+     ],
+     "out": [
+      0,
+      2
+     ]
+    },
+    {
+     "unit_id": "CFS21#0",
+     "cls": "logic",
+     "text": "要",
+     "ref": "CFS21",
+     "span": null,
+     "out": [
+      2,
+      3
+     ]
+    },
+    {
+     "unit_id": "ref:2",
+     "cls": "content",
+     "text": "学习",
+     "ref": 2,
+     "span": [
+      3,
+      5
+     ],
+     "out": [
+      3,
+      5
+     ]
+    },
+    {
+     "unit_id": "CFS21#1",
+     "cls": "formal",
+     "text": "。",
+     "ref": "CFS21",
+     "span": null,
+     "out": [
+      5,
+      6
+     ]
+    }
+   ],
+   "gates": {
+    "rule_a": 0,
+    "slot_schema": 0,
+    "item": 0,
+    "contract": 0,
+    "structure": 0,
+    "deref": 0
+   },
+   "audit": []
+  },
+  "CFS22": {
+   "fid": "F22",
+   "input": "我不学习",
+   "kind": "text",
+   "schema": [],
+   "rule_a": [],
+   "validate": [],
+   "text": "我不学习吗？",
+   "instruction": {
+    "skeleton_id": "CFS22",
+    "assignment": [
+     0,
+     1,
+     2
+    ]
+   },
+   "evidence": [
+    {
+     "source": "span",
+     "ref": 0,
+     "text": "我",
+     "span": [
+      0,
+      1
+     ],
+     "candidate_id": "c0"
+    },
+    {
+     "source": "span",
+     "ref": 1,
+     "text": "不",
+     "span": [
+      1,
+      2
+     ],
+     "candidate_id": "c1"
+    },
+    {
+     "source": "span",
+     "ref": 2,
+     "text": "学习",
+     "span": [
+      2,
+      4
+     ],
+     "candidate_id": "verb:2:4"
+    },
+    {
+     "source": "table",
+     "unit_id": "CFS22#0",
+     "word": "吗",
+     "cls": "formal"
+    },
+    {
+     "source": "table",
+     "unit_id": "CFS22#1",
+     "word": "？",
+     "cls": "formal"
+    }
+   ],
+   "ref_map": [
+    {
+     "unit_id": "ref:0",
+     "cls": "content",
+     "text": "我",
+     "ref": 0,
+     "span": [
+      0,
+      1
+     ],
+     "out": [
+      0,
+      1
+     ]
+    },
+    {
+     "unit_id": "ref:1",
+     "cls": "content",
+     "text": "不",
+     "ref": 1,
+     "span": [
+      1,
+      2
+     ],
+     "out": [
+      1,
+      2
+     ]
+    },
+    {
+     "unit_id": "ref:2",
+     "cls": "content",
+     "text": "学习",
+     "ref": 2,
+     "span": [
+      2,
+      4
+     ],
+     "out": [
+      2,
+      4
+     ]
+    },
+    {
+     "unit_id": "CFS22#0",
+     "cls": "formal",
+     "text": "吗",
+     "ref": "CFS22",
+     "span": null,
+     "out": [
+      4,
+      5
+     ]
+    },
+    {
+     "unit_id": "CFS22#1",
+     "cls": "formal",
+     "text": "？",
+     "ref": "CFS22",
+     "span": null,
+     "out": [
+      5,
+      6
+     ]
+    }
+   ],
+   "gates": {
+    "rule_a": 0,
+    "slot_schema": 0,
+    "item": 0,
+    "contract": 0,
+    "structure": 0,
+    "deref": 0
+   },
+   "audit": []
+  }
+ },
+ "p3_nine": {
+  "CFS04": {
+   "fid": "F20",
+   "input": "我不开心",
+   "kind": "text",
+   "schema": [],
+   "rule_a": [],
+   "validate": [],
+   "text": "我不开心。",
+   "instruction": {
+    "skeleton_id": "CFS04",
+    "assignment": [
+     0,
+     1,
+     3
+    ]
+   },
+   "evidence": [
+    {
+     "source": "span",
+     "ref": 0,
+     "text": "我",
+     "span": [
+      0,
+      1
+     ],
+     "candidate_id": "c0"
+    },
+    {
+     "source": "span",
+     "ref": 1,
+     "text": "不",
+     "span": [
+      1,
+      2
+     ],
+     "candidate_id": "c1"
+    },
+    {
+     "source": "span",
+     "ref": 3,
+     "text": "开心",
+     "span": [
+      2,
+      4
+     ],
+     "candidate_id": "c3"
+    },
+    {
+     "source": "table",
+     "unit_id": "CFS04#0",
+     "word": "。",
+     "cls": "formal"
+    }
+   ],
+   "ref_map": [
+    {
+     "unit_id": "ref:0",
+     "cls": "content",
+     "text": "我",
+     "ref": 0,
+     "span": [
+      0,
+      1
+     ],
+     "out": [
+      0,
+      1
+     ]
+    },
+    {
+     "unit_id": "ref:1",
+     "cls": "content",
+     "text": "不",
+     "ref": 1,
+     "span": [
+      1,
+      2
+     ],
+     "out": [
+      1,
+      2
+     ]
+    },
+    {
+     "unit_id": "ref:3",
+     "cls": "content",
+     "text": "开心",
+     "ref": 3,
+     "span": [
+      2,
+      4
+     ],
+     "out": [
+      2,
+      4
+     ]
+    },
+    {
+     "unit_id": "CFS04#0",
+     "cls": "formal",
+     "text": "。",
+     "ref": "CFS04",
+     "span": null,
+     "out": [
+      4,
+      5
+     ]
+    }
+   ],
+   "gates": {
+    "rule_a": 0,
+    "slot_schema": 0,
+    "item": 0,
+    "contract": 0,
+    "structure": 0,
+    "deref": 0
+   },
+   "audit": []
+  },
+  "CFS05": {
+   "fid": "F20",
+   "input": "我不开心",
+   "kind": "text",
+   "schema": [],
+   "rule_a": [],
+   "validate": [],
+   "text": "我不开心吗？",
+   "instruction": {
+    "skeleton_id": "CFS05",
+    "assignment": [
+     0,
+     1,
+     3
+    ]
+   },
+   "evidence": [
+    {
+     "source": "span",
+     "ref": 0,
+     "text": "我",
+     "span": [
+      0,
+      1
+     ],
+     "candidate_id": "c0"
+    },
+    {
+     "source": "span",
+     "ref": 1,
+     "text": "不",
+     "span": [
+      1,
+      2
+     ],
+     "candidate_id": "c1"
+    },
+    {
+     "source": "span",
+     "ref": 3,
+     "text": "开心",
+     "span": [
+      2,
+      4
+     ],
+     "candidate_id": "c3"
+    },
+    {
+     "source": "table",
+     "unit_id": "CFS05#0",
+     "word": "吗",
+     "cls": "formal"
+    },
+    {
+     "source": "table",
+     "unit_id": "CFS05#1",
+     "word": "？",
+     "cls": "formal"
+    }
+   ],
+   "ref_map": [
+    {
+     "unit_id": "ref:0",
+     "cls": "content",
+     "text": "我",
+     "ref": 0,
+     "span": [
+      0,
+      1
+     ],
+     "out": [
+      0,
+      1
+     ]
+    },
+    {
+     "unit_id": "ref:1",
+     "cls": "content",
+     "text": "不",
+     "ref": 1,
+     "span": [
+      1,
+      2
+     ],
+     "out": [
+      1,
+      2
+     ]
+    },
+    {
+     "unit_id": "ref:3",
+     "cls": "content",
+     "text": "开心",
+     "ref": 3,
+     "span": [
+      2,
+      4
+     ],
+     "out": [
+      2,
+      4
+     ]
+    },
+    {
+     "unit_id": "CFS05#0",
+     "cls": "formal",
+     "text": "吗",
+     "ref": "CFS05",
+     "span": null,
+     "out": [
+      4,
+      5
+     ]
+    },
+    {
+     "unit_id": "CFS05#1",
+     "cls": "formal",
+     "text": "？",
+     "ref": "CFS05",
+     "span": null,
+     "out": [
+      5,
+      6
+     ]
+    }
+   ],
+   "gates": {
+    "rule_a": 0,
+    "slot_schema": 0,
+    "item": 0,
+    "contract": 0,
+    "structure": 0,
+    "deref": 0
+   },
+   "audit": []
+  },
+  "CFS10": {
+   "fid": "F21",
+   "input": "我不开心，你难过",
+   "kind": "text",
+   "schema": [],
+   "rule_a": [],
+   "validate": [],
+   "text": "我不开心，你难过。",
+   "instruction": {
+    "skeleton_id": "CFS10",
+    "assignment": [
+     0,
+     1,
+     3,
+     4,
+     6
+    ]
+   },
+   "evidence": [
+    {
+     "source": "span",
+     "ref": 0,
+     "text": "我",
+     "span": [
+      0,
+      1
+     ],
+     "candidate_id": "c0"
+    },
+    {
+     "source": "span",
+     "ref": 1,
+     "text": "不",
+     "span": [
+      1,
+      2
+     ],
+     "candidate_id": "c1"
+    },
+    {
+     "source": "span",
+     "ref": 3,
+     "text": "开心",
+     "span": [
+      2,
+      4
+     ],
+     "candidate_id": "c3"
+    },
+    {
+     "source": "table",
+     "unit_id": "CFS10#0",
+     "word": "，",
+     "cls": "formal"
+    },
+    {
+     "source": "span",
+     "ref": 4,
+     "text": "你",
+     "span": [
+      5,
+      6
+     ],
+     "candidate_id": "c4"
+    },
+    {
+     "source": "span",
+     "ref": 6,
+     "text": "难过",
+     "span": [
+      6,
+      8
+     ],
+     "candidate_id": "c5"
+    },
+    {
+     "source": "table",
+     "unit_id": "CFS10#1",
+     "word": "。",
+     "cls": "formal"
+    }
+   ],
+   "ref_map": [
+    {
+     "unit_id": "ref:0",
+     "cls": "content",
+     "text": "我",
+     "ref": 0,
+     "span": [
+      0,
+      1
+     ],
+     "out": [
+      0,
+      1
+     ]
+    },
+    {
+     "unit_id": "ref:1",
+     "cls": "content",
+     "text": "不",
+     "ref": 1,
+     "span": [
+      1,
+      2
+     ],
+     "out": [
+      1,
+      2
+     ]
+    },
+    {
+     "unit_id": "ref:3",
+     "cls": "content",
+     "text": "开心",
+     "ref": 3,
+     "span": [
+      2,
+      4
+     ],
+     "out": [
+      2,
+      4
+     ]
+    },
+    {
+     "unit_id": "CFS10#0",
+     "cls": "formal",
+     "text": "，",
+     "ref": "CFS10",
+     "span": null,
+     "out": [
+      4,
+      5
+     ]
+    },
+    {
+     "unit_id": "ref:4",
+     "cls": "content",
+     "text": "你",
+     "ref": 4,
+     "span": [
+      5,
+      6
+     ],
+     "out": [
+      5,
+      6
+     ]
+    },
+    {
+     "unit_id": "ref:6",
+     "cls": "content",
+     "text": "难过",
+     "ref": 6,
+     "span": [
+      6,
+      8
+     ],
+     "out": [
+      6,
+      8
+     ]
+    },
+    {
+     "unit_id": "CFS10#1",
+     "cls": "formal",
+     "text": "。",
+     "ref": "CFS10",
+     "span": null,
+     "out": [
+      8,
+      9
+     ]
+    }
+   ],
+   "gates": {
+    "rule_a": 0,
+    "slot_schema": 0,
+    "item": 0,
+    "contract": 0,
+    "structure": 0,
+    "deref": 0
+   },
+   "audit": []
+  },
+  "CFS15": {
+   "fid": "F22",
+   "input": "我不学习",
+   "kind": "text",
+   "schema": [],
+   "rule_a": [],
+   "validate": [],
+   "text": "我不学习。",
+   "instruction": {
+    "skeleton_id": "CFS15",
+    "assignment": [
+     0,
+     1,
+     2
+    ]
+   },
+   "evidence": [
+    {
+     "source": "span",
+     "ref": 0,
+     "text": "我",
+     "span": [
+      0,
+      1
+     ],
+     "candidate_id": "c0"
+    },
+    {
+     "source": "span",
+     "ref": 1,
+     "text": "不",
+     "span": [
+      1,
+      2
+     ],
+     "candidate_id": "c1"
+    },
+    {
+     "source": "span",
+     "ref": 2,
+     "text": "学习",
+     "span": [
+      2,
+      4
+     ],
+     "candidate_id": "verb:2:4"
+    },
+    {
+     "source": "table",
+     "unit_id": "CFS15#0",
+     "word": "。",
+     "cls": "formal"
+    }
+   ],
+   "ref_map": [
+    {
+     "unit_id": "ref:0",
+     "cls": "content",
+     "text": "我",
+     "ref": 0,
+     "span": [
+      0,
+      1
+     ],
+     "out": [
+      0,
+      1
+     ]
+    },
+    {
+     "unit_id": "ref:1",
+     "cls": "content",
+     "text": "不",
+     "ref": 1,
+     "span": [
+      1,
+      2
+     ],
+     "out": [
+      1,
+      2
+     ]
+    },
+    {
+     "unit_id": "ref:2",
+     "cls": "content",
+     "text": "学习",
+     "ref": 2,
+     "span": [
+      2,
+      4
+     ],
+     "out": [
+      2,
+      4
+     ]
+    },
+    {
+     "unit_id": "CFS15#0",
+     "cls": "formal",
+     "text": "。",
+     "ref": "CFS15",
+     "span": null,
+     "out": [
+      4,
+      5
+     ]
+    }
+   ],
+   "gates": {
+    "rule_a": 0,
+    "slot_schema": 0,
+    "item": 0,
+    "contract": 0,
+    "structure": 0,
+    "deref": 0
+   },
+   "audit": []
+  },
+  "CFS16": {
+   "fid": "F23",
+   "input": "我不讨论你",
+   "kind": "text",
+   "schema": [],
+   "rule_a": [],
+   "validate": [],
+   "text": "我不讨论你。",
+   "instruction": {
+    "skeleton_id": "CFS16",
+    "assignment": [
+     0,
+     1,
+     2,
+     3
+    ]
+   },
+   "evidence": [
+    {
+     "source": "span",
+     "ref": 0,
+     "text": "我",
+     "span": [
+      0,
+      1
+     ],
+     "candidate_id": "c0"
+    },
+    {
+     "source": "span",
+     "ref": 1,
+     "text": "不",
+     "span": [
+      1,
+      2
+     ],
+     "candidate_id": "c1"
+    },
+    {
+     "source": "span",
+     "ref": 2,
+     "text": "讨论",
+     "span": [
+      2,
+      4
+     ],
+     "candidate_id": "verb:2:4"
+    },
+    {
+     "source": "span",
+     "ref": 3,
+     "text": "你",
+     "span": [
+      4,
+      5
+     ],
+     "candidate_id": "c2"
+    },
+    {
+     "source": "table",
+     "unit_id": "CFS16#0",
+     "word": "。",
+     "cls": "formal"
+    }
+   ],
+   "ref_map": [
+    {
+     "unit_id": "ref:0",
+     "cls": "content",
+     "text": "我",
+     "ref": 0,
+     "span": [
+      0,
+      1
+     ],
+     "out": [
+      0,
+      1
+     ]
+    },
+    {
+     "unit_id": "ref:1",
+     "cls": "content",
+     "text": "不",
+     "ref": 1,
+     "span": [
+      1,
+      2
+     ],
+     "out": [
+      1,
+      2
+     ]
+    },
+    {
+     "unit_id": "ref:2",
+     "cls": "content",
+     "text": "讨论",
+     "ref": 2,
+     "span": [
+      2,
+      4
+     ],
+     "out": [
+      2,
+      4
+     ]
+    },
+    {
+     "unit_id": "ref:3",
+     "cls": "content",
+     "text": "你",
+     "ref": 3,
+     "span": [
+      4,
+      5
+     ],
+     "out": [
+      4,
+      5
+     ]
+    },
+    {
+     "unit_id": "CFS16#0",
+     "cls": "formal",
+     "text": "。",
+     "ref": "CFS16",
+     "span": null,
+     "out": [
+      5,
+      6
+     ]
+    }
+   ],
+   "gates": {
+    "rule_a": 0,
+    "slot_schema": 0,
+    "item": 0,
+    "contract": 0,
+    "structure": 0,
+    "deref": 0
+   },
+   "audit": []
+  },
+  "CFS22": {
+   "fid": "F22",
+   "input": "我不学习",
+   "kind": "text",
+   "schema": [],
+   "rule_a": [],
+   "validate": [],
+   "text": "我不学习吗？",
+   "instruction": {
+    "skeleton_id": "CFS22",
+    "assignment": [
+     0,
+     1,
+     2
+    ]
+   },
+   "evidence": [
+    {
+     "source": "span",
+     "ref": 0,
+     "text": "我",
+     "span": [
+      0,
+      1
+     ],
+     "candidate_id": "c0"
+    },
+    {
+     "source": "span",
+     "ref": 1,
+     "text": "不",
+     "span": [
+      1,
+      2
+     ],
+     "candidate_id": "c1"
+    },
+    {
+     "source": "span",
+     "ref": 2,
+     "text": "学习",
+     "span": [
+      2,
+      4
+     ],
+     "candidate_id": "verb:2:4"
+    },
+    {
+     "source": "table",
+     "unit_id": "CFS22#0",
+     "word": "吗",
+     "cls": "formal"
+    },
+    {
+     "source": "table",
+     "unit_id": "CFS22#1",
+     "word": "？",
+     "cls": "formal"
+    }
+   ],
+   "ref_map": [
+    {
+     "unit_id": "ref:0",
+     "cls": "content",
+     "text": "我",
+     "ref": 0,
+     "span": [
+      0,
+      1
+     ],
+     "out": [
+      0,
+      1
+     ]
+    },
+    {
+     "unit_id": "ref:1",
+     "cls": "content",
+     "text": "不",
+     "ref": 1,
+     "span": [
+      1,
+      2
+     ],
+     "out": [
+      1,
+      2
+     ]
+    },
+    {
+     "unit_id": "ref:2",
+     "cls": "content",
+     "text": "学习",
+     "ref": 2,
+     "span": [
+      2,
+      4
+     ],
+     "out": [
+      2,
+      4
+     ]
+    },
+    {
+     "unit_id": "CFS22#0",
+     "cls": "formal",
+     "text": "吗",
+     "ref": "CFS22",
+     "span": null,
+     "out": [
+      4,
+      5
+     ]
+    },
+    {
+     "unit_id": "CFS22#1",
+     "cls": "formal",
+     "text": "？",
+     "ref": "CFS22",
+     "span": null,
+     "out": [
+      5,
+      6
+     ]
+    }
+   ],
+   "gates": {
+    "rule_a": 0,
+    "slot_schema": 0,
+    "item": 0,
+    "contract": 0,
+    "structure": 0,
+    "deref": 0
+   },
+   "audit": []
+  },
+  "CFS26": {
+   "fid": "F20",
+   "input": "我不开心",
+   "kind": "text",
+   "schema": [],
+   "rule_a": [],
+   "validate": [],
+   "text": "我不开心！",
+   "instruction": {
+    "skeleton_id": "CFS26",
+    "assignment": [
+     0,
+     1,
+     3
+    ]
+   },
+   "evidence": [
+    {
+     "source": "span",
+     "ref": 0,
+     "text": "我",
+     "span": [
+      0,
+      1
+     ],
+     "candidate_id": "c0"
+    },
+    {
+     "source": "span",
+     "ref": 1,
+     "text": "不",
+     "span": [
+      1,
+      2
+     ],
+     "candidate_id": "c1"
+    },
+    {
+     "source": "span",
+     "ref": 3,
+     "text": "开心",
+     "span": [
+      2,
+      4
+     ],
+     "candidate_id": "c3"
+    },
+    {
+     "source": "table",
+     "unit_id": "CFS26#0",
+     "word": "！",
+     "cls": "formal"
+    }
+   ],
+   "ref_map": [
+    {
+     "unit_id": "ref:0",
+     "cls": "content",
+     "text": "我",
+     "ref": 0,
+     "span": [
+      0,
+      1
+     ],
+     "out": [
+      0,
+      1
+     ]
+    },
+    {
+     "unit_id": "ref:1",
+     "cls": "content",
+     "text": "不",
+     "ref": 1,
+     "span": [
+      1,
+      2
+     ],
+     "out": [
+      1,
+      2
+     ]
+    },
+    {
+     "unit_id": "ref:3",
+     "cls": "content",
+     "text": "开心",
+     "ref": 3,
+     "span": [
+      2,
+      4
+     ],
+     "out": [
+      2,
+      4
+     ]
+    },
+    {
+     "unit_id": "CFS26#0",
+     "cls": "formal",
+     "text": "！",
+     "ref": "CFS26",
+     "span": null,
+     "out": [
+      4,
+      5
+     ]
+    }
+   ],
+   "gates": {
+    "rule_a": 0,
+    "slot_schema": 0,
+    "item": 0,
+    "contract": 0,
+    "structure": 0,
+    "deref": 0
+   },
+   "audit": []
+  },
+  "CFS23": {
+   "fid": "F24",
+   "input": "我18开心",
+   "kind": "text",
+   "schema": [],
+   "rule_a": [],
+   "validate": [],
+   "text": "我18开心。",
+   "instruction": {
+    "skeleton_id": "CFS23",
+    "assignment": [
+     0,
+     1,
+     2
+    ]
+   },
+   "evidence": [
+    {
+     "source": "span",
+     "ref": 0,
+     "text": "我",
+     "span": [
+      0,
+      1
+     ],
+     "candidate_id": "c0"
+    },
+    {
+     "source": "span",
+     "ref": 1,
+     "text": "18",
+     "span": [
+      1,
+      3
+     ],
+     "candidate_id": "number:1:3"
+    },
+    {
+     "source": "span",
+     "ref": 2,
+     "text": "开心",
+     "span": [
+      3,
+      5
+     ],
+     "candidate_id": "c1"
+    },
+    {
+     "source": "table",
+     "unit_id": "CFS23#0",
+     "word": "。",
+     "cls": "formal"
+    }
+   ],
+   "ref_map": [
+    {
+     "unit_id": "ref:0",
+     "cls": "content",
+     "text": "我",
+     "ref": 0,
+     "span": [
+      0,
+      1
+     ],
+     "out": [
+      0,
+      1
+     ]
+    },
+    {
+     "unit_id": "ref:1",
+     "cls": "content",
+     "text": "18",
+     "ref": 1,
+     "span": [
+      1,
+      3
+     ],
+     "out": [
+      1,
+      3
+     ]
+    },
+    {
+     "unit_id": "ref:2",
+     "cls": "content",
+     "text": "开心",
+     "ref": 2,
+     "span": [
+      3,
+      5
+     ],
+     "out": [
+      3,
+      5
+     ]
+    },
+    {
+     "unit_id": "CFS23#0",
+     "cls": "formal",
+     "text": "。",
+     "ref": "CFS23",
+     "span": null,
+     "out": [
+      5,
+      6
+     ]
+    }
+   ],
+   "gates": {
+    "rule_a": 0,
+    "slot_schema": 0,
+    "item": 0,
+    "contract": 0,
+    "structure": 0,
+    "deref": 0
+   },
+   "audit": []
+  },
+  "CFS24": {
+   "fid": "F24",
+   "input": "我18开心",
+   "kind": "text",
+   "schema": [],
+   "rule_a": [],
+   "validate": [],
+   "text": "我18开心吗？",
+   "instruction": {
+    "skeleton_id": "CFS24",
+    "assignment": [
+     0,
+     1,
+     2
+    ]
+   },
+   "evidence": [
+    {
+     "source": "span",
+     "ref": 0,
+     "text": "我",
+     "span": [
+      0,
+      1
+     ],
+     "candidate_id": "c0"
+    },
+    {
+     "source": "span",
+     "ref": 1,
+     "text": "18",
+     "span": [
+      1,
+      3
+     ],
+     "candidate_id": "number:1:3"
+    },
+    {
+     "source": "span",
+     "ref": 2,
+     "text": "开心",
+     "span": [
+      3,
+      5
+     ],
+     "candidate_id": "c1"
+    },
+    {
+     "source": "table",
+     "unit_id": "CFS24#0",
+     "word": "吗",
+     "cls": "formal"
+    },
+    {
+     "source": "table",
+     "unit_id": "CFS24#1",
+     "word": "？",
+     "cls": "formal"
+    }
+   ],
+   "ref_map": [
+    {
+     "unit_id": "ref:0",
+     "cls": "content",
+     "text": "我",
+     "ref": 0,
+     "span": [
+      0,
+      1
+     ],
+     "out": [
+      0,
+      1
+     ]
+    },
+    {
+     "unit_id": "ref:1",
+     "cls": "content",
+     "text": "18",
+     "ref": 1,
+     "span": [
+      1,
+      3
+     ],
+     "out": [
+      1,
+      3
+     ]
+    },
+    {
+     "unit_id": "ref:2",
+     "cls": "content",
+     "text": "开心",
+     "ref": 2,
+     "span": [
+      3,
+      5
+     ],
+     "out": [
+      3,
+      5
+     ]
+    },
+    {
+     "unit_id": "CFS24#0",
+     "cls": "formal",
+     "text": "吗",
+     "ref": "CFS24",
+     "span": null,
+     "out": [
+      5,
+      6
+     ]
+    },
+    {
+     "unit_id": "CFS24#1",
+     "cls": "formal",
+     "text": "？",
+     "ref": "CFS24",
+     "span": null,
+     "out": [
+      6,
+      7
+     ]
+    }
+   ],
+   "gates": {
+    "rule_a": 0,
+    "slot_schema": 0,
+    "item": 0,
+    "contract": 0,
+    "structure": 0,
+    "deref": 0
+   },
+   "audit": []
+  }
+ },
+ "sha256": {
+  "src/dtseek/tasks/render.py": "18c28cebd6a7683b",
+  "src/dtseek/tasks/card_contract.py": "37bcf0a83aa98c92",
+  "src/dtseek/tasks/dialogue.py": "51e4230f2a4cb4a2",
+  "src/dtseek/tasks/dispatch.py": "550e546240d3ea8a",
+  "src/dtseek/tasks/engine.py": "e76597a4e70335c9",
+  "src/dtseek/tasks/plugin.py": "16a5b58b2a241031",
+  "src/dtseek/tasks/runtime.py": "2c1e5d58f62ce6ef",
+  "src/dtseek/tasks/compose.py": "f4b67dfd0bfea922",
+  "experiments/card_flow/skeletons.py": "8861313d237ffca2",
+  "experiments/card_flow/lexicon.py": "ef961586c2116f73",
+  "experiments/card_flow/proposers.py": "df4bf59d0665e55e",
+  "experiments/card_flow/predicates.py": "e9248b2c4f2384e6"
+ }
+}
