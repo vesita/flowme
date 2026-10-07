@@ -1,0 +1,112 @@
+{
+  "name": "B_s42_rand",
+  "arm": "B",
+  "seed": 42,
+  "randlabel": true,
+  "device": "cuda",
+  "freeze": {
+    "encoder_params": 1688460,
+    "encoder_trainable": 0,
+    "encoder_training": false,
+    "hidden": 128,
+    "max_len": 128
+  },
+  "params": {
+    "arm": "B",
+    "trunk_ptr": 0,
+    "trunk_gen": 164224,
+    "shared_trunk": false,
+    "ptr_out": 0,
+    "gen_skel": 5160,
+    "gen_assign": 16704,
+    "head_trainable": 186088
+  },
+  "recipe": {
+    "steps": 1800,
+    "batch": 64,
+    "lr": 0.001,
+    "weight_decay": 0.0001,
+    "cosine": true,
+    "grad_clip": 1.0,
+    "n_ptr_train": 0,
+    "n_gen_train": 8000,
+    "loss": "L_gen"
+  },
+  "eval": {
+    "gen_test": {
+      "skel": {
+        "n": 2500,
+        "acc": 0.378,
+        "se": 0.01,
+        "margin_over_se": 35.3,
+        "blind_guess": 0.025
+      },
+      "slot": {
+        "n": 2500,
+        "acc": 0.335733,
+        "se": 0.007082
+      },
+      "joint": {
+        "n": 2500,
+        "acc": 0.0732,
+        "se": 0.01
+      },
+      "ce": 1.939854
+    }
+  },
+  "timing": {
+    "probe_fwd_gen_ms": {
+      "n": 200,
+      "mean_ms": 0.2016,
+      "p50_ms": 0.198,
+      "p95_ms": 0.2153
+    },
+    "probe_step_fwd_bwd_ms": {
+      "n": 50,
+      "mean_ms": 1.1019,
+      "p50_ms": 1.118,
+      "p95_ms": 1.2761
+    },
+    "probe_n": 200,
+    "train_warm_skip": 50,
+    "train_fwd_ms": {
+      "gen": {
+        "n": 1750,
+        "mean": 0.535,
+        "p50": 0.5208,
+        "p95": 0.5382
+      }
+    },
+    "train_step_ms": {
+      "n": 1750,
+      "mean": 2.2775,
+      "p50": 2.1939,
+      "p95": 2.3762
+    },
+    "loss_by_channel": {
+      "gen": {
+        "n": 1800,
+        "first": 4.671694,
+        "last": 2.584599,
+        "mean_over_all": 2.66774
+      }
+    },
+    "train_step_all_ms": {
+      "n": 1800,
+      "mean": 2.5324,
+      "p50": 2.1949,
+      "p95": 2.3762
+    }
+  },
+  "loss_first": 4.671694,
+  "loss_last": 2.584599,
+  "loss_by_channel": {
+    "gen": {
+      "n": 1800,
+      "first": 4.671694,
+      "last": 2.584599,
+      "mean_over_all": 2.66774
+    }
+  },
+  "wall_sec": 9.8
+}

@@ -1,0 +1,1296 @@
+{
+  "runs": [
+    "KEEP_s42",
+    "KEEP_s43",
+    "MASK_s42",
+    "MASK_s42_rand",
+    "MASK_s43",
+    "MASK_s43_rand",
+    "MIX_s42",
+    "MIX_s43"
+  ],
+  "ext_runs": [
+    "KEEP_s42_steps8000",
+    "MASK_s42_steps8000",
+    "MASK_s43_steps8000"
+  ],
+  "battery": {
+    "keep": {
+      "n": 6000,
+      "R0_majority": 0.456,
+      "R1_punct_simple": 0.7225,
+      "R1_punct_full": 1.0,
+      "R2_particle": 0.6807,
+      "R3_final_char": 0.7225,
+      "R4_len_bucket": 0.4842,
+      "R5_first_char": 0.5267,
+      "R6_labeldef": 1.0,
+      "max_naive": 1.0,
+      "max_naive_rule": "R1_punct_full",
+      "se_at_max": 0.0,
+      "one_minus_2se": 1.0,
+      "M3_rule_lt_1m2se": false,
+      "R_trig_majority_single": 0.2778,
+      "trig_none_pct_test": 0.2778
+    },
+    "maskfinal": {
+      "n": 6000,
+      "R0_majority": 0.456,
+      "R1_punct_simple": 0.4945,
+      "R1_punct_full": 0.7172,
+      "R2_particle": 0.6807,
+      "R3_final_char": 0.5898,
+      "R4_len_bucket": 0.484,
+      "R5_first_char": 0.5267,
+      "R6_labeldef": 0.7172,
+      "max_naive": 0.7172,
+      "max_naive_rule": "R1_punct_full",
+      "se_at_max": 0.0058,
+      "one_minus_2se": 0.9884,
+      "M3_rule_lt_1m2se": true,
+      "R_trig_majority_single": 0.2778,
+      "trig_none_pct_test": 0.2778
+    },
+    "mask": {
+      "n": 6000,
+      "R0_majority": 0.456,
+      "R1_punct_simple": 0.456,
+      "R1_punct_full": 0.6968,
+      "R2_particle": 0.6807,
+      "R3_final_char": 0.5595,
+      "R4_len_bucket": 0.4862,
+      "R5_first_char": 0.5272,
+      "R6_labeldef": 0.6968,
+      "max_naive": 0.6968,
+      "max_naive_rule": "R1_punct_full",
+      "se_at_max": 0.0059,
+      "one_minus_2se": 0.9882,
+      "M3_rule_lt_1m2se": true,
+      "R_trig_majority_single": 0.2778,
+      "trig_none_pct_test": 0.2778
+    },
+    "colloq": {
+      "n": 4000,
+      "R0_majority": 0.4695,
+      "R1_punct_simple": 0.4695,
+      "R1_punct_full": 1.0,
+      "R2_particle": 0.6973,
+      "R3_final_char": 0.5543,
+      "R4_len_bucket": 0.479,
+      "R5_first_char": 0.544,
+      "R6_labeldef": 1.0,
+      "max_naive": 1.0,
+      "max_naive_rule": "R1_punct_full",
+      "se_at_max": 0.0,
+      "one_minus_2se": 1.0,
+      "M3_rule_lt_1m2se": false,
+      "R_trig_majority_single": 0.6787,
+      "trig_none_pct_test": 0.6787
+    },
+    "colloq_mask": {
+      "n": 4000,
+      "R0_majority": 0.4695,
+      "R1_punct_simple": 0.4695,
+      "R1_punct_full": 1.0,
+      "R2_particle": 0.6973,
+      "R3_final_char": 0.5543,
+      "R4_len_bucket": 0.4775,
+      "R5_first_char": 0.546,
+      "R6_labeldef": 1.0,
+      "max_naive": 1.0,
+      "max_naive_rule": "R1_punct_full",
+      "se_at_max": 0.0,
+      "one_minus_2se": 1.0,
+      "M3_rule_lt_1m2se": false,
+      "R_trig_majority_single": 0.6787,
+      "trig_none_pct_test": 0.6787
+    }
+  },
+  "table": [
+    {
+      "run": "KEEP_s42",
+      "exit": "keep",
+      "n": 6000,
+      "acc": 0.7285,
+      "se": 0.0057,
+      "max_naive": 1.0,
+      "over": -0.2715,
+      "over_2se": -0.283,
+      "paired_mean": -0.7733,
+      "paired_se": 0.0147,
+      "over_R2": 0.0478,
+      "over_R3": 0.006,
+      "trig_acc": 0.2812,
+      "rec_text_rate": 0.9917
+    },
+    {
+      "run": "KEEP_s42",
+      "exit": "maskfinal",
+      "n": 6000,
+      "acc": 0.5273,
+      "se": 0.0064,
+      "max_naive": 0.7172,
+      "over": -0.1899,
+      "over_2se": -0.2028,
+      "paired_mean": -1.1392,
+      "paired_se": 0.01538,
+      "over_R2": -0.1534,
+      "over_R3": -0.0625,
+      "trig_acc": 0.2787,
+      "rec_text_rate": 0.9927
+    },
+    {
+      "run": "KEEP_s42",
+      "exit": "mask",
+      "n": 6000,
+      "acc": 0.486,
+      "se": 0.0065,
+      "max_naive": 0.6968,
+      "over": -0.2108,
+      "over_2se": -0.2237,
+      "paired_mean": -1.1797,
+      "paired_se": 0.01538,
+      "over_R2": -0.1947,
+      "over_R3": -0.0735,
+      "trig_acc": 0.2788,
+      "rec_text_rate": 0.9913
+    },
+    {
+      "run": "KEEP_s42",
+      "exit": "colloq",
+      "n": 4000,
+      "acc": 0.2777,
+      "se": 0.0071,
+      "max_naive": 1.0,
+      "over": -0.7223,
+      "over_2se": -0.7364,
+      "paired_mean": -1.2692,
+      "paired_se": 0.02587,
+      "over_R2": -0.4196,
+      "over_R3": -0.2766,
+      "trig_acc": 0.6743,
+      "rec_text_rate": 0.9928
+    },
+    {
+      "run": "KEEP_s42",
+      "exit": "colloq_mask",
+      "n": 4000,
+      "acc": 0.2612,
+      "se": 0.0069,
+      "max_naive": 1.0,
+      "over": -0.7388,
+      "over_2se": -0.7526,
+      "paired_mean": -1.2857,
+      "paired_se": 0.02543,
+      "over_R2": -0.4361,
+      "over_R3": -0.2931,
+      "trig_acc": 0.6737,
+      "rec_text_rate": 0.9912
+    },
+    {
+      "run": "KEEP_s43",
+      "exit": "keep",
+      "n": 6000,
+      "acc": 0.7275,
+      "se": 0.0057,
+      "max_naive": 1.0,
+      "over": -0.2725,
+      "over_2se": -0.284,
+      "paired_mean": -0.7743,
+      "paired_se": 0.01471,
+      "over_R2": 0.0468,
+      "over_R3": 0.005,
+      "trig_acc": 0.2803,
+      "rec_text_rate": 0.9967
+    },
+    {
+      "run": "KEEP_s43",
+      "exit": "maskfinal",
+      "n": 6000,
+      "acc": 0.5245,
+      "se": 0.0064,
+      "max_naive": 0.7172,
+      "over": -0.1927,
+      "over_2se": -0.2056,
+      "paired_mean": -1.142,
+      "paired_se": 0.01543,
+      "over_R2": -0.1562,
+      "over_R3": -0.0653,
+      "trig_acc": 0.2787,
+      "rec_text_rate": 0.9977
+    },
+    {
+      "run": "KEEP_s43",
+      "exit": "mask",
+      "n": 6000,
+      "acc": 0.4867,
+      "se": 0.0065,
+      "max_naive": 0.6968,
+      "over": -0.2101,
+      "over_2se": -0.223,
+      "paired_mean": -1.179,
+      "paired_se": 0.0154,
+      "over_R2": -0.194,
+      "over_R3": -0.0728,
+      "trig_acc": 0.2783,
+      "rec_text_rate": 0.9973
+    },
+    {
+      "run": "KEEP_s43",
+      "exit": "colloq",
+      "n": 4000,
+      "acc": 0.281,
+      "se": 0.0071,
+      "max_naive": 1.0,
+      "over": -0.719,
+      "over_2se": -0.7332,
+      "paired_mean": -1.266,
+      "paired_se": 0.02575,
+      "over_R2": -0.4163,
+      "over_R3": -0.2733,
+      "trig_acc": 0.6777,
+      "rec_text_rate": 0.9972
+    },
+    {
+      "run": "KEEP_s43",
+      "exit": "colloq_mask",
+      "n": 4000,
+      "acc": 0.2642,
+      "se": 0.007,
+      "max_naive": 1.0,
+      "over": -0.7358,
+      "over_2se": -0.7497,
+      "paired_mean": -1.2828,
+      "paired_se": 0.02534,
+      "over_R2": -0.4331,
+      "over_R3": -0.2901,
+      "trig_acc": 0.6775,
+      "rec_text_rate": 0.997
+    },
+    {
+      "run": "MASK_s42",
+      "exit": "keep",
+      "n": 6000,
+      "acc": 0.5585,
+      "se": 0.0064,
+      "max_naive": 1.0,
+      "over": -0.4415,
+      "over_2se": -0.4543,
+      "paired_mean": -0.9433,
+      "paired_se": 0.01358,
+      "over_R2": -0.1222,
+      "over_R3": -0.164,
+      "trig_acc": 0.2833,
+      "rec_text_rate": 0.994
+    },
+    {
+      "run": "MASK_s42",
+      "exit": "maskfinal",
+      "n": 6000,
+      "acc": 0.5793,
+      "se": 0.0064,
+      "max_naive": 0.7172,
+      "over": -0.1379,
+      "over_2se": -0.1506,
+      "paired_mean": -1.0872,
+      "paired_se": 0.01545,
+      "over_R2": -0.1014,
+      "over_R3": -0.0105,
+      "trig_acc": 0.2822,
+      "rec_text_rate": 0.9947
+    },
+    {
+      "run": "MASK_s42",
+      "exit": "mask",
+      "n": 6000,
+      "acc": 0.5923,
+      "se": 0.0063,
+      "max_naive": 0.6968,
+      "over": -0.1045,
+      "over_2se": -0.1172,
+      "paired_mean": -1.0733,
+      "paired_se": 0.01531,
+      "over_R2": -0.0884,
+      "over_R3": 0.0328,
+      "trig_acc": 0.2832,
+      "rec_text_rate": 0.9937
+    },
+    {
+      "run": "MASK_s42",
+      "exit": "colloq",
+      "n": 4000,
+      "acc": 0.3053,
+      "se": 0.0073,
+      "max_naive": 1.0,
+      "over": -0.6947,
+      "over_2se": -0.7093,
+      "paired_mean": -1.2417,
+      "paired_se": 0.02827,
+      "over_R2": -0.392,
+      "over_R3": -0.249,
+      "trig_acc": 0.677,
+      "rec_text_rate": 0.995
+    },
+    {
+      "run": "MASK_s42",
+      "exit": "colloq_mask",
+      "n": 4000,
+      "acc": 0.3065,
+      "se": 0.0073,
+      "max_naive": 1.0,
+      "over": -0.6935,
+      "over_2se": -0.7081,
+      "paired_mean": -1.2405,
+      "paired_se": 0.02822,
+      "over_R2": -0.3908,
+      "over_R3": -0.2478,
+      "trig_acc": 0.6773,
+      "rec_text_rate": 0.995
+    },
+    {
+      "run": "MASK_s42_rand",
+      "exit": "keep",
+      "n": 6000,
+      "acc": 0.4562,
+      "se": 0.0064,
+      "max_naive": 1.0,
+      "over": -0.5438,
+      "over_2se": -0.5567,
+      "paired_mean": -1.0457,
+      "paired_se": 0.01245,
+      "over_R2": -0.2245,
+      "over_R3": -0.2663,
+      "trig_acc": 0.2842,
+      "rec_text_rate": 0.9942
+    },
+    {
+      "run": "MASK_s42_rand",
+      "exit": "maskfinal",
+      "n": 6000,
+      "acc": 0.456,
+      "se": 0.0064,
+      "max_naive": 0.7172,
+      "over": -0.2612,
+      "over_2se": -0.2741,
+      "paired_mean": -1.2105,
+      "paired_se": 0.01436,
+      "over_R2": -0.2247,
+      "over_R3": -0.1338,
+      "trig_acc": 0.2828,
+      "rec_text_rate": 0.9952
+    },
+    {
+      "run": "MASK_s42_rand",
+      "exit": "mask",
+      "n": 6000,
+      "acc": 0.456,
+      "se": 0.0064,
+      "max_naive": 0.6968,
+      "over": -0.2408,
+      "over_2se": -0.2537,
+      "paired_mean": -1.2097,
+      "paired_se": 0.01421,
+      "over_R2": -0.2247,
+      "over_R3": -0.1035,
+      "trig_acc": 0.2842,
+      "rec_text_rate": 0.9938
+    },
+    {
+      "run": "MASK_s42_rand",
+      "exit": "colloq",
+      "n": 4000,
+      "acc": 0.1415,
+      "se": 0.0055,
+      "max_naive": 1.0,
+      "over": -0.8585,
+      "over_2se": -0.8695,
+      "paired_mean": -1.4055,
+      "paired_se": 0.02616,
+      "over_R2": -0.5558,
+      "over_R3": -0.4128,
+      "trig_acc": 0.6767,
+      "rec_text_rate": 0.995
+    },
+    {
+      "run": "MASK_s42_rand",
+      "exit": "colloq_mask",
+      "n": 4000,
+      "acc": 0.1412,
+      "se": 0.0055,
+      "max_naive": 1.0,
+      "over": -0.8588,
+      "over_2se": -0.8698,
+      "paired_mean": -1.4058,
+      "paired_se": 0.02615,
+      "over_R2": -0.5561,
+      "over_R3": -0.4131,
+      "trig_acc": 0.677,
+      "rec_text_rate": 0.995
+    },
+    {
+      "run": "MASK_s43",
+      "exit": "keep",
+      "n": 6000,
+      "acc": 0.5567,
+      "se": 0.0064,
+      "max_naive": 1.0,
+      "over": -0.4433,
+      "over_2se": -0.4562,
+      "paired_mean": -0.9452,
+      "paired_se": 0.0136,
+      "over_R2": -0.124,
+      "over_R3": -0.1658,
+      "trig_acc": 0.2863,
+      "rec_text_rate": 0.99
+    },
+    {
+      "run": "MASK_s43",
+      "exit": "maskfinal",
+      "n": 6000,
+      "acc": 0.5785,
+      "se": 0.0064,
+      "max_naive": 0.7172,
+      "over": -0.1387,
+      "over_2se": -0.1514,
+      "paired_mean": -1.088,
+      "paired_se": 0.0154,
+      "over_R2": -0.1022,
+      "over_R3": -0.0113,
+      "trig_acc": 0.2842,
+      "rec_text_rate": 0.9947
+    },
+    {
+      "run": "MASK_s43",
+      "exit": "mask",
+      "n": 6000,
+      "acc": 0.5898,
+      "se": 0.0063,
+      "max_naive": 0.6968,
+      "over": -0.107,
+      "over_2se": -0.1197,
+      "paired_mean": -1.0758,
+      "paired_se": 0.01531,
+      "over_R2": -0.0909,
+      "over_R3": 0.0303,
+      "trig_acc": 0.2847,
+      "rec_text_rate": 0.9948
+    },
+    {
+      "run": "MASK_s43",
+      "exit": "colloq",
+      "n": 4000,
+      "acc": 0.3095,
+      "se": 0.0073,
+      "max_naive": 1.0,
+      "over": -0.6905,
+      "over_2se": -0.7051,
+      "paired_mean": -1.2375,
+      "paired_se": 0.02804,
+      "over_R2": -0.3878,
+      "over_R3": -0.2448,
+      "trig_acc": 0.6775,
+      "rec_text_rate": 0.9952
+    },
+    {
+      "run": "MASK_s43",
+      "exit": "colloq_mask",
+      "n": 4000,
+      "acc": 0.31,
+      "se": 0.0073,
+      "max_naive": 1.0,
+      "over": -0.69,
+      "over_2se": -0.7046,
+      "paired_mean": -1.237,
+      "paired_se": 0.02807,
+      "over_R2": -0.3873,
+      "over_R3": -0.2443,
+      "trig_acc": 0.678,
+      "rec_text_rate": 0.9955
+    },
+    {
+      "run": "MASK_s43_rand",
+      "exit": "keep",
+      "n": 6000,
+      "acc": 0.456,
+      "se": 0.0064,
+      "max_naive": 1.0,
+      "over": -0.544,
+      "over_2se": -0.5569,
+      "paired_mean": -1.0458,
+      "paired_se": 0.01246,
+      "over_R2": -0.2247,
+      "over_R3": -0.2665,
+      "trig_acc": 0.2872,
+      "rec_text_rate": 0.9895
+    },
+    {
+      "run": "MASK_s43_rand",
+      "exit": "maskfinal",
+      "n": 6000,
+      "acc": 0.4563,
+      "se": 0.0064,
+      "max_naive": 0.7172,
+      "over": -0.2609,
+      "over_2se": -0.2737,
+      "paired_mean": -1.2102,
+      "paired_se": 0.01437,
+      "over_R2": -0.2244,
+      "over_R3": -0.1335,
+      "trig_acc": 0.2845,
+      "rec_text_rate": 0.9942
+    },
+    {
+      "run": "MASK_s43_rand",
+      "exit": "mask",
+      "n": 6000,
+      "acc": 0.4567,
+      "se": 0.0064,
+      "max_naive": 0.6968,
+      "over": -0.2401,
+      "over_2se": -0.253,
+      "paired_mean": -1.209,
+      "paired_se": 0.01422,
+      "over_R2": -0.224,
+      "over_R3": -0.1028,
+      "trig_acc": 0.2858,
+      "rec_text_rate": 0.9942
+    },
+    {
+      "run": "MASK_s43_rand",
+      "exit": "colloq",
+      "n": 4000,
+      "acc": 0.1405,
+      "se": 0.0055,
+      "max_naive": 1.0,
+      "over": -0.8595,
+      "over_2se": -0.8705,
+      "paired_mean": -1.4065,
+      "paired_se": 0.02615,
+      "over_R2": -0.5568,
+      "over_R3": -0.4138,
+      "trig_acc": 0.6775,
+      "rec_text_rate": 0.9952
+    },
+    {
+      "run": "MASK_s43_rand",
+      "exit": "colloq_mask",
+      "n": 4000,
+      "acc": 0.141,
+      "se": 0.0055,
+      "max_naive": 1.0,
+      "over": -0.859,
+      "over_2se": -0.87,
+      "paired_mean": -1.406,
+      "paired_se": 0.02615,
+      "over_R2": -0.5563,
+      "over_R3": -0.4133,
+      "trig_acc": 0.678,
+      "rec_text_rate": 0.9958
+    },
+    {
+      "run": "MIX_s42",
+      "exit": "keep",
+      "n": 6000,
+      "acc": 0.708,
+      "se": 0.0059,
+      "max_naive": 1.0,
+      "over": -0.292,
+      "over_2se": -0.3037,
+      "paired_mean": -0.7938,
+      "paired_se": 0.01468,
+      "over_R2": 0.0273,
+      "over_R3": -0.0145,
+      "trig_acc": 0.2797,
+      "rec_text_rate": 0.9965
+    },
+    {
+      "run": "MIX_s42",
+      "exit": "maskfinal",
+      "n": 6000,
+      "acc": 0.5902,
+      "se": 0.0063,
+      "max_naive": 0.7172,
+      "over": -0.127,
+      "over_2se": -0.1397,
+      "paired_mean": -1.0763,
+      "paired_se": 0.01534,
+      "over_R2": -0.0905,
+      "over_R3": 0.0004,
+      "trig_acc": 0.2792,
+      "rec_text_rate": 0.9965
+    },
+    {
+      "run": "MIX_s42",
+      "exit": "mask",
+      "n": 6000,
+      "acc": 0.5748,
+      "se": 0.0064,
+      "max_naive": 0.6968,
+      "over": -0.122,
+      "over_2se": -0.1347,
+      "paired_mean": -1.0908,
+      "paired_se": 0.01521,
+      "over_R2": -0.1059,
+      "over_R3": 0.0153,
+      "trig_acc": 0.2797,
+      "rec_text_rate": 0.9955
+    },
+    {
+      "run": "MIX_s42",
+      "exit": "colloq",
+      "n": 4000,
+      "acc": 0.3065,
+      "se": 0.0073,
+      "max_naive": 1.0,
+      "over": -0.6935,
+      "over_2se": -0.7081,
+      "paired_mean": -1.2405,
+      "paired_se": 0.02745,
+      "over_R2": -0.3908,
+      "over_R3": -0.2478,
+      "trig_acc": 0.676,
+      "rec_text_rate": 0.9952
+    },
+    {
+      "run": "MIX_s42",
+      "exit": "colloq_mask",
+      "n": 4000,
+      "acc": 0.2933,
+      "se": 0.0072,
+      "max_naive": 1.0,
+      "over": -0.7067,
+      "over_2se": -0.7211,
+      "paired_mean": -1.2537,
+      "paired_se": 0.0273,
+      "over_R2": -0.404,
+      "over_R3": -0.261,
+      "trig_acc": 0.6763,
+      "rec_text_rate": 0.9952
+    },
+    {
+      "run": "MIX_s43",
+      "exit": "keep",
+      "n": 6000,
+      "acc": 0.7037,
+      "se": 0.0059,
+      "max_naive": 1.0,
+      "over": -0.2963,
+      "over_2se": -0.3081,
+      "paired_mean": -0.7982,
+      "paired_se": 0.01471,
+      "over_R2": 0.023,
+      "over_R3": -0.0188,
+      "trig_acc": 0.2805,
+      "rec_text_rate": 0.9972
+    },
+    {
+      "run": "MIX_s43",
+      "exit": "maskfinal",
+      "n": 6000,
+      "acc": 0.5883,
+      "se": 0.0064,
+      "max_naive": 0.7172,
+      "over": -0.1289,
+      "over_2se": -0.1416,
+      "paired_mean": -1.0782,
+      "paired_se": 0.0154,
+      "over_R2": -0.0924,
+      "over_R3": -0.0015,
+      "trig_acc": 0.2805,
+      "rec_text_rate": 0.998
+    },
+    {
+      "run": "MIX_s43",
+      "exit": "mask",
+      "n": 6000,
+      "acc": 0.573,
+      "se": 0.0064,
+      "max_naive": 0.6968,
+      "over": -0.1238,
+      "over_2se": -0.1366,
+      "paired_mean": -1.0927,
+      "paired_se": 0.01522,
+      "over_R2": -0.1077,
+      "over_R3": 0.0135,
+      "trig_acc": 0.2807,
+      "rec_text_rate": 0.9975
+    },
+    {
+      "run": "MIX_s43",
+      "exit": "colloq",
+      "n": 4000,
+      "acc": 0.3055,
+      "se": 0.0073,
+      "max_naive": 1.0,
+      "over": -0.6945,
+      "over_2se": -0.7091,
+      "paired_mean": -1.2415,
+      "paired_se": 0.02748,
+      "over_R2": -0.3918,
+      "over_R3": -0.2488,
+      "trig_acc": 0.678,
+      "rec_text_rate": 0.9968
+    },
+    {
+      "run": "MIX_s43",
+      "exit": "colloq_mask",
+      "n": 4000,
+      "acc": 0.2978,
+      "se": 0.0072,
+      "max_naive": 1.0,
+      "over": -0.7023,
+      "over_2se": -0.7167,
+      "paired_mean": -1.2492,
+      "paired_se": 0.02736,
+      "over_R2": -0.3995,
+      "over_R3": -0.2565,
+      "trig_acc": 0.6783,
+      "rec_text_rate": 0.9968
+    }
+  ],
+  "M": {
+    "M0": {
+      "R1_simple_keep": 0.7225,
+      "R1_simple_mask": 0.456,
+      "majority_mask": 0.456,
+      "R1_full_keep": 1.0,
+      "R1_full_mask": 0.6968,
+      "assert_equiv": true,
+      "drop_simple": 0.2665,
+      "drop_full": 0.3032,
+      "pass": true
+    },
+    "M1": {
+      "KEEP_s42": {
+        "acc": 0.486,
+        "se": 0.0065,
+        "max_naive": 0.6968,
+        "over": -0.2108,
+        "over_2se": -0.2237,
+        "paired_mean": -1.1797,
+        "paired_se": 0.01538,
+        "pass_2se": false,
+        "pass_paired": false
+      },
+      "KEEP_s43": {
+        "acc": 0.4867,
+        "se": 0.0065,
+        "max_naive": 0.6968,
+        "over": -0.2101,
+        "over_2se": -0.223,
+        "paired_mean": -1.179,
+        "paired_se": 0.0154,
+        "pass_2se": false,
+        "pass_paired": false
+      },
+      "MASK_s42": {
+        "acc": 0.5923,
+        "se": 0.0063,
+        "max_naive": 0.6968,
+        "over": -0.1045,
+        "over_2se": -0.1172,
+        "paired_mean": -1.0733,
+        "paired_se": 0.01531,
+        "pass_2se": false,
+        "pass_paired": false
+      },
+      "MASK_s43": {
+        "acc": 0.5898,
+        "se": 0.0063,
+        "max_naive": 0.6968,
+        "over": -0.107,
+        "over_2se": -0.1197,
+        "paired_mean": -1.0758,
+        "paired_se": 0.01531,
+        "pass_2se": false,
+        "pass_paired": false
+      },
+      "MIX_s42": {
+        "acc": 0.5748,
+        "se": 0.0064,
+        "max_naive": 0.6968,
+        "over": -0.122,
+        "over_2se": -0.1347,
+        "paired_mean": -1.0908,
+        "paired_se": 0.01521,
+        "pass_2se": false,
+        "pass_paired": false
+      },
+      "MIX_s43": {
+        "acc": 0.573,
+        "se": 0.0064,
+        "max_naive": 0.6968,
+        "over": -0.1238,
+        "over_2se": -0.1366,
+        "paired_mean": -1.0927,
+        "paired_se": 0.01522,
+        "pass_2se": false,
+        "pass_paired": false
+      },
+      "two_seed_same_sign_MASK": true,
+      "two_seed_sign": "同为负",
+      "verdict_M1": false,
+      "MIX_support": {
+        "MIX_s42": false,
+        "MIX_s43": false
+      },
+      "KEEP_excluded_reason": "KEEP 臂地板按定义 = 1.0（R6=label_full），归 M2 对照"
+    },
+    "M2": {
+      "max_naive_keep": 1.0,
+      "max_naive_mask": 0.6968,
+      "punct_gives": 0.3032,
+      "card_keep": {
+        "MASK_s42": 0.5585,
+        "MASK_s43": 0.5567
+      },
+      "card_mask": {
+        "MASK_s42": 0.5923,
+        "MASK_s43": 0.5898
+      },
+      "card_drop_KEEP_arm": {
+        "KEEP_s42": 0.2425,
+        "KEEP_s43": 0.2408
+      },
+      "card_keep_vs_rule_KEEP_arm": {
+        "KEEP_s42": -0.2715,
+        "KEEP_s43": -0.2725
+      }
+    },
+    "M3": {
+      "max_naive_mask": 0.6968,
+      "one_minus_2se": 0.9882,
+      "pass": true,
+      "source_independent": {
+        "陈述/是非/感叹(顶部分支)": "标点定义 ⇒ 与遮蔽输入上的特征规则不同源",
+        "特指疑问(细分)": "QSET 词表 ⇒ 与 R-particle **同源**",
+        "祈使(细分)": "IMP 词表 ⇒ 不同源",
+        "反问": "RHO 词表 ⇒ 与 R-particle **同源**"
+      },
+      "caveat": "更正 C：整体 rule<1−2SE 只覆盖标点分界；词表细分处来源不独立"
+    },
+    "M4": {
+      "MASK_s42_rand": {
+        "acc": 0.456,
+        "se": 0.0064,
+        "majority": 0.456,
+        "pass": true
+      },
+      "MASK_s43_rand": {
+        "acc": 0.4567,
+        "se": 0.0064,
+        "majority": 0.456,
+        "pass": true
+      },
+      "verdict": true
+    },
+    "M5": {
+      "pronoun": {
+        "delta": 0.0,
+        "band": 0.0283,
+        "pass": true,
+        "identical": true
+      },
+      "sentiment": {
+        "delta": 0.0,
+        "band": 0.0041,
+        "pass": true,
+        "identical": true
+      },
+      "relation": {
+        "delta": 0.0,
+        "band": 0.0139,
+        "pass": true,
+        "identical": true
+      },
+      "person": {
+        "delta": 0.0,
+        "band": 0.0033,
+        "pass": true,
+        "identical": true
+      },
+      "hash_identical": true,
+      "verdict": true
+    }
+  },
+  "ext": {
+    "KEEP_s42_steps8000": {
+      "train_acc_last100": 0.948,
+      "loss_last": 0.256649,
+      "mask_acc": 0.4738,
+      "mask_over": -0.223,
+      "mask_over_2se": -0.2359,
+      "keep_acc": 0.742,
+      "keep_over": -0.258,
+      "trig_acc": 0.3562,
+      "rec_text_rate": 0.8388
+    },
+    "MASK_s42_steps8000": {
+      "train_acc_last100": 0.9159,
+      "loss_last": 0.384576,
+      "mask_acc": 0.5763,
+      "mask_over": -0.1205,
+      "mask_over_2se": -0.1332,
+      "keep_acc": 0.5557,
+      "keep_over": -0.4443,
+      "trig_acc": 0.4038,
+      "rec_text_rate": 0.856
+    },
+    "MASK_s43_steps8000": {
+      "train_acc_last100": 0.9141,
+      "loss_last": 0.317731,
+      "mask_acc": 0.5842,
+      "mask_over": -0.1126,
+      "mask_over_2se": -0.1254,
+      "keep_acc": 0.5577,
+      "keep_over": -0.4423,
+      "trig_acc": 0.4035,
+      "rec_text_rate": 0.8597
+    }
+  },
+  "per_class": {
+    "MASK_s42": {
+      "陈述": {
+        "n": 1189,
+        "card_rec": 0.2994,
+        "R6_rec": 0.3944
+      },
+      "是非疑问": {
+        "n": 1579,
+        "card_rec": 0.4883,
+        "R6_rec": 0.4908
+      },
+      "特指疑问": {
+        "n": 2736,
+        "card_rec": 0.8626,
+        "R6_rec": 1.0
+      },
+      "祈使": {
+        "n": 55,
+        "card_rec": 0.0,
+        "R6_rec": 0.7091
+      },
+      "感叹": {
+        "n": 410,
+        "card_rec": 0.1634,
+        "R6_rec": 0.3195
+      },
+      "反问": {
+        "n": 31,
+        "card_rec": 0.0,
+        "R6_rec": 1.0
+      }
+    },
+    "MASK_s43": {
+      "陈述": {
+        "n": 1189,
+        "card_rec": 0.3112,
+        "R6_rec": 0.3944
+      },
+      "是非疑问": {
+        "n": 1579,
+        "card_rec": 0.4921,
+        "R6_rec": 0.4908
+      },
+      "特指疑问": {
+        "n": 2736,
+        "card_rec": 0.8512,
+        "R6_rec": 1.0
+      },
+      "祈使": {
+        "n": 55,
+        "card_rec": 0.0,
+        "R6_rec": 0.7091
+      },
+      "感叹": {
+        "n": 410,
+        "card_rec": 0.1537,
+        "R6_rec": 0.3195
+      },
+      "反问": {
+        "n": 31,
+        "card_rec": 0.0,
+        "R6_rec": 1.0
+      }
+    }
+  },
+  "verdict": "只靠标点（遮蔽后崩）",
+  "gate": {
+    "M0": true,
+    "M1": false,
+    "M3": true,
+    "M4": true,
+    "M5": true,
+    "punct_drop_ge_0.30": true
+  },
+  "samples": [
+    {
+      "原文": "在这些孩子身上能看到当年依稀的影子，顺便致敬我腐朽的青春。",
+      "输入(遮蔽)": "在这些孩子身上能看到当年依稀的影子顺便致敬我腐朽的青春",
+      "gold": "陈述",
+      "pred": "是非疑问",
+      "对错": "错",
+      "触发词span": null,
+      "触发词": "∅",
+      "kind": "text",
+      "instruction": {
+        "mode_id": "M02",
+        "assignment": []
+      },
+      "依据": "无封闭表触发词；R6 判 陈述"
+    },
+    {
+      "原文": "35岁造价工程师老板让我转管理，我想太多了吗？",
+      "输入(遮蔽)": "35岁造价工程师老板让我转管理我想太多了吗",
+      "gold": "是非疑问",
+      "pred": "陈述",
+      "对错": "错",
+      "触发词span": [
+        20,
+        21
+      ],
+      "触发词": "吗",
+      "kind": "text",
+      "instruction": {
+        "mode_id": "M01",
+        "assignment": [
+          0
+        ]
+      },
+      "依据": "遮蔽输入含触发词「吗」（封闭表）；构造性规则 R6 在此样本上判 是非疑问"
+    },
+    {
+      "原文": "中信证券、中信建投证券是什么关系？",
+      "输入(遮蔽)": "中信证券中信建投证券是什么关系",
+      "gold": "特指疑问",
+      "pred": "特指疑问",
+      "对错": "对",
+      "触发词span": [
+        11,
+        13
+      ],
+      "触发词": "什么",
+      "kind": "text",
+      "instruction": {
+        "mode_id": "M03",
+        "assignment": [
+          0
+        ]
+      },
+      "依据": "遮蔽输入含触发词「什么」（封闭表）；构造性规则 R6 在此样本上判 特指疑问"
+    },
+    {
+      "原文": "觉醒毛线！我不要！",
+      "输入(遮蔽)": "觉醒毛线我不要",
+      "gold": "祈使",
+      "pred": "是非疑问",
+      "对错": "错",
+      "触发词span": [
+        5,
+        7
+      ],
+      "触发词": "不要",
+      "kind": "text",
+      "instruction": {
+        "mode_id": "M02",
+        "assignment": [
+          0
+        ]
+      },
+      "依据": "遮蔽输入含触发词「不要」（封闭表）；构造性规则 R6 在此样本上判 祈使"
+    },
+    {
+      "原文": "祝你们幸福！",
+      "输入(遮蔽)": "祝你们幸福",
+      "gold": "感叹",
+      "pred": "感叹",
+      "对错": "对",
+      "触发词span": null,
+      "触发词": "∅",
+      "kind": "text",
+      "instruction": {
+        "mode_id": "M05",
+        "assignment": []
+      },
+      "依据": "无封闭表触发词；R6 判 陈述"
+    },
+    {
+      "原文": "我敢打赌,她后悔,的所作所为。,你可真会抓人啊!,真的迷路了,不是吗?",
+      "输入(遮蔽)": "我敢打赌她后悔的所作所为你可真会抓人啊真的迷路了不是吗",
+      "gold": "反问",
+      "pred": "是非疑问",
+      "对错": "错",
+      "触发词span": [
+        24,
+        27
+      ],
+      "触发词": "不是吗",
+      "kind": "text",
+      "instruction": {
+        "mode_id": "M02",
+        "assignment": [
+          0
+        ]
+      },
+      "依据": "遮蔽输入含触发词「不是吗」（封闭表）；构造性规则 R6 在此样本上判 反问"
+    },
+    {
+      "原文": "请不要骂了，我是她们同学，我也是目击证人，她们也是无奈打的。",
+      "输入(遮蔽)": "请不要骂了我是她们同学我也是目击证人她们也是无奈打的",
+      "gold": "陈述",
+      "pred": "陈述",
+      "对错": "对",
+      "触发词span": [
+        1,
+        3
+      ],
+      "触发词": "不要",
+      "kind": "text",
+      "instruction": {
+        "mode_id": "M01",
+        "assignment": [
+          0
+        ]
+      },
+      "依据": "遮蔽输入含触发词「不要」（封闭表）；构造性规则 R6 在此样本上判 祈使"
+    },
+    {
+      "原文": "弄哪能到莘庄。。。？坐地铁？",
+      "输入(遮蔽)": "弄哪能到莘庄坐地铁",
+      "gold": "是非疑问",
+      "pred": "是非疑问",
+      "对错": "对",
+      "触发词span": null,
+      "触发词": "∅",
+      "kind": "text",
+      "instruction": {
+        "mode_id": "M02",
+        "assignment": []
+      },
+      "依据": "无封闭表触发词；R6 判 陈述"
+    },
+    {
+      "原文": "我的小腿比较粗,喜欢穿靴子搭配牛仔裤,应该挑选什么样的靴子比较合适呢?",
+      "输入(遮蔽)": "我的小腿比较粗喜欢穿靴子搭配牛仔裤应该挑选什么样的靴子比较合适呢",
+      "gold": "特指疑问",
+      "pred": "陈述",
+      "对错": "错",
+      "触发词span": [
+        21,
+        23
+      ],
+      "触发词": "什么",
+      "kind": "text",
+      "instruction": {
+        "mode_id": "M01",
+        "assignment": [
+          0
+        ]
+      },
+      "依据": "遮蔽输入含触发词「什么」（封闭表）；构造性规则 R6 在此样本上判 特指疑问"
+    },
+    {
+      "原文": "加油男神！",
+      "输入(遮蔽)": "加油男神",
+      "gold": "祈使",
+      "pred": "特指疑问",
+      "对错": "错",
+      "触发词span": [
+        0,
+        2
+      ],
+      "触发词": "加油",
+      "kind": "text",
+      "instruction": {
+        "mode_id": "M03",
+        "assignment": [
+          0
+        ]
+      },
+      "依据": "遮蔽输入含触发词「加油」（封闭表）；构造性规则 R6 在此样本上判 祈使"
+    }
+  ],
+  "stats_head": {
+    "rows": {
+      "用户话轮行数": 659115,
+      "行级 ok": 570062,
+      "去重后池": 417287,
+      "有句末标点(标签池)": 222803,
+      "无句末标点(口语池)": 182850,
+      "丢弃": {
+        "行级过滤（长度/汉字比/ASCII词）": 89053,
+        "末字是其他标点 （": 31,
+        "末字是其他标点 ）": 414,
+        "重复文本": 152775,
+        "末字是其他标点 ”": 1271,
+        "末字是其他标点 )": 2317,
+        "末字是其他标点 “": 6,
+        "末字是其他标点 :": 775,
+        "末字是其他标点 》": 98,
+        "末字是其他标点 (": 78,
+        "末字是其他标点 ，": 1221,
+        "末字是其他标点 ,": 1187,
+        "末字是其他标点 ;": 21,
+        "末字是其他标点 …": 3543,
+        "末字是其他标点 ‘": 2,
+        "末字是其他标点 」": 20,
+        "末字是其他标点 \"": 50,
+        "末字是其他标点 、": 273,
+        "末字是其他标点 ’": 6,
+        "末字是其他标点 '": 81,
+        "末字是其他标点 ·": 218,
+        "末字是其他标点 〉": 2,
+        "末字是其他标点 ：": 6,
+        "末字是其他标点 ；": 5,
+        "末字是其他标点 』": 4,
+        "末字是其他标点 —": 4,
+        "末字是其他标点 「": 1
+      },
+      "丢弃率_主标签池": 0.4661,
+      "有句末标点占比": 0.5339,
+      "长度": {
+        "p10": 6,
+        "p50": 16,
+        "p90": 39
+      }
+    },
+    "sizes": {
+      "labeled": {
+        "n_all": 18000,
+        "n_train": 12000,
+        "n_test": 6000
+      },
+      "colloq": {
+        "n_all": 12000,
+        "n_train": 8000,
+        "n_test": 4000
+      }
+    },
+    "dist_test": {
+      "特指疑问": {
+        "n": 2736,
+        "pct": 0.456
+      },
+      "是非疑问": {
+        "n": 1579,
+        "pct": 0.2632
+      },
+      "陈述": {
+        "n": 1189,
+        "pct": 0.1982
+      },
+      "感叹": {
+        "n": 410,
+        "pct": 0.0683
+      },
+      "祈使": {
+        "n": 55,
+        "pct": 0.0092
+      },
+      "反问": {
+        "n": 31,
+        "pct": 0.0052
+      }
+    }
+  }
+}

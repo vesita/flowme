@@ -1,0 +1,123 @@
+{
+  "name": "C_s42_steps30",
+  "arm": "C",
+  "seed": 42,
+  "randlabel": false,
+  "device": "cuda",
+  "freeze": {
+    "encoder_params": 1688460,
+    "encoder_trainable": 0,
+    "encoder_training": false,
+    "hidden": 128,
+    "max_len": 128
+  },
+  "params": {
+    "arm": "C",
+    "trunk_ptr": 164224,
+    "trunk_gen": 164224,
+    "shared_trunk": true,
+    "ptr_out": 129,
+    "gen_skel": 5160,
+    "gen_assign": 16704,
+    "head_trainable": 186217
+  },
+  "recipe": {
+    "steps": 30,
+    "batch": 64,
+    "lr": 0.001,
+    "weight_decay": 0.0001,
+    "cosine": true,
+    "grad_clip": 1.0,
+    "n_ptr_train": 8000,
+    "n_gen_train": 8000,
+    "loss": "L_ptr + L_gen (λ=1)"
+  },
+  "eval": {
+    "ptr_train": {
+      "n": 8000,
+      "acc": 0.7575,
+      "ce": 0.636899,
+      "se": 0.00559,
+      "margin_over_se": 46.063,
+      "blind_guess": 0.5
+    },
+    "ptr_test": {
+      "n": 2500,
+      "acc": 0.7552,
+      "ce": 0.637823,
+      "se": 0.01,
+      "margin_over_se": 25.52,
+      "blind_guess": 0.5
+    },
+    "ptr_adv": {
+      "n": 2500,
+      "acc": 0.6352,
+      "ce": 0.66785,
+      "se": 0.01,
+      "margin_over_se": 13.52,
+      "blind_guess": 0.5
+    },
+    "ptr_adv_shifted_pos": {
+      "n": 1250,
+      "acc": 0.7136,
+      "se": 0.014142,
+      "margin_over_se": 15.104
+    },
+    "ptr_adv_heldout_pair": {
+      "n": 1250,
+      "acc": 0.5568,
+      "se": 0.014142,
+      "margin_over_se": 4.016
+    },
+    "gen_test": {
+      "skel": {
+        "n": 2500,
+        "acc": 0.4212,
+        "se": 0.01,
+        "margin_over_se": 39.62,
+        "blind_guess": 0.025
+      },
+      "slot": {
+        "n": 2500,
+        "acc": 0.834933,
+        "se": 0.004149
+      },
+      "joint": {
+        "n": 2500,
+        "acc": 0.4148,
+        "se": 0.01
+      },
+      "ce": 1.868795
+    }
+  },
+  "timing": {
+    "probe_fwd_ptr_ms": {
+      "n": 200,
+      "mean_ms": 0.139,
+      "p50_ms": 0.1376,
+      "p95_ms": 0.1442
+    },
+    "probe_fwd_gen_ms": {
+      "n": 200,
+      "mean_ms": 0.2114,
+      "p50_ms": 0.2096,
+      "p95_ms": 0.2274
+    },
+    "probe_step_fwd_bwd_ms": {
+      "n": 50,
+      "mean_ms": 7.1312,
+      "p50_ms": 7.6575,
+      "p95_ms": 7.7254
+    },
+    "probe_n": 200,
+    "train_fwd_ms": {
+      "ptr": 0.686,
+      "gen": 3.77
+    },
+    "train_step_ms": 10.7921,
+    "train_step_p95_ms": 3.7716
+  },
+  "loss_first": 5.364055,
+  "loss_last": 3.59312,
+  "wall_sec": 7.5
+}

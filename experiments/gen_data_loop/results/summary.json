@@ -1,0 +1,261 @@
+{
+  "thresholds": {
+    "majority": 0.5,
+    "n_natural": 200,
+    "se_majority": 0.035355,
+    "D4a_threshold": 0.5707
+  },
+  "main": {
+    "P_42": {
+      "natural": {
+        "acc": 0.705,
+        "majority": 0.5,
+        "se": 0.0322,
+        "margin": 0.205,
+        "margin_over_se": 6.357,
+        "max_naive": 0.765,
+        "max_naive_rule": "lex_member",
+        "card_minus_max_naive": -0.06,
+        "note": "**未超过免费规则** D4(a)过"
+      },
+      "adversarial": {
+        "acc": 0.745,
+        "majority": 0.5,
+        "se": 0.0126,
+        "margin": 0.245,
+        "margin_over_se": 19.472,
+        "max_naive": 0.5408,
+        "max_naive_rule": "neg_char",
+        "card_minus_max_naive": 0.2042,
+        "note": ""
+      },
+      "ctrl_adversarial": {
+        "acc": 0.4733,
+        "majority": 0.5,
+        "se": 0.0144,
+        "margin": -0.0267,
+        "margin_over_se": -1.852,
+        "max_naive": 0.5067,
+        "max_naive_rule": "neg_char",
+        "card_minus_max_naive": -0.0334,
+        "note": "**未超过免费规则**"
+      }
+    },
+    "P_43": {
+      "natural": {
+        "acc": 0.715,
+        "majority": 0.5,
+        "se": 0.0319,
+        "margin": 0.215,
+        "margin_over_se": 6.736,
+        "max_naive": 0.765,
+        "max_naive_rule": "lex_member",
+        "card_minus_max_naive": -0.05,
+        "note": "**未超过免费规则** D4(a)过"
+      },
+      "adversarial": {
+        "acc": 0.7275,
+        "majority": 0.5,
+        "se": 0.0129,
+        "margin": 0.2275,
+        "margin_over_se": 17.7,
+        "max_naive": 0.5408,
+        "max_naive_rule": "neg_char",
+        "card_minus_max_naive": 0.1867,
+        "note": ""
+      },
+      "ctrl_adversarial": {
+        "acc": 0.4908,
+        "majority": 0.5,
+        "se": 0.0144,
+        "margin": -0.0092,
+        "margin_over_se": -0.638,
+        "max_naive": 0.5067,
+        "max_naive_rule": "neg_char",
+        "card_minus_max_naive": -0.0159,
+        "note": "**未超过免费规则**"
+      }
+    },
+    "C_42": {
+      "natural": {
+        "acc": 0.505,
+        "majority": 0.5,
+        "se": 0.0354,
+        "margin": 0.005,
+        "margin_over_se": 0.141,
+        "max_naive": 0.765,
+        "max_naive_rule": "lex_member",
+        "card_minus_max_naive": -0.26,
+        "note": "**未超过免费规则** **D4(a)不过**"
+      },
+      "adversarial": {
+        "acc": 0.4575,
+        "majority": 0.5,
+        "se": 0.0144,
+        "margin": -0.0425,
+        "margin_over_se": -2.955,
+        "max_naive": 0.5408,
+        "max_naive_rule": "neg_char",
+        "card_minus_max_naive": -0.0833,
+        "note": "**未超过免费规则**"
+      },
+      "ctrl_adversarial": {
+        "acc": 0.485,
+        "majority": 0.5,
+        "se": 0.0144,
+        "margin": -0.015,
+        "margin_over_se": -1.04,
+        "max_naive": 0.5067,
+        "max_naive_rule": "neg_char",
+        "card_minus_max_naive": -0.0217,
+        "note": "**未超过免费规则**"
+      }
+    },
+    "C_43": {
+      "natural": {
+        "acc": 0.525,
+        "majority": 0.5,
+        "se": 0.0353,
+        "margin": 0.025,
+        "margin_over_se": 0.708,
+        "max_naive": 0.765,
+        "max_naive_rule": "lex_member",
+        "card_minus_max_naive": -0.24,
+        "note": "**未超过免费规则** **D4(a)不过**"
+      },
+      "adversarial": {
+        "acc": 0.475,
+        "majority": 0.5,
+        "se": 0.0144,
+        "margin": -0.025,
+        "margin_over_se": -1.734,
+        "max_naive": 0.5408,
+        "max_naive_rule": "neg_char",
+        "card_minus_max_naive": -0.0658,
+        "note": "**未超过免费规则**"
+      },
+      "ctrl_adversarial": {
+        "acc": 0.5017,
+        "majority": 0.5,
+        "se": 0.0144,
+        "margin": 0.0017,
+        "margin_over_se": 0.118,
+        "max_naive": 0.5067,
+        "max_naive_rule": "neg_char",
+        "card_minus_max_naive": -0.005,
+        "note": "**未超过免费规则**"
+      }
+    }
+  },
+  "d4a": {
+    "s42": {
+      "acc": 0.705,
+      "threshold": 0.5707,
+      "margin": 0.1343,
+      "margin_over_se": 4.164,
+      "pass": true
+    },
+    "s43": {
+      "acc": 0.715,
+      "threshold": 0.5707,
+      "margin": 0.1443,
+      "margin_over_se": 4.52,
+      "pass": true
+    },
+    "pass": true
+  },
+  "d4b": {
+    "s42": {
+      "acc_P": 0.705,
+      "acc_C": 0.505,
+      "diff": 0.2,
+      "se_diff": 0.0479,
+      "two_se_diff": 0.0957,
+      "diff_over_se": 4.18,
+      "pass": true
+    },
+    "s43": {
+      "acc_P": 0.715,
+      "acc_C": 0.525,
+      "diff": 0.19,
+      "se_diff": 0.0476,
+      "two_se_diff": 0.0952,
+      "diff_over_se": 3.992,
+      "pass": true
+    },
+    "pass": true
+  },
+  "v_bonus": {
+    "P_shuf_s42": {
+      "natural_acc": 0.505,
+      "own_test_acc": 0.4819,
+      "own_test_split": "test",
+      "ok_natural": true,
+      "ok_test": true
+    },
+    "P_shuf_s43": {
+      "natural_acc": 0.515,
+      "own_test_acc": 0.5056,
+      "own_test_split": "test",
+      "ok_natural": true,
+      "ok_test": true
+    },
+    "C_shuf_s42": {
+      "natural_acc": 0.475,
+      "own_test_acc": 0.4956,
+      "own_test_split": "ctrl_test",
+      "ok_natural": true,
+      "ok_test": true
+    },
+    "C_shuf_s43": {
+      "natural_acc": 0.48,
+      "own_test_acc": 0.4963,
+      "own_test_split": "ctrl_test",
+      "ok_natural": true,
+      "ok_test": true
+    },
+    "pass": true
+  },
+  "d6": {
+    "original_pass": false,
+    "d6p1": true,
+    "d6p2": true,
+    "d6p3": true,
+    "d6p_pass": true
+  },
+  "foundations": {
+    "D1": "标签 100% 由 P2–P5 谓词判出（引用 PREREG §4.1）",
+    "D2": [
+      0.2803,
+      0.2802,
+      0.3677
+    ],
+    "D3_train_max_naive": {
+      "rule": "lex_member",
+      "best_dir": 0.797
+    },
+    "overlap_text_input_full_nonzero": {
+      "prop:train∩test": {},
+      "ctrl:train∩test": {},
+      "cross:train∩ctrl_test": {},
+      "prop:train∩adversarial": {},
+      "ctrl:train∩adversarial": {},
+      "cross:train∩ctrl_adversarial": {},
+      "prop:test∩adversarial": {},
+      "ctrl:test∩adversarial": {},
+      "cross:test∩ctrl_adversarial": {},
+      "train∩natural": {},
+      "ctrl_train∩natural": {},
+      "test∩natural": {},
+      "ctrl_test∩natural": {},
+      "adversarial∩natural": {},
+      "ctrl_adversarial∩natural": {}
+    }
+  },
+  "verdict": {
+    "code": "①",
+    "why": "可用且优于注入式",
+    "D3_pass": true,
+    "D5": "不适用（本轮不走联合训练）"
+  }
+}

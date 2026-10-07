@@ -1,0 +1,75 @@
+{
+  "train_acc": [
+    62.02,
+    64.0
+  ],
+  "test_acc": [
+    49.13,
+    49.93
+  ],
+  "adv_acc": [
+    36.17,
+    35.5
+  ],
+  "gold_acc": [
+    40.0,
+    36.67
+  ],
+  "gold_spearman": [
+    0.3223,
+    0.2976
+  ],
+  "shuf_test_acc": [
+    34.2,
+    38.67
+  ],
+  "shuf_adv_acc": [
+    32.5,
+    13.67
+  ],
+  "majority": {
+    "test": 40.0,
+    "adversarial": 33.33,
+    "gold": 33.33
+  },
+  "delta": {
+    "test": 2.0,
+    "adversarial": 2.0,
+    "gold": 3.33,
+    "raw_range": {
+      "test": 0.8,
+      "adversarial": 0.67,
+      "gold": 3.33
+    }
+  },
+  "thresholds": {
+    "V1": 42.0,
+    "V2": 35.33,
+    "V3": {
+      "gold_acc": 36.66,
+      "rho": 0.4
+    },
+    "V-bonus": {
+      "test_max": 43.0,
+      "adv_max": 36.33
+    }
+  },
+  "V1_pass": [
+    true,
+    true
+  ],
+  "V2_pass": [
+    true,
+    true
+  ],
+  "V3_pass": [
+    false,
+    false
+  ],
+  "V_bonus_pass": [
+    true,
+    true
+  ],
+  "verdict": "③ 证据不足",
+  "recommend_stage2": false
+}

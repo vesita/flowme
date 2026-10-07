@@ -1,0 +1,756 @@
+{
+  "H0": {
+    "A": {
+      "params": 365960,
+      "per_group": {
+        "emb": 290176,
+        "enc": 66944,
+        "head_s": 390,
+        "head_t": 130,
+        "trunk": 8320
+      },
+      "step_ms": 11.416,
+      "wall_sec": 22.0,
+      "train_wall_sec": 13.7,
+      "peak_mem_GB": 0.748,
+      "steps": 1200,
+      "batch": 64,
+      "params_vs_A_pct": 0.0
+    },
+    "B": {
+      "params": 378376,
+      "per_group": {
+        "emb": 290176,
+        "enc": 66944,
+        "head_s": 390,
+        "head_t": 130,
+        "pool_v": 64,
+        "pool_w": 4160,
+        "pos": 8192,
+        "trunk": 8320
+      },
+      "step_ms": 12.332,
+      "wall_sec": 23.1,
+      "train_wall_sec": 14.8,
+      "peak_mem_GB": 0.748,
+      "steps": 1200,
+      "batch": 64,
+      "params_vs_A_pct": 3.39
+    },
+    "C": {
+      "params": 390728,
+      "per_group": {
+        "emb": 290176,
+        "enc": 66944,
+        "fw_proj": 8256,
+        "head_s": 390,
+        "head_t": 130,
+        "pool_v": 64,
+        "pool_w": 4160,
+        "pos": 8192,
+        "trunk": 12416
+      },
+      "step_ms": 14.289,
+      "wall_sec": 25.6,
+      "train_wall_sec": 17.15,
+      "peak_mem_GB": 0.748,
+      "steps": 1200,
+      "batch": 64,
+      "params_vs_A_pct": 6.77
+    }
+  },
+  "H1": {
+    "S_test_mask|B-A": {
+      "s42": {
+        "delta": -0.0185,
+        "se": 0.003969,
+        "t": -4.661,
+        "pass_2se": true,
+        "same_sign_required": true,
+        "n": 6000
+      },
+      "s43": {
+        "delta": -0.0225,
+        "se": 0.003895,
+        "t": -5.777,
+        "pass_2se": true,
+        "same_sign_required": true,
+        "n": 6000
+      },
+      "same_sign_2seeds": true,
+      "both_pass_2se": true,
+      "H_pass": false
+    },
+    "S_test_mask|C-A": {
+      "s42": {
+        "delta": -0.017333,
+        "se": 0.004097,
+        "t": -4.231,
+        "pass_2se": true,
+        "same_sign_required": true,
+        "n": 6000
+      },
+      "s43": {
+        "delta": -0.017333,
+        "se": 0.004131,
+        "t": -4.196,
+        "pass_2se": true,
+        "same_sign_required": true,
+        "n": 6000
+      },
+      "same_sign_2seeds": true,
+      "both_pass_2se": true,
+      "H_pass": false
+    },
+    "H_pass": false
+  },
+  "H2": {
+    "T_test|B-A": {
+      "s42": {
+        "delta": 0.0,
+        "se": 0.0,
+        "t": null,
+        "pass_2se": false,
+        "same_sign_required": true,
+        "n": 1200,
+        "pass_H2": true
+      },
+      "s43": {
+        "delta": 0.0,
+        "se": 0.0,
+        "t": null,
+        "pass_2se": false,
+        "same_sign_required": true,
+        "n": 1200,
+        "pass_H2": true
+      },
+      "same_sign_2seeds": true,
+      "both_pass_2se": false,
+      "H_pass": false
+    },
+    "T_test|C-A": {
+      "s42": {
+        "delta": 0.0,
+        "se": 0.0,
+        "t": null,
+        "pass_2se": false,
+        "same_sign_required": true,
+        "n": 1200,
+        "pass_H2": true
+      },
+      "s43": {
+        "delta": 0.0,
+        "se": 0.0,
+        "t": null,
+        "pass_2se": false,
+        "same_sign_required": true,
+        "n": 1200,
+        "pass_H2": true
+      },
+      "same_sign_2seeds": true,
+      "both_pass_2se": false,
+      "H_pass": false
+    },
+    "B_no_degradation": true,
+    "C_no_degradation": true
+  },
+  "H3": {
+    "S_mask": {
+      "n": 6000,
+      "max_naive": 0.6968,
+      "max_naive_rule": "R6_labeldef",
+      "majority": 0.456,
+      "majority_plus_2se": 0.4689,
+      "one_minus_2se": 0.9871,
+      "usable_rule_cannot_solve": true
+    },
+    "S_keep": {
+      "n": 6000,
+      "max_naive": 1.0,
+      "max_naive_rule": "R6_labeldef",
+      "majority": 0.456,
+      "one_minus_2se": 0.9871,
+      "usable_rule_cannot_solve": false
+    },
+    "T": {
+      "n_test": 1200,
+      "max_naive": 0.875,
+      "max_naive_rule": "R_edit_dist",
+      "majority": 0.5,
+      "one_minus_2se": 0.9711,
+      "one_minus_2se_at_floor": 0.9809,
+      "usable_rule_cannot_solve": true
+    },
+    "model_vs_floor_S_mask": {
+      "A_s42": 0.103367,
+      "A_s43": 0.103867,
+      "B_s42": 0.084867,
+      "B_s43": 0.081367,
+      "C_s42": 0.086033,
+      "C_s43": 0.086533
+    },
+    "model_vs_floor_T": {
+      "A_s42": 0.125,
+      "A_s43": 0.125,
+      "B_s42": 0.125,
+      "B_s43": 0.125,
+      "C_s42": 0.125,
+      "C_s43": 0.125
+    }
+  },
+  "H4": {
+    "skel": {
+      "A_s42": {
+        "acc": 0.4672,
+        "se": 0.009978,
+        "n_eval": 2500,
+        "C": 1.0,
+        "inner_val_acc": 0.480625,
+        "n_fit": 8000,
+        "n_class": 40,
+        "floor_majority": 0.416875,
+        "eval_majority": 0.4168,
+        "max_naive_free_rule": 0.8316,
+        "note": "skel_id 是字面结构标签；地板取 free_rule_floor 完备电池 .8316"
+      },
+      "A_s43": {
+        "acc": 0.498,
+        "se": 0.01,
+        "n_eval": 2500,
+        "C": 0.1,
+        "inner_val_acc": 0.50625,
+        "n_fit": 8000,
+        "n_class": 40,
+        "floor_majority": 0.416875,
+        "eval_majority": 0.4168,
+        "max_naive_free_rule": 0.8316,
+        "note": "skel_id 是字面结构标签；地板取 free_rule_floor 完备电池 .8316"
+      },
+      "B_s42": {
+        "acc": 0.4684,
+        "se": 0.00998,
+        "n_eval": 2500,
+        "C": 1.0,
+        "inner_val_acc": 0.464375,
+        "n_fit": 8000,
+        "n_class": 40,
+        "floor_majority": 0.416875,
+        "eval_majority": 0.4168,
+        "max_naive_free_rule": 0.8316,
+        "note": "skel_id 是字面结构标签；地板取 free_rule_floor 完备电池 .8316"
+      },
+      "B_s43": {
+        "acc": 0.4984,
+        "se": 0.01,
+        "n_eval": 2500,
+        "C": 0.1,
+        "inner_val_acc": 0.494375,
+        "n_fit": 8000,
+        "n_class": 40,
+        "floor_majority": 0.416875,
+        "eval_majority": 0.4168,
+        "max_naive_free_rule": 0.8316,
+        "note": "skel_id 是字面结构标签；地板取 free_rule_floor 完备电池 .8316"
+      },
+      "C_s42": {
+        "acc": 0.5048,
+        "se": 0.01,
+        "n_eval": 2500,
+        "C": 0.1,
+        "inner_val_acc": 0.495,
+        "n_fit": 8000,
+        "n_class": 40,
+        "floor_majority": 0.416875,
+        "eval_majority": 0.4168,
+        "max_naive_free_rule": 0.8316,
+        "note": "skel_id 是字面结构标签；地板取 free_rule_floor 完备电池 .8316"
+      },
+      "C_s43": {
+        "acc": 0.5164,
+        "se": 0.009995,
+        "n_eval": 2500,
+        "C": 0.1,
+        "inner_val_acc": 0.516875,
+        "n_fit": 8000,
+        "n_class": 40,
+        "floor_majority": 0.416875,
+        "eval_majority": 0.4168,
+        "max_naive_free_rule": 0.8316,
+        "note": "skel_id 是字面结构标签；地板取 free_rule_floor 完备电池 .8316"
+      }
+    },
+    "trig_pos": {
+      "A_s42": {
+        "acc": 0.582,
+        "se": 0.006368,
+        "n_eval": 6000,
+        "C": 0.1,
+        "inner_val_acc": 0.589583,
+        "n_fit": 12000,
+        "n_class": 9,
+        "floor_majority_train": 0.310917,
+        "eval_majority": 0.311833,
+        "note": "触发词起点位置；对无位置编码的 A 置换不可学 ⇒ 应落多数类"
+      },
+      "A_s43": {
+        "acc": 0.591167,
+        "se": 0.006347,
+        "n_eval": 6000,
+        "C": 1.0,
+        "inner_val_acc": 0.6,
+        "n_fit": 12000,
+        "n_class": 9,
+        "floor_majority_train": 0.310917,
+        "eval_majority": 0.311833,
+        "note": "触发词起点位置；对无位置编码的 A 置换不可学 ⇒ 应落多数类"
+      },
+      "B_s42": {
+        "acc": 0.719,
+        "se": 0.005803,
+        "n_eval": 6000,
+        "C": 10.0,
+        "inner_val_acc": 0.727917,
+        "n_fit": 12000,
+        "n_class": 9,
+        "floor_majority_train": 0.310917,
+        "eval_majority": 0.311833,
+        "note": "触发词起点位置；对无位置编码的 A 置换不可学 ⇒ 应落多数类"
+      },
+      "B_s43": {
+        "acc": 0.765,
+        "se": 0.005474,
+        "n_eval": 6000,
+        "C": 1.0,
+        "inner_val_acc": 0.77875,
+        "n_fit": 12000,
+        "n_class": 9,
+        "floor_majority_train": 0.310917,
+        "eval_majority": 0.311833,
+        "note": "触发词起点位置；对无位置编码的 A 置换不可学 ⇒ 应落多数类"
+      },
+      "C_s42": {
+        "acc": 0.728833,
+        "se": 0.005739,
+        "n_eval": 6000,
+        "C": 10.0,
+        "inner_val_acc": 0.740417,
+        "n_fit": 12000,
+        "n_class": 9,
+        "floor_majority_train": 0.310917,
+        "eval_majority": 0.311833,
+        "note": "触发词起点位置；对无位置编码的 A 置换不可学 ⇒ 应落多数类"
+      },
+      "C_s43": {
+        "acc": 0.7615,
+        "se": 0.005502,
+        "n_eval": 6000,
+        "C": 0.1,
+        "inner_val_acc": 0.76,
+        "n_fit": 12000,
+        "n_class": 9,
+        "floor_majority_train": 0.310917,
+        "eval_majority": 0.311833,
+        "note": "触发词起点位置；对无位置编码的 A 置换不可学 ⇒ 应落多数类"
+      }
+    },
+    "ent": {
+      "A_s42": {
+        "acc": 1.0,
+        "se": 0.0,
+        "n_eval": 1200,
+        "C": 0.01,
+        "inner_val_acc": 1.0,
+        "n_fit": 4000,
+        "n_class": 2,
+        "max_naive_free_rule": 0.875,
+        "floor_majority": 0.5
+      },
+      "A_s43": {
+        "acc": 1.0,
+        "se": 0.0,
+        "n_eval": 1200,
+        "C": 0.01,
+        "inner_val_acc": 1.0,
+        "n_fit": 4000,
+        "n_class": 2,
+        "max_naive_free_rule": 0.875,
+        "floor_majority": 0.5
+      },
+      "B_s42": {
+        "acc": 1.0,
+        "se": 0.0,
+        "n_eval": 1200,
+        "C": 0.01,
+        "inner_val_acc": 1.0,
+        "n_fit": 4000,
+        "n_class": 2,
+        "max_naive_free_rule": 0.875,
+        "floor_majority": 0.5
+      },
+      "B_s43": {
+        "acc": 1.0,
+        "se": 0.0,
+        "n_eval": 1200,
+        "C": 0.01,
+        "inner_val_acc": 1.0,
+        "n_fit": 4000,
+        "n_class": 2,
+        "max_naive_free_rule": 0.875,
+        "floor_majority": 0.5
+      },
+      "C_s42": {
+        "acc": 1.0,
+        "se": 0.0,
+        "n_eval": 1200,
+        "C": 0.01,
+        "inner_val_acc": 1.0,
+        "n_fit": 4000,
+        "n_class": 2,
+        "max_naive_free_rule": 0.875,
+        "floor_majority": 0.5
+      },
+      "C_s43": {
+        "acc": 1.0,
+        "se": 0.0,
+        "n_eval": 1200,
+        "C": 0.01,
+        "inner_val_acc": 1.0,
+        "n_fit": 4000,
+        "n_class": 2,
+        "max_naive_free_rule": 0.875,
+        "floor_majority": 0.5
+      }
+    },
+    "b_pairs": {
+      "A_s42": {
+        "pair_success": 0.366071,
+        "se_pair": 0.020357,
+        "n_pairs": 560,
+        "pair_chance": 0.5,
+        "both_correct": 0.014286,
+        "per_side_acc": 0.11875,
+        "ref_perm_invariant_rule": 0.0,
+        "ref_literal_skeleton_rule": 1.0,
+        "per_side_floor_free_rule": 0.1404,
+        "per_side_note": "a_bal 完备电池 .1404（skeleton_leak 实测）"
+      },
+      "A_s43": {
+        "pair_success": 0.283929,
+        "se_pair": 0.019054,
+        "n_pairs": 560,
+        "pair_chance": 0.5,
+        "both_correct": 0.001786,
+        "per_side_acc": 0.074107,
+        "ref_perm_invariant_rule": 0.0,
+        "ref_literal_skeleton_rule": 1.0,
+        "per_side_floor_free_rule": 0.1404,
+        "per_side_note": "a_bal 完备电池 .1404（skeleton_leak 实测）"
+      },
+      "B_s42": {
+        "pair_success": 0.355357,
+        "se_pair": 0.020225,
+        "n_pairs": 560,
+        "pair_chance": 0.5,
+        "both_correct": 0.001786,
+        "per_side_acc": 0.103571,
+        "ref_perm_invariant_rule": 0.0,
+        "ref_literal_skeleton_rule": 1.0,
+        "per_side_floor_free_rule": 0.1404,
+        "per_side_note": "a_bal 完备电池 .1404（skeleton_leak 实测）"
+      },
+      "B_s43": {
+        "pair_success": 0.246429,
+        "se_pair": 0.01821,
+        "n_pairs": 560,
+        "pair_chance": 0.5,
+        "both_correct": 0.001786,
+        "per_side_acc": 0.049107,
+        "ref_perm_invariant_rule": 0.0,
+        "ref_literal_skeleton_rule": 1.0,
+        "per_side_floor_free_rule": 0.1404,
+        "per_side_note": "a_bal 完备电池 .1404（skeleton_leak 实测）"
+      },
+      "C_s42": {
+        "pair_success": 0.382143,
+        "se_pair": 0.020533,
+        "n_pairs": 560,
+        "pair_chance": 0.5,
+        "both_correct": 0.025,
+        "per_side_acc": 0.132143,
+        "ref_perm_invariant_rule": 0.0,
+        "ref_literal_skeleton_rule": 1.0,
+        "per_side_floor_free_rule": 0.1404,
+        "per_side_note": "a_bal 完备电池 .1404（skeleton_leak 实测）"
+      },
+      "C_s43": {
+        "pair_success": 0.3,
+        "se_pair": 0.019365,
+        "n_pairs": 560,
+        "pair_chance": 0.5,
+        "both_correct": 0.008929,
+        "per_side_acc": 0.078571,
+        "ref_perm_invariant_rule": 0.0,
+        "ref_literal_skeleton_rule": 1.0,
+        "per_side_floor_free_rule": 0.1404,
+        "per_side_note": "a_bal 完备电池 .1404（skeleton_leak 实测）"
+      }
+    },
+    "c_pairs": {
+      "A_s42": {
+        "per_side_acc": 0.135577,
+        "se": 0.010615,
+        "n_eval": 1040,
+        "floor": 0.1788,
+        "floor_note": "skeleton_leak c 完备 max_naive .1788"
+      },
+      "A_s43": {
+        "per_side_acc": 0.092308,
+        "se": 0.008976,
+        "n_eval": 1040,
+        "floor": 0.1788,
+        "floor_note": "skeleton_leak c 完备 max_naive .1788"
+      },
+      "B_s42": {
+        "per_side_acc": 0.126923,
+        "se": 0.010322,
+        "n_eval": 1040,
+        "floor": 0.1788,
+        "floor_note": "skeleton_leak c 完备 max_naive .1788"
+      },
+      "B_s43": {
+        "per_side_acc": 0.065385,
+        "se": 0.007665,
+        "n_eval": 1040,
+        "floor": 0.1788,
+        "floor_note": "skeleton_leak c 完备 max_naive .1788"
+      },
+      "C_s42": {
+        "per_side_acc": 0.117308,
+        "se": 0.009978,
+        "n_eval": 1040,
+        "floor": 0.1788,
+        "floor_note": "skeleton_leak c 完备 max_naive .1788"
+      },
+      "C_s43": {
+        "per_side_acc": 0.083654,
+        "se": 0.008585,
+        "n_eval": 1040,
+        "floor": 0.1788,
+        "floor_note": "skeleton_leak c 完备 max_naive .1788"
+      }
+    }
+  },
+  "H5": {
+    "S_test_keep|B-A": {
+      "s42": {
+        "delta": -0.014167,
+        "se": 0.003915,
+        "t": -3.618,
+        "pass_2se": true,
+        "same_sign_required": true,
+        "n": 6000
+      },
+      "s43": {
+        "delta": -0.035167,
+        "se": 0.003992,
+        "t": -8.809,
+        "pass_2se": true,
+        "same_sign_required": true,
+        "n": 6000
+      },
+      "same_sign_2seeds": true,
+      "both_pass_2se": true,
+      "H_pass": false
+    },
+    "S_test_keep|C-A": {
+      "s42": {
+        "delta": -0.015167,
+        "se": 0.004102,
+        "t": -3.697,
+        "pass_2se": true,
+        "same_sign_required": true,
+        "n": 6000
+      },
+      "s43": {
+        "delta": -0.031167,
+        "se": 0.004161,
+        "t": -7.49,
+        "pass_2se": true,
+        "same_sign_required": true,
+        "n": 6000
+      },
+      "same_sign_2seeds": true,
+      "both_pass_2se": true,
+      "H_pass": false
+    }
+  },
+  "M": {
+    "A_s42": {
+      "n": 6000,
+      "acc": 0.800167,
+      "se": 0.005162,
+      "acc_delta": -0.0,
+      "pred_agree": 1.0
+    },
+    "A_s43": {
+      "n": 6000,
+      "acc": 0.800667,
+      "se": 0.005158,
+      "acc_delta": -0.0,
+      "pred_agree": 1.0
+    },
+    "B_s42": {
+      "n": 6000,
+      "acc": 0.773833,
+      "se": 0.005401,
+      "acc_delta": -0.007834,
+      "pred_agree": 0.907167
+    },
+    "B_s43": {
+      "n": 6000,
+      "acc": 0.763833,
+      "se": 0.005483,
+      "acc_delta": -0.014334,
+      "pred_agree": 0.900333
+    },
+    "C_s42": {
+      "n": 6000,
+      "acc": 0.764167,
+      "se": 0.005481,
+      "acc_delta": -0.018666,
+      "pred_agree": 0.893167
+    },
+    "C_s43": {
+      "n": 6000,
+      "acc": 0.773833,
+      "se": 0.005401,
+      "acc_delta": -0.0095,
+      "pred_agree": 0.9065
+    }
+  },
+  "exploratory": {
+    "rule_fail_subset": {
+      "n": 1819,
+      "pct": 0.3032,
+      "acc": {
+        "A_s42": 0.5558,
+        "A_s43": 0.556899,
+        "B_s42": 0.556899,
+        "B_s43": 0.532161,
+        "C_s42": 0.560748,
+        "C_s43": 0.547554
+      }
+    },
+    "rule_pass_subset": {
+      "n": 4181,
+      "acc": {
+        "A_s42": 0.906482,
+        "A_s43": 0.906721,
+        "B_s42": 0.879455,
+        "B_s43": 0.885195,
+        "C_s42": 0.879455,
+        "C_s43": 0.885912
+      }
+    },
+    "per_class": {
+      "0": {
+        "n": 1189,
+        "mode_name": "陈述",
+        "A_s42": 0.6106,
+        "A_s43": 0.6384,
+        "B_s42": 0.635,
+        "B_s43": 0.672,
+        "C_s42": 0.6358,
+        "C_s43": 0.6426
+      },
+      "1": {
+        "n": 1579,
+        "mode_name": "是非疑问",
+        "A_s42": 0.8005,
+        "A_s43": 0.7942,
+        "B_s42": 0.7745,
+        "B_s43": 0.7511,
+        "C_s42": 0.7644,
+        "C_s43": 0.7555
+      },
+      "2": {
+        "n": 2736,
+        "mode_name": "特指疑问",
+        "A_s42": 0.9828,
+        "A_s43": 0.9839,
+        "B_s42": 0.9565,
+        "B_s43": 0.9631,
+        "C_s42": 0.9547,
+        "C_s43": 0.9591
+      },
+      "3": {
+        "n": 55,
+        "mode_name": "祈使",
+        "A_s42": 0.0,
+        "A_s43": 0.0,
+        "B_s42": 0.0,
+        "B_s43": 0.0,
+        "C_s42": 0.0,
+        "C_s43": 0.0
+      },
+      "4": {
+        "n": 410,
+        "mode_name": "感叹",
+        "A_s42": 0.2976,
+        "A_s43": 0.2415,
+        "B_s42": 0.2317,
+        "B_s43": 0.1195,
+        "C_s42": 0.2951,
+        "C_s43": 0.2902
+      },
+      "5": {
+        "n": 31,
+        "mode_name": "反问",
+        "A_s42": 0.0,
+        "A_s43": 0.0,
+        "B_s42": 0.0,
+        "B_s43": 0.0,
+        "C_s42": 0.0323,
+        "C_s43": 0.0
+      }
+    }
+  },
+  "H5_abs": {
+    "A_s42": {
+      "S_test_keep": 0.792667,
+      "S_train_mask": 0.821417,
+      "T_train": 1.0,
+      "S_test_mask": 0.800167
+    },
+    "A_s43": {
+      "S_test_keep": 0.797833,
+      "S_train_mask": 0.819667,
+      "T_train": 1.0,
+      "S_test_mask": 0.800667
+    },
+    "B_s42": {
+      "S_test_keep": 0.7785,
+      "S_train_mask": 0.816083,
+      "T_train": 1.0,
+      "S_test_mask": 0.781667
+    },
+    "B_s43": {
+      "S_test_keep": 0.762667,
+      "S_train_mask": 0.804833,
+      "T_train": 1.0,
+      "S_test_mask": 0.778167
+    },
+    "C_s42": {
+      "S_test_keep": 0.7775,
+      "S_train_mask": 0.822667,
+      "T_train": 1.0,
+      "S_test_mask": 0.782833
+    },
+    "C_s43": {
+      "S_test_keep": 0.766667,
+      "S_train_mask": 0.81675,
+      "T_train": 1.0,
+      "S_test_mask": 0.783333
+    }
+  }
+}

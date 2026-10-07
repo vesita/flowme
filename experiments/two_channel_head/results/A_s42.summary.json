@@ -1,0 +1,128 @@
+{
+  "name": "A_s42",
+  "arm": "A",
+  "seed": 42,
+  "randlabel": false,
+  "device": "cuda",
+  "freeze": {
+    "encoder_params": 1688460,
+    "encoder_trainable": 0,
+    "encoder_training": false,
+    "hidden": 128,
+    "max_len": 128
+  },
+  "params": {
+    "arm": "A",
+    "trunk_ptr": 164224,
+    "trunk_gen": 0,
+    "shared_trunk": false,
+    "ptr_out": 129,
+    "gen_skel": 0,
+    "gen_assign": 0,
+    "head_trainable": 164353
+  },
+  "recipe": {
+    "steps": 1800,
+    "batch": 64,
+    "lr": 0.001,
+    "weight_decay": 0.0001,
+    "cosine": true,
+    "grad_clip": 1.0,
+    "n_ptr_train": 8000,
+    "n_gen_train": 0,
+    "loss": "L_ptr"
+  },
+  "eval": {
+    "ptr_train": {
+      "n": 8000,
+      "acc": 1.0,
+      "ce": 0.001039,
+      "se": 0.00559,
+      "margin_over_se": 89.443,
+      "blind_guess": 0.5
+    },
+    "ptr_test": {
+      "n": 2500,
+      "acc": 0.9468,
+      "ce": 0.293684,
+      "se": 0.01,
+      "margin_over_se": 44.68,
+      "blind_guess": 0.5
+    },
+    "ptr_adv": {
+      "n": 2500,
+      "acc": 0.7044,
+      "ce": 2.54847,
+      "se": 0.01,
+      "margin_over_se": 20.44,
+      "blind_guess": 0.5
+    },
+    "ptr_adv_shifted_pos": {
+      "n": 1250,
+      "acc": 0.9216,
+      "se": 0.014142,
+      "margin_over_se": 29.812
+    },
+    "ptr_adv_heldout_pair": {
+      "n": 1250,
+      "acc": 0.4872,
+      "se": 0.014142,
+      "margin_over_se": -0.905
+    }
+  },
+  "timing": {
+    "probe_fwd_ptr_ms": {
+      "n": 200,
+      "mean_ms": 0.1397,
+      "p50_ms": 0.1392,
+      "p95_ms": 0.1435
+    },
+    "probe_step_fwd_bwd_ms": {
+      "n": 50,
+      "mean_ms": 0.4593,
+      "p50_ms": 0.455,
+      "p95_ms": 0.4901
+    },
+    "probe_n": 200,
+    "train_warm_skip": 50,
+    "train_fwd_ms": {
+      "ptr": {
+        "n": 1750,
+        "mean": 0.2212,
+        "p50": 0.2182,
+        "p95": 0.2464
+      }
+    },
+    "train_step_ms": {
+      "n": 1750,
+      "mean": 1.3457,
+      "p50": 1.3165,
+      "p95": 1.5482
+    },
+    "loss_by_channel": {
+      "ptr": {
+        "n": 1800,
+        "first": 0.69386,
+        "last": 0.001058,
+        "mean_over_all": 0.055857
+      }
+    },
+    "train_step_all_ms": {
+      "n": 1800,
+      "mean": 1.5428,
+      "p50": 1.3166,
+      "p95": 1.5556
+    }
+  },
+  "loss_first": 0.69386,
+  "loss_last": 0.001058,
+  "loss_by_channel": {
+    "ptr": {
+      "n": 1800,
+      "first": 0.69386,
+      "last": 0.001058,
+      "mean_over_all": 0.055857
+    }
+  },
+  "wall_sec": 7.9
+}

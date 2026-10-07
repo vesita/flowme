@@ -1,0 +1,144 @@
+{
+  "name": "D_s42_steps60",
+  "arm": "D",
+  "seed": 42,
+  "randlabel": false,
+  "device": "cuda",
+  "freeze": {
+    "encoder_params": 1688460,
+    "encoder_trainable": 0,
+    "encoder_training": false,
+    "hidden": 128,
+    "max_len": 128
+  },
+  "params": {
+    "arm": "D",
+    "trunk_ptr": 164224,
+    "trunk_gen": 164224,
+    "shared_trunk": false,
+    "ptr_out": 129,
+    "gen_skel": 5160,
+    "gen_assign": 16704,
+    "head_trainable": 350441
+  },
+  "recipe": {
+    "steps": 60,
+    "batch": 64,
+    "lr": 0.001,
+    "weight_decay": 0.0001,
+    "cosine": true,
+    "grad_clip": 1.0,
+    "n_ptr_train": 8000,
+    "n_gen_train": 8000,
+    "loss": "L_ptr + L_gen (λ=1)"
+  },
+  "eval": {
+    "ptr_train": {
+      "n": 8000,
+      "acc": 0.87925,
+      "ce": 0.299353,
+      "se": 0.00559,
+      "margin_over_se": 67.842,
+      "blind_guess": 0.5
+    },
+    "ptr_test": {
+      "n": 2500,
+      "acc": 0.8612,
+      "ce": 0.320676,
+      "se": 0.01,
+      "margin_over_se": 36.12,
+      "blind_guess": 0.5
+    },
+    "ptr_adv": {
+      "n": 2500,
+      "acc": 0.6592,
+      "ce": 0.707109,
+      "se": 0.01,
+      "margin_over_se": 15.92,
+      "blind_guess": 0.5
+    },
+    "ptr_adv_shifted_pos": {
+      "n": 1250,
+      "acc": 0.8456,
+      "se": 0.014142,
+      "margin_over_se": 24.438
+    },
+    "ptr_adv_heldout_pair": {
+      "n": 1250,
+      "acc": 0.4728,
+      "se": 0.014142,
+      "margin_over_se": -1.923
+    },
+    "gen_test": {
+      "skel": {
+        "n": 2500,
+        "acc": 0.4472,
+        "se": 0.01,
+        "margin_over_se": 42.22,
+        "blind_guess": 0.025
+      },
+      "slot": {
+        "n": 2500,
+        "acc": 0.834067,
+        "se": 0.004112
+      },
+      "joint": {
+        "n": 2500,
+        "acc": 0.4016,
+        "se": 0.01
+      },
+      "ce": 1.752556
+    }
+  },
+  "timing": {
+    "probe_fwd_ptr_ms": {
+      "n": 200,
+      "mean_ms": 0.1384,
+      "p50_ms": 0.1368,
+      "p95_ms": 0.1436
+    },
+    "probe_fwd_gen_ms": {
+      "n": 200,
+      "mean_ms": 0.2114,
+      "p50_ms": 0.2117,
+      "p95_ms": 0.2217
+    },
+    "probe_step_fwd_bwd_ms": {
+      "n": 50,
+      "mean_ms": 4.2804,
+      "p50_ms": 3.6916,
+      "p95_ms": 7.7245
+    },
+    "probe_n": 200,
+    "train_warm_skip": 15,
+    "train_fwd_ms": {
+      "ptr": {
+        "n": 45,
+        "mean": 0.1986,
+        "p50": 0.1945,
+        "p95": 0.2131
+      },
+      "gen": {
+        "n": 45,
+        "mean": 0.4853,
+        "p50": 0.4799,
+        "p95": 0.5083
+      }
+    },
+    "train_step_ms": {
+      "n": 45,
+      "mean": 3.2124,
+      "p50": 3.2138,
+      "p95": 3.3325
+    },
+    "train_step_all_ms": {
+      "n": 60,
+      "mean": 10.932,
+      "p50": 3.2211,
+      "p95": 3.4019
+    }
+  },
+  "loss_first": 5.364055,
+  "loss_last": 2.713189,
+  "wall_sec": 6.0
+}

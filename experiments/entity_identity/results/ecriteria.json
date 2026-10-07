@@ -1,0 +1,336 @@
+{
+  "se": {},
+  "E1": {
+    "x": {
+      "n": 1200,
+      "se": 0.014433756729740645,
+      "max_naive": 1.0,
+      "max_naive_rule": "n_cue",
+      "gate": 1.0288675134594814,
+      "seeds": [
+        {
+          "seed": 42,
+          "card": 1.0,
+          "max_naive": 1.0,
+          "gate": 1.0288675134594814,
+          "margin": -0.028867513459481353,
+          "pass": false
+        },
+        {
+          "seed": 43,
+          "card": 1.0,
+          "max_naive": 1.0,
+          "gate": 1.0288675134594814,
+          "margin": -0.028867513459481353,
+          "pass": false
+        }
+      ],
+      "both_same_sign": true,
+      "pass": false
+    },
+    "x-ir": {
+      "n": 1200,
+      "se": 0.014433756729740645,
+      "max_naive": 1.0,
+      "max_naive_rule": "n_cue",
+      "gate": 1.0288675134594814,
+      "seeds": [
+        {
+          "seed": 42,
+          "card": 1.0,
+          "max_naive": 1.0,
+          "gate": 1.0288675134594814,
+          "margin": -0.028867513459481353,
+          "pass": false
+        },
+        {
+          "seed": 43,
+          "card": 1.0,
+          "max_naive": 1.0,
+          "gate": 1.0288675134594814,
+          "margin": -0.028867513459481353,
+          "pass": false
+        }
+      ],
+      "both_same_sign": true,
+      "pass": false
+    },
+    "x-cross": {
+      "n": 1200,
+      "se": 0.014433756729740645,
+      "max_naive": 1.0,
+      "max_naive_rule": "n_cue",
+      "gate": 1.0288675134594814,
+      "seeds": [
+        {
+          "seed": 42,
+          "card": 1.0,
+          "max_naive": 1.0,
+          "gate": 1.0288675134594814,
+          "margin": -0.028867513459481353,
+          "pass": false
+        },
+        {
+          "seed": 43,
+          "card": 1.0,
+          "max_naive": 1.0,
+          "gate": 1.0288675134594814,
+          "margin": -0.028867513459481353,
+          "pass": false
+        }
+      ],
+      "both_same_sign": true,
+      "pass": false
+    }
+  },
+  "E2": {
+    "types": [
+      {
+        "type": "A",
+        "n": 300,
+        "se": 0.02886751345948129,
+        "floor": 1.0,
+        "floor_rule": "R-same",
+        "gate": 1.0577350269189625,
+        "card_s42": 1.0,
+        "card_s43": 1.0,
+        "pass": false
+      },
+      {
+        "type": "B",
+        "n": 300,
+        "se": 0.02886751345948129,
+        "floor": 1.0,
+        "floor_rule": "R-same",
+        "gate": 1.0577350269189625,
+        "card_s42": 1.0,
+        "card_s43": 1.0,
+        "pass": false
+      },
+      {
+        "type": "C",
+        "n": 300,
+        "se": 0.02886751345948129,
+        "floor": 1.0,
+        "floor_rule": "R-same",
+        "gate": 1.0577350269189625,
+        "card_s42": 1.0,
+        "card_s43": 1.0,
+        "pass": false
+      },
+      {
+        "type": "D",
+        "n": 300,
+        "se": 0.02886751345948129,
+        "floor": 1.0,
+        "floor_rule": "R-edit",
+        "gate": 1.0577350269189625,
+        "card_s42": 1.0,
+        "card_s43": 1.0,
+        "pass": false
+      }
+    ],
+    "neg_types_pass": false,
+    "all_types_pass": false,
+    "x_ir_subtypes": [
+      {
+        "subtype": "DIFF-N1",
+        "n": 450,
+        "floor": 1.0,
+        "floor_rule": "structure",
+        "gate": 1.0471404520791032,
+        "card": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "subtype": "DIFF-N2",
+        "n": 150,
+        "floor": 1.0,
+        "floor_rule": "n_cue",
+        "gate": 1.0816496580927726,
+        "card": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "subtype": "SAME-B",
+        "n": 600,
+        "floor": 1.0,
+        "floor_rule": "R-same",
+        "gate": 1.0408248290463864,
+        "card": [
+          1.0,
+          1.0
+        ]
+      }
+    ]
+  },
+  "E3": {
+    "runs": [
+      {
+        "seed": 42,
+        "acc": 0.4725,
+        "majority": 0.5,
+        "gate": 0.5288675134594812,
+        "pass": true
+      },
+      {
+        "seed": 43,
+        "acc": 0.4891666666666667,
+        "majority": 0.5,
+        "gate": 0.5288675134594812,
+        "pass": true
+      }
+    ],
+    "pass": true
+  },
+  "E6": {
+    "x-cross": {
+      "own_trained": [
+        1.0,
+        1.0
+      ],
+      "x_trained": [
+        1.0,
+        1.0
+      ],
+      "max_naive": 1.0,
+      "blind_guess_gate": 0.52886,
+      "approx_blind": false
+    },
+    "x-ir": {
+      "own_trained": [
+        1.0,
+        1.0
+      ],
+      "x_trained": [
+        0.9558333333333333,
+        0.9675
+      ],
+      "max_naive": 1.0,
+      "blind_guess_gate": 0.52886,
+      "approx_blind": false
+    }
+  },
+  "delta_vs_each": {
+    "x": {
+      "R-same": [
+        0.25,
+        0.25
+      ],
+      "R-edit": [
+        0.125,
+        0.125
+      ],
+      "R-ngram": [
+        0.133333,
+        0.133333
+      ],
+      "R-lcs": [
+        0.125,
+        0.125
+      ],
+      "majority": [
+        0.5,
+        0.5
+      ],
+      "length": [
+        0.479167,
+        0.479167
+      ],
+      "structure": [
+        0.5,
+        0.5
+      ],
+      "n_cue": [
+        0.0,
+        0.0
+      ],
+      "R-pron": [
+        0.25,
+        0.25
+      ]
+    },
+    "x-ir": {
+      "R-same": [
+        0.5,
+        0.5
+      ],
+      "R-edit": [
+        0.5,
+        0.5
+      ],
+      "R-ngram": [
+        0.5,
+        0.5
+      ],
+      "R-lcs": [
+        0.5,
+        0.5
+      ],
+      "majority": [
+        0.5,
+        0.5
+      ],
+      "length": [
+        0.4825,
+        0.4825
+      ],
+      "structure": [
+        0.375,
+        0.375
+      ],
+      "n_cue": [
+        0.0,
+        0.0
+      ],
+      "R-pron": [
+        0.375,
+        0.375
+      ]
+    },
+    "x-cross": {
+      "R-same": [
+        0.25,
+        0.25
+      ],
+      "R-edit": [
+        0.125,
+        0.125
+      ],
+      "R-ngram": [
+        0.155,
+        0.155
+      ],
+      "R-lcs": [
+        0.125,
+        0.125
+      ],
+      "majority": [
+        0.5,
+        0.5
+      ],
+      "length": [
+        0.481667,
+        0.481667
+      ],
+      "structure": [
+        0.5,
+        0.5
+      ],
+      "n_cue": [
+        0.0,
+        0.0
+      ],
+      "R-pron": [
+        0.25,
+        0.25
+      ]
+    }
+  },
+  "verdict": "证据不足",
+  "E1_main_pass": false
+}

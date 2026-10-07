@@ -1,0 +1,80 @@
+{
+  "name": "B_s42_steps30",
+  "arm": "B",
+  "seed": 42,
+  "randlabel": false,
+  "device": "cuda",
+  "freeze": {
+    "encoder_params": 1688460,
+    "encoder_trainable": 0,
+    "encoder_training": false,
+    "hidden": 128,
+    "max_len": 128
+  },
+  "params": {
+    "arm": "B",
+    "trunk_ptr": 0,
+    "trunk_gen": 164224,
+    "shared_trunk": false,
+    "ptr_out": 0,
+    "gen_skel": 5160,
+    "gen_assign": 16704,
+    "head_trainable": 186088
+  },
+  "recipe": {
+    "steps": 30,
+    "batch": 64,
+    "lr": 0.001,
+    "weight_decay": 0.0001,
+    "cosine": true,
+    "grad_clip": 1.0,
+    "n_ptr_train": 0,
+    "n_gen_train": 8000,
+    "loss": "L_gen"
+  },
+  "eval": {
+    "gen_test": {
+      "skel": {
+        "n": 2500,
+        "acc": 0.422,
+        "se": 0.01,
+        "margin_over_se": 39.7,
+        "blind_guess": 0.025
+      },
+      "slot": {
+        "n": 2500,
+        "acc": 0.835033,
+        "se": 0.004145
+      },
+      "joint": {
+        "n": 2500,
+        "acc": 0.4148,
+        "se": 0.01
+      },
+      "ce": 1.868349
+    }
+  },
+  "timing": {
+    "probe_fwd_gen_ms": {
+      "n": 200,
+      "mean_ms": 0.2005,
+      "p50_ms": 0.1981,
+      "p95_ms": 0.2131
+    },
+    "probe_step_fwd_bwd_ms": {
+      "n": 50,
+      "mean_ms": 1.113,
+      "p50_ms": 1.09,
+      "p95_ms": 1.299
+    },
+    "probe_n": 200,
+    "train_fwd_ms": {
+      "gen": 9.7216
+    },
+    "train_step_ms": 17.6653,
+    "train_step_p95_ms": 2.8473
+  },
+  "loss_first": 4.670195,
+  "loss_last": 2.958791,
+  "wall_sec": 5.8
+}

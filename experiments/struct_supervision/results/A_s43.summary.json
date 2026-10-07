@@ -1,0 +1,178 @@
+{
+  "name": "A_s43",
+  "arm": "A",
+  "seed": 43,
+  "randlabel": false,
+  "device": "cuda",
+  "freeze": {
+    "encoder_params": 1688460,
+    "encoder_trainable": 0,
+    "encoder_training": false,
+    "placeholder_trainable": 0
+  },
+  "params": {
+    "arm": "A",
+    "trunk": 164224,
+    "gen_skel": 0,
+    "gen_assign": 0,
+    "sent_head": 1028841,
+    "head_trainable": 1193065,
+    "heads_frozen": [
+      "gen"
+    ]
+  },
+  "recipe": {
+    "steps": 1800,
+    "batch": 64,
+    "lr": 0.001,
+    "weight_decay": 0.0001,
+    "cosine": true,
+    "grad_clip": 1.0,
+    "n_train": 8000,
+    "loss": "L_sent",
+    "vocab_size": 4393
+  },
+  "eval": {
+    "test_decoded": {
+      "skel": {
+        "n": 2500,
+        "acc": 0.0,
+        "se": 0.01,
+        "blind": 0.025,
+        "margin_over_2se": -2.5
+      },
+      "slot": {
+        "n": 2500,
+        "acc": 0.0,
+        "se": 0.0,
+        "blind": 0.4231,
+        "t": null,
+        "all_identical": true
+      },
+      "joint": {
+        "n": 2500,
+        "acc": 0.0,
+        "se": 0.01
+      },
+      "sent_diag": {
+        "tf_char_acc": 0.187731,
+        "tf_char_n": 72476,
+        "sent_exact": 0.0,
+        "parseable": 0.0,
+        "n": 2500
+      }
+    },
+    "adv1_decoded": {
+      "skel": {
+        "n": 1220,
+        "acc": 0.0,
+        "se": 0.014315,
+        "blind": 0.025,
+        "margin_over_2se": -1.746
+      },
+      "slot": {
+        "n": 1220,
+        "acc": 0.0,
+        "se": 0.0,
+        "blind": 0.4988,
+        "t": null,
+        "all_identical": true
+      },
+      "joint": {
+        "n": 1220,
+        "acc": 0.0,
+        "se": 0.014315
+      },
+      "sent_diag": {
+        "tf_char_acc": 0.175396,
+        "tf_char_n": 33986,
+        "sent_exact": 0.0,
+        "parseable": 0.0,
+        "n": 1220
+      }
+    },
+    "adv2_decoded": {
+      "skel": {
+        "n": 1000,
+        "acc": 0.0,
+        "se": 0.015811,
+        "blind": 0.025,
+        "margin_over_2se": -1.581
+      },
+      "slot": {
+        "n": 1000,
+        "acc": 0.0,
+        "se": 0.0,
+        "blind": 0.4133,
+        "t": null,
+        "all_identical": true
+      },
+      "joint": {
+        "n": 1000,
+        "acc": 0.0,
+        "se": 0.015811
+      },
+      "sent_diag": {
+        "tf_char_acc": 0.197034,
+        "tf_char_n": 32908,
+        "sent_exact": 0.0,
+        "parseable": 0.0,
+        "n": 1000
+      }
+    }
+  },
+  "loss_first": 8.379637,
+  "loss_last": 4.984755,
+  "loss_parts": {
+    "sent": {
+      "first": 8.379637,
+      "last": 4.984755,
+      "mean": 5.50284
+    }
+  },
+  "wall_sec": 37.5,
+  "examples": {
+    "test": [
+      {
+        "gold": "13、求人如吞三尺剑，靠人如攀九重天",
+        "pred": "1、如果一个人，一个人"
+      },
+      {
+        "gold": "期待低开高走，后续收视率也破冰",
+        "pred": "而且一个人，不是一个"
+      },
+      {
+        "gold": "21、工作不会太忙碌，生活和工作两不误",
+        "pred": "不是不会有什么，不会有什么"
+      }
+    ],
+    "adv1": [
+      {
+        "gold": "那服务器太多了，然而玩家又少了怎么办",
+        "pred": "这个人的人，就是了了"
+      },
+      {
+        "gold": "的速度向上升起，然而桑普森却说，砝码将会向下降",
+        "pred": "在于此，在于此的时候，在于个时候，在于个时候，在于个时候，在于什么不是"
+      },
+      {
+        "gold": "喜欢下雪，不喜欢下雨，然而我这边在下雨",
+        "pred": "我们不过我们，我们就不过我们不过"
+      }
+    ],
+    "adv2": [
+      {
+        "gold": "当企业积累到第一桶金的时候，企业将面临一个选择，如何使用这第一桶金",
+        "pred": "如果有一个人，一个人类的人类，是一个人类"
+      },
+      {
+        "gold": "因为α和β都是锐角，所以α-β的可能范围是-π/2到π/2，不过具体得看数值",
+        "pred": "这种是不是这个，这种是不是这个人类的"
+      },
+      {
+        "gold": "管理部门的纵向、横向分工是否合理",
+        "pred": "这个时候的时候，这是在这些大的"
+      }
+    ]
+  }
+}

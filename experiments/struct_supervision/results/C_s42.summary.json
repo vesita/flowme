@@ -1,0 +1,257 @@
+{
+  "name": "C_s42",
+  "arm": "C",
+  "seed": 42,
+  "randlabel": false,
+  "device": "cuda",
+  "freeze": {
+    "encoder_params": 1688460,
+    "encoder_trainable": 0,
+    "encoder_training": false,
+    "placeholder_trainable": 0
+  },
+  "params": {
+    "arm": "C",
+    "trunk": 164224,
+    "gen_skel": 5160,
+    "gen_assign": 16704,
+    "sent_head": 1028841,
+    "head_trainable": 1214929,
+    "heads_frozen": []
+  },
+  "recipe": {
+    "steps": 1800,
+    "batch": 64,
+    "lr": 0.001,
+    "weight_decay": 0.0001,
+    "cosine": true,
+    "grad_clip": 1.0,
+    "n_train": 8000,
+    "loss": "L_gen + L_sent (λ=1)",
+    "vocab_size": 4393
+  },
+  "eval": {
+    "test_head": {
+      "skel": {
+        "n": 2500,
+        "acc": 0.6472,
+        "se": 0.01,
+        "blind": 0.025,
+        "margin_over_2se": 62.22
+      },
+      "slot": {
+        "n": 2500,
+        "acc": 0.966467,
+        "se": 0.002194,
+        "blind": 0.4231,
+        "t": 247.676,
+        "all_identical": false
+      },
+      "joint": {
+        "n": 2500,
+        "acc": 0.6172,
+        "se": 0.01
+      }
+    },
+    "test_decoded": {
+      "skel": {
+        "n": 2500,
+        "acc": 0.0,
+        "se": 0.01,
+        "blind": 0.025,
+        "margin_over_2se": -2.5
+      },
+      "slot": {
+        "n": 2500,
+        "acc": 0.0,
+        "se": 0.0,
+        "blind": 0.4231,
+        "t": null,
+        "all_identical": true
+      },
+      "joint": {
+        "n": 2500,
+        "acc": 0.0,
+        "se": 0.01
+      },
+      "sent_diag": {
+        "tf_char_acc": 0.181122,
+        "tf_char_n": 72476,
+        "sent_exact": 0.0,
+        "parseable": 0.0,
+        "n": 2500
+      }
+    },
+    "adv1_head": {
+      "skel": {
+        "n": 1220,
+        "acc": 0.0,
+        "se": 0.014315,
+        "blind": 0.025,
+        "margin_over_2se": -1.746
+      },
+      "slot": {
+        "n": 1220,
+        "acc": 0.977186,
+        "se": 0.002988,
+        "blind": 0.4988,
+        "t": 160.112,
+        "all_identical": false
+      },
+      "joint": {
+        "n": 1220,
+        "acc": 0.0,
+        "se": 0.014315
+      }
+    },
+    "adv1_decoded": {
+      "skel": {
+        "n": 1220,
+        "acc": 0.0,
+        "se": 0.014315,
+        "blind": 0.025,
+        "margin_over_2se": -1.746
+      },
+      "slot": {
+        "n": 1220,
+        "acc": 0.0,
+        "se": 0.0,
+        "blind": 0.4988,
+        "t": null,
+        "all_identical": true
+      },
+      "joint": {
+        "n": 1220,
+        "acc": 0.0,
+        "se": 0.014315
+      },
+      "sent_diag": {
+        "tf_char_acc": 0.170041,
+        "tf_char_n": 33986,
+        "sent_exact": 0.0,
+        "parseable": 0.0,
+        "n": 1220
+      }
+    },
+    "adv2_head": {
+      "skel": {
+        "n": 1000,
+        "acc": 0.239,
+        "se": 0.015811,
+        "blind": 0.025,
+        "margin_over_2se": 13.535
+      },
+      "slot": {
+        "n": 1000,
+        "acc": 0.958083,
+        "se": 0.00367,
+        "blind": 0.4133,
+        "t": 148.433,
+        "all_identical": false
+      },
+      "joint": {
+        "n": 1000,
+        "acc": 0.203,
+        "se": 0.015811
+      }
+    },
+    "adv2_decoded": {
+      "skel": {
+        "n": 1000,
+        "acc": 0.0,
+        "se": 0.015811,
+        "blind": 0.025,
+        "margin_over_2se": -1.581
+      },
+      "slot": {
+        "n": 1000,
+        "acc": 0.0,
+        "se": 0.0,
+        "blind": 0.4133,
+        "t": null,
+        "all_identical": true
+      },
+      "joint": {
+        "n": 1000,
+        "acc": 0.0,
+        "se": 0.015811
+      },
+      "sent_diag": {
+        "tf_char_acc": 0.192749,
+        "tf_char_n": 32908,
+        "sent_exact": 0.0,
+        "parseable": 0.0,
+        "n": 1000
+      }
+    }
+  },
+  "loss_first": 13.105026,
+  "loss_last": 5.941044,
+  "loss_parts": {
+    "gen": {
+      "first": 4.670195,
+      "last": 0.792949,
+      "mean": 1.262884
+    },
+    "skel": {
+      "first": 3.694527,
+      "last": 0.73067,
+      "mean": 1.084205
+    },
+    "assign": {
+      "first": 0.975668,
+      "last": 0.062279,
+      "mean": 0.17868
+    },
+    "sent": {
+      "first": 8.434831,
+      "last": 5.148095,
+      "mean": 5.54461
+    }
+  },
+  "wall_sec": 39.1,
+  "examples": {
+    "test": [
+      {
+        "gold": "13、求人如吞三尺剑，靠人如攀九重天",
+        "pred": "1.  ***************，一个人"
+      },
+      {
+        "gold": "期待低开高走，后续收视率也破冰",
+        "pred": "但是一个，一个国家庭"
+      },
+      {
+        "gold": "21、工作不会太忙碌，生活和工作两不误",
+        "pred": "************不是不会有一个人，不会不会不会"
+      }
+    ],
+    "adv1": [
+      {
+        "gold": "那服务器太多了，然而玩家又少了怎么办",
+        "pred": "这个人的人的人，就是了了"
+      },
+      {
+        "gold": "的速度向上升起，然而桑普森却说，砝码将会向下降",
+        "pred": "在这个人的，是不是在你的时候，就是在你的时候，就是不是不要"
+      },
+      {
+        "gold": "喜欢下雪，不喜欢下雨，然而我这边在下雨",
+        "pred": "我们的候，但是这些过了"
+      }
+    ],
+    "adv2": [
+      {
+        "gold": "当企业积累到第一桶金的时候，企业将面临一个选择，如何使用这第一桶金",
+        "pred": "如果是一个人，如果是一个人，如果是一个人的，如果是一个人"
+      },
+      {
+        "gold": "因为α和β都是锐角，所以α-β的可能范围是-π/2到π/2，不过具体得看数值",
+        "pred": "********************，这些是一个人的是一个人的"
+      },
+      {
+        "gold": "管理部门的纵向、横向分工是否合理",
+        "pred": "在本是不是一个人，是一个人的是一个人"
+      }
+    ]
+  }
+}

@@ -1,0 +1,121 @@
+{
+  "name": "B_s42_steps60",
+  "arm": "B",
+  "seed": 42,
+  "randlabel": false,
+  "device": "cuda",
+  "freeze": {
+    "encoder_params": 1688460,
+    "encoder_trainable": 0,
+    "encoder_training": false,
+    "placeholder_trainable": 0
+  },
+  "params": {
+    "arm": "B",
+    "trunk": 164224,
+    "gen_skel": 5160,
+    "gen_assign": 16704,
+    "sent_head": 0,
+    "head_trainable": 186088,
+    "heads_frozen": [
+      "sent"
+    ]
+  },
+  "recipe": {
+    "steps": 60,
+    "batch": 64,
+    "lr": 0.001,
+    "weight_decay": 0.0001,
+    "cosine": true,
+    "grad_clip": 1.0,
+    "n_train": 8000,
+    "loss": "L_gen",
+    "vocab_size": 4393
+  },
+  "eval": {
+    "test_head": {
+      "skel": {
+        "n": 2500,
+        "acc": 0.4472,
+        "se": 0.01,
+        "blind": 0.025,
+        "margin_over_2se": 42.22
+      },
+      "slot": {
+        "n": 2500,
+        "acc": 0.834067,
+        "se": 0.004112,
+        "blind": 0.4231,
+        "margin_over_2se": 99.951
+      },
+      "joint": {
+        "n": 2500,
+        "acc": 0.4016,
+        "se": 0.01
+      }
+    },
+    "adv1_head": {
+      "skel": {
+        "n": 1220,
+        "acc": 0.0,
+        "se": 0.014315,
+        "blind": 0.025,
+        "margin_over_2se": -1.746
+      },
+      "slot": {
+        "n": 1220,
+        "acc": 0.996448,
+        "se": 0.001106,
+        "blind": 0.4988,
+        "margin_over_2se": 449.98
+      },
+      "joint": {
+        "n": 1220,
+        "acc": 0.0,
+        "se": 0.014315
+      }
+    },
+    "adv2_head": {
+      "skel": {
+        "n": 1000,
+        "acc": 0.011,
+        "se": 0.015811,
+        "blind": 0.025,
+        "margin_over_2se": -0.885
+      },
+      "slot": {
+        "n": 1000,
+        "acc": 0.82825,
+        "se": 0.007266,
+        "blind": 0.4133,
+        "margin_over_2se": 57.104
+      },
+      "joint": {
+        "n": 1000,
+        "acc": 0.0,
+        "se": 0.015811
+      }
+    }
+  },
+  "loss_first": 4.670195,
+  "loss_last": 2.548881,
+  "loss_parts": {
+    "gen": {
+      "first": 4.670195,
+      "last": 2.548881,
+      "mean": 2.828562
+    },
+    "skel": {
+      "first": 3.694527,
+      "last": 1.804371,
+      "mean": 2.016188
+    },
+    "assign": {
+      "first": 0.975668,
+      "last": 0.74451,
+      "mean": 0.812374
+    }
+  },
+  "wall_sec": 6.1,
+  "examples": {}
+}

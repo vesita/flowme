@@ -1,0 +1,3019 @@
+{
+ "baseline": {
+  "n": 120,
+  "ok": 36,
+  "reject": 84,
+  "reasons": {
+   "type_inventory": 82,
+   "no_valid_candidate": 2
+  }
+ },
+ "C0": {
+  "struct_fail": 0,
+  "struct_checked": 131,
+  "rate": 0.0,
+  "R1_fail": 0,
+  "R1_checked": 156,
+  "R2_fail": 0,
+  "R2_checked": 139,
+  "baseline_mismatch": 0,
+  "n_fail_total": 0
+ },
+ "C3": {
+  "baseline_mismatch": 0,
+  "claim_mismatch": 0,
+  "consistent": true
+ },
+ "C1": {
+  "F1_F4": {
+   "R1": {
+    "n": 240,
+    "p_struct": 0.5417,
+    "p_rand": 0.6458,
+    "delta": -0.1042,
+    "se": 0.0313,
+    "b": 17,
+    "c": 42,
+    "sig": false,
+    "t": -3.33
+   },
+   "R2": {
+    "n": 240,
+    "p_struct": 0.5417,
+    "p_rand": 0.575,
+    "delta": -0.0333,
+    "se": 0.0317,
+    "b": 25,
+    "c": 33,
+    "sig": false,
+    "t": -1.05
+   }
+  },
+  "F5": {
+   "R1": {
+    "n": 2,
+    "p_struct": 0.5,
+    "p_rand": 0.5,
+    "delta": 0.0,
+    "se": 0.0,
+    "b": 0,
+    "c": 0,
+    "sig": false,
+    "t": null
+   },
+   "R2": {
+    "n": 2,
+    "p_struct": 0.5,
+    "p_rand": 0.5,
+    "delta": 0.0,
+    "se": 0.0,
+    "b": 0,
+    "c": 0,
+    "sig": false,
+    "t": null
+   }
+  },
+  "ALL5": {
+   "R1": {
+    "n": 242,
+    "p_struct": 0.5413,
+    "p_rand": 0.6446,
+    "delta": -0.1033,
+    "se": 0.031,
+    "b": 17,
+    "c": 42,
+    "sig": false,
+    "t": -3.33
+   },
+   "R2": {
+    "n": 242,
+    "p_struct": 0.5413,
+    "p_rand": 0.5744,
+    "delta": -0.0331,
+    "se": 0.0314,
+    "b": 25,
+    "c": 33,
+    "sig": false,
+    "t": -1.05
+   }
+  },
+  "RUNION_F1_F4": {
+   "n": 240,
+   "p_struct": 0.5417,
+   "p_rand": 0.7417,
+   "delta": -0.2,
+   "se": 0.0313,
+   "b": 9,
+   "c": 57,
+   "sig": false,
+   "t": -6.39
+  },
+  "channel_only_F1_F4": {
+   "R1": {
+    "n": 240,
+    "p_struct": 0.2917,
+    "p_rand": 0.3917,
+    "delta": -0.1,
+    "se": 0.0362,
+    "b": 27,
+    "c": 51,
+    "sig": false,
+    "t": -2.76
+   },
+   "R2": {
+    "n": 240,
+    "p_struct": 0.2917,
+    "p_rand": 0.3583,
+    "delta": -0.0667,
+    "se": 0.0365,
+    "b": 31,
+    "c": 47,
+    "sig": false,
+    "t": -1.82
+   },
+   "struct_cells_hit": 70
+  },
+  "per_draw": {
+   "struct": {
+    "hit": 131,
+    "n": 530,
+    "p": 0.2472
+   },
+   "R1": {
+    "hit": 156,
+    "n": 480,
+    "p": 0.325
+   },
+   "R2": {
+    "hit": 139,
+    "n": 495,
+    "p": 0.2808
+   }
+  },
+  "n_cells": 242,
+  "n_cells_F5": 2
+ },
+ "unreachable": {
+  "R1": 0,
+  "R2": 0
+ },
+ "C2": {
+  "F1": {
+   "n": 12,
+   "p25": 1.0,
+   "p50": 1.0,
+   "p75": 1.0,
+   "max": 2,
+   "min": 1
+  },
+  "F2": {
+   "n": 32,
+   "p25": 12.0,
+   "p50": 16.0,
+   "p75": 16.0,
+   "max": 22,
+   "min": 6
+  },
+  "F3": {
+   "n": 68,
+   "p25": 1.0,
+   "p50": 1.0,
+   "p75": 1.0,
+   "max": 1,
+   "min": 1
+  },
+  "F4": {
+   "n": 18,
+   "p25": 1.0,
+   "p50": 1.0,
+   "p75": 2.0,
+   "max": 2,
+   "min": 1
+  },
+  "F5": {
+   "n": 1,
+   "p25": 1.0,
+   "p50": 1.0,
+   "p75": 1.0,
+   "max": 1,
+   "min": 1
+  },
+  "ALL": {
+   "n": 131,
+   "p25": 1.0,
+   "p50": 1.0,
+   "p75": 2.0,
+   "max": 22
+  },
+  "global_min": {
+   "n_samples_with_cf": 81,
+   "p25": 1.0,
+   "p50": 1.0,
+   "p75": 1.0,
+   "max": 20
+  }
+ },
+ "C4": {
+  "struct": {
+   "ok→reject": 30,
+   "reject→ok": 41,
+   "ok→ok 文本变": 37,
+   "reject→reject 拒因变": 23
+  },
+  "R1": {
+   "ok→ok 文本变": 36,
+   "ok→reject": 32,
+   "reject→ok": 63,
+   "reject→reject 拒因变": 25
+  },
+  "R2": {
+   "ok→reject": 32,
+   "ok→ok 文本变": 35,
+   "reject→ok": 54,
+   "reject→reject 拒因变": 18
+  },
+  "struct_channel_change": 71,
+  "struct_ok_text_change": 37
+ },
+ "per_family": {
+  "F1": {
+   "name": "换功能词",
+   "cells": 30,
+   "struct_found": 12,
+   "struct_per_draw": {
+    "hit": 12,
+    "n": 38,
+    "p": 0.3158
+   },
+   "rand_per_draw": {
+    "R1": {
+     "hit": 14,
+     "n": 43,
+     "p": 0.3256
+    },
+    "R2": {
+     "hit": 11,
+     "n": 39,
+     "p": 0.2821
+    }
+   },
+   "paired": {
+    "R1": {
+     "n": 30,
+     "p_struct": 0.4,
+     "p_rand": 0.4667,
+     "delta": -0.0667,
+     "se": 0.0935,
+     "b": 3,
+     "c": 5,
+     "sig": false,
+     "t": -0.71
+    },
+    "R2": {
+     "n": 30,
+     "p_struct": 0.4,
+     "p_rand": 0.3667,
+     "delta": 0.0333,
+     "se": 0.0998,
+     "b": 5,
+     "c": 4,
+     "sig": false,
+     "t": 0.33
+    }
+   },
+   "size": {
+    "n": 12,
+    "p25": 1.0,
+    "p50": 1.0,
+    "p75": 1.0,
+    "max": 2,
+    "min": 1
+   }
+  },
+  "F2": {
+   "name": "换槽序",
+   "cells": 49,
+   "struct_found": 32,
+   "struct_per_draw": {
+    "hit": 32,
+    "n": 92,
+    "p": 0.3478
+   },
+   "rand_per_draw": {
+    "R1": {
+     "hit": 38,
+     "n": 72,
+     "p": 0.5278
+    },
+    "R2": {
+     "hit": 36,
+     "n": 66,
+     "p": 0.5455
+    }
+   },
+   "paired": {
+    "R1": {
+     "n": 49,
+     "p_struct": 0.6531,
+     "p_rand": 0.7755,
+     "delta": -0.1224,
+     "se": 0.0743,
+     "b": 4,
+     "c": 10,
+     "sig": false,
+     "t": -1.65
+    },
+    "R2": {
+     "n": 49,
+     "p_struct": 0.6531,
+     "p_rand": 0.7347,
+     "delta": -0.0816,
+     "se": 0.0755,
+     "b": 5,
+     "c": 9,
+     "sig": false,
+     "t": -1.08
+    }
+   },
+   "size": {
+    "n": 32,
+    "p25": 12.0,
+    "p50": 16.0,
+    "p75": 16.0,
+    "max": 22,
+    "min": 6
+   }
+  },
+  "F3": {
+   "name": "改否定",
+   "cells": 120,
+   "struct_found": 68,
+   "struct_per_draw": {
+    "hit": 68,
+    "n": 332,
+    "p": 0.2048
+   },
+   "rand_per_draw": {
+    "R1": {
+     "hit": 81,
+     "n": 299,
+     "p": 0.2709
+    },
+    "R2": {
+     "hit": 72,
+     "n": 320,
+     "p": 0.225
+    }
+   },
+   "paired": {
+    "R1": {
+     "n": 120,
+     "p_struct": 0.5667,
+     "p_rand": 0.675,
+     "delta": -0.1083,
+     "se": 0.0422,
+     "b": 7,
+     "c": 20,
+     "sig": false,
+     "t": -2.57
+    },
+    "R2": {
+     "n": 120,
+     "p_struct": 0.5667,
+     "p_rand": 0.6,
+     "delta": -0.0333,
+     "se": 0.044,
+     "b": 12,
+     "c": 16,
+     "sig": false,
+     "t": -0.76
+    }
+   },
+   "size": {
+    "n": 68,
+    "p25": 1.0,
+    "p50": 1.0,
+    "p75": 1.0,
+    "max": 1,
+    "min": 1
+   }
+  },
+  "F4": {
+   "name": "改数量/量词",
+   "cells": 41,
+   "struct_found": 18,
+   "struct_per_draw": {
+    "hit": 18,
+    "n": 66,
+    "p": 0.2727
+   },
+   "rand_per_draw": {
+    "R1": {
+     "hit": 22,
+     "n": 63,
+     "p": 0.3492
+    },
+    "R2": {
+     "hit": 19,
+     "n": 67,
+     "p": 0.2836
+    }
+   },
+   "paired": {
+    "R1": {
+     "n": 41,
+     "p_struct": 0.439,
+     "p_rand": 0.5366,
+     "delta": -0.0976,
+     "se": 0.0756,
+     "b": 3,
+     "c": 7,
+     "sig": false,
+     "t": -1.29
+    },
+    "R2": {
+     "n": 41,
+     "p_struct": 0.439,
+     "p_rand": 0.4634,
+     "delta": -0.0244,
+     "se": 0.0644,
+     "b": 3,
+     "c": 4,
+     "sig": false,
+     "t": -0.38
+    }
+   },
+   "size": {
+    "n": 18,
+    "p25": 1.0,
+    "p50": 1.0,
+    "p75": 2.0,
+    "max": 2,
+    "min": 1
+   }
+  },
+  "F5": {
+   "name": "换连接词(方向反转)",
+   "cells": 2,
+   "struct_found": 1,
+   "struct_per_draw": {
+    "hit": 1,
+    "n": 2,
+    "p": 0.5
+   },
+   "rand_per_draw": {
+    "R1": {
+     "hit": 1,
+     "n": 3,
+     "p": 0.3333
+    },
+    "R2": {
+     "hit": 1,
+     "n": 3,
+     "p": 0.3333
+    }
+   },
+   "paired": {
+    "R1": {
+     "n": 2,
+     "p_struct": 0.5,
+     "p_rand": 0.5,
+     "delta": 0.0,
+     "se": 0.0,
+     "b": 0,
+     "c": 0,
+     "sig": false,
+     "t": null
+    },
+    "R2": {
+     "n": 2,
+     "p_struct": 0.5,
+     "p_rand": 0.5,
+     "delta": 0.0,
+     "se": 0.0,
+     "b": 0,
+     "c": 0,
+     "sig": false,
+     "t": null
+    }
+   },
+   "size": {
+    "n": 1,
+    "p25": 1.0,
+    "p50": 1.0,
+    "p75": 1.0,
+    "max": 1,
+    "min": 1
+   }
+  }
+ },
+ "examples": [
+  {
+   "kind": "struct",
+   "idx": 0,
+   "family": "F3",
+   "lev": 1,
+   "x": "我让它发挥最大的价值",
+   "x_prime": "不我让它发挥最大的价值",
+   "y": [
+    "ok",
+    "我让发挥最。"
+   ],
+   "y_prime": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "ch_before": "ok",
+   "ch_after": "reject"
+  },
+  {
+   "kind": "struct",
+   "idx": 0,
+   "family": "F4",
+   "lev": 2,
+   "x": "我让它发挥最大的价值",
+   "x_prime": "我让它发挥比较大的价值",
+   "y": [
+    "ok",
+    "我让发挥最。"
+   ],
+   "y_prime": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "ch_before": "ok",
+   "ch_after": "reject"
+  },
+  {
+   "kind": "struct",
+   "idx": 1,
+   "family": "F1",
+   "lev": 1,
+   "x": "你才得早睡呢",
+   "x_prime": "你就得早睡呢",
+   "y": [
+    "ok",
+    "你睡。"
+   ],
+   "y_prime": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "ch_before": "ok",
+   "ch_after": "reject"
+  },
+  {
+   "kind": "struct",
+   "idx": 1,
+   "family": "F3",
+   "lev": 1,
+   "x": "你才得早睡呢",
+   "x_prime": "不你才得早睡呢",
+   "y": [
+    "ok",
+    "你睡。"
+   ],
+   "y_prime": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "ch_before": "ok",
+   "ch_after": "reject"
+  },
+  {
+   "kind": "struct",
+   "idx": 5,
+   "family": "F1",
+   "lev": 1,
+   "x": "放下他你就更好更好了",
+   "x_prime": "放下他你也更好更好了",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "ok",
+    "他好。"
+   ],
+   "ch_before": "reject",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 5,
+   "family": "F3",
+   "lev": 1,
+   "x": "放下他你就更好更好了",
+   "x_prime": "没放下他你就更好更好了",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "ok",
+    "他好。"
+   ],
+   "ch_before": "reject",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 6,
+   "family": "F3",
+   "lev": 1,
+   "x": "死了记得把你家那个送我",
+   "x_prime": "不死了记得把你家那个送我",
+   "y": [
+    "ok",
+    "那个送吗？"
+   ],
+   "y_prime": [
+    "ok",
+    "不送。"
+   ],
+   "ch_before": "ok",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 7,
+   "family": "F2",
+   "lev": 10,
+   "x": "我们这前两天沙尘暴，天气要多糟糕有多糟糕，真是烦人",
+   "x_prime": "我们这前两天沙尘暴，真是烦人，天气要多糟糕有多糟糕",
+   "y": [
+    "ok",
+    "我糟。"
+   ],
+   "y_prime": [
+    "ok",
+    "我糟糕有多糟。"
+   ],
+   "ch_before": "ok",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 7,
+   "family": "F3",
+   "lev": 1,
+   "x": "我们这前两天沙尘暴，天气要多糟糕有多糟糕，真是烦人",
+   "x_prime": "我们这前两天沙尘暴，不天气要多糟糕有多糟糕，真是烦人",
+   "y": [
+    "ok",
+    "我糟。"
+   ],
+   "y_prime": [
+    "ok",
+    "我不天气要糟。"
+   ],
+   "ch_before": "ok",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 7,
+   "family": "F4",
+   "lev": 1,
+   "x": "我们这前两天沙尘暴，天气要多糟糕有多糟糕，真是烦人",
+   "x_prime": "我们这前两天沙尘暴，天气要少糟糕有多糟糕，真是烦人",
+   "y": [
+    "ok",
+    "我糟。"
+   ],
+   "y_prime": [
+    "ok",
+    "我前两天沙尘糟。"
+   ],
+   "ch_before": "ok",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 8,
+   "family": "F1",
+   "lev": 1,
+   "x": "还不快到碗里来",
+   "x_prime": "再不快到碗里来",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "ok",
+    "快到碗里吗？"
+   ],
+   "ch_before": "reject",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 8,
+   "family": "F3",
+   "lev": 1,
+   "x": "还不快到碗里来",
+   "x_prime": "没还不快到碗里来",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "ok",
+    "没还不吗？"
+   ],
+   "ch_before": "reject",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 10,
+   "family": "F3",
+   "lev": 1,
+   "x": "海底捞那个球是什么",
+   "x_prime": "没海底捞那个球是什么",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "ok",
+    "没吗？"
+   ],
+   "ch_before": "reject",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 13,
+   "family": "F3",
+   "lev": 1,
+   "x": "美美哒看到寄几的背影了",
+   "x_prime": "不美美哒看到寄几的背影了",
+   "y": [
+    "ok",
+    "美背影。"
+   ],
+   "y_prime": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "ch_before": "ok",
+   "ch_after": "reject"
+  },
+  {
+   "kind": "struct",
+   "idx": 13,
+   "family": "F4",
+   "lev": 2,
+   "x": "美美哒看到寄几的背影了",
+   "x_prime": "美美哒看到寄一些的背影了",
+   "y": [
+    "ok",
+    "美背影。"
+   ],
+   "y_prime": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "ch_before": "ok",
+   "ch_after": "reject"
+  },
+  {
+   "kind": "struct",
+   "idx": 15,
+   "family": "F1",
+   "lev": 1,
+   "x": "脸大不是因为开心，是本来就这么大",
+   "x_prime": "脸大不是因为开心，是本来也这么大",
+   "y": [
+    "ok",
+    "因为开吗？"
+   ],
+   "y_prime": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "ch_before": "ok",
+   "ch_after": "reject"
+  },
+  {
+   "kind": "struct",
+   "idx": 15,
+   "family": "F2",
+   "lev": 16,
+   "x": "脸大不是因为开心，是本来就这么大",
+   "x_prime": "是本来就这么大，脸大不是因为开心",
+   "y": [
+    "ok",
+    "因为开吗？"
+   ],
+   "y_prime": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "ch_before": "ok",
+   "ch_after": "reject"
+  },
+  {
+   "kind": "struct",
+   "idx": 15,
+   "family": "F3",
+   "lev": 1,
+   "x": "脸大不是因为开心，是本来就这么大",
+   "x_prime": "不脸大不是因为开心，是本来就这么大",
+   "y": [
+    "ok",
+    "因为开吗？"
+   ],
+   "y_prime": [
+    "ok",
+    "不脸大不是开。"
+   ],
+   "ch_before": "ok",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 15,
+   "family": "F5",
+   "lev": 1,
+   "x": "脸大不是因为开心，是本来就这么大",
+   "x_prime": "脸大不是因此开心，是本来就这么大",
+   "y": [
+    "ok",
+    "因为开吗？"
+   ],
+   "y_prime": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "ch_before": "ok",
+   "ch_after": "reject"
+  },
+  {
+   "kind": "struct",
+   "idx": 18,
+   "family": "F3",
+   "lev": 1,
+   "x": "昕昕生日快乐娜娜快快乐乐的喔",
+   "x_prime": "不昕昕生日快乐娜娜快快乐乐的喔",
+   "y": [
+    "ok",
+    "昕昕生日快吗？"
+   ],
+   "y_prime": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "ch_before": "ok",
+   "ch_after": "reject"
+  },
+  {
+   "kind": "struct",
+   "idx": 22,
+   "family": "F3",
+   "lev": 1,
+   "x": "中午吃早茶啊",
+   "x_prime": "不中午吃早茶啊",
+   "y": [
+    "ok",
+    "午吃早吗？"
+   ],
+   "y_prime": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "ch_before": "ok",
+   "ch_after": "reject"
+  },
+  {
+   "kind": "struct",
+   "idx": 24,
+   "family": "F1",
+   "lev": 1,
+   "x": "好吧，幻想还是可以的",
+   "x_prime": "好吧，幻想再是可以的",
+   "y": [
+    "ok",
+    "幻想还是吗？"
+   ],
+   "y_prime": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "ch_before": "ok",
+   "ch_after": "reject"
+  },
+  {
+   "kind": "struct",
+   "idx": 24,
+   "family": "F2",
+   "lev": 6,
+   "x": "好吧，幻想还是可以的",
+   "x_prime": "幻想还是可以的，好吧",
+   "y": [
+    "ok",
+    "幻想还是吗？"
+   ],
+   "y_prime": [
+    "ok",
+    "幻想还是好。"
+   ],
+   "ch_before": "ok",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 24,
+   "family": "F3",
+   "lev": 1,
+   "x": "好吧，幻想还是可以的",
+   "x_prime": "不好吧，幻想还是可以的",
+   "y": [
+    "ok",
+    "幻想还是吗？"
+   ],
+   "y_prime": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "ch_before": "ok",
+   "ch_after": "reject"
+  },
+  {
+   "kind": "struct",
+   "idx": 26,
+   "family": "F3",
+   "lev": 1,
+   "x": "呵呵是的平均18度挺冷的",
+   "x_prime": "不呵呵是的平均18度挺冷的",
+   "y": [
+    "ok",
+    "18度挺吗？"
+   ],
+   "y_prime": [
+    "ok",
+    "不呵呵是的平均挺。"
+   ],
+   "ch_before": "ok",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 26,
+   "family": "F4",
+   "lev": 1,
+   "x": "呵呵是的平均18度挺冷的",
+   "x_prime": "呵呵是的平均18度很冷的",
+   "y": [
+    "ok",
+    "18度挺吗？"
+   ],
+   "y_prime": [
+    "ok",
+    "平均18度很吗？"
+   ],
+   "ch_before": "ok",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 28,
+   "family": "F1",
+   "lev": 1,
+   "x": "我就是在等它长长了还是气质高冷型适合我哈哈哈哈",
+   "x_prime": "我也是在等它长长了还是气质高冷型适合我哈哈哈哈",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "ok",
+    "我也是在等气质高。"
+   ],
+   "ch_before": "reject",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 29,
+   "family": "F3",
+   "lev": 1,
+   "x": "那也行啊~~欧冠分量多大",
+   "x_prime": "不那也行啊~~欧冠分量多大",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "ok",
+    "那也行啊~~欧冠分吗？"
+   ],
+   "ch_before": "reject",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 30,
+   "family": "F1",
+   "lev": 1,
+   "x": "哈哈、不会啦，其实我也是湖北黄冈的，关注你很久了",
+   "x_prime": "哈哈、不会啦，其实我就是湖北黄冈的，关注你很久了",
+   "y": [
+    "reject",
+    "filter",
+    "no_valid_candidate"
+   ],
+   "y_prime": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "ch_before": "reject",
+   "ch_after": "reject"
+  },
+  {
+   "kind": "struct",
+   "idx": 30,
+   "family": "F2",
+   "lev": 6,
+   "x": "哈哈、不会啦，其实我也是湖北黄冈的，关注你很久了",
+   "x_prime": "不会啦、哈哈，其实我也是湖北黄冈的，关注你很久了",
+   "y": [
+    "reject",
+    "filter",
+    "no_valid_candidate"
+   ],
+   "y_prime": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "ch_before": "reject",
+   "ch_after": "reject"
+  },
+  {
+   "kind": "struct",
+   "idx": 30,
+   "family": "F3",
+   "lev": 1,
+   "x": "哈哈、不会啦，其实我也是湖北黄冈的，关注你很久了",
+   "x_prime": "没哈哈、不会啦，其实我也是湖北黄冈的，关注你很久了",
+   "y": [
+    "reject",
+    "filter",
+    "no_valid_candidate"
+   ],
+   "y_prime": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "ch_before": "reject",
+   "ch_after": "reject"
+  },
+  {
+   "kind": "struct",
+   "idx": 30,
+   "family": "F4",
+   "lev": 2,
+   "x": "哈哈、不会啦，其实我也是湖北黄冈的，关注你很久了",
+   "x_prime": "哈哈、不会啦，其实我也是湖北黄冈的，关注你比较久了",
+   "y": [
+    "reject",
+    "filter",
+    "no_valid_candidate"
+   ],
+   "y_prime": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "ch_before": "reject",
+   "ch_after": "reject"
+  },
+  {
+   "kind": "struct",
+   "idx": 31,
+   "family": "F3",
+   "lev": 1,
+   "x": "明天给你们讲",
+   "x_prime": "不明天给你们讲",
+   "y": [
+    "ok",
+    "天和你。"
+   ],
+   "y_prime": [
+    "ok",
+    "你吗？"
+   ],
+   "ch_before": "ok",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 33,
+   "family": "F3",
+   "lev": 1,
+   "x": "票根被撕掉了呀笨~",
+   "x_prime": "没票根被撕掉了呀笨~",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "ok",
+    "掉了吗？"
+   ],
+   "ch_before": "reject",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 35,
+   "family": "F1",
+   "lev": 1,
+   "x": "我以为我们江浙沪一带是南方，现在想想还是算了吧",
+   "x_prime": "我以为我们江浙沪一带是南方，现在想想再是算了吧",
+   "y": [
+    "ok",
+    "我吗？"
+   ],
+   "y_prime": [
+    "ok",
+    "我沪。"
+   ],
+   "ch_before": "ok",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 35,
+   "family": "F2",
+   "lev": 20,
+   "x": "我以为我们江浙沪一带是南方，现在想想还是算了吧",
+   "x_prime": "现在想想还是算了吧，我以为我们江浙沪一带是南方",
+   "y": [
+    "ok",
+    "我吗？"
+   ],
+   "y_prime": [
+    "ok",
+    "我一带是。"
+   ],
+   "ch_before": "ok",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 35,
+   "family": "F3",
+   "lev": 1,
+   "x": "我以为我们江浙沪一带是南方，现在想想还是算了吧",
+   "x_prime": "不我以为我们江浙沪一带是南方，现在想想还是算了吧",
+   "y": [
+    "ok",
+    "我吗？"
+   ],
+   "y_prime": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "ch_before": "ok",
+   "ch_after": "reject"
+  },
+  {
+   "kind": "struct",
+   "idx": 35,
+   "family": "F4",
+   "lev": 1,
+   "x": "我以为我们江浙沪一带是南方，现在想想还是算了吧",
+   "x_prime": "我以为我们江浙沪两带是南方，现在想想还是算了吧",
+   "y": [
+    "ok",
+    "我吗？"
+   ],
+   "y_prime": [
+    "ok",
+    "我两带是。"
+   ],
+   "ch_before": "ok",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 37,
+   "family": "F3",
+   "lev": 1,
+   "x": "好大家是不是都要上班啊",
+   "x_prime": "不好大家是不是都要上班啊",
+   "y": [
+    "ok",
+    "要上吗？"
+   ],
+   "y_prime": [
+    "ok",
+    "是不是都要上吗？"
+   ],
+   "ch_before": "ok",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 37,
+   "family": "F4",
+   "lev": 2,
+   "x": "好大家是不是都要上班啊",
+   "x_prime": "好大家是不是有些要上班啊",
+   "y": [
+    "ok",
+    "要上吗？"
+   ],
+   "y_prime": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "ch_before": "ok",
+   "ch_after": "reject"
+  },
+  {
+   "kind": "struct",
+   "idx": 38,
+   "family": "F3",
+   "lev": 1,
+   "x": "发誓再也不补位",
+   "x_prime": "没发誓再也不补位",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "ok",
+    "没发誓再也不吗？"
+   ],
+   "ch_before": "reject",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 40,
+   "family": "F2",
+   "lev": 14,
+   "x": "坚持自己的爱好，没有迷失自己，不错",
+   "x_prime": "不错，没有迷失自己，坚持自己的爱好",
+   "y": [
+    "ok",
+    "己的爱好不。"
+   ],
+   "y_prime": [
+    "ok",
+    "错吗？"
+   ],
+   "ch_before": "ok",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 40,
+   "family": "F3",
+   "lev": 1,
+   "x": "坚持自己的爱好，没有迷失自己，不错",
+   "x_prime": "不坚持自己的爱好，没有迷失自己，不错",
+   "y": [
+    "ok",
+    "己的爱好不。"
+   ],
+   "y_prime": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "ch_before": "ok",
+   "ch_after": "reject"
+  },
+  {
+   "kind": "struct",
+   "idx": 44,
+   "family": "F3",
+   "lev": 1,
+   "x": "入厂做打工妹咯",
+   "x_prime": "不入厂做打工妹咯",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "ok",
+    "不吗？"
+   ],
+   "ch_before": "reject",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 48,
+   "family": "F3",
+   "lev": 1,
+   "x": "生日快乐噢，永远笑口常开",
+   "x_prime": "生日快乐噢，没永远笑口常开",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "ok",
+    "生日快吗？"
+   ],
+   "ch_before": "reject",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 49,
+   "family": "F3",
+   "lev": 1,
+   "x": "和一切含南瓜的食物",
+   "x_prime": "不和一切含南瓜的食物",
+   "y": [
+    "ok",
+    "含吗？"
+   ],
+   "y_prime": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "ch_before": "ok",
+   "ch_after": "reject"
+  },
+  {
+   "kind": "struct",
+   "idx": 49,
+   "family": "F4",
+   "lev": 1,
+   "x": "和一切含南瓜的食物",
+   "x_prime": "和两切含南瓜的食物",
+   "y": [
+    "ok",
+    "含吗？"
+   ],
+   "y_prime": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "ch_before": "ok",
+   "ch_after": "reject"
+  },
+  {
+   "kind": "struct",
+   "idx": 50,
+   "family": "F3",
+   "lev": 1,
+   "x": "不然活着会飘起来飘走的",
+   "x_prime": "没不然活着会飘起来飘走的",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "ok",
+    "没不然吗？"
+   ],
+   "ch_before": "reject",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 51,
+   "family": "F1",
+   "lev": 1,
+   "x": "其实茶本来就不该晚上喝白天喝就好了啦",
+   "x_prime": "其实茶本来也不该晚上喝白天喝就好了啦",
+   "y": [
+    "ok",
+    "不吗？"
+   ],
+   "y_prime": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "ch_before": "ok",
+   "ch_after": "reject"
+  },
+  {
+   "kind": "struct",
+   "idx": 51,
+   "family": "F3",
+   "lev": 1,
+   "x": "其实茶本来就不该晚上喝白天喝就好了啦",
+   "x_prime": "不其实茶本来就不该晚上喝白天喝就好了啦",
+   "y": [
+    "ok",
+    "不吗？"
+   ],
+   "y_prime": [
+    "ok",
+    "不其实茶本来就不吗？"
+   ],
+   "ch_before": "ok",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 52,
+   "family": "F3",
+   "lev": 1,
+   "x": "难不难看自己理想的高度，能不能理解这句话看你文化的程度",
+   "x_prime": "难不难看自己理想的高度，没能不能理解这句话看你文化的程度",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "ok",
+    "难不吗？"
+   ],
+   "ch_before": "reject",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 53,
+   "family": "F1",
+   "lev": 1,
+   "x": "不回就呆西安么",
+   "x_prime": "不回也呆西安么",
+   "y": [
+    "ok",
+    "回就呆西安吗？"
+   ],
+   "y_prime": [
+    "ok",
+    "不呆西。"
+   ],
+   "ch_before": "ok",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 53,
+   "family": "F3",
+   "lev": 1,
+   "x": "不回就呆西安么",
+   "x_prime": "回就呆西安么",
+   "y": [
+    "ok",
+    "回就呆西安吗？"
+   ],
+   "y_prime": [
+    "ok",
+    "回就呆西吗？"
+   ],
+   "ch_before": "ok",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 54,
+   "family": "F3",
+   "lev": 1,
+   "x": "最喜欢龙井了",
+   "x_prime": "不最喜欢龙井了",
+   "y": [
+    "ok",
+    "最喜欢龙吗？"
+   ],
+   "y_prime": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "ch_before": "ok",
+   "ch_after": "reject"
+  },
+  {
+   "kind": "struct",
+   "idx": 54,
+   "family": "F4",
+   "lev": 2,
+   "x": "最喜欢龙井了",
+   "x_prime": "比较喜欢龙井了",
+   "y": [
+    "ok",
+    "最喜欢龙吗？"
+   ],
+   "y_prime": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "ch_before": "ok",
+   "ch_after": "reject"
+  },
+  {
+   "kind": "struct",
+   "idx": 57,
+   "family": "F3",
+   "lev": 1,
+   "x": "超级超级甜的",
+   "x_prime": "不超级超级甜的",
+   "y": [
+    "ok",
+    "超级甜吗？"
+   ],
+   "y_prime": [
+    "ok",
+    "不超级超级吗？"
+   ],
+   "ch_before": "ok",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 58,
+   "family": "F3",
+   "lev": 1,
+   "x": "不觉得很有团魂",
+   "x_prime": "没不觉得很有团魂",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "ok",
+    "得很有团吗？"
+   ],
+   "ch_before": "reject",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 58,
+   "family": "F4",
+   "lev": 2,
+   "x": "不觉得很有团魂",
+   "x_prime": "不觉得比较有团魂",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "ok",
+    "得比较有团吗？"
+   ],
+   "ch_before": "reject",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 59,
+   "family": "F3",
+   "lev": 1,
+   "x": "应该见过哈哈",
+   "x_prime": "不应该见过哈哈",
+   "y": [
+    "ok",
+    "应该吗？"
+   ],
+   "y_prime": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "ch_before": "ok",
+   "ch_after": "reject"
+  },
+  {
+   "kind": "struct",
+   "idx": 60,
+   "family": "F3",
+   "lev": 1,
+   "x": "主打快速传控边路突破，脚下技术华丽，进球场面看着特别爽",
+   "x_prime": "不主打快速传控边路突破，脚下技术华丽，进球场面看着特别爽",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "ok",
+    "不主打快速传控吗？"
+   ],
+   "ch_before": "reject",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 61,
+   "family": "F2",
+   "lev": 18,
+   "x": "先友好沟通调小音量，沟通无果再联系物业协调，尽量不直接起冲突",
+   "x_prime": "尽量不直接起冲突，沟通无果再联系物业协调，先友好沟通调小音量",
+   "y": [
+    "reject",
+    "filter",
+    "no_valid_candidate"
+   ],
+   "y_prime": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "ch_before": "reject",
+   "ch_after": "reject"
+  },
+  {
+   "kind": "struct",
+   "idx": 62,
+   "family": "F3",
+   "lev": 1,
+   "x": "【大专-文秘】通知公文标准格式",
+   "x_prime": "不【大专-文秘】通知公文标准格式",
+   "y": [
+    "ok",
+    "专文秘】通知公文标准。"
+   ],
+   "y_prime": [
+    "ok",
+    "专吗？"
+   ],
+   "ch_before": "ok",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 63,
+   "family": "F3",
+   "lev": 1,
+   "x": "得放动词后表状态（跑得飞快）",
+   "x_prime": "不得放动词后表状态（跑得飞快）",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "reject",
+    "filter",
+    "no_valid_candidate"
+   ],
+   "ch_before": "reject",
+   "ch_after": "reject"
+  },
+  {
+   "kind": "struct",
+   "idx": 64,
+   "family": "F2",
+   "lev": 12,
+   "x": "3.病虫害少、养护成本低",
+   "x_prime": "养护成本低、3.病虫害少",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "ok",
+    "虫害吗？"
+   ],
+   "ch_before": "reject",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 64,
+   "family": "F3",
+   "lev": 1,
+   "x": "3.病虫害少、养护成本低",
+   "x_prime": "3.病虫害少、没养护成本低",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "ok",
+    "少吗？"
+   ],
+   "ch_before": "reject",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 65,
+   "family": "F3",
+   "lev": 1,
+   "x": "2026世界杯决赛在哪座球场举办",
+   "x_prime": "不2026世界杯决赛在哪座球场举办",
+   "y": [
+    "ok",
+    "界杯决赛在哪座球。"
+   ],
+   "y_prime": [
+    "ok",
+    "界吗？"
+   ],
+   "ch_before": "ok",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 66,
+   "family": "F3",
+   "lev": 1,
+   "x": "熬夜看世界杯比赛适合配什么夜宵",
+   "x_prime": "不熬夜看世界杯比赛适合配什么夜宵",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "ok",
+    "不熬夜看世界杯比赛适合吗？"
+   ],
+   "ch_before": "reject",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 67,
+   "family": "F2",
+   "lev": 6,
+   "x": "纯钢琴、轻音乐、民谣，节奏舒缓，适合学习、睡前放松时听",
+   "x_prime": "轻音乐、纯钢琴、民谣，节奏舒缓，适合学习、睡前放松时听",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "reject",
+    "filter",
+    "no_valid_candidate"
+   ],
+   "ch_before": "reject",
+   "ch_after": "reject"
+  },
+  {
+   "kind": "struct",
+   "idx": 68,
+   "family": "F2",
+   "lev": 20,
+   "x": "应急演练的时候分发灭火器、应急手电筒、急救包，居民可以免费领取基础物资",
+   "x_prime": "应急演练的时候分发灭火器、居民可以免费领取基础物资、急救包，应急手电筒",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "ok",
+    "应急演吗？"
+   ],
+   "ch_before": "reject",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 68,
+   "family": "F3",
+   "lev": 1,
+   "x": "应急演练的时候分发灭火器、应急手电筒、急救包，居民可以免费领取基础物资",
+   "x_prime": "应急演练的时候分发灭火器、应急手电筒、急救包，没居民可以免费领取基础物资",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "ok",
+    "应急演吗？"
+   ],
+   "ch_before": "reject",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 70,
+   "family": "F2",
+   "lev": 20,
+   "x": "异地恋好不容易见面，相处两天就开始频繁吵架",
+   "x_prime": "相处两天就开始频繁吵架，异地恋好不容易见面",
+   "y": [
+    "ok",
+    "不吗？"
+   ],
+   "y_prime": [
+    "ok",
+    "相处两天就开始频繁吗？"
+   ],
+   "ch_before": "ok",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 70,
+   "family": "F3",
+   "lev": 1,
+   "x": "异地恋好不容易见面，相处两天就开始频繁吵架",
+   "x_prime": "不异地恋好不容易见面，相处两天就开始频繁吵架",
+   "y": [
+    "ok",
+    "不吗？"
+   ],
+   "y_prime": [
+    "ok",
+    "不异地恋好不吗？"
+   ],
+   "ch_before": "ok",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 70,
+   "family": "F4",
+   "lev": 1,
+   "x": "异地恋好不容易见面，相处两天就开始频繁吵架",
+   "x_prime": "异地恋好不容易见面，相处一天就开始频繁吵架",
+   "y": [
+    "ok",
+    "不吗？"
+   ],
+   "y_prime": [
+    "ok",
+    "异地恋好不吗？"
+   ],
+   "ch_before": "ok",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 71,
+   "family": "F2",
+   "lev": 12,
+   "x": "微微低头收下巴，侧身45度拍，别正对强光，背景干净一点不用复杂滤镜",
+   "x_prime": "微微低头收下巴，别正对强光，侧身45度拍，背景干净一点不用复杂滤镜",
+   "y": [
+    "ok",
+    "微头不。"
+   ],
+   "y_prime": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "ch_before": "ok",
+   "ch_after": "reject"
+  },
+  {
+   "kind": "struct",
+   "idx": 71,
+   "family": "F3",
+   "lev": 1,
+   "x": "微微低头收下巴，侧身45度拍，别正对强光，背景干净一点不用复杂滤镜",
+   "x_prime": "不微微低头收下巴，侧身45度拍，别正对强光，背景干净一点不用复杂滤镜",
+   "y": [
+    "ok",
+    "微头不。"
+   ],
+   "y_prime": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "ch_before": "ok",
+   "ch_after": "reject"
+  },
+  {
+   "kind": "struct",
+   "idx": 71,
+   "family": "F4",
+   "lev": 1,
+   "x": "微微低头收下巴，侧身45度拍，别正对强光，背景干净一点不用复杂滤镜",
+   "x_prime": "微微低头收下巴，侧身45度拍，别正对强光，背景干净两点不用复杂滤镜",
+   "y": [
+    "ok",
+    "微头不。"
+   ],
+   "y_prime": [
+    "ok",
+    "微不。"
+   ],
+   "ch_before": "ok",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 72,
+   "family": "F2",
+   "lev": 16,
+   "x": "多喝温白开水促进代谢，别刷刺激短视频，闭眼深呼吸安静躺一会儿",
+   "x_prime": "别刷刺激短视频，多喝温白开水促进代谢，闭眼深呼吸安静躺一会儿",
+   "y": [
+    "ok",
+    "温吗？"
+   ],
+   "y_prime": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "ch_before": "ok",
+   "ch_after": "reject"
+  },
+  {
+   "kind": "struct",
+   "idx": 72,
+   "family": "F3",
+   "lev": 1,
+   "x": "多喝温白开水促进代谢，别刷刺激短视频，闭眼深呼吸安静躺一会儿",
+   "x_prime": "不多喝温白开水促进代谢，别刷刺激短视频，闭眼深呼吸安静躺一会儿",
+   "y": [
+    "ok",
+    "温吗？"
+   ],
+   "y_prime": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "ch_before": "ok",
+   "ch_after": "reject"
+  },
+  {
+   "kind": "struct",
+   "idx": 72,
+   "family": "F4",
+   "lev": 1,
+   "x": "多喝温白开水促进代谢，别刷刺激短视频，闭眼深呼吸安静躺一会儿",
+   "x_prime": "少喝温白开水促进代谢，别刷刺激短视频，闭眼深呼吸安静躺一会儿",
+   "y": [
+    "ok",
+    "温吗？"
+   ],
+   "y_prime": [
+    "ok",
+    "水促进吗？"
+   ],
+   "ch_before": "ok",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 73,
+   "family": "F4",
+   "lev": 1,
+   "x": "社区跳蚤市场多久办一次",
+   "x_prime": "社区跳蚤市场多久办两次",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "ok",
+    "蚤市场多久吗？"
+   ],
+   "ch_before": "reject",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 74,
+   "family": "F2",
+   "lev": 16,
+   "x": "第三阶段线粒体内膜，产生大量ATP，最终产物CO₂和H₂O",
+   "x_prime": "第三阶段线粒体内膜，最终产物CO₂和H₂O，产生大量ATP",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "ok",
+    "产生大量AT吗？"
+   ],
+   "ch_before": "reject",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 76,
+   "family": "F2",
+   "lev": 12,
+   "x": "租房隔音差，有哪些降噪小妙招",
+   "x_prime": "有哪些降噪小妙招，租房隔音差",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "ok",
+    "些降噪吗？"
+   ],
+   "ch_before": "reject",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 76,
+   "family": "F3",
+   "lev": 1,
+   "x": "租房隔音差，有哪些降噪小妙招",
+   "x_prime": "没租房隔音差，有哪些降噪小妙招",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "ok",
+    "没小。"
+   ],
+   "ch_before": "reject",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 77,
+   "family": "F3",
+   "lev": 1,
+   "x": "二、MCGG国际服自走棋S5强势羁绊：1.6迅刃6幻兽物理体系",
+   "x_prime": "不二、MCGG国际服自走棋S5强势羁绊：1.6迅刃6幻兽物理体系",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "ok",
+    "刃吗？"
+   ],
+   "ch_before": "reject",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 78,
+   "family": "F2",
+   "lev": 14,
+   "x": "冬天手脚冰凉，有啥居家改善办法",
+   "x_prime": "有啥居家改善办法，冬天手脚冰凉",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "reject",
+    "filter",
+    "no_valid_candidate"
+   ],
+   "ch_before": "reject",
+   "ch_after": "reject"
+  },
+  {
+   "kind": "struct",
+   "idx": 79,
+   "family": "F2",
+   "lev": 14,
+   "x": "容易晕车的人，出行前有什么准备办法",
+   "x_prime": "出行前有什么准备办法，容易晕车的人",
+   "y": [
+    "ok",
+    "出行吗？"
+   ],
+   "y_prime": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "ch_before": "ok",
+   "ch_after": "reject"
+  },
+  {
+   "kind": "struct",
+   "idx": 79,
+   "family": "F3",
+   "lev": 1,
+   "x": "容易晕车的人，出行前有什么准备办法",
+   "x_prime": "不容易晕车的人，出行前有什么准备办法",
+   "y": [
+    "ok",
+    "出行吗？"
+   ],
+   "y_prime": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "ch_before": "ok",
+   "ch_after": "reject"
+  },
+  {
+   "kind": "struct",
+   "idx": 80,
+   "family": "F2",
+   "lev": 16,
+   "x": "造句：春暖花开的时候，我们去郊外踏青",
+   "x_prime": "我们去郊外踏青，造句：春暖花开的时候",
+   "y": [
+    "ok",
+    "我和们去郊外。"
+   ],
+   "y_prime": [
+    "ok",
+    "我吗？"
+   ],
+   "ch_before": "ok",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 80,
+   "family": "F3",
+   "lev": 1,
+   "x": "造句：春暖花开的时候，我们去郊外踏青",
+   "x_prime": "不造句：春暖花开的时候，我们去郊外踏青",
+   "y": [
+    "ok",
+    "我和们去郊外。"
+   ],
+   "y_prime": [
+    "ok",
+    "我吗？"
+   ],
+   "ch_before": "ok",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 81,
+   "family": "F2",
+   "lev": 20,
+   "x": "细节里藏着在意，连你安全都不惦记，很难说有多真心喜欢你",
+   "x_prime": "很难说有多真心喜欢你，连你安全都不惦记，细节里藏着在意",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "ok",
+    "难说有多真心喜欢吗？"
+   ],
+   "ch_before": "reject",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 83,
+   "family": "F1",
+   "lev": 2,
+   "x": "如果没有明确提出复合，只是闲聊打发时间，别主动投入情绪，保持距离观望",
+   "x_prime": "只有没有明确提出复合，只是闲聊打发时间，别主动投入情绪，保持距离观望",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "ok",
+    "离观吗？"
+   ],
+   "ch_before": "reject",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 83,
+   "family": "F2",
+   "lev": 16,
+   "x": "如果没有明确提出复合，只是闲聊打发时间，别主动投入情绪，保持距离观望",
+   "x_prime": "如果没有明确提出复合，保持距离观望，别主动投入情绪，只是闲聊打发时间",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "ok",
+    "离观吗？"
+   ],
+   "ch_before": "reject",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 83,
+   "family": "F3",
+   "lev": 1,
+   "x": "如果没有明确提出复合，只是闲聊打发时间，别主动投入情绪，保持距离观望",
+   "x_prime": "如果没有明确提出复合，只是闲聊打发时间，没别主动投入情绪，保持距离观望",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "ok",
+    "如果没有明确提出离观。"
+   ],
+   "ch_before": "reject",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 85,
+   "family": "F3",
+   "lev": 1,
+   "x": "【本科-药学】抗生素作用对象",
+   "x_prime": "不【本科-药学】抗生素作用对象",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "ok",
+    "本吗？"
+   ],
+   "ch_before": "reject",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 86,
+   "family": "F2",
+   "lev": 18,
+   "x": "找温和借口就行，说家里有事要回去，或者提前约了朋友，不用硬着头皮去硬聊",
+   "x_prime": "不用硬着头皮去硬聊，说家里有事要回去，或者提前约了朋友，找温和借口就行",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "reject",
+    "filter",
+    "no_valid_candidate"
+   ],
+   "ch_before": "reject",
+   "ch_after": "reject"
+  },
+  {
+   "kind": "struct",
+   "idx": 87,
+   "family": "F2",
+   "lev": 12,
+   "x": "消消乐、蛋仔派对、俄罗斯方块，随时开随时关，不用占用大块时间",
+   "x_prime": "随时开随时关、蛋仔派对、俄罗斯方块，消消乐，不用占用大块时间",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "ok",
+    "罗斯方块吗？"
+   ],
+   "ch_before": "reject",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 88,
+   "family": "F2",
+   "lev": 16,
+   "x": "积攒太久的思念和委屈容易爆发，见面多包容一点，好好沟通减少不必要争吵",
+   "x_prime": "见面多包容一点，积攒太久的思念和委屈容易爆发，好好沟通减少不必要争吵",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "ok",
+    "久的思念和委吗？"
+   ],
+   "ch_before": "reject",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 89,
+   "family": "F2",
+   "lev": 22,
+   "x": "正常人见面再无聊，也不会一直低头刷手机，没必要再主动找他聊天了，下一个更合适",
+   "x_prime": "正常人见面再无聊，没必要再主动找他聊天了，也不会一直低头刷手机，下一个更合适",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "reject",
+    "filter",
+    "no_valid_candidate"
+   ],
+   "ch_before": "reject",
+   "ch_after": "reject"
+  },
+  {
+   "kind": "struct",
+   "idx": 89,
+   "family": "F3",
+   "lev": 1,
+   "x": "正常人见面再无聊，也不会一直低头刷手机，没必要再主动找他聊天了，下一个更合适",
+   "x_prime": "不正常人见面再无聊，也不会一直低头刷手机，没必要再主动找他聊天了，下一个更合适",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "reject",
+    "filter",
+    "no_valid_candidate"
+   ],
+   "ch_before": "reject",
+   "ch_after": "reject"
+  },
+  {
+   "kind": "struct",
+   "idx": 90,
+   "family": "F2",
+   "lev": 12,
+   "x": "垫散热支架，清理出风口灰尘，降低游戏画质减轻显卡负载",
+   "x_prime": "清理出风口灰尘，垫散热支架，降低游戏画质减轻显卡负载",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "reject",
+    "filter",
+    "no_valid_candidate"
+   ],
+   "ch_before": "reject",
+   "ch_after": "reject"
+  },
+  {
+   "kind": "struct",
+   "idx": 90,
+   "family": "F3",
+   "lev": 1,
+   "x": "垫散热支架，清理出风口灰尘，降低游戏画质减轻显卡负载",
+   "x_prime": "不垫散热支架，清理出风口灰尘，降低游戏画质减轻显卡负载",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "ok",
+    "出风口灰尘轻。"
+   ],
+   "ch_before": "reject",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 91,
+   "family": "F3",
+   "lev": 1,
+   "x": "零次幂底数≠0，取所有限制条件交集为定义域",
+   "x_prime": "零次幂底数≠0，不取所有限制条件交集为定义域",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "ok",
+    "不取吗？"
+   ],
+   "ch_before": "reject",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 91,
+   "family": "F4",
+   "lev": 2,
+   "x": "零次幂底数≠0，取所有限制条件交集为定义域",
+   "x_prime": "零次幂底数≠0，取有些限制条件交集为定义域",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "reject",
+    "filter",
+    "no_valid_candidate"
+   ],
+   "ch_before": "reject",
+   "ch_after": "reject"
+  },
+  {
+   "kind": "struct",
+   "idx": 92,
+   "family": "F2",
+   "lev": 16,
+   "x": "水培（营养液浸泡根系）、基质栽培（椰糠、珍珠岩代替土壤），适合室内园艺规模化种植",
+   "x_prime": "基质栽培（椰糠、水培（营养液浸泡根系）、珍珠岩代替土壤），适合室内园艺规模化种植",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "reject",
+    "filter",
+    "no_valid_candidate"
+   ],
+   "ch_before": "reject",
+   "ch_after": "reject"
+  },
+  {
+   "kind": "struct",
+   "idx": 92,
+   "family": "F3",
+   "lev": 1,
+   "x": "水培（营养液浸泡根系）、基质栽培（椰糠、珍珠岩代替土壤），适合室内园艺规模化种植",
+   "x_prime": "水培（营养液浸泡根系）、不基质栽培（椰糠、珍珠岩代替土壤），适合室内园艺规模化种植",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "reject",
+    "filter",
+    "no_valid_candidate"
+   ],
+   "ch_before": "reject",
+   "ch_after": "reject"
+  },
+  {
+   "kind": "struct",
+   "idx": 94,
+   "family": "F2",
+   "lev": 16,
+   "x": "长期异地看不到结束的时间，该不该及时止损",
+   "x_prime": "该不该及时止损，长期异地看不到结束的时间",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "reject",
+    "filter",
+    "no_valid_candidate"
+   ],
+   "ch_before": "reject",
+   "ch_after": "reject"
+  },
+  {
+   "kind": "struct",
+   "idx": 94,
+   "family": "F3",
+   "lev": 1,
+   "x": "长期异地看不到结束的时间，该不该及时止损",
+   "x_prime": "没长期异地看不到结束的时间，该不该及时止损",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "ok",
+    "长异地看不。"
+   ],
+   "ch_before": "reject",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 95,
+   "family": "F2",
+   "lev": 14,
+   "x": "拓宽人行道，加装隔离护栏，电动车和行人分开走，不容易发生剐蹭",
+   "x_prime": "不容易发生剐蹭，加装隔离护栏，电动车和行人分开走，拓宽人行道",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "reject",
+    "filter",
+    "no_valid_candidate"
+   ],
+   "ch_before": "reject",
+   "ch_after": "reject"
+  },
+  {
+   "kind": "struct",
+   "idx": 97,
+   "family": "F3",
+   "lev": 1,
+   "x": "异地恋每天只能晚上聊半小时，总没有安全感",
+   "x_prime": "没异地恋每天只能晚上聊半小时，总没有安全感",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "ok",
+    "没没有。"
+   ],
+   "ch_before": "reject",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 99,
+   "family": "F3",
+   "lev": 1,
+   "x": "中位数中间数值，抗干扰",
+   "x_prime": "不中位数中间数值，抗干扰",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "ok",
+    "不中位数中间数干。"
+   ],
+   "ch_before": "reject",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 100,
+   "family": "F3",
+   "lev": 1,
+   "x": "晚上失眠躺两小时睡不着",
+   "x_prime": "不晚上失眠躺两小时睡不着",
+   "y": [
+    "ok",
+    "失眠躺两小时睡。"
+   ],
+   "y_prime": [
+    "ok",
+    "不晚上失眠躺两小时睡。"
+   ],
+   "ch_before": "ok",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 100,
+   "family": "F4",
+   "lev": 1,
+   "x": "晚上失眠躺两小时睡不着",
+   "x_prime": "晚上失眠躺一小时睡不着",
+   "y": [
+    "ok",
+    "失眠躺两小时睡。"
+   ],
+   "y_prime": [
+    "ok",
+    "失不。"
+   ],
+   "ch_before": "ok",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 102,
+   "family": "F3",
+   "lev": 1,
+   "x": "写一段鼓励自己坚持下去的短句",
+   "x_prime": "不写一段鼓励自己坚持下去的短句",
+   "y": [
+    "ok",
+    "一段吗？"
+   ],
+   "y_prime": [
+    "ok",
+    "不写吗？"
+   ],
+   "ch_before": "ok",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 102,
+   "family": "F4",
+   "lev": 1,
+   "x": "写一段鼓励自己坚持下去的短句",
+   "x_prime": "写两段鼓励自己坚持下去的短句",
+   "y": [
+    "ok",
+    "一段吗？"
+   ],
+   "y_prime": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "ch_before": "ok",
+   "ch_after": "reject"
+  },
+  {
+   "kind": "struct",
+   "idx": 103,
+   "family": "F3",
+   "lev": 1,
+   "x": "墨西哥主场球迷氛围为什么出名",
+   "x_prime": "没墨西哥主场球迷氛围为什么出名",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "ok",
+    "迷氛围为什吗？"
+   ],
+   "ch_before": "reject",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 104,
+   "family": "F2",
+   "lev": 10,
+   "x": "不用刻意土味情话，找一个合理的契机搭话，比如工作、学习相关的小事，自然不尴尬",
+   "x_prime": "不用刻意土味情话，比如工作，找一个合理的契机搭话、学习相关的小事，自然不尴尬",
+   "y": [
+    "ok",
+    "理的吗？"
+   ],
+   "y_prime": [
+    "ok",
+    "一个合理的吗？"
+   ],
+   "ch_before": "ok",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 104,
+   "family": "F3",
+   "lev": 1,
+   "x": "不用刻意土味情话，找一个合理的契机搭话，比如工作、学习相关的小事，自然不尴尬",
+   "x_prime": "不用刻意土味情话，找一个合理的契机搭话，不比如工作、学习相关的小事，自然不尴尬",
+   "y": [
+    "ok",
+    "理的吗？"
+   ],
+   "y_prime": [
+    "ok",
+    "理的不。"
+   ],
+   "ch_before": "ok",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 105,
+   "family": "F3",
+   "lev": 1,
+   "x": "高速节假日免费通行是哪几个假期",
+   "x_prime": "不高速节假日免费通行是哪几个假期",
+   "y": [
+    "ok",
+    "高速节假日免费通吗？"
+   ],
+   "y_prime": [
+    "ok",
+    "不高速节假日免费通吗？"
+   ],
+   "ch_before": "ok",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 105,
+   "family": "F4",
+   "lev": 2,
+   "x": "高速节假日免费通行是哪几个假期",
+   "x_prime": "高速节假日免费通行是哪一些个假期",
+   "y": [
+    "ok",
+    "高速节假日免费通吗？"
+   ],
+   "y_prime": [
+    "ok",
+    "高速节假日免些个假。"
+   ],
+   "ch_before": "ok",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 106,
+   "family": "F3",
+   "lev": 1,
+   "x": "简约钥匙扣、便携保温杯、降噪耳塞、纯棉袜子，日常能用不浮夸",
+   "x_prime": "简约钥匙扣、便携保温杯、降噪耳塞、纯棉袜子，日常能用浮夸",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "reject",
+    "filter",
+    "no_valid_candidate"
+   ],
+   "ch_before": "reject",
+   "ch_after": "reject"
+  },
+  {
+   "kind": "struct",
+   "idx": 108,
+   "family": "F1",
+   "lev": 1,
+   "x": "游戏版本补丁更新后T0羁绊会调整",
+   "x_prime": "游戏版本补丁还新后T0羁绊会调整",
+   "y": [
+    "ok",
+    "补丁更新后T0羁绊会吗？"
+   ],
+   "y_prime": [
+    "ok",
+    "T0羁绊会吗？"
+   ],
+   "ch_before": "ok",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 108,
+   "family": "F3",
+   "lev": 1,
+   "x": "游戏版本补丁更新后T0羁绊会调整",
+   "x_prime": "没游戏版本补丁更新后T0羁绊会调整",
+   "y": [
+    "ok",
+    "补丁更新后T0羁绊会吗？"
+   ],
+   "y_prime": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "ch_before": "ok",
+   "ch_after": "reject"
+  },
+  {
+   "kind": "struct",
+   "idx": 110,
+   "family": "F3",
+   "lev": 1,
+   "x": "给早餐店写简短吸引人标语",
+   "x_prime": "没给早餐店写简短吸引人标语",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "ok",
+    "没给早简。"
+   ],
+   "ch_before": "reject",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 111,
+   "family": "F3",
+   "lev": 1,
+   "x": "沙盒开放世界游戏适合喜欢自由探索的玩家吗",
+   "x_prime": "不沙盒开放世界游戏适合喜欢自由探索的玩家吗",
+   "y": [
+    "ok",
+    "适合喜欢自由探吗？"
+   ],
+   "y_prime": [
+    "ok",
+    "不沙盒开放世界游戏适合喜欢自由探吗？"
+   ],
+   "ch_before": "ok",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 112,
+   "family": "F2",
+   "lev": 16,
+   "x": "普惠园每月学费几百块，私立动辄两三千，普通家庭压力小很多",
+   "x_prime": "私立动辄两三千，普惠园每月学费几百块，普通家庭压力小很多",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "ok",
+    "动辄两三压。"
+   ],
+   "ch_before": "reject",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 113,
+   "family": "F2",
+   "lev": 14,
+   "x": "开风扇对着吹，卫生间放除湿袋，少量多次分开晾，别堆挤在一起",
+   "x_prime": "卫生间放除湿袋，开风扇对着吹，少量多次分开晾，别堆挤在一起",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "reject",
+    "filter",
+    "no_valid_candidate"
+   ],
+   "ch_before": "reject",
+   "ch_after": "reject"
+  },
+  {
+   "kind": "struct",
+   "idx": 113,
+   "family": "F3",
+   "lev": 1,
+   "x": "开风扇对着吹，卫生间放除湿袋，少量多次分开晾，别堆挤在一起",
+   "x_prime": "开风扇对着吹，没卫生间放除湿袋，少量多次分开晾，别堆挤在一起",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "reject",
+    "filter",
+    "no_valid_candidate"
+   ],
+   "ch_before": "reject",
+   "ch_after": "reject"
+  },
+  {
+   "kind": "struct",
+   "idx": 114,
+   "family": "F3",
+   "lev": 1,
+   "x": "【本科-数学与统计】什么是标准差",
+   "x_prime": "不【本科-数学与统计】什么是标准差",
+   "y": [
+    "ok",
+    "计】什么是标准吗？"
+   ],
+   "y_prime": [
+    "ok",
+    "-数学与统吗？"
+   ],
+   "ch_before": "ok",
+   "ch_after": "ok"
+  },
+  {
+   "kind": "struct",
+   "idx": 115,
+   "family": "F3",
+   "lev": 1,
+   "x": "后鼻音舌根后抬：ang eng ing ong",
+   "x_prime": "不后鼻音舌根后抬：ang eng ing ong",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "reject",
+    "filter",
+    "no_valid_candidate"
+   ],
+   "ch_before": "reject",
+   "ch_after": "reject"
+  },
+  {
+   "kind": "struct",
+   "idx": 117,
+   "family": "F2",
+   "lev": 16,
+   "x": "2026年6月开赛，三个国家联合举办，比赛场地分布在美国、加拿大、墨西哥",
+   "x_prime": "2026年6月开赛，墨西哥，比赛场地分布在美国、加拿大、三个国家联合举办",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "reject",
+    "filter",
+    "no_valid_candidate"
+   ],
+   "ch_before": "reject",
+   "ch_after": "reject"
+  },
+  {
+   "kind": "struct",
+   "idx": 119,
+   "family": "F3",
+   "lev": 1,
+   "x": "男生不主动表白，一直暧昧拉扯，我要不要主动挑明",
+   "x_prime": "男生不主动表白，不一直暧昧拉扯，我要不要主动挑明",
+   "y": [
+    "reject",
+    "compose",
+    "type_inventory"
+   ],
+   "y_prime": [
+    "reject",
+    "filter",
+    "no_valid_candidate"
+   ],
+   "ch_before": "reject",
+   "ch_after": "reject"
+  }
+ ],
+ "verdict": "真实但不特异",
+ "verdict_inputs": {
+  "c0_rate": 0.0,
+  "c0_n": 131,
+  "c3_consistent": true,
+  "delta_R1": {
+   "n": 240,
+   "p_struct": 0.5417,
+   "p_rand": 0.6458,
+   "delta": -0.1042,
+   "se": 0.0313,
+   "b": 17,
+   "c": 42,
+   "sig": false,
+   "t": -3.33
+  },
+  "delta_R2": {
+   "n": 240,
+   "p_struct": 0.5417,
+   "p_rand": 0.575,
+   "delta": -0.0333,
+   "se": 0.0317,
+   "b": 25,
+   "c": 33,
+   "sig": false,
+   "t": -1.05
+  },
+  "rand_unreachable": {
+   "R1": 0,
+   "R2": 0
+  }
+ }
+}

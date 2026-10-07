@@ -1,0 +1,417 @@
+{
+  "se": 0.01414213562373095,
+  "two_se": 0.0282842712474619,
+  "runs": {},
+  "criteria": {
+    "R0": {
+      "pass": true,
+      "detail": {
+        "42": {
+          "heldout_pair": {
+            "got": 49.52,
+            "expect": 49.52,
+            "delta": -0.0,
+            "within_2se": true,
+            "zero_error": true
+          },
+          "shifted_pos": {
+            "got": 92.56,
+            "expect": 92.56,
+            "delta": 0.0,
+            "within_2se": true,
+            "zero_error": true
+          }
+        },
+        "43": {
+          "heldout_pair": {
+            "got": 51.04,
+            "expect": 51.04,
+            "delta": 0.0,
+            "within_2se": true,
+            "zero_error": true
+          },
+          "shifted_pos": {
+            "got": 92.48,
+            "expect": 92.48,
+            "delta": -0.0,
+            "within_2se": true,
+            "zero_error": true
+          }
+        }
+      },
+      "note": "门槛=逐 seed Δ 必须为 0.00（零误差）"
+    },
+    "R4": {
+      "pass": true,
+      "detail": {
+        "42": {
+          "baseline": "d2ea73d8648deb344f17cb56efcc2c3ffdfab78f6c6ef5e72dc65df42ca7f346",
+          "step0": "d2ea73d8648deb344f17cb56efcc2c3ffdfab78f6c6ef5e72dc65df42ca7f346",
+          "equal": true,
+          "per_card_equal": {
+            "pronoun": true,
+            "sentiment": true,
+            "relation": true,
+            "person": true
+          },
+          "baseline_exact": {
+            "pronoun": 0.9533333333333334,
+            "sentiment": 0.79375,
+            "relation": 0.9638888888888889,
+            "person": 0.31
+          },
+          "step0_exact": {
+            "pronoun": 0.9533333333333334,
+            "sentiment": 0.79375,
+            "relation": 0.9638888888888889,
+            "person": 0.31
+          },
+          "delta_vs_capmap": {
+            "pronoun": 0.0,
+            "sentiment": 0.0,
+            "relation": 0.0,
+            "person": 0.0
+          }
+        },
+        "43": {
+          "baseline": "119e825d86f9e1e5bdfdfd359fae2133850b771e7f226a887c582888ba9a3281",
+          "step0": "119e825d86f9e1e5bdfdfd359fae2133850b771e7f226a887c582888ba9a3281",
+          "equal": true,
+          "per_card_equal": {
+            "pronoun": true,
+            "sentiment": true,
+            "relation": true,
+            "person": true
+          },
+          "baseline_exact": {
+            "pronoun": 0.98,
+            "sentiment": 0.8146875,
+            "relation": 0.9652777777777778,
+            "person": 0.3233333333333333
+          },
+          "step0_exact": {
+            "pronoun": 0.98,
+            "sentiment": 0.8146875,
+            "relation": 0.9652777777777778,
+            "person": 0.3233333333333333
+          },
+          "delta_vs_capmap": {
+            "pronoun": 0.0,
+            "sentiment": 0.0,
+            "relation": 0.0,
+            "person": 0.0
+          }
+        }
+      },
+      "note": "step-0 老卡逐样本 pred/exact 的 sha256 == 不接本任务配置"
+    },
+    "R3": {
+      "pass": true,
+      "detail": {
+        "frozen_s42": {
+          "heldout_pair": 51.84,
+          "shifted_pos": 49.68,
+          "pass_": true,
+          "train": 49.55,
+          "test": 49.2,
+          "n_diff_executed": 4026
+        },
+        "frozen_s43": {
+          "heldout_pair": 51.6,
+          "shifted_pos": 49.12,
+          "pass_": true,
+          "train": 49.6,
+          "test": 48.32,
+          "n_diff_executed": 4016
+        },
+        "joint_s42": {
+          "heldout_pair": 48.24,
+          "shifted_pos": 48.4,
+          "pass_": true,
+          "train": 49.65,
+          "test": 47.56,
+          "n_diff_executed": 4026
+        },
+        "joint_s43": {
+          "heldout_pair": 49.76,
+          "shifted_pos": 49.36,
+          "pass_": true,
+          "train": 49.8,
+          "test": 47.68,
+          "n_diff_executed": 4016
+        }
+      },
+      "note": "4 跑（两臂 × 两 seed）heldout 与 shifted 均 ≤ 52.83"
+    },
+    "R1": {
+      "pass": true,
+      "detail": {
+        "s42": {
+          "joint": 59.36,
+          "frozen": 49.52,
+          "delta_pt": 9.84,
+          "se_pt": 1.4142,
+          "delta_over_se": 6.958,
+          "delta_over_se_diff": 4.92,
+          "margin_vs_2se_pt": 7.0116,
+          "pass": true,
+          "joint_vs_50_over_se": 6.619
+        },
+        "s43": {
+          "joint": 63.2,
+          "frozen": 51.04,
+          "delta_pt": 12.16,
+          "se_pt": 1.4142,
+          "delta_over_se": 8.598,
+          "delta_over_se_diff": 6.08,
+          "margin_vs_2se_pt": 9.3316,
+          "pass": true,
+          "joint_vs_50_over_se": 9.334
+        }
+      },
+      "note": "Δ > 2×SE=2.828pt 且两 seed 同号（都过）"
+    },
+    "R2": {
+      "pass": true,
+      "detail": {
+        "s42": {
+          "joint": 99.6,
+          "frozen": 92.56,
+          "delta_pt": 7.04,
+          "threshold": 89.7316,
+          "pass": true
+        },
+        "s43": {
+          "joint": 99.6,
+          "frozen": 92.48,
+          "delta_pt": 7.12,
+          "threshold": 89.6516,
+          "pass": true
+        }
+      },
+      "note": "joint.shifted ≥ frozen.shifted − 2.828pt（逐 seed）"
+    },
+    "R5": {
+      "pass": true,
+      "detail": {
+        "pronoun_s42": {
+          "step0": 0.953333,
+          "post": 0.973333,
+          "delta": 0.02,
+          "band": 0.0283,
+          "pass": true
+        },
+        "sentiment_s42": {
+          "step0": 0.79375,
+          "post": 0.949688,
+          "delta": 0.155938,
+          "band": 0.0041,
+          "pass": true
+        },
+        "relation_s42": {
+          "step0": 0.963889,
+          "post": 0.979167,
+          "delta": 0.015278,
+          "band": 0.0139,
+          "pass": true
+        },
+        "person_s42": {
+          "step0": 0.31,
+          "post": 0.318333,
+          "delta": 0.008333,
+          "band": 0.0033,
+          "pass": true
+        },
+        "pronoun_s43": {
+          "step0": 0.98,
+          "post": 0.978333,
+          "delta": -0.001667,
+          "band": 0.0283,
+          "pass": true
+        },
+        "sentiment_s43": {
+          "step0": 0.814688,
+          "post": 0.955937,
+          "delta": 0.14125,
+          "band": 0.0041,
+          "pass": true
+        },
+        "relation_s43": {
+          "step0": 0.965278,
+          "post": 0.990278,
+          "delta": 0.025,
+          "band": 0.0139,
+          "pass": true
+        },
+        "person_s43": {
+          "step0": 0.323333,
+          "post": 0.321667,
+          "delta": -0.001667,
+          "band": 0.0033,
+          "pass": true
+        }
+      },
+      "note": "报告项：Δ ≥ −各自噪声带（8 格）"
+    },
+    "R6": {
+      "pass": true,
+      "detail": {
+        "frozen_s42": {
+          "core_drift": null,
+          "timing": {
+            "train_sec": 3.88,
+            "n_steps": 1800,
+            "sec_per_step": 0.0022,
+            "sec_per_step_steady": 0.0019,
+            "peak_mem_mb": 81.0
+          },
+          "freeze": {
+            "arm": "A",
+            "encoder_params": 1688460,
+            "encoder_trainable": 0,
+            "encoder_training": false,
+            "head_params": 164353,
+            "trainable_params": 164353,
+            "total_params": 1852813,
+            "hidden": 128
+          },
+          "old_heads_frozen": false,
+          "recipe": {
+            "steps": 1800,
+            "batch": 64,
+            "lr_head": 0.001,
+            "lr_core": null,
+            "weight_decay": 0.0001,
+            "cosine": true,
+            "grad_clip": 1.0,
+            "n_train": 8000,
+            "old_tasks_in_batch": [],
+            "encoder_eval_mode": true
+          }
+        },
+        "joint_s42": {
+          "core_drift": 0.12543158371945165,
+          "timing": {
+            "train_sec": 459.85,
+            "n_steps": 1800,
+            "sec_per_step": 0.2555,
+            "sec_per_step_steady": 0.2543,
+            "peak_mem_mb": 1978.8
+          },
+          "freeze": {
+            "arm": "A",
+            "encoder_params": 1688460,
+            "encoder_trainable": 1688460,
+            "encoder_training": false,
+            "head_params": 164353,
+            "trainable_params": 1852813,
+            "total_params": 1852813,
+            "hidden": 128
+          },
+          "old_heads_frozen": true,
+          "recipe": {
+            "steps": 1800,
+            "batch": 64,
+            "lr_head": 0.001,
+            "lr_core": 0.0003,
+            "weight_decay": 0.0001,
+            "cosine": true,
+            "grad_clip": 1.0,
+            "n_train": 8000,
+            "old_tasks_in_batch": [
+              "pronoun",
+              "sentiment",
+              "relation",
+              "person"
+            ],
+            "encoder_eval_mode": true
+          }
+        },
+        "frozen_s43": {
+          "core_drift": null,
+          "timing": {
+            "train_sec": 3.89,
+            "n_steps": 1800,
+            "sec_per_step": 0.0022,
+            "sec_per_step_steady": 0.0018,
+            "peak_mem_mb": 81.0
+          },
+          "freeze": {
+            "arm": "A",
+            "encoder_params": 1688460,
+            "encoder_trainable": 0,
+            "encoder_training": false,
+            "head_params": 164353,
+            "trainable_params": 164353,
+            "total_params": 1852813,
+            "hidden": 128
+          },
+          "old_heads_frozen": false,
+          "recipe": {
+            "steps": 1800,
+            "batch": 64,
+            "lr_head": 0.001,
+            "lr_core": null,
+            "weight_decay": 0.0001,
+            "cosine": true,
+            "grad_clip": 1.0,
+            "n_train": 8000,
+            "old_tasks_in_batch": [],
+            "encoder_eval_mode": true
+          }
+        },
+        "joint_s43": {
+          "core_drift": 0.12640601884288874,
+          "timing": {
+            "train_sec": 461.16,
+            "n_steps": 1800,
+            "sec_per_step": 0.2562,
+            "sec_per_step_steady": 0.2551,
+            "peak_mem_mb": 1979.7
+          },
+          "freeze": {
+            "arm": "A",
+            "encoder_params": 1688460,
+            "encoder_trainable": 1688460,
+            "encoder_training": false,
+            "head_params": 164353,
+            "trainable_params": 1852813,
+            "total_params": 1852813,
+            "hidden": 128
+          },
+          "old_heads_frozen": true,
+          "recipe": {
+            "steps": 1800,
+            "batch": 64,
+            "lr_head": 0.001,
+            "lr_core": 0.0003,
+            "weight_decay": 0.0001,
+            "cosine": true,
+            "grad_clip": 1.0,
+            "n_train": 8000,
+            "old_tasks_in_batch": [
+              "pronoun",
+              "sentiment",
+              "relation",
+              "person"
+            ],
+            "encoder_eval_mode": true
+          }
+        }
+      },
+      "note": "必报：漂移 + 步时 + 显存"
+    }
+  },
+  "verdict": {
+    "verdict": "② 墙是「核没学过这个任务」",
+    "why": "R1 过（两 seed 同号且 Δ > 2×SE）",
+    "gates": {
+      "R0": true,
+      "R3": true,
+      "R4": true
+    },
+    "R1": true,
+    "R2": true,
+    "R5": true
+  }
+}
