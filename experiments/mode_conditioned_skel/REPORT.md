@@ -59,6 +59,7 @@ C-soft（λ=1 纯后验）在 a_bal **低于 F**（.1346/.1529）；C-soft-lr（
 
 - **探针的 acc 是不平衡假指标**：train 目标 97.5% 为陈述，探针 argmax 边际 = a_bal **陈述 1040/1040**（s42）、1031/1040（s43）⇒ **它实际执行「永远陈述子集」**，把 15.4% 的小众句式行强制排除 gold。
 - **误差传播 C-rule → C-pred**（规则分类器）：a_bal **−.0048 / −.0038**（对应 .9731 覆盖率）；test −.0188/−.0192；adv2 −.0210/−.0190（错分全部是「陈述→疑问/祈使」28/64/46 行，反向 0 行）。
+- **与并行单元 P7 标签器的交叉校验（跑后补做，不改判据）**：`experiments/sentence_mode/labels.py` 在 11:59 才落盘。其 `label_full` 因**语料无句末标点**几乎全返 `None`（a_bal 0/1040 可用）；用其 `label_nopunct`（6 类→并入本单元 3 类）与我的规则标签一致率 **a_bal .728 / test .737 / adv2 .632**；对 gold 的 recall（a_bal）P7 = 陈述 .770、疑问 .838、**祈使 .125**，**我的规则 = .968 / 1.000 / 1.000** ⇒ **本单元的规则标签与 gold 对齐显著更好，P7 标签器不能直接替代**（推断：换 P7 标签做 C-pred 会明显变差，**未测**）。两路都是规则标签，报告中未冒充学习分类器。
 
 ## 5. N0–N6 逐条 + 判定 + 机制
 
@@ -89,4 +90,5 @@ C-soft（λ=1 纯后验）在 a_bal **低于 F**（.1346/.1529）；C-soft-lr（
 - **产物**：`PREREG.md`、`REPORT.md`、`{modes,common,probe,rules_mode,eval_main,analyze,old_cards}.py`；`results/{mapping,probe,probe_pred,rules,eval,gates,sha256_before,old_cards_before,old_cards_after,old_cards_delta}.json`；`weights/probe_s{42,43}.pt`；`cache/enc_*.pt`（train 自编码；test/adv2/a_bal **只读复用 skeleton_leak 缓存**）。
 - **实测遗留**：① C-pred-ML 反向（探针退化）；② 污染出口 L 组被规则错分拖累（test L −.0178/−.0197、adv2 L −.0506/−.0536）；③ 随机对照未落回多数类；④ adv2 非 L 组模型仍**低于**免费规则（−.050/−.063）；⑤ 映射 B 在无泄露出口覆盖率仅 .2692。
 - **推断（非直接实验）**：① 「陈述行无收益是因为模型错误集中在同为陈述的 #0/#1/#11」——由 §5.2 的预测分布直接支持（强推断，未做错误归因实验）；② 「免费规则空间未穷尽，更强规则可能吃掉 +.099 的余量」——未穷尽搜索（**不确定**）；③ 「学习探针不行是均值池化丢掉了句末信号」——未做非线性头/末位 token 池化对照（**未测**）。
+- **仓库状态（实测）**：本单元**从未执行任何 git 写操作**（commit/stash/checkout/restore/clean）；但本单元在建文件被**另一会话 P10 于 11:59 的全仓提交扫入**（`git log -1 --format=%h -- experiments/mode_conditioned_skel/modes.py` → `105b82a`）。现 `git diff` 对**既有已跟踪文件零改动**，未跟踪仅 `REPORT.md`（+ 另一单元的 `syllogism_card/run.py`，非我所建）。
 - **未实现（跑前声明即如此）**：不重训四臂、不训句式卡、不动 `src/` 与既有实验；`adv1` 未评（与 skeleton_leak 一致，骨架构造性为 0）。
