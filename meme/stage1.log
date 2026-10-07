@@ -1,0 +1,23 @@
+warning: Found both a `uv.toml` file and a `[tool.uv]` section in an adjacent `pyproject.toml`. The following fields from `[tool.uv]` will be ignored in favor of the `uv.toml` file:
+- index
+CMD: CUDA_VISIBLE_DEVICES='' uv run --project DTSeek --no-sync python meme/stage1.py
+BASELINE {"copy_ce": 0.0, "len_ce": 4.1641}
+/opt/amdgpu/share/libdrm/amdgpu.ids: No such file or directory
+/home/vesita/coding/my/DTSeek/.venv/lib/python3.12/site-packages/torch/nn/modules/transformer.py:515: UserWarning: The PyTorch API of nested tensors is in prototype stage and will change in the near future. We recommend specifying layout=torch.jagged when constructing a nested tensor, as this layout receives active development, has better operator coverage, and works with torch.compile. (Triggered internally at /pytorch/aten/src/ATen/NestedTensorImpl.cpp:178.)
+  output = torch._nested_tensor_from_mask(
+RUN {"arm": "M", "seed": 42, "think": "enc", "params": 1202496, "trunk": 1202496, "med": 0, "test_ce": 0.0001, "train_ce": 0.0001, "sec": 580.4}
+RUN {"arm": "T", "seed": 42, "think": "enc", "params": 1218944, "trunk": 1202496, "med": 16448, "test_ce": 1.3546, "train_ce": 1.3596, "sec": 386.3}
+RUN {"arm": "M", "seed": 43, "think": "enc", "params": 1202496, "trunk": 1202496, "med": 0, "test_ce": 0.0001, "train_ce": 0.0001, "sec": 596.6}
+RUN {"arm": "T", "seed": 43, "think": "enc", "params": 1218944, "trunk": 1202496, "med": 16448, "test_ce": 1.4993, "train_ce": 1.4898, "sec": 382.3}
+RUN {"arm": "M", "seed": 42, "think": "ident", "params": 609472, "trunk": 609472, "med": 0, "test_ce": 0.0001, "train_ce": 0.0001, "sec": 278.9}
+RUN {"arm": "T", "seed": 42, "think": "ident", "params": 625920, "trunk": 609472, "med": 16448, "test_ce": 1.376, "train_ce": 1.3765, "sec": 187.4}
+RUN {"arm": "M", "seed": 43, "think": "ident", "params": 609472, "trunk": 609472, "med": 0, "test_ce": 0.0001, "train_ce": 0.0001, "sec": 400.3}
+RUN {"arm": "T", "seed": 43, "think": "ident", "params": 625920, "trunk": 609472, "med": 16448, "test_ce": 1.2893, "train_ce": 1.2783, "sec": 330.5}
+=== SUMMARY ===
+params  M=1202496  T=1218944  (共享干 trunk=1202496，T 多中介 16448 参数)
+NORMAL seed=42  CE_M=0.0001  CE_T=1.3546  delta(T-M)=1.3545
+NORMAL seed=43  CE_M=0.0001  CE_T=1.4993  delta(T-M)=1.4992
+P5_ident seed=42  CE_M=0.0001  CE_T=1.376  delta(T-M)=1.3759
+P5_ident seed=43  CE_M=0.0001  CE_T=1.2893  delta(T-M)=1.2892
+BASELINE copy=0.0  length=4.1641  (uniform=4.1589)
+=== END ===
