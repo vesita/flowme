@@ -1,0 +1,646 @@
+{
+  "n_train": 4000,
+  "n_test": 1200,
+  "se": 0.014433756729740645,
+  "se_type": 0.02886751345948129,
+  "gate": 0.9711324865405188,
+  "rules": [
+    {
+      "family": "R-keyword",
+      "n_features": 9,
+      "n_candidates": 56,
+      "train_fit": {
+        "metric": "kw_pron",
+        "dir": "le",
+        "t": 0.5,
+        "acc_train": 0.75,
+        "acc_test": 0.75,
+        "per_type_test": {
+          "A": {
+            "n": 300,
+            "acc": 0.0
+          },
+          "B": {
+            "n": 300,
+            "acc": 1.0
+          },
+          "C": {
+            "n": 300,
+            "acc": 1.0
+          },
+          "D": {
+            "n": 300,
+            "acc": 1.0
+          }
+        }
+      },
+      "test_oracle": {
+        "metric": "kw_pron",
+        "dir": "le",
+        "t": 0.5,
+        "acc_test": 0.75,
+        "per_type_test": {
+          "A": {
+            "n": 300,
+            "acc": 0.0
+          },
+          "B": {
+            "n": 300,
+            "acc": 1.0
+          },
+          "C": {
+            "n": 300,
+            "acc": 1.0
+          },
+          "D": {
+            "n": 300,
+            "acc": 1.0
+          }
+        }
+      },
+      "score": 0.75,
+      "score_source": "train_fit",
+      "feature_best": {
+        "kw_id": {
+          "test_oracle": 0.5,
+          "dir": "le",
+          "t": -1.0,
+          "train_fit_test": 0.5
+        },
+        "kw_cat": {
+          "test_oracle": 0.5766666666666667,
+          "dir": "le",
+          "t": 1.5,
+          "train_fit_test": 0.5766666666666667
+        },
+        "kw_title": {
+          "test_oracle": 0.5,
+          "dir": "le",
+          "t": -1.0,
+          "train_fit_test": 0.5
+        },
+        "kw_pron": {
+          "test_oracle": 0.75,
+          "dir": "le",
+          "t": 0.5,
+          "train_fit_test": 0.75
+        },
+        "kw_id_any": {
+          "test_oracle": 0.5,
+          "dir": "le",
+          "t": -1.0,
+          "train_fit_test": 0.5
+        },
+        "kw_cat_any": {
+          "test_oracle": 0.5,
+          "dir": "le",
+          "t": -1.0,
+          "train_fit_test": 0.5
+        },
+        "kw_title_any": {
+          "test_oracle": 0.5,
+          "dir": "le",
+          "t": -1.0,
+          "train_fit_test": 0.5
+        },
+        "kw_pron_any": {
+          "test_oracle": 0.75,
+          "dir": "le",
+          "t": 0.5,
+          "train_fit_test": 0.75
+        },
+        "kw_any": {
+          "test_oracle": 0.5,
+          "dir": "le",
+          "t": 0.0,
+          "train_fit_test": 0.5
+        }
+      },
+      "score_per_type": {
+        "A": {
+          "n": 300,
+          "acc": 0.0
+        },
+        "B": {
+          "n": 300,
+          "acc": 1.0
+        },
+        "C": {
+          "n": 300,
+          "acc": 1.0
+        },
+        "D": {
+          "n": 300,
+          "acc": 1.0
+        }
+      },
+      "se": 0.014433756729740645,
+      "se_type": 0.02886751345948129,
+      "gate": 0.9711324865405188,
+      "below_gate": true,
+      "per_type_100": [
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "family": "R-abbr",
+      "n_features": 9,
+      "n_candidates": 54,
+      "train_fit": {
+        "metric": "ab_f2",
+        "dir": "ge",
+        "t": 0.5,
+        "acc_train": 0.98975,
+        "acc_test": 0.9916666666666667,
+        "per_type_test": {
+          "A": {
+            "n": 300,
+            "acc": 1.0
+          },
+          "B": {
+            "n": 300,
+            "acc": 1.0
+          },
+          "C": {
+            "n": 300,
+            "acc": 1.0
+          },
+          "D": {
+            "n": 300,
+            "acc": 0.9666666666666667
+          }
+        }
+      },
+      "test_oracle": {
+        "metric": "ab_f2",
+        "dir": "ge",
+        "t": 0.5,
+        "acc_test": 0.9916666666666667,
+        "per_type_test": {
+          "A": {
+            "n": 300,
+            "acc": 1.0
+          },
+          "B": {
+            "n": 300,
+            "acc": 1.0
+          },
+          "C": {
+            "n": 300,
+            "acc": 1.0
+          },
+          "D": {
+            "n": 300,
+            "acc": 0.9666666666666667
+          }
+        }
+      },
+      "score": 0.9916666666666667,
+      "score_source": "train_fit",
+      "feature_best": {
+        "ab_contain": {
+          "test_oracle": 0.625,
+          "dir": "ge",
+          "t": 0.5,
+          "train_fit_test": 0.625
+        },
+        "ab_subseq": {
+          "test_oracle": 0.5,
+          "dir": "le",
+          "t": -1.0,
+          "train_fit_test": 0.5
+        },
+        "ab_suf_in": {
+          "test_oracle": 0.625,
+          "dir": "ge",
+          "t": 0.5,
+          "train_fit_test": 0.625
+        },
+        "ab_suf": {
+          "test_oracle": 0.625,
+          "dir": "ge",
+          "t": 0.5,
+          "train_fit_test": 0.625
+        },
+        "ab_desur": {
+          "test_oracle": 0.625,
+          "dir": "le",
+          "t": 0.5,
+          "train_fit_test": 0.625
+        },
+        "ab_dropsuf": {
+          "test_oracle": 0.6841666666666667,
+          "dir": "ge",
+          "t": 0.5,
+          "train_fit_test": 0.6841666666666667
+        },
+        "ab_f1": {
+          "test_oracle": 0.875,
+          "dir": "ge",
+          "t": 0.5,
+          "train_fit_test": 0.875
+        },
+        "ab_f2": {
+          "test_oracle": 0.9916666666666667,
+          "dir": "ge",
+          "t": 0.5,
+          "train_fit_test": 0.9916666666666667
+        },
+        "ab_f3": {
+          "test_oracle": 0.875,
+          "dir": "ge",
+          "t": 0.5,
+          "train_fit_test": 0.875
+        }
+      },
+      "score_per_type": {
+        "A": {
+          "n": 300,
+          "acc": 1.0
+        },
+        "B": {
+          "n": 300,
+          "acc": 1.0
+        },
+        "C": {
+          "n": 300,
+          "acc": 1.0
+        },
+        "D": {
+          "n": 300,
+          "acc": 0.9666666666666667
+        }
+      },
+      "se": 0.014433756729740645,
+      "se_type": 0.02886751345948129,
+      "gate": 0.9711324865405188,
+      "below_gate": false,
+      "per_type_100": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    {
+      "family": "R-prefix",
+      "n_features": 9,
+      "n_candidates": 48,
+      "train_fit": {
+        "metric": "pf2",
+        "dir": "ge",
+        "t": 0.5,
+        "acc_train": 0.98975,
+        "acc_test": 0.9916666666666667,
+        "per_type_test": {
+          "A": {
+            "n": 300,
+            "acc": 1.0
+          },
+          "B": {
+            "n": 300,
+            "acc": 1.0
+          },
+          "C": {
+            "n": 300,
+            "acc": 1.0
+          },
+          "D": {
+            "n": 300,
+            "acc": 0.9666666666666667
+          }
+        }
+      },
+      "test_oracle": {
+        "metric": "pf2",
+        "dir": "ge",
+        "t": 0.5,
+        "acc_test": 0.9916666666666667,
+        "per_type_test": {
+          "A": {
+            "n": 300,
+            "acc": 1.0
+          },
+          "B": {
+            "n": 300,
+            "acc": 1.0
+          },
+          "C": {
+            "n": 300,
+            "acc": 1.0
+          },
+          "D": {
+            "n": 300,
+            "acc": 0.9666666666666667
+          }
+        }
+      },
+      "score": 0.9916666666666667,
+      "score_source": "train_fit",
+      "feature_best": {
+        "pf1": {
+          "test_oracle": 0.875,
+          "dir": "ge",
+          "t": 0.5,
+          "train_fit_test": 0.875
+        },
+        "pf2": {
+          "test_oracle": 0.9916666666666667,
+          "dir": "ge",
+          "t": 0.5,
+          "train_fit_test": 0.9916666666666667
+        },
+        "pf3": {
+          "test_oracle": 0.875,
+          "dir": "ge",
+          "t": 0.5,
+          "train_fit_test": 0.875
+        },
+        "sf1": {
+          "test_oracle": 0.6333333333333333,
+          "dir": "ge",
+          "t": 0.5,
+          "train_fit_test": 0.6333333333333333
+        },
+        "sf2": {
+          "test_oracle": 0.625,
+          "dir": "ge",
+          "t": 0.5,
+          "train_fit_test": 0.625
+        },
+        "sf3": {
+          "test_oracle": 0.75,
+          "dir": "ge",
+          "t": 0.5,
+          "train_fit_test": 0.75
+        },
+        "ctxpf1": {
+          "test_oracle": 0.5,
+          "dir": "le",
+          "t": -1.0,
+          "train_fit_test": 0.5
+        },
+        "ctxpf2": {
+          "test_oracle": 0.5,
+          "dir": "le",
+          "t": -1.0,
+          "train_fit_test": 0.5
+        },
+        "ctxpf4": {
+          "test_oracle": 0.5,
+          "dir": "le",
+          "t": -1.0,
+          "train_fit_test": 0.5
+        }
+      },
+      "score_per_type": {
+        "A": {
+          "n": 300,
+          "acc": 1.0
+        },
+        "B": {
+          "n": 300,
+          "acc": 1.0
+        },
+        "C": {
+          "n": 300,
+          "acc": 1.0
+        },
+        "D": {
+          "n": 300,
+          "acc": 0.9666666666666667
+        }
+      },
+      "se": 0.014433756729740645,
+      "se_type": 0.02886751345948129,
+      "gate": 0.9711324865405188,
+      "below_gate": false,
+      "per_type_100": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    {
+      "family": "R-ctxwin",
+      "n_features": 22,
+      "n_candidates": 110,
+      "train_fit": {
+        "metric": "cw_ja2",
+        "dir": "ge",
+        "t": 0.16666666666666666,
+        "acc_train": 1.0,
+        "acc_test": 1.0,
+        "per_type_test": {
+          "A": {
+            "n": 300,
+            "acc": 1.0
+          },
+          "B": {
+            "n": 300,
+            "acc": 1.0
+          },
+          "C": {
+            "n": 300,
+            "acc": 1.0
+          },
+          "D": {
+            "n": 300,
+            "acc": 1.0
+          }
+        }
+      },
+      "test_oracle": {
+        "metric": "cw_ja2",
+        "dir": "ge",
+        "t": 0.16666666666666666,
+        "acc_test": 1.0,
+        "per_type_test": {
+          "A": {
+            "n": 300,
+            "acc": 1.0
+          },
+          "B": {
+            "n": 300,
+            "acc": 1.0
+          },
+          "C": {
+            "n": 300,
+            "acc": 1.0
+          },
+          "D": {
+            "n": 300,
+            "acc": 1.0
+          }
+        }
+      },
+      "score": 1.0,
+      "score_source": "train_fit",
+      "feature_best": {
+        "cw_b2": {
+          "test_oracle": 0.5,
+          "dir": "le",
+          "t": -1.0,
+          "train_fit_test": 0.5
+        },
+        "cw_a2": {
+          "test_oracle": 0.5041666666666667,
+          "dir": "ge",
+          "t": 0.5,
+          "train_fit_test": 0.5041666666666667
+        },
+        "cw_ba2": {
+          "test_oracle": 0.5,
+          "dir": "le",
+          "t": -1.0,
+          "train_fit_test": 0.5
+        },
+        "cw_e2": {
+          "test_oracle": 0.5041666666666667,
+          "dir": "ge",
+          "t": 0.5,
+          "train_fit_test": 0.5041666666666667
+        },
+        "cw_jb2": {
+          "test_oracle": 0.5,
+          "dir": "le",
+          "t": -1.0,
+          "train_fit_test": 0.5
+        },
+        "cw_ja2": {
+          "test_oracle": 1.0,
+          "dir": "ge",
+          "t": 0.16666666666666666,
+          "train_fit_test": 1.0
+        },
+        "cw_b3": {
+          "test_oracle": 0.5,
+          "dir": "le",
+          "t": -1.0,
+          "train_fit_test": 0.5
+        },
+        "cw_a3": {
+          "test_oracle": 0.5,
+          "dir": "le",
+          "t": -1.0,
+          "train_fit_test": 0.5
+        },
+        "cw_ba3": {
+          "test_oracle": 0.5,
+          "dir": "le",
+          "t": -1.0,
+          "train_fit_test": 0.5
+        },
+        "cw_e3": {
+          "test_oracle": 0.5,
+          "dir": "le",
+          "t": -1.0,
+          "train_fit_test": 0.5
+        },
+        "cw_jb3": {
+          "test_oracle": 0.5,
+          "dir": "le",
+          "t": -1.0,
+          "train_fit_test": 0.5
+        },
+        "cw_ja3": {
+          "test_oracle": 1.0,
+          "dir": "ge",
+          "t": 0.1,
+          "train_fit_test": 1.0
+        },
+        "cw_b4": {
+          "test_oracle": 0.5,
+          "dir": "le",
+          "t": -1.0,
+          "train_fit_test": 0.5
+        },
+        "cw_a4": {
+          "test_oracle": 0.5,
+          "dir": "le",
+          "t": -1.0,
+          "train_fit_test": 0.5
+        },
+        "cw_ba4": {
+          "test_oracle": 0.5,
+          "dir": "le",
+          "t": -1.0,
+          "train_fit_test": 0.5
+        },
+        "cw_e4": {
+          "test_oracle": 0.5,
+          "dir": "le",
+          "t": -1.0,
+          "train_fit_test": 0.5
+        },
+        "cw_jb4": {
+          "test_oracle": 0.5,
+          "dir": "le",
+          "t": -1.0,
+          "train_fit_test": 0.5
+        },
+        "cw_ja4": {
+          "test_oracle": 1.0,
+          "dir": "ge",
+          "t": 0.07142857142857142,
+          "train_fit_test": 1.0
+        },
+        "cw_in2": {
+          "test_oracle": 0.625,
+          "dir": "ge",
+          "t": 0.5,
+          "train_fit_test": 0.625
+        },
+        "cw_inx2": {
+          "test_oracle": 0.5,
+          "dir": "le",
+          "t": -1.0,
+          "train_fit_test": 0.5
+        },
+        "cw_in4": {
+          "test_oracle": 0.625,
+          "dir": "ge",
+          "t": 0.5,
+          "train_fit_test": 0.625
+        },
+        "cw_inx4": {
+          "test_oracle": 0.5,
+          "dir": "le",
+          "t": -1.0,
+          "train_fit_test": 0.5
+        }
+      },
+      "score_per_type": {
+        "A": {
+          "n": 300,
+          "acc": 1.0
+        },
+        "B": {
+          "n": 300,
+          "acc": 1.0
+        },
+        "C": {
+          "n": 300,
+          "acc": 1.0
+        },
+        "D": {
+          "n": 300,
+          "acc": 1.0
+        }
+      },
+      "se": 0.014433756729740645,
+      "se_type": 0.02886751345948129,
+      "gate": 0.9711324865405188,
+      "below_gate": false,
+      "per_type_100": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  ],
+  "all_below_gate": false,
+  "verdict": "构念门不成立（有披露规则 ≥ 门槛）"
+}
