@@ -3,7 +3,7 @@
 > **本文在首次训练之前写死**（mtime 必须早于任何 train 进程启动时刻），跑完不改；结果填进 `report.md`。
 > 口径：「实测」= 本目录产物直接读出；「推断」= 由实测推出；「口径判断」= 构造时人为规定的标签归属。
 > 只读目录：`src/`、`experiments/{card_flow,gen_dispatch,free_rule_floor,bag_modules,skeleton_leak,core_probe,label_construct_validity,select_semantic_joint,capability_map,...}`、`training/`、`checkpoints/`、`dev-notes/`、`methodology/`。
-> 只写：`experiments/syllogism_card/`、`logs/`、`/tmp`。禁止 `git commit/stash/checkout/restore/clean`。
+> 只写：`experiments/syllogism_card/`（含其 `logs/` 子目录，避免与他人的 `logs/` 冲突）、`/tmp`。禁止 `git commit/stash/checkout/restore/clean`。
 
 ## 0. 唯一问题
 
@@ -95,7 +95,7 @@ B 族表内记忆 / `lex_member` .765 / `n_slots` 查表 .8316 / N1 单片段 .8
 | **T+A** | `tmpl_train + para_train` | 两个集 |
 | **A** | 仅 `para_train` | 两个集 |
 
-配方（跑前写死，不扫）：核 `eval()`；识别头 400 步 × batch 64、推理/归因头 400 步 × batch 64；
+配方（跑前写死，不扫）：核 `eval()`；识别头 1000 步 × batch 64、推理/归因头 1000 步 × batch 64；
 AdamW、lr 1e-3、wd 1e-4、cosine、clip 1.0；seed **42 / 43**；lr/步数/头宽全部跑后不改。
 私有适配层：核输出后、池化前，`x + fc2(GELU(fc1(x)))`，**fc2 零初始化 ⇒ step-0 恒等**（核外私有，参数量在报告里实测打印）。
 
