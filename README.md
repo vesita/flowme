@@ -71,6 +71,10 @@ uv run --no-sync python stages/07_card_vs_params.py                           # 
 
 ⚠️ **多进程请用 `spawn`** —— `fork` + torch 会 0% CPU 死锁（已实测，见 `stages/06_steps_attribution.py`）。
 ⚠️ **长跑用 `systemd-run --user --unit=<名>`**，不要 `setsid nohup &`。
+⚠️ **若再次移动仓库根** ⇒ `.venv` 里 23 个脚本的 shebang 与 `pyvenv.cfg` 仍指向旧路径，
+  于是 `pytest`/`torchrun` 等 console script 会报 `Failed to spawn`（**代码本身没坏**）。
+  修法（`.venv` 未入库，安全）：
+  `grep -Il "旧绝对路径" .venv/bin/* .venv/pyvenv.cfg | xargs sed -i 's|旧绝对路径|新绝对路径|g'`
 
 ---
 
