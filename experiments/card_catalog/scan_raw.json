@@ -1,0 +1,2406 @@
+[
+ {
+  "path": "checkpoints/arm_a2_seed43.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.28199487924575806,
+  "enc_eq": false,
+  "tasks": [
+   "pronoun",
+   "sentiment",
+   "relation",
+   "person"
+  ]
+ },
+ {
+  "path": "checkpoints/arm_aprime_dtseek.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.06880578398704529,
+  "enc_eq": false,
+  "tasks": [
+   "pronoun",
+   "sentiment",
+   "relation",
+   "person"
+  ]
+ },
+ {
+  "path": "checkpoints/arm_b_freeze_base_dtseek.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.07856476306915283,
+  "enc_eq": false,
+  "tasks": [
+   "pronoun",
+   "sentiment",
+   "relation",
+   "person"
+  ]
+ },
+ {
+  "path": "checkpoints/arm_c12_warmup12_freeze_dtseek.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.03443126007914543,
+  "enc_eq": false,
+  "tasks": [
+   "pronoun",
+   "sentiment",
+   "relation",
+   "person"
+  ]
+ },
+ {
+  "path": "checkpoints/arm_c_warmup4_freeze_dtseek.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.06962019205093384,
+  "enc_eq": false,
+  "tasks": [
+   "pronoun",
+   "sentiment",
+   "relation",
+   "person"
+  ]
+ },
+ {
+  "path": "checkpoints/arm_cprime_headonly_dtseek.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 0,
+  "maxd": 0.0,
+  "enc_eq": true,
+  "tasks": [
+   "pronoun",
+   "sentiment",
+   "relation",
+   "person"
+  ]
+ },
+ {
+  "path": "checkpoints/arm_lrbase1e4_5card.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.07844997942447662,
+  "enc_eq": false,
+  "tasks": [
+   "pronoun",
+   "sentiment",
+   "relation",
+   "person",
+   "negation"
+  ]
+ },
+ {
+  "path": "checkpoints/arm_neg5_seed42.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.11202019453048706,
+  "enc_eq": false,
+  "tasks": [
+   "pronoun",
+   "sentiment",
+   "relation",
+   "person",
+   "negation"
+  ]
+ },
+ {
+  "path": "checkpoints/arm_neg5_seed43.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.24007032811641693,
+  "enc_eq": false,
+  "tasks": [
+   "pronoun",
+   "sentiment",
+   "relation",
+   "person",
+   "negation"
+  ]
+ },
+ {
+  "path": "checkpoints/arm_remedy_frozen_add_neg.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.06880578398704529,
+  "enc_eq": false,
+  "tasks": [
+   "pronoun",
+   "sentiment",
+   "relation",
+   "person",
+   "negation"
+  ]
+ },
+ {
+  "path": "checkpoints/base_encoder.pt",
+  "kind": "BASE",
+  "n_ten": 26,
+  "neq": 0,
+  "maxd": 0.0,
+  "enc_eq": true
+ },
+ {
+  "path": "checkpoints/cards/person.pt",
+  "kind": "CARD_V1",
+  "task": "person",
+  "base": null,
+  "split_from": "checkpoints/multitask_v2_dtseek.pt"
+ },
+ {
+  "path": "checkpoints/cards/pronoun.pt",
+  "kind": "CARD_V1",
+  "task": "pronoun",
+  "base": null,
+  "split_from": "checkpoints/multitask_v2_dtseek.pt"
+ },
+ {
+  "path": "checkpoints/cards/relation.pt",
+  "kind": "CARD_V1",
+  "task": "relation",
+  "base": null,
+  "split_from": "checkpoints/multitask_v2_dtseek.pt"
+ },
+ {
+  "path": "checkpoints/cards/sentiment.pt",
+  "kind": "CARD_V1",
+  "task": "sentiment",
+  "base": null,
+  "split_from": "checkpoints/multitask_v2_dtseek.pt"
+ },
+ {
+  "path": "checkpoints/e5_single_pronoun.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.09363190084695816,
+  "enc_eq": false,
+  "tasks": [
+   "pronoun"
+  ]
+ },
+ {
+  "path": "checkpoints/e5b_single_person.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.08715260028839111,
+  "enc_eq": false,
+  "tasks": [
+   "person"
+  ]
+ },
+ {
+  "path": "checkpoints/e5b_single_pronoun.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.09363190084695816,
+  "enc_eq": false,
+  "tasks": [
+   "pronoun"
+  ]
+ },
+ {
+  "path": "checkpoints/e5b_single_relation.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.10122272372245789,
+  "enc_eq": false,
+  "tasks": [
+   "relation"
+  ]
+ },
+ {
+  "path": "checkpoints/e5b_single_sentiment.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.09248293936252594,
+  "enc_eq": false,
+  "tasks": [
+   "sentiment"
+  ]
+ },
+ {
+  "path": "checkpoints/e5c_single_person.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.08715260028839111,
+  "enc_eq": false,
+  "tasks": [
+   "person"
+  ]
+ },
+ {
+  "path": "checkpoints/e5c_single_pronoun.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.09363190084695816,
+  "enc_eq": false,
+  "tasks": [
+   "pronoun"
+  ]
+ },
+ {
+  "path": "checkpoints/e5c_single_relation.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.10122272372245789,
+  "enc_eq": false,
+  "tasks": [
+   "relation"
+  ]
+ },
+ {
+  "path": "checkpoints/e5c_single_sentiment.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.09248293936252594,
+  "enc_eq": false,
+  "tasks": [
+   "sentiment"
+  ]
+ },
+ {
+  "path": "checkpoints/multitask_v2_dtseek.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 0,
+  "maxd": 0.0,
+  "enc_eq": true,
+  "tasks": [
+   "pronoun",
+   "sentiment",
+   "relation",
+   "person"
+  ]
+ },
+ {
+  "path": "checkpoints/ndb_recheck_base_seed42.pt",
+  "kind": "CARD_V1",
+  "task": "person",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "checkpoints/ndb_recheck_base_seed43.pt",
+  "kind": "CARD_V1",
+  "task": "person",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "checkpoints/ndb_recheck_ndb_seed42.pt",
+  "kind": "CARD_V1",
+  "task": "person",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "checkpoints/ndb_recheck_ndb_seed43.pt",
+  "kind": "CARD_V1",
+  "task": "person",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "checkpoints/negation_accept_card.pt",
+  "kind": "CARD_V1",
+  "task": "negation",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "checkpoints/negation_accept_card_e12.pt",
+  "kind": "CARD_V1",
+  "task": "negation",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "checkpoints/reply_pick_joint.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.08662345260381699,
+  "enc_eq": false,
+  "tasks": [
+   "reply_pick"
+  ]
+ },
+ {
+  "path": "checkpoints/smoke_test.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.07872498035430908,
+  "enc_eq": false,
+  "tasks": [
+   "sentiment"
+  ]
+ },
+ {
+  "path": "experiments/additivity/base_aprime.pt",
+  "kind": "BASE",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.06880578398704529,
+  "enc_eq": false
+ },
+ {
+  "path": "experiments/additivity/cards/negation_byp_r128_s42.pt",
+  "kind": "CARD_V1",
+  "task": "negation",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/additivity/cards/negation_byp_r16_e32_s42.pt",
+  "kind": "CARD_V1",
+  "task": "negation",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/additivity/cards/negation_byp_r32_e32_s42.pt",
+  "kind": "CARD_V1",
+  "task": "negation",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/additivity/cards/negation_byp_r32_e64_s42.pt",
+  "kind": "CARD_V1",
+  "task": "negation",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/additivity/cards/negation_byp_r32_lr3k_s42.pt",
+  "kind": "CARD_V1",
+  "task": "negation",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/additivity/cards/negation_byp_r32_s42.pt",
+  "kind": "CARD_V1",
+  "task": "negation",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/additivity/cards/negation_bypass_aprime_s42.pt",
+  "kind": "CARD_V1",
+  "task": "negation",
+  "base": "experiments/additivity/base_aprime.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/additivity/cards/negation_bypass_aprime_s43.pt",
+  "kind": "CARD_V1",
+  "task": "negation",
+  "base": "experiments/additivity/base_aprime.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/additivity/cards/negation_bypass_base_s42.pt",
+  "kind": "CARD_V1",
+  "task": "negation",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/additivity/cards/negation_bypass_base_s43.pt",
+  "kind": "CARD_V1",
+  "task": "negation",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/additivity/cards/negation_frozen_aprime_s42.pt",
+  "kind": "CARD_V1",
+  "task": "negation",
+  "base": "experiments/additivity/base_aprime.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/additivity/cards/negation_frozen_base_s42.pt",
+  "kind": "CARD_V1",
+  "task": "negation",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/additivity/cards/negation_frozen_base_s43.pt",
+  "kind": "CARD_V1",
+  "task": "negation",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/anchored_select/cards/anchored_s42.pt",
+  "kind": "CARD_V1",
+  "task": "anchored_sel",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/anchored_select/cards/anchored_s43.pt",
+  "kind": "CARD_V1",
+  "task": "anchored_sel",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/anchored_select/cards/joint_s42.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.05542619526386261,
+  "enc_eq": false,
+  "tasks": [
+   "pronoun",
+   "sentiment",
+   "relation",
+   "person",
+   "anchored_sel"
+  ]
+ },
+ {
+  "path": "experiments/anchored_select/cards/joint_s43.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.04589667171239853,
+  "enc_eq": false,
+  "tasks": [
+   "pronoun",
+   "sentiment",
+   "relation",
+   "person",
+   "anchored_sel"
+  ]
+ },
+ {
+  "path": "experiments/anchored_select/cards/shuf_s42.pt",
+  "kind": "CARD_V1",
+  "task": "anchored_sel",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/anchored_select/cards/shuf_s43.pt",
+  "kind": "CARD_V1",
+  "task": "anchored_sel",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/bag_modules/cache/tok_4169598e4af7_L64.pt",
+  "kind": "CACHE"
+ },
+ {
+  "path": "experiments/bag_modules/cache/tok_5d0afaf586cc_L64.pt",
+  "kind": "CACHE"
+ },
+ {
+  "path": "experiments/bag_modules/cache/tok_bac00ff05e35_L64.pt",
+  "kind": "CACHE"
+ },
+ {
+  "path": "experiments/bag_modules/cache/tok_d3c4cb18cbe3_L64.pt",
+  "kind": "CACHE"
+ },
+ {
+  "path": "experiments/bag_modules/weights/A_s42.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/bag_modules/weights/A_s42_steps60.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/bag_modules/weights/A_s43.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/bag_modules/weights/P_s42.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/bag_modules/weights/P_s42_steps60.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/bag_modules/weights/P_s43.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/bag_modules/weights/UP_s42.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/bag_modules/weights/UP_s42_steps60.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/bag_modules/weights/UP_s43.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/bag_modules/weights/U_s42.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/bag_modules/weights/U_s42_mcls.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/bag_modules/weights/U_s42_mrole.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/bag_modules/weights/U_s42_mtype-cls.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/bag_modules/weights/U_s42_mtype.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/bag_modules/weights/U_s42_rand.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/bag_modules/weights/U_s42_steps60.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/bag_modules/weights/U_s43.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/bag_modules/weights/U_s43_mcls.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/bag_modules/weights/U_s43_mrole.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/bag_modules/weights/U_s43_mtype-cls.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/bag_modules/weights/U_s43_mtype.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/bag_modules/weights/U_s43_rand.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/capability_map/cards/person_bypass_s42.pt",
+  "kind": "CARD_V1",
+  "task": "person",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/capability_map/cards/person_bypass_s43.pt",
+  "kind": "CARD_V1",
+  "task": "person",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/capability_map/cards/person_frozen_s42.pt",
+  "kind": "CARD_V1",
+  "task": "person",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/capability_map/cards/person_frozen_s43.pt",
+  "kind": "CARD_V1",
+  "task": "person",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/capability_map/cards/pronoun_bypass_s42.pt",
+  "kind": "CARD_V1",
+  "task": "pronoun",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/capability_map/cards/pronoun_bypass_s43.pt",
+  "kind": "CARD_V1",
+  "task": "pronoun",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/capability_map/cards/pronoun_frozen_s42.pt",
+  "kind": "CARD_V1",
+  "task": "pronoun",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/capability_map/cards/pronoun_frozen_s43.pt",
+  "kind": "CARD_V1",
+  "task": "pronoun",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/capability_map/cards/relation_bypass_s42.pt",
+  "kind": "CARD_V1",
+  "task": "relation",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/capability_map/cards/relation_bypass_s43.pt",
+  "kind": "CARD_V1",
+  "task": "relation",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/capability_map/cards/relation_frozen_s42.pt",
+  "kind": "CARD_V1",
+  "task": "relation",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/capability_map/cards/relation_frozen_s43.pt",
+  "kind": "CARD_V1",
+  "task": "relation",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/capability_map/cards/sentiment_bypass_s42.pt",
+  "kind": "CARD_V1",
+  "task": "sentiment",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/capability_map/cards/sentiment_bypass_s43.pt",
+  "kind": "CARD_V1",
+  "task": "sentiment",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/capability_map/cards/sentiment_frozen_s42.pt",
+  "kind": "CARD_V1",
+  "task": "sentiment",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/capability_map/cards/sentiment_frozen_s43.pt",
+  "kind": "CARD_V1",
+  "task": "sentiment",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/compose_ops/artifacts/base_encoder.pt",
+  "kind": "BASE",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.11202019453048706,
+  "enc_eq": false
+ },
+ {
+  "path": "experiments/compose_ops/artifacts/cards/negation.pt",
+  "kind": "CARD_V1",
+  "task": "negation",
+  "base": null,
+  "split_from": "checkpoints/arm_neg5_seed42.pt"
+ },
+ {
+  "path": "experiments/compose_ops/artifacts/cards/person.pt",
+  "kind": "CARD_V1",
+  "task": "person",
+  "base": null,
+  "split_from": "checkpoints/arm_neg5_seed42.pt"
+ },
+ {
+  "path": "experiments/compose_ops/artifacts/cards/pronoun.pt",
+  "kind": "CARD_V1",
+  "task": "pronoun",
+  "base": null,
+  "split_from": "checkpoints/arm_neg5_seed42.pt"
+ },
+ {
+  "path": "experiments/compose_ops/artifacts/cards/relation.pt",
+  "kind": "CARD_V1",
+  "task": "relation",
+  "base": null,
+  "split_from": "checkpoints/arm_neg5_seed42.pt"
+ },
+ {
+  "path": "experiments/compose_ops/artifacts/cards/sentiment.pt",
+  "kind": "CARD_V1",
+  "task": "sentiment",
+  "base": null,
+  "split_from": "checkpoints/arm_neg5_seed42.pt"
+ },
+ {
+  "path": "experiments/core_branch/cards/negation_block1_s42.pt",
+  "kind": "CARD_V1",
+  "task": "negation",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/core_branch/cards/negation_block1_s43.pt",
+  "kind": "CARD_V1",
+  "task": "negation",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/core_branch/cards/negation_block2_s42.pt",
+  "kind": "CARD_V1",
+  "task": "negation",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/core_branch/cards/negation_block2_s43.pt",
+  "kind": "CARD_V1",
+  "task": "negation",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/core_branch/cards/negation_frozen_block1_s42.pt",
+  "kind": "CARD_V1",
+  "task": "negation",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/core_branch/cards/negation_frozen_block1_s43.pt",
+  "kind": "CARD_V1",
+  "task": "negation",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/core_branch/cards/negation_frozen_block2_s42.pt",
+  "kind": "CARD_V1",
+  "task": "negation",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/core_branch/cards/negation_frozen_block2_s43.pt",
+  "kind": "CARD_V1",
+  "task": "negation",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/core_branch/cards/negation_frozen_mlp_s42.pt",
+  "kind": "CARD_V1",
+  "task": "negation",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/core_branch/cards/negation_frozen_mlp_s42_noeval.pt",
+  "kind": "CARD_V1",
+  "task": "negation",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/core_branch/cards/negation_frozen_mlp_s43.pt",
+  "kind": "CARD_V1",
+  "task": "negation",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/core_branch/cards/negation_mlp_e32_s42.pt",
+  "kind": "CARD_V1",
+  "task": "negation",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/core_branch/cards/negation_mlp_e32_s43.pt",
+  "kind": "CARD_V1",
+  "task": "negation",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/core_branch/cards/negation_mlp_e64_s42.pt",
+  "kind": "CARD_V1",
+  "task": "negation",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/core_branch/cards/negation_mlp_s42.pt",
+  "kind": "CARD_V1",
+  "task": "negation",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/core_branch/cards/negation_mlp_s43.pt",
+  "kind": "CARD_V1",
+  "task": "negation",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/core_generalize/cores/C1_s42.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.04045915603637695,
+  "enc_eq": false,
+  "tasks": [
+   "sentiment"
+  ]
+ },
+ {
+  "path": "experiments/core_generalize/cores/C1_s43.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.047952450811862946,
+  "enc_eq": false,
+  "tasks": [
+   "sentiment"
+  ]
+ },
+ {
+  "path": "experiments/core_generalize/cores/C1x5_s42.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.11966085433959961,
+  "enc_eq": false,
+  "tasks": [
+   "sentiment"
+  ]
+ },
+ {
+  "path": "experiments/core_generalize/cores/C3_s42.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.049445152282714844,
+  "enc_eq": false,
+  "tasks": [
+   "pronoun",
+   "sentiment",
+   "relation"
+  ]
+ },
+ {
+  "path": "experiments/core_generalize/cores/C3_s43.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.04201459884643555,
+  "enc_eq": false,
+  "tasks": [
+   "pronoun",
+   "sentiment",
+   "relation"
+  ]
+ },
+ {
+  "path": "experiments/core_generalize/cores/C5_s42.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.042645588517189026,
+  "enc_eq": false,
+  "tasks": [
+   "pronoun",
+   "sentiment",
+   "relation",
+   "person",
+   "negation"
+  ]
+ },
+ {
+  "path": "experiments/core_generalize/cores/C5_s43.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.040749672800302505,
+  "enc_eq": false,
+  "tasks": [
+   "pronoun",
+   "sentiment",
+   "relation",
+   "person",
+   "negation"
+  ]
+ },
+ {
+  "path": "experiments/core_generalize/cores/PRE_idiom_s42.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.07249832153320312,
+  "enc_eq": false,
+  "tasks": [
+   "idiom"
+  ]
+ },
+ {
+  "path": "experiments/core_generalize/cores/PRE_idiom_s43.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.07232332229614258,
+  "enc_eq": false,
+  "tasks": [
+   "idiom"
+  ]
+ },
+ {
+  "path": "experiments/core_generalize/cores/PRE_ownership_s42.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.0404188372194767,
+  "enc_eq": false,
+  "tasks": [
+   "ownership"
+  ]
+ },
+ {
+  "path": "experiments/core_generalize/cores/PRE_ownership_s43.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.047587648034095764,
+  "enc_eq": false,
+  "tasks": [
+   "ownership"
+  ]
+ },
+ {
+  "path": "experiments/core_keep/cards/F_s42.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.11202019453048706,
+  "enc_eq": false,
+  "tasks": [
+   "pronoun",
+   "sentiment",
+   "relation",
+   "person",
+   "negation"
+  ]
+ },
+ {
+  "path": "experiments/core_keep/cards/J0_s42.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.03805284947156906,
+  "enc_eq": false,
+  "tasks": [
+   "pronoun",
+   "sentiment",
+   "relation",
+   "person",
+   "negation"
+  ]
+ },
+ {
+  "path": "experiments/core_keep/cards/J0_s43.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.042690955102443695,
+  "enc_eq": false,
+  "tasks": [
+   "pronoun",
+   "sentiment",
+   "relation",
+   "person",
+   "negation"
+  ]
+ },
+ {
+  "path": "experiments/core_keep/cards/J1_s42.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.03613806515932083,
+  "enc_eq": false,
+  "tasks": [
+   "pronoun",
+   "sentiment",
+   "relation",
+   "person",
+   "negation"
+  ]
+ },
+ {
+  "path": "experiments/core_keep/cards/J1_s43.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.03539862111210823,
+  "enc_eq": false,
+  "tasks": [
+   "pronoun",
+   "sentiment",
+   "relation",
+   "person",
+   "negation"
+  ]
+ },
+ {
+  "path": "experiments/core_keep/cards/J1c_s42.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.09502216428518295,
+  "enc_eq": false,
+  "tasks": [
+   "pronoun",
+   "sentiment",
+   "relation",
+   "person",
+   "negation"
+  ]
+ },
+ {
+  "path": "experiments/core_keep/cards/J1c_s43.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.26930350065231323,
+  "enc_eq": false,
+  "tasks": [
+   "pronoun",
+   "sentiment",
+   "relation",
+   "person",
+   "negation"
+  ]
+ },
+ {
+  "path": "experiments/core_keep/cards/J1l16_s42.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.038428306579589844,
+  "enc_eq": false,
+  "tasks": [
+   "pronoun",
+   "sentiment",
+   "relation",
+   "person",
+   "negation"
+  ]
+ },
+ {
+  "path": "experiments/core_keep/cards/J1l4_s42.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.03514798730611801,
+  "enc_eq": false,
+  "tasks": [
+   "pronoun",
+   "sentiment",
+   "relation",
+   "person",
+   "negation"
+  ]
+ },
+ {
+  "path": "experiments/core_keep/cards/J2_s42.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.039991289377212524,
+  "enc_eq": false,
+  "tasks": [
+   "pronoun",
+   "sentiment",
+   "relation",
+   "person",
+   "negation"
+  ]
+ },
+ {
+  "path": "experiments/core_keep/cards/J2_s43.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.035948410630226135,
+  "enc_eq": false,
+  "tasks": [
+   "pronoun",
+   "sentiment",
+   "relation",
+   "person",
+   "negation"
+  ]
+ },
+ {
+  "path": "experiments/core_keep/cards/J3_s42.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.04503174126148224,
+  "enc_eq": false,
+  "tasks": [
+   "pronoun",
+   "sentiment",
+   "relation",
+   "person",
+   "negation"
+  ]
+ },
+ {
+  "path": "experiments/core_keep/cards/J3_s43.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.04462146759033203,
+  "enc_eq": false,
+  "tasks": [
+   "pronoun",
+   "sentiment",
+   "relation",
+   "person",
+   "negation"
+  ]
+ },
+ {
+  "path": "experiments/core_ndb/cards/p2_C_s42.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.03909602761268616,
+  "enc_eq": false,
+  "tasks": [
+   "pronoun",
+   "sentiment",
+   "relation",
+   "person",
+   "negation"
+  ]
+ },
+ {
+  "path": "experiments/core_ndb/cards/p2_C_s43.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.04412531852722168,
+  "enc_eq": false,
+  "tasks": [
+   "pronoun",
+   "sentiment",
+   "relation",
+   "person",
+   "negation"
+  ]
+ },
+ {
+  "path": "experiments/core_ndb/cards/p2_L_s42.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.04016268253326416,
+  "enc_eq": false,
+  "tasks": [
+   "pronoun",
+   "sentiment",
+   "relation",
+   "person",
+   "negation"
+  ]
+ },
+ {
+  "path": "experiments/core_ndb/cards/p2_L_s43.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.0432623028755188,
+  "enc_eq": false,
+  "tasks": [
+   "pronoun",
+   "sentiment",
+   "relation",
+   "person",
+   "negation"
+  ]
+ },
+ {
+  "path": "experiments/core_select_only/weights/joint_fidmine_s42.pt",
+  "kind": "ENC",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.011635622009634972,
+  "enc_eq": false
+ },
+ {
+  "path": "experiments/core_select_only/weights/joint_fidref_s42.pt",
+  "kind": "ENC",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.011635622009634972,
+  "enc_eq": false
+ },
+ {
+  "path": "experiments/core_select_only/weights/joint_s42.pt",
+  "kind": "ENC",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.08699452877044678,
+  "enc_eq": false
+ },
+ {
+  "path": "experiments/core_select_only/weights/joint_s43.pt",
+  "kind": "ENC",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.08954751491546631,
+  "enc_eq": false
+ },
+ {
+  "path": "experiments/core_select_only/weights/selonly_s42.pt",
+  "kind": "ENC",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.017611198127269745,
+  "enc_eq": false
+ },
+ {
+  "path": "experiments/core_select_only/weights/selonly_s42_rand.pt",
+  "kind": "ENC",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.09482192993164062,
+  "enc_eq": false
+ },
+ {
+  "path": "experiments/core_select_only/weights/selonly_s43.pt",
+  "kind": "ENC",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.016018781810998917,
+  "enc_eq": false
+ },
+ {
+  "path": "experiments/core_select_only/weights/selonly_s43_rand.pt",
+  "kind": "ENC",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.07631254196166992,
+  "enc_eq": false
+ },
+ {
+  "path": "experiments/core_select_only/weights/selonly_selftest_s42.pt",
+  "kind": "ENC",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.010779086500406265,
+  "enc_eq": false
+ },
+ {
+  "path": "experiments/cumulative_add/cards/ctrl_idiom_s42.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.043751731514930725,
+  "enc_eq": false,
+  "tasks": [
+   "pronoun",
+   "sentiment",
+   "relation",
+   "person",
+   "idiom"
+  ]
+ },
+ {
+  "path": "experiments/cumulative_add/cards/ctrl_idiom_s43.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.053217172622680664,
+  "enc_eq": false,
+  "tasks": [
+   "pronoun",
+   "sentiment",
+   "relation",
+   "person",
+   "idiom"
+  ]
+ },
+ {
+  "path": "experiments/cumulative_add/cards/ctrl_ownership_s42.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.03705239295959473,
+  "enc_eq": false,
+  "tasks": [
+   "pronoun",
+   "sentiment",
+   "relation",
+   "person",
+   "ownership"
+  ]
+ },
+ {
+  "path": "experiments/cumulative_add/cards/ctrl_ownership_s43.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.047426819801330566,
+  "enc_eq": false,
+  "tasks": [
+   "pronoun",
+   "sentiment",
+   "relation",
+   "person",
+   "ownership"
+  ]
+ },
+ {
+  "path": "experiments/cumulative_add/cards/gate0_s42.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 0,
+  "maxd": 0.0,
+  "enc_eq": true,
+  "tasks": [
+   "pronoun",
+   "sentiment",
+   "relation",
+   "person"
+  ]
+ },
+ {
+  "path": "experiments/cumulative_add/cards/gate0_s43.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 0,
+  "maxd": 0.0,
+  "enc_eq": true,
+  "tasks": [
+   "pronoun",
+   "sentiment",
+   "relation",
+   "person"
+  ]
+ },
+ {
+  "path": "experiments/cumulative_add/cards/step1_s42.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.04142467677593231,
+  "enc_eq": false,
+  "tasks": [
+   "pronoun",
+   "sentiment",
+   "relation",
+   "person",
+   "negation"
+  ]
+ },
+ {
+  "path": "experiments/cumulative_add/cards/step1_s43.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.047286152839660645,
+  "enc_eq": false,
+  "tasks": [
+   "pronoun",
+   "sentiment",
+   "relation",
+   "person",
+   "negation"
+  ]
+ },
+ {
+  "path": "experiments/cumulative_add/cards/step2_s42.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.08545303344726562,
+  "enc_eq": false,
+  "tasks": [
+   "pronoun",
+   "sentiment",
+   "relation",
+   "person",
+   "negation",
+   "idiom"
+  ]
+ },
+ {
+  "path": "experiments/cumulative_add/cards/step2_s43.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.09097087383270264,
+  "enc_eq": false,
+  "tasks": [
+   "pronoun",
+   "sentiment",
+   "relation",
+   "person",
+   "negation",
+   "idiom"
+  ]
+ },
+ {
+  "path": "experiments/cumulative_add/cards/step3_s42.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.1257002353668213,
+  "enc_eq": false,
+  "tasks": [
+   "pronoun",
+   "sentiment",
+   "relation",
+   "person",
+   "negation",
+   "idiom",
+   "ownership"
+  ]
+ },
+ {
+  "path": "experiments/cumulative_add/cards/step3_s43.pt",
+  "kind": "OLD_CKPT",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.13066565990447998,
+  "enc_eq": false,
+  "tasks": [
+   "pronoun",
+   "sentiment",
+   "relation",
+   "person",
+   "negation",
+   "idiom",
+   "ownership"
+  ]
+ },
+ {
+  "path": "experiments/free_rule_floor/weights/A_s42.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/free_rule_floor/weights/A_s43.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/free_rule_floor/weights/N_s42.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/free_rule_floor/weights/N_s43.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/free_rule_floor/weights/UP_s42.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/free_rule_floor/weights/UP_s43.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/free_rule_floor/weights/U_s42.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/free_rule_floor/weights/U_s42_rand.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/free_rule_floor/weights/U_s43.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/free_rule_floor/weights/U_s43_rand.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/funcword_minpair/cache/gen_3dc8a93b05fb_L64_M4.pt",
+  "kind": "CACHE"
+ },
+ {
+  "path": "experiments/funcword_minpair/cache/gen_6e13e4eee2b9_L64_M4.pt",
+  "kind": "CACHE"
+ },
+ {
+  "path": "experiments/funcword_minpair/cache/gen_8a879e610439_L64_M4.pt",
+  "kind": "CACHE"
+ },
+ {
+  "path": "experiments/funcword_minpair/cache/gen_8da3bb789223_L64_M4.pt",
+  "kind": "CACHE"
+ },
+ {
+  "path": "experiments/funcword_minpair/cache/gen_a0efdc6c9188_L64_M4.pt",
+  "kind": "CACHE"
+ },
+ {
+  "path": "experiments/funcword_minpair/cache/gen_cb97fd12b97a_L64_M4.pt",
+  "kind": "CACHE"
+ },
+ {
+  "path": "experiments/funcword_minpair/cache/gen_fa47a01876ad_L64_M4.pt",
+  "kind": "CACHE"
+ },
+ {
+  "path": "experiments/funcword_minpair/weights/MP+_s42.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/funcword_minpair/weights/MP+_s42_rand.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/funcword_minpair/weights/MP+_s42_steps60.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/funcword_minpair/weights/MP+_s43.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/funcword_minpair/weights/MP+_s43_rand.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/funcword_minpair/weights/MP_s42.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/funcword_minpair/weights/MP_s42_rand.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/funcword_minpair/weights/MP_s42_steps60.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/funcword_minpair/weights/MP_s43.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/funcword_minpair/weights/MP_s43_rand.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/funcword_minpair/weights/M_s42.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/funcword_minpair/weights/M_s42_rand.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/funcword_minpair/weights/M_s42_steps60.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/funcword_minpair/weights/M_s43.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/funcword_minpair/weights/M_s43_rand.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/gen_data_loop/cards/cand_C_s42.pt",
+  "kind": "CARD_V1",
+  "task": "cand_validity",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/gen_data_loop/cards/cand_C_s43.pt",
+  "kind": "CARD_V1",
+  "task": "cand_validity",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/gen_data_loop/cards/cand_C_shuf_s42.pt",
+  "kind": "CARD_V1",
+  "task": "cand_validity",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/gen_data_loop/cards/cand_C_shuf_s43.pt",
+  "kind": "CARD_V1",
+  "task": "cand_validity",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/gen_data_loop/cards/cand_P_s42.pt",
+  "kind": "CARD_V1",
+  "task": "cand_validity",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/gen_data_loop/cards/cand_P_s43.pt",
+  "kind": "CARD_V1",
+  "task": "cand_validity",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/gen_data_loop/cards/cand_P_shuf_s42.pt",
+  "kind": "CARD_V1",
+  "task": "cand_validity",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/gen_data_loop/cards/cand_P_shuf_s43.pt",
+  "kind": "CARD_V1",
+  "task": "cand_validity",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/gen_dispatch/cache/idiom_base.pt",
+  "kind": "BASE",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.043751731514930725,
+  "enc_eq": false
+ },
+ {
+  "path": "experiments/gen_dispatch/cache/idiom_card.pt",
+  "kind": "CARD_V1",
+  "task": "idiom",
+  "base": null,
+  "split_from": null
+ },
+ {
+  "path": "experiments/layer_selective/weights/ADPT_s42.pt",
+  "kind": "ENC",
+  "n_ten": 26,
+  "neq": 0,
+  "maxd": 0.0,
+  "enc_eq": true
+ },
+ {
+  "path": "experiments/layer_selective/weights/ADPT_s42_rand.pt",
+  "kind": "ENC",
+  "n_ten": 26,
+  "neq": 0,
+  "maxd": 0.0,
+  "enc_eq": true
+ },
+ {
+  "path": "experiments/layer_selective/weights/ADPT_s43.pt",
+  "kind": "ENC",
+  "n_ten": 26,
+  "neq": 0,
+  "maxd": 0.0,
+  "enc_eq": true
+ },
+ {
+  "path": "experiments/layer_selective/weights/ADPT_s43_rand.pt",
+  "kind": "ENC",
+  "n_ten": 26,
+  "neq": 0,
+  "maxd": 0.0,
+  "enc_eq": true
+ },
+ {
+  "path": "experiments/layer_selective/weights/ALL_s42.pt",
+  "kind": "ENC",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.017611198127269745,
+  "enc_eq": false
+ },
+ {
+  "path": "experiments/layer_selective/weights/ALL_s42_rand.pt",
+  "kind": "ENC",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.09482192993164062,
+  "enc_eq": false
+ },
+ {
+  "path": "experiments/layer_selective/weights/ALL_s43.pt",
+  "kind": "ENC",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.016018781810998917,
+  "enc_eq": false
+ },
+ {
+  "path": "experiments/layer_selective/weights/ALL_s43_rand.pt",
+  "kind": "ENC",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.07631254196166992,
+  "enc_eq": false
+ },
+ {
+  "path": "experiments/layer_selective/weights/ALLprobe100_s42.pt",
+  "kind": "ENC",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.010779086500406265,
+  "enc_eq": false
+ },
+ {
+  "path": "experiments/layer_selective/weights/EMB_s42.pt",
+  "kind": "ENC",
+  "n_ten": 26,
+  "neq": 1,
+  "maxd": 0.019752809777855873,
+  "enc_eq": false
+ },
+ {
+  "path": "experiments/layer_selective/weights/EMB_s42_rand.pt",
+  "kind": "ENC",
+  "n_ten": 26,
+  "neq": 1,
+  "maxd": 0.038633786141872406,
+  "enc_eq": false
+ },
+ {
+  "path": "experiments/layer_selective/weights/EMB_s43.pt",
+  "kind": "ENC",
+  "n_ten": 26,
+  "neq": 1,
+  "maxd": 0.020648900419473648,
+  "enc_eq": false
+ },
+ {
+  "path": "experiments/layer_selective/weights/EMB_s43_rand.pt",
+  "kind": "ENC",
+  "n_ten": 26,
+  "neq": 1,
+  "maxd": 0.03517625108361244,
+  "enc_eq": false
+ },
+ {
+  "path": "experiments/layer_selective/weights/F_s42.pt",
+  "kind": "ENC",
+  "n_ten": 26,
+  "neq": 0,
+  "maxd": 0.0,
+  "enc_eq": true
+ },
+ {
+  "path": "experiments/layer_selective/weights/F_s42_rand.pt",
+  "kind": "ENC",
+  "n_ten": 26,
+  "neq": 0,
+  "maxd": 0.0,
+  "enc_eq": true
+ },
+ {
+  "path": "experiments/layer_selective/weights/F_s43.pt",
+  "kind": "ENC",
+  "n_ten": 26,
+  "neq": 0,
+  "maxd": 0.0,
+  "enc_eq": true
+ },
+ {
+  "path": "experiments/layer_selective/weights/F_s43_rand.pt",
+  "kind": "ENC",
+  "n_ten": 26,
+  "neq": 0,
+  "maxd": 0.0,
+  "enc_eq": true
+ },
+ {
+  "path": "experiments/layer_selective/weights/TOP_s42.pt",
+  "kind": "ENC",
+  "n_ten": 26,
+  "neq": 8,
+  "maxd": 0.03745212405920029,
+  "enc_eq": false
+ },
+ {
+  "path": "experiments/layer_selective/weights/TOP_s42_rand.pt",
+  "kind": "ENC",
+  "n_ten": 26,
+  "neq": 8,
+  "maxd": 0.06366360187530518,
+  "enc_eq": false
+ },
+ {
+  "path": "experiments/layer_selective/weights/TOP_s43.pt",
+  "kind": "ENC",
+  "n_ten": 26,
+  "neq": 8,
+  "maxd": 0.03625156357884407,
+  "enc_eq": false
+ },
+ {
+  "path": "experiments/layer_selective/weights/TOP_s43_rand.pt",
+  "kind": "ENC",
+  "n_ten": 26,
+  "neq": 8,
+  "maxd": 0.06189635023474693,
+  "enc_eq": false
+ },
+ {
+  "path": "experiments/mode_conditioned_skel/cache/enc_6e20fdc8a40e_L64.pt",
+  "kind": "CACHE"
+ },
+ {
+  "path": "experiments/mode_conditioned_skel/cache/enc_73fc851bb2af_L64.pt",
+  "kind": "CACHE"
+ },
+ {
+  "path": "experiments/mode_conditioned_skel/cache/enc_b9103ab9cb7c_L64.pt",
+  "kind": "CACHE"
+ },
+ {
+  "path": "experiments/mode_conditioned_skel/cache/enc_bac00ff05e35_L64.pt",
+  "kind": "CACHE"
+ },
+ {
+  "path": "experiments/mode_conditioned_skel/weights/probe_s42.pt",
+  "kind": "OTHER"
+ },
+ {
+  "path": "experiments/mode_conditioned_skel/weights/probe_s43.pt",
+  "kind": "OTHER"
+ },
+ {
+  "path": "experiments/relation_bg/relation_repaired.pt",
+  "kind": "CARD_V1",
+  "task": "relation",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/select_pool/cache/clean_28988c64fa91_tok_ctx64_cand32.pt",
+  "kind": "CACHE"
+ },
+ {
+  "path": "experiments/select_pool/weights/A_s42.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/select_pool/weights/A_s42_rand.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/select_pool/weights/A_s43.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/select_pool/weights/Aplus_s42.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/select_pool/weights/Aplus_s42_rand.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/select_pool/weights/Aplus_s43.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/select_pool/weights/B_s42.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/select_pool/weights/B_s42_rand.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/select_pool/weights/B_s43.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/select_pool/weights/C_s42.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/select_pool/weights/C_s42_rand.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/select_pool/weights/C_s43.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/select_pool/weights/D_s42.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/select_pool/weights/D_s42_rand.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/select_pool/weights/D_s43.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/select_pool/weights/D_s43_rand.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/select_rerank/cache/clean_28988c64fa91_ctx64_cand32.pt",
+  "kind": "CACHE"
+ },
+ {
+  "path": "experiments/select_rerank/cache/shortcut_1b8f8106558a_ctx64_cand32.pt",
+  "kind": "CACHE"
+ },
+ {
+  "path": "experiments/select_rerank/weights/clean_s42.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/select_rerank/weights/clean_s42_rand.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/select_rerank/weights/clean_s43.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/select_rerank/weights/clean_s43_rand.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/select_rerank/weights/shortcut_s42.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/select_rerank/weights/shortcut_s42_rand.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/select_rerank/weights/shortcut_s43.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/select_rerank/weights/shortcut_s43_rand.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/select_semantic_joint/weights/frozen_s42.pt",
+  "kind": "ENC",
+  "n_ten": 26,
+  "neq": 0,
+  "maxd": 0.0,
+  "enc_eq": true
+ },
+ {
+  "path": "experiments/select_semantic_joint/weights/frozen_s42_rand.pt",
+  "kind": "ENC",
+  "n_ten": 26,
+  "neq": 0,
+  "maxd": 0.0,
+  "enc_eq": true
+ },
+ {
+  "path": "experiments/select_semantic_joint/weights/frozen_s43.pt",
+  "kind": "ENC",
+  "n_ten": 26,
+  "neq": 0,
+  "maxd": 0.0,
+  "enc_eq": true
+ },
+ {
+  "path": "experiments/select_semantic_joint/weights/frozen_s43_rand.pt",
+  "kind": "ENC",
+  "n_ten": 26,
+  "neq": 0,
+  "maxd": 0.0,
+  "enc_eq": true
+ },
+ {
+  "path": "experiments/select_semantic_joint/weights/joint_s42.pt",
+  "kind": "ENC",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.08699452877044678,
+  "enc_eq": false
+ },
+ {
+  "path": "experiments/select_semantic_joint/weights/joint_s42_rand.pt",
+  "kind": "ENC",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.08146166801452637,
+  "enc_eq": false
+ },
+ {
+  "path": "experiments/select_semantic_joint/weights/joint_s43.pt",
+  "kind": "ENC",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.08954751491546631,
+  "enc_eq": false
+ },
+ {
+  "path": "experiments/select_semantic_joint/weights/joint_s43_rand.pt",
+  "kind": "ENC",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.07833504676818848,
+  "enc_eq": false
+ },
+ {
+  "path": "experiments/select_semantic_joint/weights/jointprobe_s42.pt",
+  "kind": "ENC",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.011635622009634972,
+  "enc_eq": false
+ },
+ {
+  "path": "experiments/selection_cards/candemb_frozen_cand_s42.pt",
+  "kind": "OTHER"
+ },
+ {
+  "path": "experiments/selection_cards/candemb_frozen_cand_s43.pt",
+  "kind": "OTHER"
+ },
+ {
+  "path": "experiments/selection_cards/candemb_frozen_nocand_s42.pt",
+  "kind": "OTHER"
+ },
+ {
+  "path": "experiments/selection_cards/candemb_frozen_nocand_s43.pt",
+  "kind": "OTHER"
+ },
+ {
+  "path": "experiments/selection_cards/candemb_joint_cand_s42.pt",
+  "kind": "ENC",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.09025287628173828,
+  "enc_eq": false
+ },
+ {
+  "path": "experiments/selection_cards/candemb_joint_cand_s43.pt",
+  "kind": "ENC",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.0795278549194336,
+  "enc_eq": false
+ },
+ {
+  "path": "experiments/selection_cards/candemb_joint_nocand_s42.pt",
+  "kind": "ENC",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.09058094024658203,
+  "enc_eq": false
+ },
+ {
+  "path": "experiments/selection_cards/candemb_joint_nocand_s43.pt",
+  "kind": "ENC",
+  "n_ten": 26,
+  "neq": 26,
+  "maxd": 0.07488250732421875,
+  "enc_eq": false
+ },
+ {
+  "path": "experiments/selection_cards/cloze_fill.pt",
+  "kind": "CARD_V1",
+  "task": "cloze_fill",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/selection_cards/reply_pick.pt",
+  "kind": "CARD_V1",
+  "task": "reply_pick",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/selection_cards/reply_pick_easy.pt",
+  "kind": "CARD_V1",
+  "task": "reply_pick",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/skeleton_leak/cache/enc_17f00c349a76_L64.pt",
+  "kind": "CACHE"
+ },
+ {
+  "path": "experiments/skeleton_leak/cache/enc_4169598e4af7_L64.pt",
+  "kind": "CACHE"
+ },
+ {
+  "path": "experiments/skeleton_leak/cache/enc_58b315d8f6ba_L64.pt",
+  "kind": "CACHE"
+ },
+ {
+  "path": "experiments/skeleton_leak/cache/enc_cbcab631ffcd_L64.pt",
+  "kind": "CACHE"
+ },
+ {
+  "path": "experiments/skeleton_leak/cache/enc_d3c4cb18cbe3_L64.pt",
+  "kind": "CACHE"
+ },
+ {
+  "path": "experiments/skeleton_leak/cache/enc_eb7c161971a2_L64.pt",
+  "kind": "CACHE"
+ },
+ {
+  "path": "experiments/struct_supervision/cache/gen_5d0afaf586cc_L64_M4.pt",
+  "kind": "CACHE"
+ },
+ {
+  "path": "experiments/struct_supervision/cache/gen_a1ea86699c61_L64_M4.pt",
+  "kind": "CACHE"
+ },
+ {
+  "path": "experiments/struct_supervision/cache/gen_d3c4cb18cbe3_L64_M4.pt",
+  "kind": "CACHE"
+ },
+ {
+  "path": "experiments/struct_supervision/weights/A_s42.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/struct_supervision/weights/A_s42_rand.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/struct_supervision/weights/A_s42_steps60.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/struct_supervision/weights/A_s43.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/struct_supervision/weights/A_s43_rand.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/struct_supervision/weights/B_s42.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/struct_supervision/weights/B_s42_rand.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/struct_supervision/weights/B_s42_steps60.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/struct_supervision/weights/B_s43.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/struct_supervision/weights/B_s43_rand.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/struct_supervision/weights/C_s42.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/struct_supervision/weights/C_s42_steps60.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/struct_supervision/weights/C_s43.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/syllogism_card/weights/A_s42.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/syllogism_card/weights/A_s43.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/syllogism_card/weights/TA_s42.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/syllogism_card/weights/TA_s42_rand.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/syllogism_card/weights/TA_s43.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/syllogism_card/weights/TA_s43_rand.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/syllogism_card/weights/T_s42.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/syllogism_card/weights/T_s42_rand.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/syllogism_card/weights/T_s43.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/syllogism_card/weights/T_s43_rand.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/two_channel_head/cache/gen_4169598e4af7_L64_M4.pt",
+  "kind": "CACHE"
+ },
+ {
+  "path": "experiments/two_channel_head/cache/gen_bac00ff05e35_L64_M4.pt",
+  "kind": "CACHE"
+ },
+ {
+  "path": "experiments/two_channel_head/weights/A_s42.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/two_channel_head/weights/A_s42_rand.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/two_channel_head/weights/A_s42_steps30.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/two_channel_head/weights/A_s42_steps60.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/two_channel_head/weights/A_s43.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/two_channel_head/weights/B_s42.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/two_channel_head/weights/B_s42_rand.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/two_channel_head/weights/B_s42_steps30.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/two_channel_head/weights/B_s43.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/two_channel_head/weights/C_s42.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/two_channel_head/weights/C_s42_steps30.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/two_channel_head/weights/C_s43.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/two_channel_head/weights/D_s42.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/two_channel_head/weights/D_s42_steps30.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/two_channel_head/weights/D_s42_steps60.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/two_channel_head/weights/D_s43.pt",
+  "kind": "HEAD"
+ },
+ {
+  "path": "experiments/value_card/cards/shuf_s42.pt",
+  "kind": "CARD_V1",
+  "task": "value_judge",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/value_card/cards/shuf_s43.pt",
+  "kind": "CARD_V1",
+  "task": "value_judge",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/value_card/cards/value_s42.pt",
+  "kind": "CARD_V1",
+  "task": "value_judge",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ },
+ {
+  "path": "experiments/value_card/cards/value_s43.pt",
+  "kind": "CARD_V1",
+  "task": "value_judge",
+  "base": "checkpoints/base_encoder.pt",
+  "split_from": null
+ }
+]
