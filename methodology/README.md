@@ -40,6 +40,7 @@
 
 | 文件 | 内容 | 条目数 |
 |---|---|---|
+| [`RULES.md`](./RULES.md) | **纪律总表（R1–R27）**：唯一的纪律表体，表就在那里；`dev-notes/21` 与 `MEME_FRAMEWORK §7` 只留指针 | R1–R27 |
 | [`findings.md`](./findings.md) | **结论与规律**：已确证 / 已否证 / 已被推翻的 | 17 |
 | [`measurement.md`](./measurement.md) | **测量准绳**：量怎么取、口径怎么对、代理量的陷阱 + 迁移正文 `dev-notes/16` §11 | 10 条目 + 1 迁移正文（原 `dev-notes/16` §11，正文原样） |
 | [`experiment-design.md`](./experiment-design.md) | **实验设计准绳**：判据、捷径检查、订正留痕、归因 | 11 |
