@@ -102,7 +102,7 @@ DIALOGUE_BIT_KINDS: dict[str, str] = {
 SUPPORTED_TYPES: tuple[str, ...] = ("plain",)
 
 #: negation 不在 `checkpoints/cards/`（默认只挂 4 张），对话必需位要用它 ⇒ 由示例/测试补挂。
-DEFAULT_ATTACH: tuple[str, ...] = ("experiments/compose_ops/artifacts/cards/negation.pt",)
+DEFAULT_ATTACH: tuple[str, ...] = ("experiments/fix_negation/cards/negation_r2_s42.pt",)
 
 # ---- 模板表（手写、有限、可穷举） -------------------------------------------
 
