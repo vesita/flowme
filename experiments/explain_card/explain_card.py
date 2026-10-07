@@ -33,6 +33,37 @@ from dtseek.tasks import render as R  # 只读 import（硬约束）
 CF_DIR = ROOT / "experiments" / "card_flow"
 GD_DIR = ROOT / "experiments" / "gen_dispatch"
 
+# ---- 谓词调用计数（证据强度：哪些谓词真被行使、几次返回非空） ------------------
+
+PRED_CALLS: dict[str, int] = {}
+PRED_NONEMPTY: dict[str, int] = {}
+
+
+def _P(name: str, probs: list[str]) -> list[str]:
+    PRED_CALLS[name] = PRED_CALLS.get(name, 0) + 1
+    if probs:
+        PRED_NONEMPTY[name] = PRED_NONEMPTY.get(name, 0) + 1
+    return probs
+
+
+def _rule_a(sk): return _P("rule_a_problems", R.rule_a_problems(sk))
+
+
+def _slot_schema(sk): return _P("slot_schema_problems", R.slot_schema_problems(sk))
+
+
+def _word_face(inp, sk): return _P("word_face_problems", R.word_face_problems(inp, sk))
+
+
+def _item(it, inp): return _P("item_problems", R.item_problems(it, inp))
+
+
+def _struct(instr, bag, inp, table): return _P("check_structure", R.check_structure(instr, bag, inp, skeletons=table))
+
+
+def _deref(rec, bag, inp, table): return _P("check_deref", R.check_deref(rec, bag, inp, skeletons=table))
+
+
 # ---- 封闭解释骨架表（PREREG §2 写死，跑中不改） --------------------------------
 
 EXPL_SKELETONS: dict[str, R.Skeleton] = {
@@ -57,8 +88,8 @@ def expl_gate() -> list[str]:
     """解释表门禁：复用 `rule_a_problems` + `slot_schema_problems`（带病不进表）。"""
     probs: list[str] = []
     for sk in EXPL_SKELETONS.values():
-        probs += [f"{sk.sid}: {p}" for p in R.rule_a_problems(sk)]
-        probs += [f"{sk.sid}: {p}" for p in R.slot_schema_problems(sk)]
+        probs += [f"{sk.sid}: {p}" for p in _rule_a(sk)]
+        probs += [f"{sk.sid}: {p}" for p in _slot_schema(sk)]
     return probs
 
 
@@ -296,14 +327,14 @@ def source_problems(src: Src) -> list[str]:
     sk = (src.table or {}).get(src.instruction["skeleton_id"])  # type: ignore[index]
     if sk is None:
         return [f"源骨架 {src.instruction['skeleton_id']!r} 不在表里"]
-    probs += [f"rule_a: {p}" for p in R.rule_a_problems(sk)]
-    probs += [f"slot_schema: {p}" for p in R.slot_schema_problems(sk)]
-    probs += [f"word_face: {p}" for p in R.word_face_problems(src.input, sk)]
+    probs += [f"rule_a: {p}" for p in _rule_a(sk)]
+    probs += [f"slot_schema: {p}" for p in _slot_schema(sk)]
+    probs += [f"word_face: {p}" for p in _word_face(src.input, sk)]
     instr = R.Instruction(sk.sid, tuple(src.instruction["assignment"]))  # type: ignore[index]
-    probs += [f"structure: {p}" for p in R.check_structure(instr, src.bag, src.input, skeletons=src.table)]
+    probs += [f"structure: {p}" for p in _struct(instr, src.bag, src.input, src.table)]
     record = {"kind": "text", "text": src.text, "evidence": src.evidence,
               "instruction": src.instruction, "ref_map": src.ref_map}
-    probs += [f"deref: {p}" for p in R.check_deref(record, src.bag, src.input, skeletons=src.table)]
+    probs += [f"deref: {p}" for p in _deref(record, src.bag, src.input, src.table)]
     return probs
 
 
@@ -370,9 +401,9 @@ def x0_problems(card: dict, src: Src) -> list[str]:
     sk = table.get(sid)
     if sk is None:
         return [f"X0: 解释骨架 {sid!r} 不在封闭表"]
-    probs += [f"rule_a: {p}" for p in R.rule_a_problems(sk)]
-    probs += [f"slot_schema: {p}" for p in R.slot_schema_problems(sk)]
-    probs += [f"word_face: {p}" for p in R.word_face_problems(src.input, sk)]
+    probs += [f"rule_a: {p}" for p in _rule_a(sk)]
+    probs += [f"slot_schema: {p}" for p in _slot_schema(sk)]
+    probs += [f"word_face: {p}" for p in _word_face(src.input, sk)]
     items = {b.ref: b for b in src.bag}
     src_content = {(e["text"], tuple(e["span"])) for e in src.ref_map if e["cls"] == "content"}
     for e in card.get("ref_map", []):
@@ -382,14 +413,14 @@ def x0_problems(card: dict, src: Src) -> list[str]:
         if it is None:
             probs.append(f"回溯: 内容条目 ref={e.get('ref')!r} 不在袋里")
             continue
-        probs += [f"item: {p}" for p in R.item_problems(it, src.input)]
+        probs += [f"item: {p}" for p in _item(it, src.input)]
         if (e.get("text"), tuple(e.get("span") or ())) not in src_content:
             probs.append(
                 f"回溯断言: 内容单元 {e.get('text')!r} span={e.get('span')} "
                 f"不在源记录 ref_map 的 content 条目里（解释引入了新内容）")
     instr = R.Instruction(sid, tuple(card["instruction"]["assignment"]))
-    probs += [f"structure: {p}" for p in R.check_structure(instr, src.bag, src.input, skeletons=table)]
-    probs += [f"deref: {p}" for p in R.check_deref(card, src.bag, src.input, skeletons=table)]
+    probs += [f"structure: {p}" for p in _struct(instr, src.bag, src.input, table)]
+    probs += [f"deref: {p}" for p in _deref(card, src.bag, src.input, table)]
     return probs
 
 
@@ -495,9 +526,9 @@ def x0_free(record: dict, src: Src, meta: dict) -> list[str]:
         return list(meta["problems"])
     sk = meta["skeleton"]
     probs: list[str] = []
-    probs += [f"rule_a: {p}" for p in R.rule_a_problems(sk)]
-    probs += [f"slot_schema: {p}" for p in R.slot_schema_problems(sk)]
-    probs += [f"word_face: {p}" for p in R.word_face_problems(src.input, sk)]
+    probs += [f"rule_a: {p}" for p in _rule_a(sk)]
+    probs += [f"slot_schema: {p}" for p in _slot_schema(sk)]
+    probs += [f"word_face: {p}" for p in _word_face(src.input, sk)]
     items = {b.ref: b for b in src.bag}
     src_content = {(e["text"], tuple(e["span"])) for e in src.ref_map if e["cls"] == "content"}
     for e in record.get("ref_map", []):
@@ -507,12 +538,12 @@ def x0_free(record: dict, src: Src, meta: dict) -> list[str]:
         if it is None:
             probs.append(f"回溯: 内容条目 ref={e.get('ref')!r} 不在袋里")
             continue
-        probs += [f"item: {p}" for p in R.item_problems(it, src.input)]
+        probs += [f"item: {p}" for p in _item(it, src.input)]
         if (e.get("text"), tuple(e.get("span") or ())) not in src_content:
             probs.append(f"回溯断言: 内容单元 {e.get('text')!r} 不在源 ref_map 里")
     instr = R.Instruction("XFREE", tuple(record["instruction"]["assignment"]))
-    probs += [f"structure: {p}" for p in R.check_structure(instr, src.bag, src.input, skeletons=meta["table"])]
-    probs += [f"deref: {p}" for p in R.check_deref(record, src.bag, src.input, skeletons=meta["table"])]
+    probs += [f"structure: {p}" for p in _struct(instr, src.bag, src.input, meta["table"])]
+    probs += [f"deref: {p}" for p in _deref(record, src.bag, src.input, meta["table"])]
     return probs
 
 
@@ -537,6 +568,29 @@ def inject_content_word(card: dict, src: Src) -> tuple[dict, list[str]]:
                     "out": (last_end, last_end + len(_INJECT_WORD))})
     bad["text"] = text + _INJECT_WORD
     return bad, x0_problems(bad, src)
+
+
+def inject_content_word_bag(card: dict, src: Src) -> tuple[dict, list[str]]:
+    """①′ **PREREG 外的加测**（只加强、不放松判据）：
+    在 ① 的基础上再**伪造一个袋块**给这个输入外的"内容词"背书 ——
+    让 `item_problems`（零信息新增的字面谓词）直接面对它。"""
+    assert _INJECT_WORD not in src.input, "注入词必须不在输入里"
+    bad = copy.deepcopy(card)
+    text = bad["text"]
+    ref_map = bad["ref_map"]
+    last_end = ref_map[-1]["out"][1] if ref_map else 0
+    span = (0, min(2, len(src.input)))
+    if src.input[span[0]:span[1]] == _INJECT_WORD:
+        span = (len(src.input) - 1, len(src.input))
+    ref_map.append({"unit_id": "ref:9999", "cls": "content", "text": _INJECT_WORD,
+                    "ref": 9999, "span": span,
+                    "out": (last_end, last_end + len(_INJECT_WORD))})
+    bad["text"] = text + _INJECT_WORD
+    bad_src = copy.deepcopy(src)
+    bad_src.bag.append(R.BagItem(ref=9999, text=_INJECT_WORD, span=span,
+                                 pos="名", theta=None,
+                                 candidate_id="c_injected", screened=True))
+    return bad, x0_problems(bad, bad_src)
 
 
 def inject_bad_ref(card: dict, src: Src) -> tuple[dict, list[str]]:

@@ -112,6 +112,11 @@ def make_record(mode_idx: int, span: tuple[int, int] | None, text: str,
                 *, plan_step_id: str = "", input_text: str = "") -> dict:
     """结构指令 → 记录（与 `render._record` 同形状）。任一检查不过 ⇒ `kind="reject"`。"""
     src = input_text or text
+    if mode_idx not in SID_TO_IDX:
+        return {"kind": "reject", "text": "（拒答）模式 id 不在封闭表", "evidence": [],
+                "plan_step_id": plan_step_id,
+                "instruction": {"mode_id": str(mode_idx), "assignment": []},
+                "ref_map": [], "reason": "模式 id 不在封闭表"}
     sid = sid_of(mode_idx)
     probs = check_mode_structure(mode_idx, span, src)
     if probs:
