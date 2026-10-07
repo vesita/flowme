@@ -1,0 +1,122 @@
+{
+ "summary": {
+  "n_pt_scanned": 262,
+  "n_pt_manifested": 262,
+  "total_bytes": 3380031533,
+  "same_as_online": 5,
+  "diff_from_online": 58,
+  "not_applicable": 199,
+  "load_errors": 0,
+  "load_error_paths": [],
+  "in_cache_dir": 31,
+  "duplicate_sha_groups": 8,
+  "files_with_physical_copy": 16,
+  "unique_sha_files": 246,
+  "online_doc_sha256": "dc27db5337d16f185dd08cc50505390e53d03606b9d307457828f4ecbfdf6b1a",
+  "elapsed_sec": 10.0
+ },
+ "diff_paths": [
+  "checkpoints/arm_a2_seed43.pt",
+  "checkpoints/arm_aprime_dtseek.pt",
+  "checkpoints/arm_b_freeze_base_dtseek.pt",
+  "checkpoints/arm_c12_warmup12_freeze_dtseek.pt",
+  "checkpoints/arm_c_warmup4_freeze_dtseek.pt",
+  "checkpoints/arm_lrbase1e4_5card.pt",
+  "checkpoints/arm_neg5_seed42.pt",
+  "checkpoints/arm_neg5_seed43.pt",
+  "checkpoints/arm_remedy_frozen_add_neg.pt",
+  "checkpoints/e5_single_pronoun.pt",
+  "checkpoints/e5b_single_person.pt",
+  "checkpoints/e5b_single_pronoun.pt",
+  "checkpoints/e5b_single_relation.pt",
+  "checkpoints/e5b_single_sentiment.pt",
+  "checkpoints/e5c_single_person.pt",
+  "checkpoints/e5c_single_pronoun.pt",
+  "checkpoints/e5c_single_relation.pt",
+  "checkpoints/e5c_single_sentiment.pt",
+  "checkpoints/reply_pick_joint.pt",
+  "checkpoints/smoke_test.pt",
+  "experiments/anchored_select/cards/joint_s42.pt",
+  "experiments/anchored_select/cards/joint_s43.pt",
+  "experiments/compose_ops/artifacts/base_encoder.pt",
+  "experiments/core_generalize/cores/C1_s42.pt",
+  "experiments/core_generalize/cores/C1_s43.pt",
+  "experiments/core_generalize/cores/C1x5_s42.pt",
+  "experiments/core_generalize/cores/C3_s42.pt",
+  "experiments/core_generalize/cores/C3_s43.pt",
+  "experiments/core_generalize/cores/C5_s42.pt",
+  "experiments/core_generalize/cores/C5_s43.pt",
+  "experiments/core_generalize/cores/PRE_idiom_s42.pt",
+  "experiments/core_generalize/cores/PRE_idiom_s43.pt",
+  "experiments/core_generalize/cores/PRE_ownership_s42.pt",
+  "experiments/core_generalize/cores/PRE_ownership_s43.pt",
+  "experiments/core_keep/cards/F_s42.pt",
+  "experiments/core_keep/cards/J0_s42.pt",
+  "experiments/core_keep/cards/J0_s43.pt",
+  "experiments/core_keep/cards/J1_s42.pt",
+  "experiments/core_keep/cards/J1_s43.pt",
+  "experiments/core_keep/cards/J1c_s42.pt",
+  "experiments/core_keep/cards/J1c_s43.pt",
+  "experiments/core_keep/cards/J1l16_s42.pt",
+  "experiments/core_keep/cards/J1l4_s42.pt",
+  "experiments/core_keep/cards/J2_s42.pt",
+  "experiments/core_keep/cards/J2_s43.pt",
+  "experiments/core_keep/cards/J3_s42.pt",
+  "experiments/core_keep/cards/J3_s43.pt",
+  "experiments/cumulative_add/cards/ctrl_idiom_s42.pt",
+  "experiments/cumulative_add/cards/ctrl_idiom_s43.pt",
+  "experiments/cumulative_add/cards/ctrl_ownership_s42.pt",
+  "experiments/cumulative_add/cards/ctrl_ownership_s43.pt",
+  "experiments/cumulative_add/cards/step1_s42.pt",
+  "experiments/cumulative_add/cards/step1_s43.pt",
+  "experiments/cumulative_add/cards/step2_s42.pt",
+  "experiments/cumulative_add/cards/step2_s43.pt",
+  "experiments/cumulative_add/cards/step3_s42.pt",
+  "experiments/cumulative_add/cards/step3_s43.pt",
+  "experiments/gen_dispatch/cache/idiom_base.pt"
+ ],
+ "dup_groups": {
+  "06fc0e02bb0ff3c2422399d07a7713db89de59f07e368b4944a72555a17cd57c": [
+   "experiments/bag_modules/weights/A_s42.pt",
+   "experiments/free_rule_floor/weights/A_s42.pt"
+  ],
+  "22056e95f12435e67f1119110db3df9c61bf725bd1293ca85b276df5fa286888": [
+   "experiments/bag_modules/weights/A_s43.pt",
+   "experiments/free_rule_floor/weights/A_s43.pt"
+  ],
+  "587f332c2521da83453d02293f1f41187c759e6f846d4345d92d5df5461022ee": [
+   "experiments/bag_modules/weights/UP_s42.pt",
+   "experiments/free_rule_floor/weights/UP_s42.pt"
+  ],
+  "09791c384e9a90bfb97ba26c09bf62ca27759707697dde5a910714557e141cee": [
+   "experiments/bag_modules/weights/UP_s43.pt",
+   "experiments/free_rule_floor/weights/UP_s43.pt"
+  ],
+  "d351e5585807dd89eafd16289fe0ca154341eb0724f555d8838190f72ca59325": [
+   "experiments/bag_modules/weights/U_s42.pt",
+   "experiments/free_rule_floor/weights/U_s42.pt"
+  ],
+  "2f7a9b008d2dc01b8bd995150064f00ae56fcbdff4d4846ac2b47182e65225c0": [
+   "experiments/bag_modules/weights/U_s42_rand.pt",
+   "experiments/free_rule_floor/weights/U_s42_rand.pt"
+  ],
+  "48876842ba3546ff6c81d5a9561be3913ab6341bc059523098737ea6bd104293": [
+   "experiments/bag_modules/weights/U_s43.pt",
+   "experiments/free_rule_floor/weights/U_s43.pt"
+  ],
+  "a11324065456e9fc9e1c6c01c371c0ffa3931d08207e5be12ca8de278045db8b": [
+   "experiments/bag_modules/weights/U_s43_rand.pt",
+   "experiments/free_rule_floor/weights/U_s43_rand.pt"
+  ]
+ },
+ "legacy_sha_record_paths": [
+  "/home/vesita/coding/my/DTSeek/checkpoints/base_encoder.pt",
+  "/home/vesita/coding/my/DTSeek/experiments/compose_ops/artifacts/base_encoder.pt",
+  "checkpoints/base_encoder.pt",
+  "checkpoints/cards/person.pt",
+  "checkpoints/cards/pronoun.pt",
+  "checkpoints/cards/relation.pt",
+  "checkpoints/cards/sentiment.pt",
+  "experiments/compose_ops/artifacts/cards/negation.pt"
+ ]
+}
