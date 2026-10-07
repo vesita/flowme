@@ -1,0 +1,6201 @@
+{
+ "prereg_mtime": 1791347423.82294,
+ "run_start": 1791348357.63096,
+ "gate": [],
+ "n_records": 12,
+ "R0": {
+  "covered": 12,
+  "n": 12,
+  "uncovered": {},
+  "field_table": [
+   "kind",
+   "chosen.card",
+   "chosen.span",
+   "chosen.span_text",
+   "chosen.rank",
+   "chosen.score_replay",
+   "chosen.score_original",
+   "candidates",
+   "scores_kind",
+   "ref_map",
+   "evidence",
+   "L1解释文本",
+   "L2理由",
+   "差异事实"
+  ],
+  "n_unavailable": 35,
+  "unavailable_ratio": 0.2083,
+  "unavailable_by_field": {
+   "chosen.score_original": 12,
+   "L2理由": 12,
+   "差异事实": 11
+  },
+  "unavailable_records": [
+   {
+    "rid": "P[random:0]",
+    "field": "chosen.score_original"
+   },
+   {
+    "rid": "P[random:0]",
+    "field": "L2理由"
+   },
+   {
+    "rid": "P[random:0]",
+    "field": "差异事实"
+   },
+   {
+    "rid": "P[random:1]",
+    "field": "chosen.score_original"
+   },
+   {
+    "rid": "P[random:1]",
+    "field": "L2理由"
+   },
+   {
+    "rid": "P[random:1]",
+    "field": "差异事实"
+   },
+   {
+    "rid": "P[random:2]",
+    "field": "chosen.score_original"
+   },
+   {
+    "rid": "P[random:2]",
+    "field": "L2理由"
+   },
+   {
+    "rid": "P[random:2]",
+    "field": "差异事实"
+   },
+   {
+    "rid": "P[random:3]",
+    "field": "chosen.score_original"
+   },
+   {
+    "rid": "P[random:3]",
+    "field": "L2理由"
+   },
+   {
+    "rid": "P[random:3]",
+    "field": "差异事实"
+   },
+   {
+    "rid": "P[random:4]",
+    "field": "chosen.score_original"
+   },
+   {
+    "rid": "P[random:4]",
+    "field": "L2理由"
+   },
+   {
+    "rid": "P[random:4]",
+    "field": "差异事实"
+   },
+   {
+    "rid": "P[random:5]",
+    "field": "chosen.score_original"
+   },
+   {
+    "rid": "P[random:5]",
+    "field": "L2理由"
+   },
+   {
+    "rid": "P[random:5]",
+    "field": "差异事实"
+   },
+   {
+    "rid": "P[enriched:0]",
+    "field": "chosen.score_original"
+   },
+   {
+    "rid": "P[enriched:0]",
+    "field": "L2理由"
+   },
+   {
+    "rid": "P[enriched:0]",
+    "field": "差异事实"
+   },
+   {
+    "rid": "P[enriched:1]",
+    "field": "chosen.score_original"
+   },
+   {
+    "rid": "P[enriched:1]",
+    "field": "L2理由"
+   },
+   {
+    "rid": "P[enriched:1]",
+    "field": "差异事实"
+   },
+   {
+    "rid": "P[enriched:2]",
+    "field": "chosen.score_original"
+   },
+   {
+    "rid": "P[enriched:2]",
+    "field": "L2理由"
+   },
+   {
+    "rid": "P[enriched:2]",
+    "field": "差异事实"
+   },
+   {
+    "rid": "P[enriched:3]",
+    "field": "chosen.score_original"
+   },
+   {
+    "rid": "P[enriched:3]",
+    "field": "L2理由"
+   },
+   {
+    "rid": "P[enriched:3]",
+    "field": "差异事实"
+   },
+   {
+    "rid": "P[enriched:4]",
+    "field": "chosen.score_original"
+   },
+   {
+    "rid": "P[enriched:4]",
+    "field": "L2理由"
+   },
+   {
+    "rid": "P[enriched:5]",
+    "field": "chosen.score_original"
+   },
+   {
+    "rid": "P[enriched:5]",
+    "field": "L2理由"
+   },
+   {
+    "rid": "P[enriched:5]",
+    "field": "差异事实"
+   }
+  ]
+ },
+ "R1": {
+  "n_violation_records": 0,
+  "n_violations": 0,
+  "examples": {}
+ },
+ "R2": {
+  "n_mismatch_records": 0,
+  "n_mismatches": 0,
+  "examples": {}
+ },
+ "R3": {
+  "①改 chosen span": {
+   "injected": 12,
+   "caught": 12,
+   "missed": 0,
+   "by_category": {
+    "R1 逐字断言": 12,
+    "R1 断言": 12
+   },
+   "representative": {
+    "R1 逐字断言": "R1 逐字断言：sentiment:0 span=[21, 23] 给出的 '满' ≠ 输入逐字 '满的'",
+    "R1 断言": "R1 断言：解释内容单元 '满' span=(21, 22) 不在 chosen 里（解释只许复述入选者）"
+   }
+  },
+  "②改分数使分数序矛盾": {
+   "injected": 12,
+   "caught": 12,
+   "missed": 0,
+   "by_category": {
+    "R2 分数序不一致": 47
+   },
+   "representative": {
+    "R2 分数序不一致": "R2 分数序不一致：negation:0 记录 score_rank=1 重算=2（score=0.998）"
+   }
+  },
+  "③加输入没有的内容词": {
+   "injected": 12,
+   "caught": 12,
+   "missed": 0,
+   "by_category": {
+    "回溯断言": 12,
+    "deref": 36,
+    "R1 断言": 12
+   },
+   "representative": {
+    "回溯断言": "回溯断言: 内容单元 '方案' span=(0, 2) 不在源记录 ref_map 的 content 条目里（解释引入了新内容）",
+    "deref": "deref: I3 违规：ref_map[3] span (0, 2) 不是输入逐字子串",
+    "R1 断言": "R1 断言：解释内容单元 '方案' span=(0, 2) 不在 chosen 里（解释只许复述入选者）"
+   }
+  }
+ },
+ "R4": {
+  "G-free_strict": {
+   "n_records": 12,
+   "n_violation_records": 12,
+   "n_problems": 12,
+   "by_category": {
+    "free": 12
+   },
+   "example": [
+    "free: 文本里没有任何可回溯内容单元"
+   ]
+  },
+  "G-free_generous": {
+   "n_records": 12,
+   "n_violation_records": 12,
+   "n_problems": 1756,
+   "by_category": {
+    "rule_a": 778,
+    "slot_schema": 52,
+    "word_face": 16,
+    "structure": 898,
+    "deref": 12
+   },
+   "example": [
+    "rule_a: 规则 A 违规：骨架 XFREE 字面含实义词 '你'（实义词必须进槽）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面含实义词 '说'（实义词必须进槽）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面 '这' 既非形式词也非逻辑词（疑似实义词/专名）"
+   ]
+  }
+ },
+ "R5": {
+  "deterministic": true,
+  "baseline": {
+   "n_records": 12,
+   "n_violation_records": 12,
+   "n_problems": 396,
+   "by_category": {
+    "rule_a": 186,
+    "slot_schema": 6,
+    "structure": 204
+   },
+   "example": [
+    "rule_a: 规则 A 违规：骨架 XFREE 字面含实义词 '你'（实义词必须进槽）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面 '你' 既非形式词也非逻辑词（疑似实义词/专名）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面 '这' 既非形式词也非逻辑词（疑似实义词/专名）"
+   ]
+  },
+  "n_passes": 2
+ },
+ "R6": {
+  "n_no_reason": 12,
+  "n": 12,
+  "ratio": 1.0,
+  "given": [],
+  "detail": {
+   "P[random:0]": {
+    "reason": "无法给出结构性理由",
+    "detail": "C1 谓词套 4 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）",
+    "first_problem": "rule_a: 规则 A 违规：骨架 XFREE 字面 '积' 既非形式词也非逻辑词（疑似实义词/专名）",
+    "attempts": [
+     {
+      "name": "A1 类名理由",
+      "text": "「满」积极。",
+      "ok": false,
+      "na": false,
+      "c1": false,
+      "c2": false,
+      "c3": true,
+      "n_problems": 4,
+      "problems": [
+       "rule_a: 规则 A 违规：骨架 XFREE 字面 '积' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "rule_a: 规则 A 违规：骨架 XFREE 字面 '极' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "structure: 规则 A 违规：骨架 XFREE 字面 '积' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "structure: 规则 A 违规：骨架 XFREE 字面 '极' 既非形式词也非逻辑词（疑似实义词/专名）"
+      ],
+      "fail": "C1 谓词套 4 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     },
+     {
+      "name": "A2 分数/序差异理由",
+      "text": "",
+      "ok": false,
+      "na": true,
+      "c1": null,
+      "c2": null,
+      "c3": null,
+      "n_problems": 0,
+      "problems": [],
+      "fail": "N/A：无同卡对照候选（结构上不可得差异事实）"
+     },
+     {
+      "name": "A3 因果理由",
+      "text": "因为「满」。",
+      "ok": false,
+      "na": false,
+      "c1": false,
+      "c2": false,
+      "c3": true,
+      "n_problems": 2,
+      "problems": [
+       "word_face: 词面守卫：逻辑词 '因为' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）",
+       "structure: 词面守卫：逻辑词 '因为' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）"
+      ],
+      "fail": "C1 谓词套 2 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     },
+     {
+      "name": "A4 纯复述（对照）",
+      "text": "「满」。",
+      "ok": false,
+      "na": false,
+      "c1": true,
+      "c2": false,
+      "c3": true,
+      "n_problems": 0,
+      "problems": [],
+      "fail": "C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     }
+    ]
+   },
+   "P[random:1]": {
+    "reason": "无法给出结构性理由",
+    "detail": "C1 谓词套 4 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）",
+    "first_problem": "rule_a: 规则 A 违规：骨架 XFREE 字面 '积' 既非形式词也非逻辑词（疑似实义词/专名）",
+    "attempts": [
+     {
+      "name": "A1 类名理由",
+      "text": "「落叶书签」积极。",
+      "ok": false,
+      "na": false,
+      "c1": false,
+      "c2": false,
+      "c3": true,
+      "n_problems": 4,
+      "problems": [
+       "rule_a: 规则 A 违规：骨架 XFREE 字面 '积' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "rule_a: 规则 A 违规：骨架 XFREE 字面 '极' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "structure: 规则 A 违规：骨架 XFREE 字面 '积' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "structure: 规则 A 违规：骨架 XFREE 字面 '极' 既非形式词也非逻辑词（疑似实义词/专名）"
+      ],
+      "fail": "C1 谓词套 4 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     },
+     {
+      "name": "A2 分数/序差异理由",
+      "text": "",
+      "ok": false,
+      "na": true,
+      "c1": null,
+      "c2": null,
+      "c3": null,
+      "n_problems": 0,
+      "problems": [],
+      "fail": "N/A：无同卡对照候选（结构上不可得差异事实）"
+     },
+     {
+      "name": "A3 因果理由",
+      "text": "因为「落叶书签」。",
+      "ok": false,
+      "na": false,
+      "c1": false,
+      "c2": false,
+      "c3": true,
+      "n_problems": 2,
+      "problems": [
+       "word_face: 词面守卫：逻辑词 '因为' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）",
+       "structure: 词面守卫：逻辑词 '因为' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）"
+      ],
+      "fail": "C1 谓词套 2 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     },
+     {
+      "name": "A4 纯复述（对照）",
+      "text": "「落叶书签」。",
+      "ok": false,
+      "na": false,
+      "c1": true,
+      "c2": false,
+      "c3": true,
+      "n_problems": 0,
+      "problems": [],
+      "fail": "C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     }
+    ]
+   },
+   "P[random:2]": {
+    "reason": "无法给出结构性理由",
+    "detail": "C1 谓词套 4 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）",
+    "first_problem": "rule_a: 规则 A 违规：骨架 XFREE 字面 '积' 既非形式词也非逻辑词（疑似实义词/专名）",
+    "attempts": [
+     {
+      "name": "A1 类名理由",
+      "text": "「优势:适」积极。",
+      "ok": false,
+      "na": false,
+      "c1": false,
+      "c2": false,
+      "c3": true,
+      "n_problems": 4,
+      "problems": [
+       "rule_a: 规则 A 违规：骨架 XFREE 字面 '积' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "rule_a: 规则 A 违规：骨架 XFREE 字面 '极' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "structure: 规则 A 违规：骨架 XFREE 字面 '积' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "structure: 规则 A 违规：骨架 XFREE 字面 '极' 既非形式词也非逻辑词（疑似实义词/专名）"
+      ],
+      "fail": "C1 谓词套 4 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     },
+     {
+      "name": "A2 分数/序差异理由",
+      "text": "",
+      "ok": false,
+      "na": true,
+      "c1": null,
+      "c2": null,
+      "c3": null,
+      "n_problems": 0,
+      "problems": [],
+      "fail": "N/A：无同卡对照候选（结构上不可得差异事实）"
+     },
+     {
+      "name": "A3 因果理由",
+      "text": "因为「优势:适」。",
+      "ok": false,
+      "na": false,
+      "c1": false,
+      "c2": false,
+      "c3": true,
+      "n_problems": 2,
+      "problems": [
+       "word_face: 词面守卫：逻辑词 '因为' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）",
+       "structure: 词面守卫：逻辑词 '因为' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）"
+      ],
+      "fail": "C1 谓词套 2 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     },
+     {
+      "name": "A4 纯复述（对照）",
+      "text": "「优势:适」。",
+      "ok": false,
+      "na": false,
+      "c1": true,
+      "c2": false,
+      "c3": true,
+      "n_problems": 0,
+      "problems": [],
+      "fail": "C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     }
+    ]
+   },
+   "P[random:3]": {
+    "reason": "无法给出结构性理由",
+    "detail": "C1 谓词套 4 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）",
+    "first_problem": "rule_a: 规则 A 违规：骨架 XFREE 字面 '积' 既非形式词也非逻辑词（疑似实义词/专名）",
+    "attempts": [
+     {
+      "name": "A1 类名理由",
+      "text": "「亿人用」积极。",
+      "ok": false,
+      "na": false,
+      "c1": false,
+      "c2": false,
+      "c3": true,
+      "n_problems": 4,
+      "problems": [
+       "rule_a: 规则 A 违规：骨架 XFREE 字面 '积' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "rule_a: 规则 A 违规：骨架 XFREE 字面 '极' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "structure: 规则 A 违规：骨架 XFREE 字面 '积' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "structure: 规则 A 违规：骨架 XFREE 字面 '极' 既非形式词也非逻辑词（疑似实义词/专名）"
+      ],
+      "fail": "C1 谓词套 4 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     },
+     {
+      "name": "A2 分数/序差异理由",
+      "text": "",
+      "ok": false,
+      "na": true,
+      "c1": null,
+      "c2": null,
+      "c3": null,
+      "n_problems": 0,
+      "problems": [],
+      "fail": "N/A：无同卡对照候选（结构上不可得差异事实）"
+     },
+     {
+      "name": "A3 因果理由",
+      "text": "因为「亿人用」。",
+      "ok": false,
+      "na": false,
+      "c1": false,
+      "c2": false,
+      "c3": true,
+      "n_problems": 2,
+      "problems": [
+       "word_face: 词面守卫：逻辑词 '因为' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）",
+       "structure: 词面守卫：逻辑词 '因为' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）"
+      ],
+      "fail": "C1 谓词套 2 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     },
+     {
+      "name": "A4 纯复述（对照）",
+      "text": "「亿人用」。",
+      "ok": false,
+      "na": false,
+      "c1": true,
+      "c2": false,
+      "c3": true,
+      "n_problems": 0,
+      "problems": [],
+      "fail": "C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     }
+    ]
+   },
+   "P[random:4]": {
+    "reason": "无法给出结构性理由",
+    "detail": "C1 谓词套 4 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）",
+    "first_problem": "rule_a: 规则 A 违规：骨架 XFREE 字面 '积' 既非形式词也非逻辑词（疑似实义词/专名）",
+    "attempts": [
+     {
+      "name": "A1 类名理由",
+      "text": "「例」积极。",
+      "ok": false,
+      "na": false,
+      "c1": false,
+      "c2": false,
+      "c3": true,
+      "n_problems": 4,
+      "problems": [
+       "rule_a: 规则 A 违规：骨架 XFREE 字面 '积' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "rule_a: 规则 A 违规：骨架 XFREE 字面 '极' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "structure: 规则 A 违规：骨架 XFREE 字面 '积' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "structure: 规则 A 违规：骨架 XFREE 字面 '极' 既非形式词也非逻辑词（疑似实义词/专名）"
+      ],
+      "fail": "C1 谓词套 4 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     },
+     {
+      "name": "A2 分数/序差异理由",
+      "text": "",
+      "ok": false,
+      "na": true,
+      "c1": null,
+      "c2": null,
+      "c3": null,
+      "n_problems": 0,
+      "problems": [],
+      "fail": "N/A：无同卡对照候选（结构上不可得差异事实）"
+     },
+     {
+      "name": "A3 因果理由",
+      "text": "因为「例」。",
+      "ok": false,
+      "na": false,
+      "c1": false,
+      "c2": false,
+      "c3": true,
+      "n_problems": 2,
+      "problems": [
+       "word_face: 词面守卫：逻辑词 '因为' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）",
+       "structure: 词面守卫：逻辑词 '因为' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）"
+      ],
+      "fail": "C1 谓词套 2 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     },
+     {
+      "name": "A4 纯复述（对照）",
+      "text": "「例」。",
+      "ok": false,
+      "na": false,
+      "c1": true,
+      "c2": false,
+      "c3": true,
+      "n_problems": 0,
+      "problems": [],
+      "fail": "C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     }
+    ]
+   },
+   "P[random:5]": {
+    "reason": "无法给出结构性理由",
+    "detail": "C1 谓词套 4 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）",
+    "first_problem": "rule_a: 规则 A 违规：骨架 XFREE 字面 '愤' 既非形式词也非逻辑词（疑似实义词/专名）",
+    "attempts": [
+     {
+      "name": "A1 类名理由",
+      "text": "「描述 | 任务类型 | 说明」愤怒。",
+      "ok": false,
+      "na": false,
+      "c1": false,
+      "c2": false,
+      "c3": true,
+      "n_problems": 4,
+      "problems": [
+       "rule_a: 规则 A 违规：骨架 XFREE 字面 '愤' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "rule_a: 规则 A 违规：骨架 XFREE 字面 '怒' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "structure: 规则 A 违规：骨架 XFREE 字面 '愤' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "structure: 规则 A 违规：骨架 XFREE 字面 '怒' 既非形式词也非逻辑词（疑似实义词/专名）"
+      ],
+      "fail": "C1 谓词套 4 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     },
+     {
+      "name": "A2 分数/序差异理由",
+      "text": "",
+      "ok": false,
+      "na": true,
+      "c1": null,
+      "c2": null,
+      "c3": null,
+      "n_problems": 0,
+      "problems": [],
+      "fail": "N/A：无同卡对照候选（结构上不可得差异事实）"
+     },
+     {
+      "name": "A3 因果理由",
+      "text": "因为「描述 | 任务类型 | 说明」。",
+      "ok": false,
+      "na": false,
+      "c1": false,
+      "c2": false,
+      "c3": true,
+      "n_problems": 2,
+      "problems": [
+       "word_face: 词面守卫：逻辑词 '因为' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）",
+       "structure: 词面守卫：逻辑词 '因为' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）"
+      ],
+      "fail": "C1 谓词套 2 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     },
+     {
+      "name": "A4 纯复述（对照）",
+      "text": "「描述 | 任务类型 | 说明」。",
+      "ok": false,
+      "na": false,
+      "c1": true,
+      "c2": false,
+      "c3": true,
+      "n_problems": 0,
+      "problems": [],
+      "fail": "C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     }
+    ]
+   },
+   "P[enriched:0]": {
+    "reason": "无法给出结构性理由",
+    "detail": "C1 谓词套 4 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）",
+    "first_problem": "rule_a: 规则 A 违规：骨架 XFREE 字面 '积' 既非形式词也非逻辑词（疑似实义词/专名）",
+    "attempts": [
+     {
+      "name": "A1 类名理由",
+      "text": "「循序」积极。",
+      "ok": false,
+      "na": false,
+      "c1": false,
+      "c2": false,
+      "c3": true,
+      "n_problems": 4,
+      "problems": [
+       "rule_a: 规则 A 违规：骨架 XFREE 字面 '积' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "rule_a: 规则 A 违规：骨架 XFREE 字面 '极' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "structure: 规则 A 违规：骨架 XFREE 字面 '积' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "structure: 规则 A 违规：骨架 XFREE 字面 '极' 既非形式词也非逻辑词（疑似实义词/专名）"
+      ],
+      "fail": "C1 谓词套 4 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     },
+     {
+      "name": "A2 分数/序差异理由",
+      "text": "",
+      "ok": false,
+      "na": true,
+      "c1": null,
+      "c2": null,
+      "c3": null,
+      "n_problems": 0,
+      "problems": [],
+      "fail": "N/A：无同卡对照候选（结构上不可得差异事实）"
+     },
+     {
+      "name": "A3 因果理由",
+      "text": "因为「循序」。",
+      "ok": false,
+      "na": false,
+      "c1": false,
+      "c2": false,
+      "c3": true,
+      "n_problems": 2,
+      "problems": [
+       "word_face: 词面守卫：逻辑词 '因为' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）",
+       "structure: 词面守卫：逻辑词 '因为' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）"
+      ],
+      "fail": "C1 谓词套 2 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     },
+     {
+      "name": "A4 纯复述（对照）",
+      "text": "「循序」。",
+      "ok": false,
+      "na": false,
+      "c1": true,
+      "c2": false,
+      "c3": true,
+      "n_problems": 0,
+      "problems": [],
+      "fail": "C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     }
+    ]
+   },
+   "P[enriched:1]": {
+    "reason": "无法给出结构性理由",
+    "detail": "C1 谓词套 4 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）",
+    "first_problem": "rule_a: 规则 A 违规：骨架 XFREE 字面 '愤' 既非形式词也非逻辑词（疑似实义词/专名）",
+    "attempts": [
+     {
+      "name": "A1 类名理由",
+      "text": "「难度」愤怒。",
+      "ok": false,
+      "na": false,
+      "c1": false,
+      "c2": false,
+      "c3": true,
+      "n_problems": 4,
+      "problems": [
+       "rule_a: 规则 A 违规：骨架 XFREE 字面 '愤' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "rule_a: 规则 A 违规：骨架 XFREE 字面 '怒' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "structure: 规则 A 违规：骨架 XFREE 字面 '愤' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "structure: 规则 A 违规：骨架 XFREE 字面 '怒' 既非形式词也非逻辑词（疑似实义词/专名）"
+      ],
+      "fail": "C1 谓词套 4 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     },
+     {
+      "name": "A2 分数/序差异理由",
+      "text": "",
+      "ok": false,
+      "na": true,
+      "c1": null,
+      "c2": null,
+      "c3": null,
+      "n_problems": 0,
+      "problems": [],
+      "fail": "N/A：无同卡对照候选（结构上不可得差异事实）"
+     },
+     {
+      "name": "A3 因果理由",
+      "text": "因为「难度」。",
+      "ok": false,
+      "na": false,
+      "c1": false,
+      "c2": false,
+      "c3": true,
+      "n_problems": 2,
+      "problems": [
+       "word_face: 词面守卫：逻辑词 '因为' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）",
+       "structure: 词面守卫：逻辑词 '因为' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）"
+      ],
+      "fail": "C1 谓词套 2 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     },
+     {
+      "name": "A4 纯复述（对照）",
+      "text": "「难度」。",
+      "ok": false,
+      "na": false,
+      "c1": true,
+      "c2": false,
+      "c3": true,
+      "n_problems": 0,
+      "problems": [],
+      "fail": "C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     }
+    ]
+   },
+   "P[enriched:2]": {
+    "reason": "无法给出结构性理由",
+    "detail": "C1 谓词套 4 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）",
+    "first_problem": "rule_a: 规则 A 违规：骨架 XFREE 字面 '积' 既非形式词也非逻辑词（疑似实义词/专名）",
+    "attempts": [
+     {
+      "name": "A1 类名理由",
+      "text": "「差异,但基本需求可能相似」积极。",
+      "ok": false,
+      "na": false,
+      "c1": false,
+      "c2": false,
+      "c3": true,
+      "n_problems": 4,
+      "problems": [
+       "rule_a: 规则 A 违规：骨架 XFREE 字面 '积' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "rule_a: 规则 A 违规：骨架 XFREE 字面 '极' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "structure: 规则 A 违规：骨架 XFREE 字面 '积' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "structure: 规则 A 违规：骨架 XFREE 字面 '极' 既非形式词也非逻辑词（疑似实义词/专名）"
+      ],
+      "fail": "C1 谓词套 4 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     },
+     {
+      "name": "A2 分数/序差异理由",
+      "text": "",
+      "ok": false,
+      "na": true,
+      "c1": null,
+      "c2": null,
+      "c3": null,
+      "n_problems": 0,
+      "problems": [],
+      "fail": "N/A：无同卡对照候选（结构上不可得差异事实）"
+     },
+     {
+      "name": "A3 因果理由",
+      "text": "因为「差异,但基本需求可能相似」。",
+      "ok": false,
+      "na": false,
+      "c1": false,
+      "c2": false,
+      "c3": true,
+      "n_problems": 2,
+      "problems": [
+       "word_face: 词面守卫：逻辑词 '因为' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）",
+       "structure: 词面守卫：逻辑词 '因为' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）"
+      ],
+      "fail": "C1 谓词套 2 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     },
+     {
+      "name": "A4 纯复述（对照）",
+      "text": "「差异,但基本需求可能相似」。",
+      "ok": false,
+      "na": false,
+      "c1": true,
+      "c2": false,
+      "c3": true,
+      "n_problems": 0,
+      "problems": [],
+      "fail": "C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     }
+    ]
+   },
+   "P[enriched:3]": {
+    "reason": "无法给出结构性理由",
+    "detail": "C1 谓词套 4 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）",
+    "first_problem": "rule_a: 规则 A 违规：骨架 XFREE 字面 '积' 既非形式词也非逻辑词（疑似实义词/专名）",
+    "attempts": [
+     {
+      "name": "A1 类名理由",
+      "text": "「一见钟」积极。",
+      "ok": false,
+      "na": false,
+      "c1": false,
+      "c2": false,
+      "c3": true,
+      "n_problems": 4,
+      "problems": [
+       "rule_a: 规则 A 违规：骨架 XFREE 字面 '积' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "rule_a: 规则 A 违规：骨架 XFREE 字面 '极' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "structure: 规则 A 违规：骨架 XFREE 字面 '积' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "structure: 规则 A 违规：骨架 XFREE 字面 '极' 既非形式词也非逻辑词（疑似实义词/专名）"
+      ],
+      "fail": "C1 谓词套 4 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     },
+     {
+      "name": "A2 分数/序差异理由",
+      "text": "",
+      "ok": false,
+      "na": true,
+      "c1": null,
+      "c2": null,
+      "c3": null,
+      "n_problems": 0,
+      "problems": [],
+      "fail": "N/A：无同卡对照候选（结构上不可得差异事实）"
+     },
+     {
+      "name": "A3 因果理由",
+      "text": "因为「一见钟」。",
+      "ok": false,
+      "na": false,
+      "c1": false,
+      "c2": false,
+      "c3": true,
+      "n_problems": 2,
+      "problems": [
+       "word_face: 词面守卫：逻辑词 '因为' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）",
+       "structure: 词面守卫：逻辑词 '因为' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）"
+      ],
+      "fail": "C1 谓词套 2 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     },
+     {
+      "name": "A4 纯复述（对照）",
+      "text": "「一见钟」。",
+      "ok": false,
+      "na": false,
+      "c1": true,
+      "c2": false,
+      "c3": true,
+      "n_problems": 0,
+      "problems": [],
+      "fail": "C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     }
+    ]
+   },
+   "P[enriched:4]": {
+    "reason": "无法给出结构性理由",
+    "detail": "C1 谓词套 4 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）",
+    "first_problem": "rule_a: 规则 A 违规：骨架 XFREE 字面 '愤' 既非形式词也非逻辑词（疑似实义词/专名）",
+    "attempts": [
+     {
+      "name": "A1 类名理由",
+      "text": "「不是按部就班的作业,沟通和应变能力」愤怒。",
+      "ok": false,
+      "na": false,
+      "c1": false,
+      "c2": false,
+      "c3": true,
+      "n_problems": 4,
+      "problems": [
+       "rule_a: 规则 A 违规：骨架 XFREE 字面 '愤' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "rule_a: 规则 A 违规：骨架 XFREE 字面 '怒' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "structure: 规则 A 违规：骨架 XFREE 字面 '愤' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "structure: 规则 A 违规：骨架 XFREE 字面 '怒' 既非形式词也非逻辑词（疑似实义词/专名）"
+      ],
+      "fail": "C1 谓词套 4 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     },
+     {
+      "name": "A2 分数/序差异理由",
+      "text": "「*体会**:社会实践不」比「不」高。",
+      "ok": false,
+      "na": false,
+      "c1": false,
+      "c2": false,
+      "c3": true,
+      "n_problems": 10,
+      "problems": [
+       "rule_a: 规则 A 违规：骨架 XFREE 字面 '比' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "rule_a: 规则 A 违规：骨架 XFREE 字面 '高' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "slot_schema: 规则 B 违规：骨架 XFREE 槽1 类型 None 不在 ('名', '动', '形')",
+       "slot_schema: 规则 B 违规：骨架 XFREE 槽2 类型 None 不在 ('名', '动', '形')",
+       "structure: 规则 A 违规：骨架 XFREE 字面 '比' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "structure: 规则 A 违规：骨架 XFREE 字面 '高' 既非形式词也非逻辑词（疑似实义词/专名）"
+      ],
+      "fail": "C1 谓词套 10 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     },
+     {
+      "name": "A3 因果理由",
+      "text": "因为「不是按部就班的作业,沟通和应变能力」。",
+      "ok": false,
+      "na": false,
+      "c1": false,
+      "c2": false,
+      "c3": true,
+      "n_problems": 2,
+      "problems": [
+       "word_face: 词面守卫：逻辑词 '因为' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）",
+       "structure: 词面守卫：逻辑词 '因为' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）"
+      ],
+      "fail": "C1 谓词套 2 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     },
+     {
+      "name": "A4 纯复述（对照）",
+      "text": "「不是按部就班的作业,沟通和应变能力」。",
+      "ok": false,
+      "na": false,
+      "c1": true,
+      "c2": false,
+      "c3": true,
+      "n_problems": 0,
+      "problems": [],
+      "fail": "C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     }
+    ]
+   },
+   "P[enriched:5]": {
+    "reason": "无法给出结构性理由",
+    "detail": "C1 谓词套 4 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）",
+    "first_problem": "rule_a: 规则 A 违规：骨架 XFREE 字面 '愤' 既非形式词也非逻辑词（疑似实义词/专名）",
+    "attempts": [
+     {
+      "name": "A1 类名理由",
+      "text": "「渐进」愤怒。",
+      "ok": false,
+      "na": false,
+      "c1": false,
+      "c2": false,
+      "c3": true,
+      "n_problems": 4,
+      "problems": [
+       "rule_a: 规则 A 违规：骨架 XFREE 字面 '愤' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "rule_a: 规则 A 违规：骨架 XFREE 字面 '怒' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "structure: 规则 A 违规：骨架 XFREE 字面 '愤' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "structure: 规则 A 违规：骨架 XFREE 字面 '怒' 既非形式词也非逻辑词（疑似实义词/专名）"
+      ],
+      "fail": "C1 谓词套 4 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     },
+     {
+      "name": "A2 分数/序差异理由",
+      "text": "",
+      "ok": false,
+      "na": true,
+      "c1": null,
+      "c2": null,
+      "c3": null,
+      "n_problems": 0,
+      "problems": [],
+      "fail": "N/A：无同卡对照候选（结构上不可得差异事实）"
+     },
+     {
+      "name": "A3 因果理由",
+      "text": "因为「渐进」。",
+      "ok": false,
+      "na": false,
+      "c1": false,
+      "c2": false,
+      "c3": true,
+      "n_problems": 2,
+      "problems": [
+       "word_face: 词面守卫：逻辑词 '因为' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）",
+       "structure: 词面守卫：逻辑词 '因为' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）"
+      ],
+      "fail": "C1 谓词套 2 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     },
+     {
+      "name": "A4 纯复述（对照）",
+      "text": "「渐进」。",
+      "ok": false,
+      "na": false,
+      "c1": true,
+      "c2": false,
+      "c3": true,
+      "n_problems": 0,
+      "problems": [],
+      "fail": "C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     }
+    ]
+   }
+  }
+ },
+ "struct_records": [
+  {
+   "kind": "pointer",
+   "rid": "P[random:0]",
+   "input": "如约而至的第二季,能不能给广大追剧迷一个完满的解释",
+   "chosen": [
+    {
+     "cid": "sentiment:0",
+     "card": "sentiment",
+     "span": [
+      21,
+      22
+     ],
+     "span_text": "满",
+     "score": 0.6997,
+     "score_provenance": "replay",
+     "rank": 0,
+     "score_rank": 3,
+     "eligible": true
+    },
+    {
+     "cid": "negation:0",
+     "card": "negation",
+     "span": [
+      10,
+      11
+     ],
+     "span_text": "不",
+     "score": 0.998,
+     "score_provenance": "replay",
+     "rank": 1,
+     "score_rank": 1,
+     "eligible": true
+    }
+   ],
+   "candidates": [
+    {
+     "cid": "negation:0",
+     "card": "negation",
+     "span": [
+      10,
+      11
+     ],
+     "span_text": "不",
+     "score": 0.998,
+     "score_provenance": "replay",
+     "rank": 1,
+     "score_rank": 1,
+     "eligible": true,
+     "ineligible_reason": "",
+     "emission_index": 0,
+     "class_name": "否定",
+     "pos": null
+    },
+    {
+     "cid": "pronoun:0",
+     "card": "pronoun",
+     "span": [
+      11,
+      12
+     ],
+     "span_text": "能",
+     "score": 0.8453,
+     "score_provenance": "replay",
+     "rank": null,
+     "score_rank": 2,
+     "eligible": false,
+     "ineligible_reason": "不在本轮 cards_run（计划未授权调用）",
+     "emission_index": 0,
+     "class_name": "第三人称",
+     "pos": "名"
+    },
+    {
+     "cid": "relation:0",
+     "card": "relation",
+     "span": [
+      7,
+      12
+     ],
+     "span_text": "季,能不能",
+     "score": 0.5716,
+     "score_provenance": "replay",
+     "rank": null,
+     "score_rank": 4,
+     "eligible": false,
+     "ineligible_reason": "不在本轮 cards_run（计划未授权调用）",
+     "emission_index": 0,
+     "class_name": "反义词",
+     "pos": null
+    },
+    {
+     "cid": "relation:1",
+     "card": "relation",
+     "span": [
+      17,
+      22
+     ],
+     "span_text": "迷一个完满",
+     "score": 0.9992,
+     "score_provenance": "replay",
+     "rank": null,
+     "score_rank": 0,
+     "eligible": false,
+     "ineligible_reason": "不在本轮 cards_run（计划未授权调用）",
+     "emission_index": 1,
+     "class_name": "反义词",
+     "pos": null
+    },
+    {
+     "cid": "sentiment:0",
+     "card": "sentiment",
+     "span": [
+      21,
+      22
+     ],
+     "span_text": "满",
+     "score": 0.6997,
+     "score_provenance": "replay",
+     "rank": 0,
+     "score_rank": 3,
+     "eligible": true,
+     "ineligible_reason": "",
+     "emission_index": 0,
+     "class_name": "积极",
+     "pos": "形"
+    }
+   ],
+   "scores_kind": "engine_confidence（原跑未持久化；重放取回。跨卡不可比 ⇒ 只作记录内一致性核对）",
+   "ref_map": [
+    {
+     "unit_id": "ptr:P[random:0]:negation:0",
+     "cls": "content",
+     "text": "不",
+     "ref": 0,
+     "span": [
+      10,
+      11
+     ],
+     "out": [
+      0,
+      1
+     ]
+    },
+    {
+     "unit_id": "ptr:P[random:0]:pronoun:0",
+     "cls": "content",
+     "text": "能",
+     "ref": 1,
+     "span": [
+      11,
+      12
+     ],
+     "out": [
+      0,
+      1
+     ]
+    },
+    {
+     "unit_id": "ptr:P[random:0]:relation:0",
+     "cls": "content",
+     "text": "季,能不能",
+     "ref": 2,
+     "span": [
+      7,
+      12
+     ],
+     "out": [
+      0,
+      5
+     ]
+    },
+    {
+     "unit_id": "ptr:P[random:0]:relation:1",
+     "cls": "content",
+     "text": "迷一个完满",
+     "ref": 3,
+     "span": [
+      17,
+      22
+     ],
+     "out": [
+      0,
+      5
+     ]
+    },
+    {
+     "unit_id": "ptr:P[random:0]:sentiment:0",
+     "cls": "content",
+     "text": "满",
+     "ref": 4,
+     "span": [
+      21,
+      22
+     ],
+     "out": [
+      0,
+      1
+     ]
+    }
+   ],
+   "evidence": [
+    {
+     "card": "sentiment",
+     "span": [
+      21,
+      22
+     ],
+     "class_name": "积极"
+    },
+    {
+     "card": "negation",
+     "span": [
+      10,
+      11
+     ],
+     "class_name": "否定"
+    }
+   ],
+   "unavailable": [
+    "chosen[negation] 的 pos 不可得（type_pos→None，card_flow.type_of 给「否」∉ POS_TYPES）⇒ 不入受约束槽",
+    "chosen.score_original：原跑未持久化 confidence（provenance=replay）",
+    "cards_run/plan：原记录未持久化（provenance=replay）"
+   ],
+   "replay_match": true,
+   "cards_run": [
+    "sentiment",
+    "negation"
+   ],
+   "cards_run_provenance": "replay",
+   "text": "你这句话里的『满』表达了积极；并且有否定成分『不』。"
+  },
+  {
+   "kind": "pointer",
+   "rid": "P[random:1]",
+   "input": "- 穿亚麻色系服装赠限定落叶书签",
+   "chosen": [
+    {
+     "cid": "sentiment:0",
+     "card": "sentiment",
+     "span": [
+      12,
+      16
+     ],
+     "span_text": "落叶书签",
+     "score": 0.99,
+     "score_provenance": "replay",
+     "rank": 0,
+     "score_rank": 1,
+     "eligible": true
+    }
+   ],
+   "candidates": [
+    {
+     "cid": "pronoun:0",
+     "card": "pronoun",
+     "span": [
+      12,
+      13
+     ],
+     "span_text": "落",
+     "score": 0.9492,
+     "score_provenance": "replay",
+     "rank": null,
+     "score_rank": 3,
+     "eligible": false,
+     "ineligible_reason": "不在本轮 cards_run（计划未授权调用）",
+     "emission_index": 0,
+     "class_name": "第一人称",
+     "pos": "名"
+    },
+    {
+     "cid": "relation:0",
+     "card": "relation",
+     "span": [
+      0,
+      5
+     ],
+     "span_text": "- 穿亚麻",
+     "score": 0.9594,
+     "score_provenance": "replay",
+     "rank": null,
+     "score_rank": 2,
+     "eligible": false,
+     "ineligible_reason": "不在本轮 cards_run（计划未授权调用）",
+     "emission_index": 0,
+     "class_name": "近义词",
+     "pos": null
+    },
+    {
+     "cid": "relation:1",
+     "card": "relation",
+     "span": [
+      10,
+      13
+     ],
+     "span_text": "限定落",
+     "score": 0.9999,
+     "score_provenance": "replay",
+     "rank": null,
+     "score_rank": 0,
+     "eligible": false,
+     "ineligible_reason": "不在本轮 cards_run（计划未授权调用）",
+     "emission_index": 1,
+     "class_name": "近义词",
+     "pos": null
+    },
+    {
+     "cid": "sentiment:0",
+     "card": "sentiment",
+     "span": [
+      12,
+      16
+     ],
+     "span_text": "落叶书签",
+     "score": 0.99,
+     "score_provenance": "replay",
+     "rank": 0,
+     "score_rank": 1,
+     "eligible": true,
+     "ineligible_reason": "",
+     "emission_index": 0,
+     "class_name": "积极",
+     "pos": "形"
+    }
+   ],
+   "scores_kind": "engine_confidence（原跑未持久化；重放取回。跨卡不可比 ⇒ 只作记录内一致性核对）",
+   "ref_map": [
+    {
+     "unit_id": "ptr:P[random:1]:pronoun:0",
+     "cls": "content",
+     "text": "落",
+     "ref": 0,
+     "span": [
+      12,
+      13
+     ],
+     "out": [
+      0,
+      1
+     ]
+    },
+    {
+     "unit_id": "ptr:P[random:1]:relation:0",
+     "cls": "content",
+     "text": "- 穿亚麻",
+     "ref": 1,
+     "span": [
+      0,
+      5
+     ],
+     "out": [
+      0,
+      5
+     ]
+    },
+    {
+     "unit_id": "ptr:P[random:1]:relation:1",
+     "cls": "content",
+     "text": "限定落",
+     "ref": 2,
+     "span": [
+      10,
+      13
+     ],
+     "out": [
+      0,
+      3
+     ]
+    },
+    {
+     "unit_id": "ptr:P[random:1]:sentiment:0",
+     "cls": "content",
+     "text": "落叶书签",
+     "ref": 3,
+     "span": [
+      12,
+      16
+     ],
+     "out": [
+      0,
+      4
+     ]
+    }
+   ],
+   "evidence": [
+    {
+     "card": "sentiment",
+     "span": [
+      12,
+      16
+     ],
+     "class_name": "积极"
+    }
+   ],
+   "unavailable": [
+    "chosen.score_original：原跑未持久化 confidence（provenance=replay）",
+    "cards_run/plan：原记录未持久化（provenance=replay）"
+   ],
+   "replay_match": true,
+   "cards_run": [
+    "sentiment",
+    "negation"
+   ],
+   "cards_run_provenance": "replay",
+   "text": "你这句话里的『落叶书签』表达了积极。"
+  },
+  {
+   "kind": "pointer",
+   "rid": "P[random:2]",
+   "input": "优势:适用于多种金属(包括稀土、过渡金属),可制备一维、二维或三维纳米结构",
+   "chosen": [
+    {
+     "cid": "sentiment:0",
+     "card": "sentiment",
+     "span": [
+      0,
+      4
+     ],
+     "span_text": "优势:适",
+     "score": 0.7164,
+     "score_provenance": "replay",
+     "rank": 0,
+     "score_rank": 2,
+     "eligible": true
+    }
+   ],
+   "candidates": [
+    {
+     "cid": "pronoun:0",
+     "card": "pronoun",
+     "span": [
+      19,
+      26
+     ],
+     "span_text": "属),可制备一",
+     "score": 0.5909,
+     "score_provenance": "replay",
+     "rank": null,
+     "score_rank": 3,
+     "eligible": false,
+     "ineligible_reason": "不在本轮 cards_run（计划未授权调用）",
+     "emission_index": 0,
+     "class_name": "第三人称",
+     "pos": "名"
+    },
+    {
+     "cid": "relation:0",
+     "card": "relation",
+     "span": [
+      0,
+      27
+     ],
+     "span_text": "优势:适用于多种金属(包括稀土、过渡金属),可制备一维",
+     "score": 0.9893,
+     "score_provenance": "replay",
+     "rank": null,
+     "score_rank": 1,
+     "eligible": false,
+     "ineligible_reason": "不在本轮 cards_run（计划未授权调用）",
+     "emission_index": 0,
+     "class_name": "反义词",
+     "pos": null
+    },
+    {
+     "cid": "relation:1",
+     "card": "relation",
+     "span": [
+      33,
+      37
+     ],
+     "span_text": "纳米结构",
+     "score": 0.9998,
+     "score_provenance": "replay",
+     "rank": null,
+     "score_rank": 0,
+     "eligible": false,
+     "ineligible_reason": "不在本轮 cards_run（计划未授权调用）",
+     "emission_index": 1,
+     "class_name": "反义词",
+     "pos": null
+    },
+    {
+     "cid": "sentiment:0",
+     "card": "sentiment",
+     "span": [
+      0,
+      4
+     ],
+     "span_text": "优势:适",
+     "score": 0.7164,
+     "score_provenance": "replay",
+     "rank": 0,
+     "score_rank": 2,
+     "eligible": true,
+     "ineligible_reason": "",
+     "emission_index": 0,
+     "class_name": "积极",
+     "pos": "形"
+    }
+   ],
+   "scores_kind": "engine_confidence（原跑未持久化；重放取回。跨卡不可比 ⇒ 只作记录内一致性核对）",
+   "ref_map": [
+    {
+     "unit_id": "ptr:P[random:2]:pronoun:0",
+     "cls": "content",
+     "text": "属),可制备一",
+     "ref": 0,
+     "span": [
+      19,
+      26
+     ],
+     "out": [
+      0,
+      7
+     ]
+    },
+    {
+     "unit_id": "ptr:P[random:2]:relation:0",
+     "cls": "content",
+     "text": "优势:适用于多种金属(包括稀土、过渡金属),可制备一维",
+     "ref": 1,
+     "span": [
+      0,
+      27
+     ],
+     "out": [
+      0,
+      27
+     ]
+    },
+    {
+     "unit_id": "ptr:P[random:2]:relation:1",
+     "cls": "content",
+     "text": "纳米结构",
+     "ref": 2,
+     "span": [
+      33,
+      37
+     ],
+     "out": [
+      0,
+      4
+     ]
+    },
+    {
+     "unit_id": "ptr:P[random:2]:sentiment:0",
+     "cls": "content",
+     "text": "优势:适",
+     "ref": 3,
+     "span": [
+      0,
+      4
+     ],
+     "out": [
+      0,
+      4
+     ]
+    }
+   ],
+   "evidence": [
+    {
+     "card": "sentiment",
+     "span": [
+      0,
+      4
+     ],
+     "class_name": "积极"
+    }
+   ],
+   "unavailable": [
+    "chosen.score_original：原跑未持久化 confidence（provenance=replay）",
+    "cards_run/plan：原记录未持久化（provenance=replay）"
+   ],
+   "replay_match": true,
+   "cards_run": [
+    "sentiment",
+    "negation"
+   ],
+   "cards_run_provenance": "replay",
+   "text": "你这句话里的『优势:适』表达了积极。"
+  },
+  {
+   "kind": "pointer",
+   "rid": "P[random:3]",
+   "input": "足够15亿人用，还有冗余",
+   "chosen": [
+    {
+     "cid": "sentiment:0",
+     "card": "sentiment",
+     "span": [
+      4,
+      7
+     ],
+     "span_text": "亿人用",
+     "score": 0.6397,
+     "score_provenance": "replay",
+     "rank": 0,
+     "score_rank": 1,
+     "eligible": true
+    }
+   ],
+   "candidates": [
+    {
+     "cid": "relation:0",
+     "card": "relation",
+     "span": [
+      2,
+      4
+     ],
+     "span_text": "15",
+     "score": 0.5249,
+     "score_provenance": "replay",
+     "rank": null,
+     "score_rank": 2,
+     "eligible": false,
+     "ineligible_reason": "不在本轮 cards_run（计划未授权调用）",
+     "emission_index": 0,
+     "class_name": "近义词",
+     "pos": null
+    },
+    {
+     "cid": "relation:1",
+     "card": "relation",
+     "span": [
+      5,
+      10
+     ],
+     "span_text": "人用，还有",
+     "score": 0.9994,
+     "score_provenance": "replay",
+     "rank": null,
+     "score_rank": 0,
+     "eligible": false,
+     "ineligible_reason": "不在本轮 cards_run（计划未授权调用）",
+     "emission_index": 1,
+     "class_name": "近义词",
+     "pos": null
+    },
+    {
+     "cid": "sentiment:0",
+     "card": "sentiment",
+     "span": [
+      4,
+      7
+     ],
+     "span_text": "亿人用",
+     "score": 0.6397,
+     "score_provenance": "replay",
+     "rank": 0,
+     "score_rank": 1,
+     "eligible": true,
+     "ineligible_reason": "",
+     "emission_index": 0,
+     "class_name": "积极",
+     "pos": "形"
+    }
+   ],
+   "scores_kind": "engine_confidence（原跑未持久化；重放取回。跨卡不可比 ⇒ 只作记录内一致性核对）",
+   "ref_map": [
+    {
+     "unit_id": "ptr:P[random:3]:relation:0",
+     "cls": "content",
+     "text": "15",
+     "ref": 0,
+     "span": [
+      2,
+      4
+     ],
+     "out": [
+      0,
+      2
+     ]
+    },
+    {
+     "unit_id": "ptr:P[random:3]:relation:1",
+     "cls": "content",
+     "text": "人用，还有",
+     "ref": 1,
+     "span": [
+      5,
+      10
+     ],
+     "out": [
+      0,
+      5
+     ]
+    },
+    {
+     "unit_id": "ptr:P[random:3]:sentiment:0",
+     "cls": "content",
+     "text": "亿人用",
+     "ref": 2,
+     "span": [
+      4,
+      7
+     ],
+     "out": [
+      0,
+      3
+     ]
+    }
+   ],
+   "evidence": [
+    {
+     "card": "sentiment",
+     "span": [
+      4,
+      7
+     ],
+     "class_name": "积极"
+    }
+   ],
+   "unavailable": [
+    "chosen.score_original：原跑未持久化 confidence（provenance=replay）",
+    "cards_run/plan：原记录未持久化（provenance=replay）"
+   ],
+   "replay_match": true,
+   "cards_run": [
+    "sentiment",
+    "negation"
+   ],
+   "cards_run_provenance": "replay",
+   "text": "你这句话里的『亿人用』表达了积极。"
+  },
+  {
+   "kind": "pointer",
+   "rid": "P[random:4]",
+   "input": "总结,示例代码应该包括:",
+   "chosen": [
+    {
+     "cid": "sentiment:0",
+     "card": "sentiment",
+     "span": [
+      4,
+      5
+     ],
+     "span_text": "例",
+     "score": 0.9502,
+     "score_provenance": "replay",
+     "rank": 0,
+     "score_rank": 0,
+     "eligible": true
+    }
+   ],
+   "candidates": [
+    {
+     "cid": "pronoun:0",
+     "card": "pronoun",
+     "span": [
+      8,
+      9
+     ],
+     "span_text": "该",
+     "score": 0.7829,
+     "score_provenance": "replay",
+     "rank": null,
+     "score_rank": 1,
+     "eligible": false,
+     "ineligible_reason": "不在本轮 cards_run（计划未授权调用）",
+     "emission_index": 0,
+     "class_name": "第三人称",
+     "pos": "名"
+    },
+    {
+     "cid": "sentiment:0",
+     "card": "sentiment",
+     "span": [
+      4,
+      5
+     ],
+     "span_text": "例",
+     "score": 0.9502,
+     "score_provenance": "replay",
+     "rank": 0,
+     "score_rank": 0,
+     "eligible": true,
+     "ineligible_reason": "",
+     "emission_index": 0,
+     "class_name": "积极",
+     "pos": "形"
+    }
+   ],
+   "scores_kind": "engine_confidence（原跑未持久化；重放取回。跨卡不可比 ⇒ 只作记录内一致性核对）",
+   "ref_map": [
+    {
+     "unit_id": "ptr:P[random:4]:pronoun:0",
+     "cls": "content",
+     "text": "该",
+     "ref": 0,
+     "span": [
+      8,
+      9
+     ],
+     "out": [
+      0,
+      1
+     ]
+    },
+    {
+     "unit_id": "ptr:P[random:4]:sentiment:0",
+     "cls": "content",
+     "text": "例",
+     "ref": 1,
+     "span": [
+      4,
+      5
+     ],
+     "out": [
+      0,
+      1
+     ]
+    }
+   ],
+   "evidence": [
+    {
+     "card": "sentiment",
+     "span": [
+      4,
+      5
+     ],
+     "class_name": "积极"
+    }
+   ],
+   "unavailable": [
+    "chosen.score_original：原跑未持久化 confidence（provenance=replay）",
+    "cards_run/plan：原记录未持久化（provenance=replay）"
+   ],
+   "replay_match": true,
+   "cards_run": [
+    "sentiment",
+    "negation"
+   ],
+   "cards_run_provenance": "replay",
+   "text": "你这句话里的『例』表达了积极。"
+  },
+  {
+   "kind": "pointer",
+   "rid": "P[random:5]",
+   "input": "| 任务描述 | 任务类型 | 说明 |",
+   "chosen": [
+    {
+     "cid": "sentiment:0",
+     "card": "sentiment",
+     "span": [
+      4,
+      18
+     ],
+     "span_text": "描述 | 任务类型 | 说明",
+     "score": 0.8771,
+     "score_provenance": "replay",
+     "rank": 0,
+     "score_rank": 0,
+     "eligible": true
+    },
+    {
+     "cid": "negation:0",
+     "card": "negation",
+     "span": [
+      1,
+      7
+     ],
+     "span_text": " 任务描述 ",
+     "score": 0.8654,
+     "score_provenance": "replay",
+     "rank": 1,
+     "score_rank": 1,
+     "eligible": true
+    }
+   ],
+   "candidates": [
+    {
+     "cid": "negation:0",
+     "card": "negation",
+     "span": [
+      1,
+      7
+     ],
+     "span_text": " 任务描述 ",
+     "score": 0.8654,
+     "score_provenance": "replay",
+     "rank": 1,
+     "score_rank": 1,
+     "eligible": true,
+     "ineligible_reason": "",
+     "emission_index": 0,
+     "class_name": "否定",
+     "pos": null
+    },
+    {
+     "cid": "pronoun:0",
+     "card": "pronoun",
+     "span": [
+      5,
+      6
+     ],
+     "span_text": "述",
+     "score": 0.609,
+     "score_provenance": "replay",
+     "rank": null,
+     "score_rank": 2,
+     "eligible": false,
+     "ineligible_reason": "不在本轮 cards_run（计划未授权调用）",
+     "emission_index": 0,
+     "class_name": "第一人称",
+     "pos": "名"
+    },
+    {
+     "cid": "sentiment:0",
+     "card": "sentiment",
+     "span": [
+      4,
+      18
+     ],
+     "span_text": "描述 | 任务类型 | 说明",
+     "score": 0.8771,
+     "score_provenance": "replay",
+     "rank": 0,
+     "score_rank": 0,
+     "eligible": true,
+     "ineligible_reason": "",
+     "emission_index": 0,
+     "class_name": "愤怒",
+     "pos": "形"
+    }
+   ],
+   "scores_kind": "engine_confidence（原跑未持久化；重放取回。跨卡不可比 ⇒ 只作记录内一致性核对）",
+   "ref_map": [
+    {
+     "unit_id": "ptr:P[random:5]:negation:0",
+     "cls": "content",
+     "text": " 任务描述 ",
+     "ref": 0,
+     "span": [
+      1,
+      7
+     ],
+     "out": [
+      0,
+      6
+     ]
+    },
+    {
+     "unit_id": "ptr:P[random:5]:pronoun:0",
+     "cls": "content",
+     "text": "述",
+     "ref": 1,
+     "span": [
+      5,
+      6
+     ],
+     "out": [
+      0,
+      1
+     ]
+    },
+    {
+     "unit_id": "ptr:P[random:5]:sentiment:0",
+     "cls": "content",
+     "text": "描述 | 任务类型 | 说明",
+     "ref": 2,
+     "span": [
+      4,
+      18
+     ],
+     "out": [
+      0,
+      14
+     ]
+    }
+   ],
+   "evidence": [
+    {
+     "card": "sentiment",
+     "span": [
+      4,
+      18
+     ],
+     "class_name": "愤怒"
+    },
+    {
+     "card": "negation",
+     "span": [
+      1,
+      7
+     ],
+     "class_name": "否定"
+    }
+   ],
+   "unavailable": [
+    "chosen[negation] 的 pos 不可得（type_pos→None，card_flow.type_of 给「否」∉ POS_TYPES）⇒ 不入受约束槽",
+    "chosen.score_original：原跑未持久化 confidence（provenance=replay）",
+    "cards_run/plan：原记录未持久化（provenance=replay）"
+   ],
+   "replay_match": true,
+   "cards_run": [
+    "sentiment",
+    "negation"
+   ],
+   "cards_run_provenance": "replay",
+   "text": "你这句话里的『描述 | 任务类型 | 说明』表达了愤怒；并且有否定成分『 任务描述 』。"
+  },
+  {
+   "kind": "pointer",
+   "rid": "P[enriched:0]",
+   "input": "改变的关键是“循序渐进”",
+   "chosen": [
+    {
+     "cid": "sentiment:0",
+     "card": "sentiment",
+     "span": [
+      7,
+      9
+     ],
+     "span_text": "循序",
+     "score": 0.9325,
+     "score_provenance": "replay",
+     "rank": 0,
+     "score_rank": 3,
+     "eligible": true
+    },
+    {
+     "cid": "negation:0",
+     "card": "negation",
+     "span": [
+      0,
+      1
+     ],
+     "span_text": "改",
+     "score": 0.9145,
+     "score_provenance": "replay",
+     "rank": 1,
+     "score_rank": 4,
+     "eligible": true
+    }
+   ],
+   "candidates": [
+    {
+     "cid": "idiom:0",
+     "card": "idiom",
+     "span": [
+      7,
+      9
+     ],
+     "span_text": "循序",
+     "score": 0.992,
+     "score_provenance": "replay",
+     "rank": null,
+     "score_rank": 2,
+     "eligible": false,
+     "ineligible_reason": "不在本轮 cards_run（计划未授权调用）",
+     "emission_index": 0,
+     "class_name": "成语",
+     "pos": null
+    },
+    {
+     "cid": "negation:0",
+     "card": "negation",
+     "span": [
+      0,
+      1
+     ],
+     "span_text": "改",
+     "score": 0.9145,
+     "score_provenance": "replay",
+     "rank": 1,
+     "score_rank": 4,
+     "eligible": true,
+     "ineligible_reason": "",
+     "emission_index": 0,
+     "class_name": "否定",
+     "pos": null
+    },
+    {
+     "cid": "pronoun:0",
+     "card": "pronoun",
+     "span": [
+      0,
+      9
+     ],
+     "span_text": "改变的关键是“循序",
+     "score": 0.4964,
+     "score_provenance": "replay",
+     "rank": null,
+     "score_rank": 5,
+     "eligible": false,
+     "ineligible_reason": "不在本轮 cards_run（计划未授权调用）",
+     "emission_index": 0,
+     "class_name": "第三人称",
+     "pos": "名"
+    },
+    {
+     "cid": "relation:0",
+     "card": "relation",
+     "span": [
+      1,
+      9
+     ],
+     "span_text": "变的关键是“循序",
+     "score": 0.9964,
+     "score_provenance": "replay",
+     "rank": null,
+     "score_rank": 1,
+     "eligible": false,
+     "ineligible_reason": "不在本轮 cards_run（计划未授权调用）",
+     "emission_index": 0,
+     "class_name": "反义词",
+     "pos": null
+    },
+    {
+     "cid": "relation:1",
+     "card": "relation",
+     "span": [
+      8,
+      12
+     ],
+     "span_text": "序渐进”",
+     "score": 0.9996,
+     "score_provenance": "replay",
+     "rank": null,
+     "score_rank": 0,
+     "eligible": false,
+     "ineligible_reason": "不在本轮 cards_run（计划未授权调用）",
+     "emission_index": 1,
+     "class_name": "反义词",
+     "pos": null
+    },
+    {
+     "cid": "sentiment:0",
+     "card": "sentiment",
+     "span": [
+      7,
+      9
+     ],
+     "span_text": "循序",
+     "score": 0.9325,
+     "score_provenance": "replay",
+     "rank": 0,
+     "score_rank": 3,
+     "eligible": true,
+     "ineligible_reason": "",
+     "emission_index": 0,
+     "class_name": "积极",
+     "pos": "形"
+    }
+   ],
+   "scores_kind": "engine_confidence（原跑未持久化；重放取回。跨卡不可比 ⇒ 只作记录内一致性核对）",
+   "ref_map": [
+    {
+     "unit_id": "ptr:P[enriched:0]:idiom:0",
+     "cls": "content",
+     "text": "循序",
+     "ref": 0,
+     "span": [
+      7,
+      9
+     ],
+     "out": [
+      0,
+      2
+     ]
+    },
+    {
+     "unit_id": "ptr:P[enriched:0]:negation:0",
+     "cls": "content",
+     "text": "改",
+     "ref": 1,
+     "span": [
+      0,
+      1
+     ],
+     "out": [
+      0,
+      1
+     ]
+    },
+    {
+     "unit_id": "ptr:P[enriched:0]:pronoun:0",
+     "cls": "content",
+     "text": "改变的关键是“循序",
+     "ref": 2,
+     "span": [
+      0,
+      9
+     ],
+     "out": [
+      0,
+      9
+     ]
+    },
+    {
+     "unit_id": "ptr:P[enriched:0]:relation:0",
+     "cls": "content",
+     "text": "变的关键是“循序",
+     "ref": 3,
+     "span": [
+      1,
+      9
+     ],
+     "out": [
+      0,
+      8
+     ]
+    },
+    {
+     "unit_id": "ptr:P[enriched:0]:relation:1",
+     "cls": "content",
+     "text": "序渐进”",
+     "ref": 4,
+     "span": [
+      8,
+      12
+     ],
+     "out": [
+      0,
+      4
+     ]
+    },
+    {
+     "unit_id": "ptr:P[enriched:0]:sentiment:0",
+     "cls": "content",
+     "text": "循序",
+     "ref": 5,
+     "span": [
+      7,
+      9
+     ],
+     "out": [
+      0,
+      2
+     ]
+    }
+   ],
+   "evidence": [
+    {
+     "card": "sentiment",
+     "span": [
+      7,
+      9
+     ],
+     "class_name": "积极"
+    },
+    {
+     "card": "negation",
+     "span": [
+      0,
+      1
+     ],
+     "class_name": "否定"
+    }
+   ],
+   "unavailable": [
+    "chosen[negation] 的 pos 不可得（type_pos→None，card_flow.type_of 给「否」∉ POS_TYPES）⇒ 不入受约束槽",
+    "chosen.score_original：原跑未持久化 confidence（provenance=replay）",
+    "cards_run/plan：原记录未持久化（provenance=replay）"
+   ],
+   "replay_match": true,
+   "cards_run": [
+    "sentiment",
+    "negation"
+   ],
+   "cards_run_provenance": "replay",
+   "text": "你这句话里的『循序』表达了积极；并且有否定成分『改』。"
+  },
+  {
+   "kind": "pointer",
+   "rid": "P[enriched:1]",
+   "input": "2. **循序渐进**:从低强度开始,逐步增加时长和难度",
+   "chosen": [
+    {
+     "cid": "sentiment:0",
+     "card": "sentiment",
+     "span": [
+      26,
+      28
+     ],
+     "span_text": "难度",
+     "score": 0.6872,
+     "score_provenance": "replay",
+     "rank": 0,
+     "score_rank": 3,
+     "eligible": true
+    },
+    {
+     "cid": "negation:0",
+     "card": "negation",
+     "span": [
+      5,
+      10
+     ],
+     "span_text": "循序渐进*",
+     "score": 0.8634,
+     "score_provenance": "replay",
+     "rank": 1,
+     "score_rank": 2,
+     "eligible": true
+    }
+   ],
+   "candidates": [
+    {
+     "cid": "negation:0",
+     "card": "negation",
+     "span": [
+      5,
+      10
+     ],
+     "span_text": "循序渐进*",
+     "score": 0.8634,
+     "score_provenance": "replay",
+     "rank": 1,
+     "score_rank": 2,
+     "eligible": true,
+     "ineligible_reason": "",
+     "emission_index": 0,
+     "class_name": "否定",
+     "pos": null
+    },
+    {
+     "cid": "pronoun:0",
+     "card": "pronoun",
+     "span": [
+      4,
+      28
+     ],
+     "span_text": "*循序渐进**:从低强度开始,逐步增加时长和难度",
+     "score": 0.6585,
+     "score_provenance": "replay",
+     "rank": null,
+     "score_rank": 4,
+     "eligible": false,
+     "ineligible_reason": "不在本轮 cards_run（计划未授权调用）",
+     "emission_index": 0,
+     "class_name": "第三人称",
+     "pos": "名"
+    },
+    {
+     "cid": "relation:0",
+     "card": "relation",
+     "span": [
+      12,
+      17
+     ],
+     "span_text": "从低强度开",
+     "score": 0.9803,
+     "score_provenance": "replay",
+     "rank": null,
+     "score_rank": 1,
+     "eligible": false,
+     "ineligible_reason": "不在本轮 cards_run（计划未授权调用）",
+     "emission_index": 0,
+     "class_name": "近义词",
+     "pos": null
+    },
+    {
+     "cid": "relation:1",
+     "card": "relation",
+     "span": [
+      19,
+      28
+     ],
+     "span_text": "逐步增加时长和难度",
+     "score": 0.9998,
+     "score_provenance": "replay",
+     "rank": null,
+     "score_rank": 0,
+     "eligible": false,
+     "ineligible_reason": "不在本轮 cards_run（计划未授权调用）",
+     "emission_index": 1,
+     "class_name": "近义词",
+     "pos": null
+    },
+    {
+     "cid": "sentiment:0",
+     "card": "sentiment",
+     "span": [
+      26,
+      28
+     ],
+     "span_text": "难度",
+     "score": 0.6872,
+     "score_provenance": "replay",
+     "rank": 0,
+     "score_rank": 3,
+     "eligible": true,
+     "ineligible_reason": "",
+     "emission_index": 0,
+     "class_name": "愤怒",
+     "pos": "形"
+    }
+   ],
+   "scores_kind": "engine_confidence（原跑未持久化；重放取回。跨卡不可比 ⇒ 只作记录内一致性核对）",
+   "ref_map": [
+    {
+     "unit_id": "ptr:P[enriched:1]:negation:0",
+     "cls": "content",
+     "text": "循序渐进*",
+     "ref": 0,
+     "span": [
+      5,
+      10
+     ],
+     "out": [
+      0,
+      5
+     ]
+    },
+    {
+     "unit_id": "ptr:P[enriched:1]:pronoun:0",
+     "cls": "content",
+     "text": "*循序渐进**:从低强度开始,逐步增加时长和难度",
+     "ref": 1,
+     "span": [
+      4,
+      28
+     ],
+     "out": [
+      0,
+      24
+     ]
+    },
+    {
+     "unit_id": "ptr:P[enriched:1]:relation:0",
+     "cls": "content",
+     "text": "从低强度开",
+     "ref": 2,
+     "span": [
+      12,
+      17
+     ],
+     "out": [
+      0,
+      5
+     ]
+    },
+    {
+     "unit_id": "ptr:P[enriched:1]:relation:1",
+     "cls": "content",
+     "text": "逐步增加时长和难度",
+     "ref": 3,
+     "span": [
+      19,
+      28
+     ],
+     "out": [
+      0,
+      9
+     ]
+    },
+    {
+     "unit_id": "ptr:P[enriched:1]:sentiment:0",
+     "cls": "content",
+     "text": "难度",
+     "ref": 4,
+     "span": [
+      26,
+      28
+     ],
+     "out": [
+      0,
+      2
+     ]
+    }
+   ],
+   "evidence": [
+    {
+     "card": "sentiment",
+     "span": [
+      26,
+      28
+     ],
+     "class_name": "愤怒"
+    },
+    {
+     "card": "negation",
+     "span": [
+      5,
+      10
+     ],
+     "class_name": "否定"
+    }
+   ],
+   "unavailable": [
+    "chosen[negation] 的 pos 不可得（type_pos→None，card_flow.type_of 给「否」∉ POS_TYPES）⇒ 不入受约束槽",
+    "chosen.score_original：原跑未持久化 confidence（provenance=replay）",
+    "cards_run/plan：原记录未持久化（provenance=replay）"
+   ],
+   "replay_match": true,
+   "cards_run": [
+    "sentiment",
+    "negation"
+   ],
+   "cards_run_provenance": "replay",
+   "text": "你这句话里的『难度』表达了愤怒；并且有否定成分『循序渐进*』。"
+  },
+  {
+   "kind": "pointer",
+   "rid": "P[enriched:2]",
+   "input": "比如集体主义和个人主义文化下的行为差异,但基本需求可能相似",
+   "chosen": [
+    {
+     "cid": "sentiment:0",
+     "card": "sentiment",
+     "span": [
+      17,
+      29
+     ],
+     "span_text": "差异,但基本需求可能相似",
+     "score": 0.9796,
+     "score_provenance": "replay",
+     "rank": 0,
+     "score_rank": 1,
+     "eligible": true
+    }
+   ],
+   "candidates": [
+    {
+     "cid": "pronoun:0",
+     "card": "pronoun",
+     "span": [
+      28,
+      29
+     ],
+     "span_text": "似",
+     "score": 0.5479,
+     "score_provenance": "replay",
+     "rank": null,
+     "score_rank": 2,
+     "eligible": false,
+     "ineligible_reason": "不在本轮 cards_run（计划未授权调用）",
+     "emission_index": 0,
+     "class_name": "第二人称",
+     "pos": "名"
+    },
+    {
+     "cid": "relation:0",
+     "card": "relation",
+     "span": [
+      0,
+      6
+     ],
+     "span_text": "比如集体主义",
+     "score": 0.5065,
+     "score_provenance": "replay",
+     "rank": null,
+     "score_rank": 3,
+     "eligible": false,
+     "ineligible_reason": "不在本轮 cards_run（计划未授权调用）",
+     "emission_index": 0,
+     "class_name": "反义词",
+     "pos": null
+    },
+    {
+     "cid": "relation:1",
+     "card": "relation",
+     "span": [
+      22,
+      26
+     ],
+     "span_text": "本需求可",
+     "score": 0.9973,
+     "score_provenance": "replay",
+     "rank": null,
+     "score_rank": 0,
+     "eligible": false,
+     "ineligible_reason": "不在本轮 cards_run（计划未授权调用）",
+     "emission_index": 1,
+     "class_name": "反义词",
+     "pos": null
+    },
+    {
+     "cid": "sentiment:0",
+     "card": "sentiment",
+     "span": [
+      17,
+      29
+     ],
+     "span_text": "差异,但基本需求可能相似",
+     "score": 0.9796,
+     "score_provenance": "replay",
+     "rank": 0,
+     "score_rank": 1,
+     "eligible": true,
+     "ineligible_reason": "",
+     "emission_index": 0,
+     "class_name": "积极",
+     "pos": "形"
+    }
+   ],
+   "scores_kind": "engine_confidence（原跑未持久化；重放取回。跨卡不可比 ⇒ 只作记录内一致性核对）",
+   "ref_map": [
+    {
+     "unit_id": "ptr:P[enriched:2]:pronoun:0",
+     "cls": "content",
+     "text": "似",
+     "ref": 0,
+     "span": [
+      28,
+      29
+     ],
+     "out": [
+      0,
+      1
+     ]
+    },
+    {
+     "unit_id": "ptr:P[enriched:2]:relation:0",
+     "cls": "content",
+     "text": "比如集体主义",
+     "ref": 1,
+     "span": [
+      0,
+      6
+     ],
+     "out": [
+      0,
+      6
+     ]
+    },
+    {
+     "unit_id": "ptr:P[enriched:2]:relation:1",
+     "cls": "content",
+     "text": "本需求可",
+     "ref": 2,
+     "span": [
+      22,
+      26
+     ],
+     "out": [
+      0,
+      4
+     ]
+    },
+    {
+     "unit_id": "ptr:P[enriched:2]:sentiment:0",
+     "cls": "content",
+     "text": "差异,但基本需求可能相似",
+     "ref": 3,
+     "span": [
+      17,
+      29
+     ],
+     "out": [
+      0,
+      12
+     ]
+    }
+   ],
+   "evidence": [
+    {
+     "card": "sentiment",
+     "span": [
+      17,
+      29
+     ],
+     "class_name": "积极"
+    }
+   ],
+   "unavailable": [
+    "chosen.score_original：原跑未持久化 confidence（provenance=replay）",
+    "cards_run/plan：原记录未持久化（provenance=replay）"
+   ],
+   "replay_match": true,
+   "cards_run": [
+    "sentiment",
+    "negation"
+   ],
+   "cards_run_provenance": "replay",
+   "text": "你这句话里的『差异,但基本需求可能相似』表达了积极。"
+  },
+  {
+   "kind": "pointer",
+   "rid": "P[enriched:3]",
+   "input": "💡【一见钟情の颜值】",
+   "chosen": [
+    {
+     "cid": "sentiment:0",
+     "card": "sentiment",
+     "span": [
+      2,
+      5
+     ],
+     "span_text": "一见钟",
+     "score": 0.5135,
+     "score_provenance": "replay",
+     "rank": 0,
+     "score_rank": 3,
+     "eligible": true
+    }
+   ],
+   "candidates": [
+    {
+     "cid": "pronoun:0",
+     "card": "pronoun",
+     "span": [
+      0,
+      10
+     ],
+     "span_text": "💡【一见钟情の颜值】",
+     "score": 0.7361,
+     "score_provenance": "replay",
+     "rank": null,
+     "score_rank": 2,
+     "eligible": false,
+     "ineligible_reason": "不在本轮 cards_run（计划未授权调用）",
+     "emission_index": 0,
+     "class_name": "第二人称",
+     "pos": "名"
+    },
+    {
+     "cid": "relation:0",
+     "card": "relation",
+     "span": [
+      0,
+      6
+     ],
+     "span_text": "💡【一见钟情",
+     "score": 0.7983,
+     "score_provenance": "replay",
+     "rank": null,
+     "score_rank": 1,
+     "eligible": false,
+     "ineligible_reason": "不在本轮 cards_run（计划未授权调用）",
+     "emission_index": 0,
+     "class_name": "近义词",
+     "pos": null
+    },
+    {
+     "cid": "relation:1",
+     "card": "relation",
+     "span": [
+      0,
+      5
+     ],
+     "span_text": "💡【一见钟",
+     "score": 0.9992,
+     "score_provenance": "replay",
+     "rank": null,
+     "score_rank": 0,
+     "eligible": false,
+     "ineligible_reason": "不在本轮 cards_run（计划未授权调用）",
+     "emission_index": 1,
+     "class_name": "近义词",
+     "pos": null
+    },
+    {
+     "cid": "sentiment:0",
+     "card": "sentiment",
+     "span": [
+      2,
+      5
+     ],
+     "span_text": "一见钟",
+     "score": 0.5135,
+     "score_provenance": "replay",
+     "rank": 0,
+     "score_rank": 3,
+     "eligible": true,
+     "ineligible_reason": "",
+     "emission_index": 0,
+     "class_name": "积极",
+     "pos": "形"
+    }
+   ],
+   "scores_kind": "engine_confidence（原跑未持久化；重放取回。跨卡不可比 ⇒ 只作记录内一致性核对）",
+   "ref_map": [
+    {
+     "unit_id": "ptr:P[enriched:3]:pronoun:0",
+     "cls": "content",
+     "text": "💡【一见钟情の颜值】",
+     "ref": 0,
+     "span": [
+      0,
+      10
+     ],
+     "out": [
+      0,
+      10
+     ]
+    },
+    {
+     "unit_id": "ptr:P[enriched:3]:relation:0",
+     "cls": "content",
+     "text": "💡【一见钟情",
+     "ref": 1,
+     "span": [
+      0,
+      6
+     ],
+     "out": [
+      0,
+      6
+     ]
+    },
+    {
+     "unit_id": "ptr:P[enriched:3]:relation:1",
+     "cls": "content",
+     "text": "💡【一见钟",
+     "ref": 2,
+     "span": [
+      0,
+      5
+     ],
+     "out": [
+      0,
+      5
+     ]
+    },
+    {
+     "unit_id": "ptr:P[enriched:3]:sentiment:0",
+     "cls": "content",
+     "text": "一见钟",
+     "ref": 3,
+     "span": [
+      2,
+      5
+     ],
+     "out": [
+      0,
+      3
+     ]
+    }
+   ],
+   "evidence": [
+    {
+     "card": "sentiment",
+     "span": [
+      2,
+      5
+     ],
+     "class_name": "积极"
+    }
+   ],
+   "unavailable": [
+    "chosen.score_original：原跑未持久化 confidence（provenance=replay）",
+    "cards_run/plan：原记录未持久化（provenance=replay）"
+   ],
+   "replay_match": true,
+   "cards_run": [
+    "sentiment",
+    "negation"
+   ],
+   "cards_run_provenance": "replay",
+   "text": "你这句话里的『一见钟』表达了积极。"
+  },
+  {
+   "kind": "pointer",
+   "rid": "P[enriched:4]",
+   "input": "- **体会**:社会实践不是按部就班的作业,沟通和应变能力更重要",
+   "chosen": [
+    {
+     "cid": "sentiment:0",
+     "card": "sentiment",
+     "span": [
+      13,
+      30
+     ],
+     "span_text": "不是按部就班的作业,沟通和应变能力",
+     "score": 0.491,
+     "score_provenance": "replay",
+     "rank": 0,
+     "score_rank": 3,
+     "eligible": true
+    },
+    {
+     "cid": "negation:0",
+     "card": "negation",
+     "span": [
+      3,
+      14
+     ],
+     "span_text": "*体会**:社会实践不",
+     "score": 0.9963,
+     "score_provenance": "replay",
+     "rank": 1,
+     "score_rank": 1,
+     "eligible": true
+    }
+   ],
+   "candidates": [
+    {
+     "cid": "negation:0",
+     "card": "negation",
+     "span": [
+      3,
+      14
+     ],
+     "span_text": "*体会**:社会实践不",
+     "score": 0.9963,
+     "score_provenance": "replay",
+     "rank": 1,
+     "score_rank": 1,
+     "eligible": true,
+     "ineligible_reason": "",
+     "emission_index": 0,
+     "class_name": "否定",
+     "pos": null
+    },
+    {
+     "cid": "negation:1",
+     "card": "negation",
+     "span": [
+      13,
+      14
+     ],
+     "span_text": "不",
+     "score": 0.9994,
+     "score_provenance": "replay",
+     "rank": 2,
+     "score_rank": 0,
+     "eligible": true,
+     "ineligible_reason": "",
+     "emission_index": 1,
+     "class_name": "否定",
+     "pos": null
+    },
+    {
+     "cid": "pronoun:0",
+     "card": "pronoun",
+     "span": [
+      8,
+      13
+     ],
+     "span_text": ":社会实践",
+     "score": 0.8029,
+     "score_provenance": "replay",
+     "rank": null,
+     "score_rank": 2,
+     "eligible": false,
+     "ineligible_reason": "不在本轮 cards_run（计划未授权调用）",
+     "emission_index": 0,
+     "class_name": "第三人称",
+     "pos": "名"
+    },
+    {
+     "cid": "sentiment:0",
+     "card": "sentiment",
+     "span": [
+      13,
+      30
+     ],
+     "span_text": "不是按部就班的作业,沟通和应变能力",
+     "score": 0.491,
+     "score_provenance": "replay",
+     "rank": 0,
+     "score_rank": 3,
+     "eligible": true,
+     "ineligible_reason": "",
+     "emission_index": 0,
+     "class_name": "愤怒",
+     "pos": "形"
+    }
+   ],
+   "scores_kind": "engine_confidence（原跑未持久化；重放取回。跨卡不可比 ⇒ 只作记录内一致性核对）",
+   "ref_map": [
+    {
+     "unit_id": "ptr:P[enriched:4]:negation:0",
+     "cls": "content",
+     "text": "*体会**:社会实践不",
+     "ref": 0,
+     "span": [
+      3,
+      14
+     ],
+     "out": [
+      0,
+      11
+     ]
+    },
+    {
+     "unit_id": "ptr:P[enriched:4]:negation:1",
+     "cls": "content",
+     "text": "不",
+     "ref": 1,
+     "span": [
+      13,
+      14
+     ],
+     "out": [
+      0,
+      1
+     ]
+    },
+    {
+     "unit_id": "ptr:P[enriched:4]:pronoun:0",
+     "cls": "content",
+     "text": ":社会实践",
+     "ref": 2,
+     "span": [
+      8,
+      13
+     ],
+     "out": [
+      0,
+      5
+     ]
+    },
+    {
+     "unit_id": "ptr:P[enriched:4]:sentiment:0",
+     "cls": "content",
+     "text": "不是按部就班的作业,沟通和应变能力",
+     "ref": 3,
+     "span": [
+      13,
+      30
+     ],
+     "out": [
+      0,
+      17
+     ]
+    }
+   ],
+   "evidence": [
+    {
+     "card": "sentiment",
+     "span": [
+      13,
+      30
+     ],
+     "class_name": "愤怒"
+    },
+    {
+     "card": "negation",
+     "span": [
+      3,
+      14
+     ],
+     "class_name": "否定"
+    }
+   ],
+   "unavailable": [
+    "chosen[negation] 的 pos 不可得（type_pos→None，card_flow.type_of 给「否」∉ POS_TYPES）⇒ 不入受约束槽",
+    "chosen.score_original：原跑未持久化 confidence（provenance=replay）",
+    "cards_run/plan：原记录未持久化（provenance=replay）"
+   ],
+   "replay_match": true,
+   "cards_run": [
+    "sentiment",
+    "negation"
+   ],
+   "cards_run_provenance": "replay",
+   "text": "你这句话里的『不是按部就班的作业,沟通和应变能力』表达了愤怒；并且有否定成分『*体会**:社会实践不』。"
+  },
+  {
+   "kind": "pointer",
+   "rid": "P[enriched:5]",
+   "input": "8. **循序渐进,培养习惯**",
+   "chosen": [
+    {
+     "cid": "sentiment:0",
+     "card": "sentiment",
+     "span": [
+      7,
+      9
+     ],
+     "span_text": "渐进",
+     "score": 0.8548,
+     "score_provenance": "replay",
+     "rank": 0,
+     "score_rank": 1,
+     "eligible": true
+    },
+    {
+     "cid": "negation:0",
+     "card": "negation",
+     "span": [
+      2,
+      3
+     ],
+     "span_text": " ",
+     "score": 0.9747,
+     "score_provenance": "replay",
+     "rank": 1,
+     "score_rank": 0,
+     "eligible": true
+    }
+   ],
+   "candidates": [
+    {
+     "cid": "negation:0",
+     "card": "negation",
+     "span": [
+      2,
+      3
+     ],
+     "span_text": " ",
+     "score": 0.9747,
+     "score_provenance": "replay",
+     "rank": 1,
+     "score_rank": 0,
+     "eligible": true,
+     "ineligible_reason": "",
+     "emission_index": 0,
+     "class_name": "否定",
+     "pos": null
+    },
+    {
+     "cid": "pronoun:0",
+     "card": "pronoun",
+     "span": [
+      0,
+      13
+     ],
+     "span_text": "8. **循序渐进,培养习",
+     "score": 0.5504,
+     "score_provenance": "replay",
+     "rank": null,
+     "score_rank": 2,
+     "eligible": false,
+     "ineligible_reason": "不在本轮 cards_run（计划未授权调用）",
+     "emission_index": 0,
+     "class_name": "第一人称",
+     "pos": "名"
+    },
+    {
+     "cid": "sentiment:0",
+     "card": "sentiment",
+     "span": [
+      7,
+      9
+     ],
+     "span_text": "渐进",
+     "score": 0.8548,
+     "score_provenance": "replay",
+     "rank": 0,
+     "score_rank": 1,
+     "eligible": true,
+     "ineligible_reason": "",
+     "emission_index": 0,
+     "class_name": "愤怒",
+     "pos": "形"
+    }
+   ],
+   "scores_kind": "engine_confidence（原跑未持久化；重放取回。跨卡不可比 ⇒ 只作记录内一致性核对）",
+   "ref_map": [
+    {
+     "unit_id": "ptr:P[enriched:5]:negation:0",
+     "cls": "content",
+     "text": " ",
+     "ref": 0,
+     "span": [
+      2,
+      3
+     ],
+     "out": [
+      0,
+      1
+     ]
+    },
+    {
+     "unit_id": "ptr:P[enriched:5]:pronoun:0",
+     "cls": "content",
+     "text": "8. **循序渐进,培养习",
+     "ref": 1,
+     "span": [
+      0,
+      13
+     ],
+     "out": [
+      0,
+      13
+     ]
+    },
+    {
+     "unit_id": "ptr:P[enriched:5]:sentiment:0",
+     "cls": "content",
+     "text": "渐进",
+     "ref": 2,
+     "span": [
+      7,
+      9
+     ],
+     "out": [
+      0,
+      2
+     ]
+    }
+   ],
+   "evidence": [
+    {
+     "card": "sentiment",
+     "span": [
+      7,
+      9
+     ],
+     "class_name": "愤怒"
+    },
+    {
+     "card": "negation",
+     "span": [
+      2,
+      3
+     ],
+     "class_name": "否定"
+    }
+   ],
+   "unavailable": [
+    "chosen[negation] 的 pos 不可得（type_pos→None，card_flow.type_of 给「否」∉ POS_TYPES）⇒ 不入受约束槽",
+    "chosen.score_original：原跑未持久化 confidence（provenance=replay）",
+    "cards_run/plan：原记录未持久化（provenance=replay）"
+   ],
+   "replay_match": true,
+   "cards_run": [
+    "sentiment",
+    "negation"
+   ],
+   "cards_run_provenance": "replay",
+   "text": "你这句话里的『渐进』表达了愤怒；并且有否定成分『 』。"
+  }
+ ],
+ "l1_cards": [
+  {
+   "rid": "P[random:0]",
+   "kind": "text",
+   "explainable": true,
+   "why": "",
+   "unrenderable_chosen": [
+    {
+     "card": "negation",
+     "span": [
+      10,
+      11
+     ],
+     "span_text": "不",
+     "why": "pos 不可得/不在 POS_TYPES ⇒ 不入受约束槽"
+    }
+   ],
+   "text": "「满」。",
+   "evidence": [
+    {
+     "source": "table",
+     "unit_id": "P01#0",
+     "word": "「",
+     "cls": "formal"
+    },
+    {
+     "source": "span",
+     "ref": 4,
+     "text": "满",
+     "span": [
+      21,
+      22
+     ],
+     "candidate_id": "ptr:P[random:0]:sentiment:0"
+    },
+    {
+     "source": "table",
+     "unit_id": "P01#1",
+     "word": "」。",
+     "cls": "formal"
+    }
+   ],
+   "instruction": {
+    "skeleton_id": "P01",
+    "assignment": [
+     4
+    ]
+   },
+   "ref_map": [
+    {
+     "unit_id": "P01#0",
+     "cls": "formal",
+     "text": "「",
+     "ref": "P01",
+     "span": null,
+     "out": [
+      0,
+      1
+     ]
+    },
+    {
+     "unit_id": "ref:4",
+     "cls": "content",
+     "text": "满",
+     "ref": 4,
+     "span": [
+      21,
+      22
+     ],
+     "out": [
+      1,
+      2
+     ]
+    },
+    {
+     "unit_id": "P01#1",
+     "cls": "formal",
+     "text": "」。",
+     "ref": "P01",
+     "span": null,
+     "out": [
+      2,
+      4
+     ]
+    }
+   ],
+   "reason": "",
+   "source": {
+    "rid": "P[random:0]",
+    "kind": "pointer",
+    "skeleton_id": "P01",
+    "assignment": [
+     4
+    ]
+   }
+  },
+  {
+   "rid": "P[random:1]",
+   "kind": "text",
+   "explainable": true,
+   "why": "",
+   "unrenderable_chosen": [],
+   "text": "「落叶书签」。",
+   "evidence": [
+    {
+     "source": "table",
+     "unit_id": "P01#0",
+     "word": "「",
+     "cls": "formal"
+    },
+    {
+     "source": "span",
+     "ref": 3,
+     "text": "落叶书签",
+     "span": [
+      12,
+      16
+     ],
+     "candidate_id": "ptr:P[random:1]:sentiment:0"
+    },
+    {
+     "source": "table",
+     "unit_id": "P01#1",
+     "word": "」。",
+     "cls": "formal"
+    }
+   ],
+   "instruction": {
+    "skeleton_id": "P01",
+    "assignment": [
+     3
+    ]
+   },
+   "ref_map": [
+    {
+     "unit_id": "P01#0",
+     "cls": "formal",
+     "text": "「",
+     "ref": "P01",
+     "span": null,
+     "out": [
+      0,
+      1
+     ]
+    },
+    {
+     "unit_id": "ref:3",
+     "cls": "content",
+     "text": "落叶书签",
+     "ref": 3,
+     "span": [
+      12,
+      16
+     ],
+     "out": [
+      1,
+      5
+     ]
+    },
+    {
+     "unit_id": "P01#1",
+     "cls": "formal",
+     "text": "」。",
+     "ref": "P01",
+     "span": null,
+     "out": [
+      5,
+      7
+     ]
+    }
+   ],
+   "reason": "",
+   "source": {
+    "rid": "P[random:1]",
+    "kind": "pointer",
+    "skeleton_id": "P01",
+    "assignment": [
+     3
+    ]
+   }
+  },
+  {
+   "rid": "P[random:2]",
+   "kind": "text",
+   "explainable": true,
+   "why": "",
+   "unrenderable_chosen": [],
+   "text": "「优势:适」。",
+   "evidence": [
+    {
+     "source": "table",
+     "unit_id": "P01#0",
+     "word": "「",
+     "cls": "formal"
+    },
+    {
+     "source": "span",
+     "ref": 3,
+     "text": "优势:适",
+     "span": [
+      0,
+      4
+     ],
+     "candidate_id": "ptr:P[random:2]:sentiment:0"
+    },
+    {
+     "source": "table",
+     "unit_id": "P01#1",
+     "word": "」。",
+     "cls": "formal"
+    }
+   ],
+   "instruction": {
+    "skeleton_id": "P01",
+    "assignment": [
+     3
+    ]
+   },
+   "ref_map": [
+    {
+     "unit_id": "P01#0",
+     "cls": "formal",
+     "text": "「",
+     "ref": "P01",
+     "span": null,
+     "out": [
+      0,
+      1
+     ]
+    },
+    {
+     "unit_id": "ref:3",
+     "cls": "content",
+     "text": "优势:适",
+     "ref": 3,
+     "span": [
+      0,
+      4
+     ],
+     "out": [
+      1,
+      5
+     ]
+    },
+    {
+     "unit_id": "P01#1",
+     "cls": "formal",
+     "text": "」。",
+     "ref": "P01",
+     "span": null,
+     "out": [
+      5,
+      7
+     ]
+    }
+   ],
+   "reason": "",
+   "source": {
+    "rid": "P[random:2]",
+    "kind": "pointer",
+    "skeleton_id": "P01",
+    "assignment": [
+     3
+    ]
+   }
+  },
+  {
+   "rid": "P[random:3]",
+   "kind": "text",
+   "explainable": true,
+   "why": "",
+   "unrenderable_chosen": [],
+   "text": "「亿人用」。",
+   "evidence": [
+    {
+     "source": "table",
+     "unit_id": "P01#0",
+     "word": "「",
+     "cls": "formal"
+    },
+    {
+     "source": "span",
+     "ref": 2,
+     "text": "亿人用",
+     "span": [
+      4,
+      7
+     ],
+     "candidate_id": "ptr:P[random:3]:sentiment:0"
+    },
+    {
+     "source": "table",
+     "unit_id": "P01#1",
+     "word": "」。",
+     "cls": "formal"
+    }
+   ],
+   "instruction": {
+    "skeleton_id": "P01",
+    "assignment": [
+     2
+    ]
+   },
+   "ref_map": [
+    {
+     "unit_id": "P01#0",
+     "cls": "formal",
+     "text": "「",
+     "ref": "P01",
+     "span": null,
+     "out": [
+      0,
+      1
+     ]
+    },
+    {
+     "unit_id": "ref:2",
+     "cls": "content",
+     "text": "亿人用",
+     "ref": 2,
+     "span": [
+      4,
+      7
+     ],
+     "out": [
+      1,
+      4
+     ]
+    },
+    {
+     "unit_id": "P01#1",
+     "cls": "formal",
+     "text": "」。",
+     "ref": "P01",
+     "span": null,
+     "out": [
+      4,
+      6
+     ]
+    }
+   ],
+   "reason": "",
+   "source": {
+    "rid": "P[random:3]",
+    "kind": "pointer",
+    "skeleton_id": "P01",
+    "assignment": [
+     2
+    ]
+   }
+  },
+  {
+   "rid": "P[random:4]",
+   "kind": "text",
+   "explainable": true,
+   "why": "",
+   "unrenderable_chosen": [],
+   "text": "「例」。",
+   "evidence": [
+    {
+     "source": "table",
+     "unit_id": "P01#0",
+     "word": "「",
+     "cls": "formal"
+    },
+    {
+     "source": "span",
+     "ref": 1,
+     "text": "例",
+     "span": [
+      4,
+      5
+     ],
+     "candidate_id": "ptr:P[random:4]:sentiment:0"
+    },
+    {
+     "source": "table",
+     "unit_id": "P01#1",
+     "word": "」。",
+     "cls": "formal"
+    }
+   ],
+   "instruction": {
+    "skeleton_id": "P01",
+    "assignment": [
+     1
+    ]
+   },
+   "ref_map": [
+    {
+     "unit_id": "P01#0",
+     "cls": "formal",
+     "text": "「",
+     "ref": "P01",
+     "span": null,
+     "out": [
+      0,
+      1
+     ]
+    },
+    {
+     "unit_id": "ref:1",
+     "cls": "content",
+     "text": "例",
+     "ref": 1,
+     "span": [
+      4,
+      5
+     ],
+     "out": [
+      1,
+      2
+     ]
+    },
+    {
+     "unit_id": "P01#1",
+     "cls": "formal",
+     "text": "」。",
+     "ref": "P01",
+     "span": null,
+     "out": [
+      2,
+      4
+     ]
+    }
+   ],
+   "reason": "",
+   "source": {
+    "rid": "P[random:4]",
+    "kind": "pointer",
+    "skeleton_id": "P01",
+    "assignment": [
+     1
+    ]
+   }
+  },
+  {
+   "rid": "P[random:5]",
+   "kind": "text",
+   "explainable": true,
+   "why": "",
+   "unrenderable_chosen": [
+    {
+     "card": "negation",
+     "span": [
+      1,
+      7
+     ],
+     "span_text": " 任务描述 ",
+     "why": "pos 不可得/不在 POS_TYPES ⇒ 不入受约束槽"
+    }
+   ],
+   "text": "「描述 | 任务类型 | 说明」。",
+   "evidence": [
+    {
+     "source": "table",
+     "unit_id": "P01#0",
+     "word": "「",
+     "cls": "formal"
+    },
+    {
+     "source": "span",
+     "ref": 2,
+     "text": "描述 | 任务类型 | 说明",
+     "span": [
+      4,
+      18
+     ],
+     "candidate_id": "ptr:P[random:5]:sentiment:0"
+    },
+    {
+     "source": "table",
+     "unit_id": "P01#1",
+     "word": "」。",
+     "cls": "formal"
+    }
+   ],
+   "instruction": {
+    "skeleton_id": "P01",
+    "assignment": [
+     2
+    ]
+   },
+   "ref_map": [
+    {
+     "unit_id": "P01#0",
+     "cls": "formal",
+     "text": "「",
+     "ref": "P01",
+     "span": null,
+     "out": [
+      0,
+      1
+     ]
+    },
+    {
+     "unit_id": "ref:2",
+     "cls": "content",
+     "text": "描述 | 任务类型 | 说明",
+     "ref": 2,
+     "span": [
+      4,
+      18
+     ],
+     "out": [
+      1,
+      15
+     ]
+    },
+    {
+     "unit_id": "P01#1",
+     "cls": "formal",
+     "text": "」。",
+     "ref": "P01",
+     "span": null,
+     "out": [
+      15,
+      17
+     ]
+    }
+   ],
+   "reason": "",
+   "source": {
+    "rid": "P[random:5]",
+    "kind": "pointer",
+    "skeleton_id": "P01",
+    "assignment": [
+     2
+    ]
+   }
+  },
+  {
+   "rid": "P[enriched:0]",
+   "kind": "text",
+   "explainable": true,
+   "why": "",
+   "unrenderable_chosen": [
+    {
+     "card": "negation",
+     "span": [
+      0,
+      1
+     ],
+     "span_text": "改",
+     "why": "pos 不可得/不在 POS_TYPES ⇒ 不入受约束槽"
+    }
+   ],
+   "text": "「循序」。",
+   "evidence": [
+    {
+     "source": "table",
+     "unit_id": "P01#0",
+     "word": "「",
+     "cls": "formal"
+    },
+    {
+     "source": "span",
+     "ref": 5,
+     "text": "循序",
+     "span": [
+      7,
+      9
+     ],
+     "candidate_id": "ptr:P[enriched:0]:sentiment:0"
+    },
+    {
+     "source": "table",
+     "unit_id": "P01#1",
+     "word": "」。",
+     "cls": "formal"
+    }
+   ],
+   "instruction": {
+    "skeleton_id": "P01",
+    "assignment": [
+     5
+    ]
+   },
+   "ref_map": [
+    {
+     "unit_id": "P01#0",
+     "cls": "formal",
+     "text": "「",
+     "ref": "P01",
+     "span": null,
+     "out": [
+      0,
+      1
+     ]
+    },
+    {
+     "unit_id": "ref:5",
+     "cls": "content",
+     "text": "循序",
+     "ref": 5,
+     "span": [
+      7,
+      9
+     ],
+     "out": [
+      1,
+      3
+     ]
+    },
+    {
+     "unit_id": "P01#1",
+     "cls": "formal",
+     "text": "」。",
+     "ref": "P01",
+     "span": null,
+     "out": [
+      3,
+      5
+     ]
+    }
+   ],
+   "reason": "",
+   "source": {
+    "rid": "P[enriched:0]",
+    "kind": "pointer",
+    "skeleton_id": "P01",
+    "assignment": [
+     5
+    ]
+   }
+  },
+  {
+   "rid": "P[enriched:1]",
+   "kind": "text",
+   "explainable": true,
+   "why": "",
+   "unrenderable_chosen": [
+    {
+     "card": "negation",
+     "span": [
+      5,
+      10
+     ],
+     "span_text": "循序渐进*",
+     "why": "pos 不可得/不在 POS_TYPES ⇒ 不入受约束槽"
+    }
+   ],
+   "text": "「难度」。",
+   "evidence": [
+    {
+     "source": "table",
+     "unit_id": "P01#0",
+     "word": "「",
+     "cls": "formal"
+    },
+    {
+     "source": "span",
+     "ref": 4,
+     "text": "难度",
+     "span": [
+      26,
+      28
+     ],
+     "candidate_id": "ptr:P[enriched:1]:sentiment:0"
+    },
+    {
+     "source": "table",
+     "unit_id": "P01#1",
+     "word": "」。",
+     "cls": "formal"
+    }
+   ],
+   "instruction": {
+    "skeleton_id": "P01",
+    "assignment": [
+     4
+    ]
+   },
+   "ref_map": [
+    {
+     "unit_id": "P01#0",
+     "cls": "formal",
+     "text": "「",
+     "ref": "P01",
+     "span": null,
+     "out": [
+      0,
+      1
+     ]
+    },
+    {
+     "unit_id": "ref:4",
+     "cls": "content",
+     "text": "难度",
+     "ref": 4,
+     "span": [
+      26,
+      28
+     ],
+     "out": [
+      1,
+      3
+     ]
+    },
+    {
+     "unit_id": "P01#1",
+     "cls": "formal",
+     "text": "」。",
+     "ref": "P01",
+     "span": null,
+     "out": [
+      3,
+      5
+     ]
+    }
+   ],
+   "reason": "",
+   "source": {
+    "rid": "P[enriched:1]",
+    "kind": "pointer",
+    "skeleton_id": "P01",
+    "assignment": [
+     4
+    ]
+   }
+  },
+  {
+   "rid": "P[enriched:2]",
+   "kind": "text",
+   "explainable": true,
+   "why": "",
+   "unrenderable_chosen": [],
+   "text": "「差异,但基本需求可能相似」。",
+   "evidence": [
+    {
+     "source": "table",
+     "unit_id": "P01#0",
+     "word": "「",
+     "cls": "formal"
+    },
+    {
+     "source": "span",
+     "ref": 3,
+     "text": "差异,但基本需求可能相似",
+     "span": [
+      17,
+      29
+     ],
+     "candidate_id": "ptr:P[enriched:2]:sentiment:0"
+    },
+    {
+     "source": "table",
+     "unit_id": "P01#1",
+     "word": "」。",
+     "cls": "formal"
+    }
+   ],
+   "instruction": {
+    "skeleton_id": "P01",
+    "assignment": [
+     3
+    ]
+   },
+   "ref_map": [
+    {
+     "unit_id": "P01#0",
+     "cls": "formal",
+     "text": "「",
+     "ref": "P01",
+     "span": null,
+     "out": [
+      0,
+      1
+     ]
+    },
+    {
+     "unit_id": "ref:3",
+     "cls": "content",
+     "text": "差异,但基本需求可能相似",
+     "ref": 3,
+     "span": [
+      17,
+      29
+     ],
+     "out": [
+      1,
+      13
+     ]
+    },
+    {
+     "unit_id": "P01#1",
+     "cls": "formal",
+     "text": "」。",
+     "ref": "P01",
+     "span": null,
+     "out": [
+      13,
+      15
+     ]
+    }
+   ],
+   "reason": "",
+   "source": {
+    "rid": "P[enriched:2]",
+    "kind": "pointer",
+    "skeleton_id": "P01",
+    "assignment": [
+     3
+    ]
+   }
+  },
+  {
+   "rid": "P[enriched:3]",
+   "kind": "text",
+   "explainable": true,
+   "why": "",
+   "unrenderable_chosen": [],
+   "text": "「一见钟」。",
+   "evidence": [
+    {
+     "source": "table",
+     "unit_id": "P01#0",
+     "word": "「",
+     "cls": "formal"
+    },
+    {
+     "source": "span",
+     "ref": 3,
+     "text": "一见钟",
+     "span": [
+      2,
+      5
+     ],
+     "candidate_id": "ptr:P[enriched:3]:sentiment:0"
+    },
+    {
+     "source": "table",
+     "unit_id": "P01#1",
+     "word": "」。",
+     "cls": "formal"
+    }
+   ],
+   "instruction": {
+    "skeleton_id": "P01",
+    "assignment": [
+     3
+    ]
+   },
+   "ref_map": [
+    {
+     "unit_id": "P01#0",
+     "cls": "formal",
+     "text": "「",
+     "ref": "P01",
+     "span": null,
+     "out": [
+      0,
+      1
+     ]
+    },
+    {
+     "unit_id": "ref:3",
+     "cls": "content",
+     "text": "一见钟",
+     "ref": 3,
+     "span": [
+      2,
+      5
+     ],
+     "out": [
+      1,
+      4
+     ]
+    },
+    {
+     "unit_id": "P01#1",
+     "cls": "formal",
+     "text": "」。",
+     "ref": "P01",
+     "span": null,
+     "out": [
+      4,
+      6
+     ]
+    }
+   ],
+   "reason": "",
+   "source": {
+    "rid": "P[enriched:3]",
+    "kind": "pointer",
+    "skeleton_id": "P01",
+    "assignment": [
+     3
+    ]
+   }
+  },
+  {
+   "rid": "P[enriched:4]",
+   "kind": "text",
+   "explainable": true,
+   "why": "",
+   "unrenderable_chosen": [
+    {
+     "card": "negation",
+     "span": [
+      3,
+      14
+     ],
+     "span_text": "*体会**:社会实践不",
+     "why": "pos 不可得/不在 POS_TYPES ⇒ 不入受约束槽"
+    }
+   ],
+   "text": "「不是按部就班的作业,沟通和应变能力」。",
+   "evidence": [
+    {
+     "source": "table",
+     "unit_id": "P01#0",
+     "word": "「",
+     "cls": "formal"
+    },
+    {
+     "source": "span",
+     "ref": 3,
+     "text": "不是按部就班的作业,沟通和应变能力",
+     "span": [
+      13,
+      30
+     ],
+     "candidate_id": "ptr:P[enriched:4]:sentiment:0"
+    },
+    {
+     "source": "table",
+     "unit_id": "P01#1",
+     "word": "」。",
+     "cls": "formal"
+    }
+   ],
+   "instruction": {
+    "skeleton_id": "P01",
+    "assignment": [
+     3
+    ]
+   },
+   "ref_map": [
+    {
+     "unit_id": "P01#0",
+     "cls": "formal",
+     "text": "「",
+     "ref": "P01",
+     "span": null,
+     "out": [
+      0,
+      1
+     ]
+    },
+    {
+     "unit_id": "ref:3",
+     "cls": "content",
+     "text": "不是按部就班的作业,沟通和应变能力",
+     "ref": 3,
+     "span": [
+      13,
+      30
+     ],
+     "out": [
+      1,
+      18
+     ]
+    },
+    {
+     "unit_id": "P01#1",
+     "cls": "formal",
+     "text": "」。",
+     "ref": "P01",
+     "span": null,
+     "out": [
+      18,
+      20
+     ]
+    }
+   ],
+   "reason": "",
+   "source": {
+    "rid": "P[enriched:4]",
+    "kind": "pointer",
+    "skeleton_id": "P01",
+    "assignment": [
+     3
+    ]
+   }
+  },
+  {
+   "rid": "P[enriched:5]",
+   "kind": "text",
+   "explainable": true,
+   "why": "",
+   "unrenderable_chosen": [
+    {
+     "card": "negation",
+     "span": [
+      2,
+      3
+     ],
+     "span_text": " ",
+     "why": "pos 不可得/不在 POS_TYPES ⇒ 不入受约束槽"
+    }
+   ],
+   "text": "「渐进」。",
+   "evidence": [
+    {
+     "source": "table",
+     "unit_id": "P01#0",
+     "word": "「",
+     "cls": "formal"
+    },
+    {
+     "source": "span",
+     "ref": 2,
+     "text": "渐进",
+     "span": [
+      7,
+      9
+     ],
+     "candidate_id": "ptr:P[enriched:5]:sentiment:0"
+    },
+    {
+     "source": "table",
+     "unit_id": "P01#1",
+     "word": "」。",
+     "cls": "formal"
+    }
+   ],
+   "instruction": {
+    "skeleton_id": "P01",
+    "assignment": [
+     2
+    ]
+   },
+   "ref_map": [
+    {
+     "unit_id": "P01#0",
+     "cls": "formal",
+     "text": "「",
+     "ref": "P01",
+     "span": null,
+     "out": [
+      0,
+      1
+     ]
+    },
+    {
+     "unit_id": "ref:2",
+     "cls": "content",
+     "text": "渐进",
+     "ref": 2,
+     "span": [
+      7,
+      9
+     ],
+     "out": [
+      1,
+      3
+     ]
+    },
+    {
+     "unit_id": "P01#1",
+     "cls": "formal",
+     "text": "」。",
+     "ref": "P01",
+     "span": null,
+     "out": [
+      3,
+      5
+     ]
+    }
+   ],
+   "reason": "",
+   "source": {
+    "rid": "P[enriched:5]",
+    "kind": "pointer",
+    "skeleton_id": "P01",
+    "assignment": [
+     2
+    ]
+   }
+  }
+ ],
+ "samples": [
+  {
+   "rid": "P[random:0]",
+   "input": "如约而至的第二季,能不能给广大追剧迷一个完满的解释",
+   "既有输出_text": "你这句话里的『满』表达了积极；并且有否定成分『不』。",
+   "既有 evidence": [
+    {
+     "card": "sentiment",
+     "span": [
+      21,
+      22
+     ],
+     "class_name": "积极"
+    },
+    {
+     "card": "negation",
+     "span": [
+      10,
+      11
+     ],
+     "class_name": "否定"
+    }
+   ],
+   "candidates": [
+    {
+     "card": "negation",
+     "span": [
+      10,
+      11
+     ],
+     "span_text": "不",
+     "score": 0.998,
+     "rank": 1,
+     "score_rank": 1,
+     "eligible": true,
+     "ineligible_reason": ""
+    },
+    {
+     "card": "pronoun",
+     "span": [
+      11,
+      12
+     ],
+     "span_text": "能",
+     "score": 0.8453,
+     "rank": null,
+     "score_rank": 2,
+     "eligible": false,
+     "ineligible_reason": "不在本轮 cards_run（计划未授权调用）"
+    },
+    {
+     "card": "relation",
+     "span": [
+      7,
+      12
+     ],
+     "span_text": "季,能不能",
+     "score": 0.5716,
+     "rank": null,
+     "score_rank": 4,
+     "eligible": false,
+     "ineligible_reason": "不在本轮 cards_run（计划未授权调用）"
+    },
+    {
+     "card": "relation",
+     "span": [
+      17,
+      22
+     ],
+     "span_text": "迷一个完满",
+     "score": 0.9992,
+     "rank": null,
+     "score_rank": 0,
+     "eligible": false,
+     "ineligible_reason": "不在本轮 cards_run（计划未授权调用）"
+    },
+    {
+     "card": "sentiment",
+     "span": [
+      21,
+      22
+     ],
+     "span_text": "满",
+     "score": 0.6997,
+     "rank": 0,
+     "score_rank": 3,
+     "eligible": true,
+     "ineligible_reason": ""
+    }
+   ],
+   "chosen": [
+    {
+     "cid": "sentiment:0",
+     "card": "sentiment",
+     "span": [
+      21,
+      22
+     ],
+     "span_text": "满",
+     "score": 0.6997,
+     "score_provenance": "replay",
+     "rank": 0,
+     "score_rank": 3,
+     "eligible": true
+    },
+    {
+     "cid": "negation:0",
+     "card": "negation",
+     "span": [
+      10,
+      11
+     ],
+     "span_text": "不",
+     "score": 0.998,
+     "score_provenance": "replay",
+     "rank": 1,
+     "score_rank": 1,
+     "eligible": true
+    }
+   ],
+   "scores_kind": "engine_confidence（原跑未持久化；重放取回。跨卡不可比 ⇒ 只作记录内一致性核对）",
+   "L1 解释文本": "「满」。",
+   "L1 ref_map": [
+    {
+     "unit_id": "P01#0",
+     "cls": "formal",
+     "text": "「",
+     "ref": "P01",
+     "span": null,
+     "out": [
+      0,
+      1
+     ]
+    },
+    {
+     "unit_id": "ref:4",
+     "cls": "content",
+     "text": "满",
+     "ref": 4,
+     "span": [
+      21,
+      22
+     ],
+     "out": [
+      1,
+      2
+     ]
+    },
+    {
+     "unit_id": "P01#1",
+     "cls": "formal",
+     "text": "」。",
+     "ref": "P01",
+     "span": null,
+     "out": [
+      2,
+      4
+     ]
+    }
+   ],
+   "L1 未入槽的 chosen": [
+    {
+     "card": "negation",
+     "span": [
+      10,
+      11
+     ],
+     "span_text": "不",
+     "why": "pos 不可得/不在 POS_TYPES ⇒ 不入受约束槽"
+    }
+   ],
+   "L2": {
+    "given": false,
+    "reason": "无法给出结构性理由",
+    "detail": "C1 谓词套 4 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）",
+    "first_problem": "rule_a: 规则 A 违规：骨架 XFREE 字面 '积' 既非形式词也非逻辑词（疑似实义词/专名）",
+    "attempts": [
+     {
+      "name": "A1 类名理由",
+      "text": "「满」积极。",
+      "ok": false,
+      "na": false,
+      "c1": false,
+      "c2": false,
+      "c3": true,
+      "n_problems": 4,
+      "problems": [
+       "rule_a: 规则 A 违规：骨架 XFREE 字面 '积' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "rule_a: 规则 A 违规：骨架 XFREE 字面 '极' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "structure: 规则 A 违规：骨架 XFREE 字面 '积' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "structure: 规则 A 违规：骨架 XFREE 字面 '极' 既非形式词也非逻辑词（疑似实义词/专名）"
+      ],
+      "fail": "C1 谓词套 4 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     },
+     {
+      "name": "A2 分数/序差异理由",
+      "text": "",
+      "ok": false,
+      "na": true,
+      "c1": null,
+      "c2": null,
+      "c3": null,
+      "n_problems": 0,
+      "problems": [],
+      "fail": "N/A：无同卡对照候选（结构上不可得差异事实）"
+     },
+     {
+      "name": "A3 因果理由",
+      "text": "因为「满」。",
+      "ok": false,
+      "na": false,
+      "c1": false,
+      "c2": false,
+      "c3": true,
+      "n_problems": 2,
+      "problems": [
+       "word_face: 词面守卫：逻辑词 '因为' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）",
+       "structure: 词面守卫：逻辑词 '因为' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）"
+      ],
+      "fail": "C1 谓词套 2 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     },
+     {
+      "name": "A4 纯复述（对照）",
+      "text": "「满」。",
+      "ok": false,
+      "na": false,
+      "c1": true,
+      "c2": false,
+      "c3": true,
+      "n_problems": 0,
+      "problems": [],
+      "fail": "C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     }
+    ]
+   },
+   "R1": [],
+   "R2": []
+  },
+  {
+   "rid": "P[random:1]",
+   "input": "- 穿亚麻色系服装赠限定落叶书签",
+   "既有输出_text": "你这句话里的『落叶书签』表达了积极。",
+   "既有 evidence": [
+    {
+     "card": "sentiment",
+     "span": [
+      12,
+      16
+     ],
+     "class_name": "积极"
+    }
+   ],
+   "candidates": [
+    {
+     "card": "pronoun",
+     "span": [
+      12,
+      13
+     ],
+     "span_text": "落",
+     "score": 0.9492,
+     "rank": null,
+     "score_rank": 3,
+     "eligible": false,
+     "ineligible_reason": "不在本轮 cards_run（计划未授权调用）"
+    },
+    {
+     "card": "relation",
+     "span": [
+      0,
+      5
+     ],
+     "span_text": "- 穿亚麻",
+     "score": 0.9594,
+     "rank": null,
+     "score_rank": 2,
+     "eligible": false,
+     "ineligible_reason": "不在本轮 cards_run（计划未授权调用）"
+    },
+    {
+     "card": "relation",
+     "span": [
+      10,
+      13
+     ],
+     "span_text": "限定落",
+     "score": 0.9999,
+     "rank": null,
+     "score_rank": 0,
+     "eligible": false,
+     "ineligible_reason": "不在本轮 cards_run（计划未授权调用）"
+    },
+    {
+     "card": "sentiment",
+     "span": [
+      12,
+      16
+     ],
+     "span_text": "落叶书签",
+     "score": 0.99,
+     "rank": 0,
+     "score_rank": 1,
+     "eligible": true,
+     "ineligible_reason": ""
+    }
+   ],
+   "chosen": [
+    {
+     "cid": "sentiment:0",
+     "card": "sentiment",
+     "span": [
+      12,
+      16
+     ],
+     "span_text": "落叶书签",
+     "score": 0.99,
+     "score_provenance": "replay",
+     "rank": 0,
+     "score_rank": 1,
+     "eligible": true
+    }
+   ],
+   "scores_kind": "engine_confidence（原跑未持久化；重放取回。跨卡不可比 ⇒ 只作记录内一致性核对）",
+   "L1 解释文本": "「落叶书签」。",
+   "L1 ref_map": [
+    {
+     "unit_id": "P01#0",
+     "cls": "formal",
+     "text": "「",
+     "ref": "P01",
+     "span": null,
+     "out": [
+      0,
+      1
+     ]
+    },
+    {
+     "unit_id": "ref:3",
+     "cls": "content",
+     "text": "落叶书签",
+     "ref": 3,
+     "span": [
+      12,
+      16
+     ],
+     "out": [
+      1,
+      5
+     ]
+    },
+    {
+     "unit_id": "P01#1",
+     "cls": "formal",
+     "text": "」。",
+     "ref": "P01",
+     "span": null,
+     "out": [
+      5,
+      7
+     ]
+    }
+   ],
+   "L1 未入槽的 chosen": [],
+   "L2": {
+    "given": false,
+    "reason": "无法给出结构性理由",
+    "detail": "C1 谓词套 4 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）",
+    "first_problem": "rule_a: 规则 A 违规：骨架 XFREE 字面 '积' 既非形式词也非逻辑词（疑似实义词/专名）",
+    "attempts": [
+     {
+      "name": "A1 类名理由",
+      "text": "「落叶书签」积极。",
+      "ok": false,
+      "na": false,
+      "c1": false,
+      "c2": false,
+      "c3": true,
+      "n_problems": 4,
+      "problems": [
+       "rule_a: 规则 A 违规：骨架 XFREE 字面 '积' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "rule_a: 规则 A 违规：骨架 XFREE 字面 '极' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "structure: 规则 A 违规：骨架 XFREE 字面 '积' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "structure: 规则 A 违规：骨架 XFREE 字面 '极' 既非形式词也非逻辑词（疑似实义词/专名）"
+      ],
+      "fail": "C1 谓词套 4 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     },
+     {
+      "name": "A2 分数/序差异理由",
+      "text": "",
+      "ok": false,
+      "na": true,
+      "c1": null,
+      "c2": null,
+      "c3": null,
+      "n_problems": 0,
+      "problems": [],
+      "fail": "N/A：无同卡对照候选（结构上不可得差异事实）"
+     },
+     {
+      "name": "A3 因果理由",
+      "text": "因为「落叶书签」。",
+      "ok": false,
+      "na": false,
+      "c1": false,
+      "c2": false,
+      "c3": true,
+      "n_problems": 2,
+      "problems": [
+       "word_face: 词面守卫：逻辑词 '因为' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）",
+       "structure: 词面守卫：逻辑词 '因为' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）"
+      ],
+      "fail": "C1 谓词套 2 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     },
+     {
+      "name": "A4 纯复述（对照）",
+      "text": "「落叶书签」。",
+      "ok": false,
+      "na": false,
+      "c1": true,
+      "c2": false,
+      "c3": true,
+      "n_problems": 0,
+      "problems": [],
+      "fail": "C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     }
+    ]
+   },
+   "R1": [],
+   "R2": []
+  },
+  {
+   "rid": "P[random:2]",
+   "input": "优势:适用于多种金属(包括稀土、过渡金属),可制备一维、二维或三维纳米结构",
+   "既有输出_text": "你这句话里的『优势:适』表达了积极。",
+   "既有 evidence": [
+    {
+     "card": "sentiment",
+     "span": [
+      0,
+      4
+     ],
+     "class_name": "积极"
+    }
+   ],
+   "candidates": [
+    {
+     "card": "pronoun",
+     "span": [
+      19,
+      26
+     ],
+     "span_text": "属),可制备一",
+     "score": 0.5909,
+     "rank": null,
+     "score_rank": 3,
+     "eligible": false,
+     "ineligible_reason": "不在本轮 cards_run（计划未授权调用）"
+    },
+    {
+     "card": "relation",
+     "span": [
+      0,
+      27
+     ],
+     "span_text": "优势:适用于多种金属(包括稀土、过渡金属),可制备一维",
+     "score": 0.9893,
+     "rank": null,
+     "score_rank": 1,
+     "eligible": false,
+     "ineligible_reason": "不在本轮 cards_run（计划未授权调用）"
+    },
+    {
+     "card": "relation",
+     "span": [
+      33,
+      37
+     ],
+     "span_text": "纳米结构",
+     "score": 0.9998,
+     "rank": null,
+     "score_rank": 0,
+     "eligible": false,
+     "ineligible_reason": "不在本轮 cards_run（计划未授权调用）"
+    },
+    {
+     "card": "sentiment",
+     "span": [
+      0,
+      4
+     ],
+     "span_text": "优势:适",
+     "score": 0.7164,
+     "rank": 0,
+     "score_rank": 2,
+     "eligible": true,
+     "ineligible_reason": ""
+    }
+   ],
+   "chosen": [
+    {
+     "cid": "sentiment:0",
+     "card": "sentiment",
+     "span": [
+      0,
+      4
+     ],
+     "span_text": "优势:适",
+     "score": 0.7164,
+     "score_provenance": "replay",
+     "rank": 0,
+     "score_rank": 2,
+     "eligible": true
+    }
+   ],
+   "scores_kind": "engine_confidence（原跑未持久化；重放取回。跨卡不可比 ⇒ 只作记录内一致性核对）",
+   "L1 解释文本": "「优势:适」。",
+   "L1 ref_map": [
+    {
+     "unit_id": "P01#0",
+     "cls": "formal",
+     "text": "「",
+     "ref": "P01",
+     "span": null,
+     "out": [
+      0,
+      1
+     ]
+    },
+    {
+     "unit_id": "ref:3",
+     "cls": "content",
+     "text": "优势:适",
+     "ref": 3,
+     "span": [
+      0,
+      4
+     ],
+     "out": [
+      1,
+      5
+     ]
+    },
+    {
+     "unit_id": "P01#1",
+     "cls": "formal",
+     "text": "」。",
+     "ref": "P01",
+     "span": null,
+     "out": [
+      5,
+      7
+     ]
+    }
+   ],
+   "L1 未入槽的 chosen": [],
+   "L2": {
+    "given": false,
+    "reason": "无法给出结构性理由",
+    "detail": "C1 谓词套 4 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）",
+    "first_problem": "rule_a: 规则 A 违规：骨架 XFREE 字面 '积' 既非形式词也非逻辑词（疑似实义词/专名）",
+    "attempts": [
+     {
+      "name": "A1 类名理由",
+      "text": "「优势:适」积极。",
+      "ok": false,
+      "na": false,
+      "c1": false,
+      "c2": false,
+      "c3": true,
+      "n_problems": 4,
+      "problems": [
+       "rule_a: 规则 A 违规：骨架 XFREE 字面 '积' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "rule_a: 规则 A 违规：骨架 XFREE 字面 '极' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "structure: 规则 A 违规：骨架 XFREE 字面 '积' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "structure: 规则 A 违规：骨架 XFREE 字面 '极' 既非形式词也非逻辑词（疑似实义词/专名）"
+      ],
+      "fail": "C1 谓词套 4 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     },
+     {
+      "name": "A2 分数/序差异理由",
+      "text": "",
+      "ok": false,
+      "na": true,
+      "c1": null,
+      "c2": null,
+      "c3": null,
+      "n_problems": 0,
+      "problems": [],
+      "fail": "N/A：无同卡对照候选（结构上不可得差异事实）"
+     },
+     {
+      "name": "A3 因果理由",
+      "text": "因为「优势:适」。",
+      "ok": false,
+      "na": false,
+      "c1": false,
+      "c2": false,
+      "c3": true,
+      "n_problems": 2,
+      "problems": [
+       "word_face: 词面守卫：逻辑词 '因为' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）",
+       "structure: 词面守卫：逻辑词 '因为' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）"
+      ],
+      "fail": "C1 谓词套 2 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     },
+     {
+      "name": "A4 纯复述（对照）",
+      "text": "「优势:适」。",
+      "ok": false,
+      "na": false,
+      "c1": true,
+      "c2": false,
+      "c3": true,
+      "n_problems": 0,
+      "problems": [],
+      "fail": "C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     }
+    ]
+   },
+   "R1": [],
+   "R2": []
+  },
+  {
+   "rid": "P[random:3]",
+   "input": "足够15亿人用，还有冗余",
+   "既有输出_text": "你这句话里的『亿人用』表达了积极。",
+   "既有 evidence": [
+    {
+     "card": "sentiment",
+     "span": [
+      4,
+      7
+     ],
+     "class_name": "积极"
+    }
+   ],
+   "candidates": [
+    {
+     "card": "relation",
+     "span": [
+      2,
+      4
+     ],
+     "span_text": "15",
+     "score": 0.5249,
+     "rank": null,
+     "score_rank": 2,
+     "eligible": false,
+     "ineligible_reason": "不在本轮 cards_run（计划未授权调用）"
+    },
+    {
+     "card": "relation",
+     "span": [
+      5,
+      10
+     ],
+     "span_text": "人用，还有",
+     "score": 0.9994,
+     "rank": null,
+     "score_rank": 0,
+     "eligible": false,
+     "ineligible_reason": "不在本轮 cards_run（计划未授权调用）"
+    },
+    {
+     "card": "sentiment",
+     "span": [
+      4,
+      7
+     ],
+     "span_text": "亿人用",
+     "score": 0.6397,
+     "rank": 0,
+     "score_rank": 1,
+     "eligible": true,
+     "ineligible_reason": ""
+    }
+   ],
+   "chosen": [
+    {
+     "cid": "sentiment:0",
+     "card": "sentiment",
+     "span": [
+      4,
+      7
+     ],
+     "span_text": "亿人用",
+     "score": 0.6397,
+     "score_provenance": "replay",
+     "rank": 0,
+     "score_rank": 1,
+     "eligible": true
+    }
+   ],
+   "scores_kind": "engine_confidence（原跑未持久化；重放取回。跨卡不可比 ⇒ 只作记录内一致性核对）",
+   "L1 解释文本": "「亿人用」。",
+   "L1 ref_map": [
+    {
+     "unit_id": "P01#0",
+     "cls": "formal",
+     "text": "「",
+     "ref": "P01",
+     "span": null,
+     "out": [
+      0,
+      1
+     ]
+    },
+    {
+     "unit_id": "ref:2",
+     "cls": "content",
+     "text": "亿人用",
+     "ref": 2,
+     "span": [
+      4,
+      7
+     ],
+     "out": [
+      1,
+      4
+     ]
+    },
+    {
+     "unit_id": "P01#1",
+     "cls": "formal",
+     "text": "」。",
+     "ref": "P01",
+     "span": null,
+     "out": [
+      4,
+      6
+     ]
+    }
+   ],
+   "L1 未入槽的 chosen": [],
+   "L2": {
+    "given": false,
+    "reason": "无法给出结构性理由",
+    "detail": "C1 谓词套 4 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）",
+    "first_problem": "rule_a: 规则 A 违规：骨架 XFREE 字面 '积' 既非形式词也非逻辑词（疑似实义词/专名）",
+    "attempts": [
+     {
+      "name": "A1 类名理由",
+      "text": "「亿人用」积极。",
+      "ok": false,
+      "na": false,
+      "c1": false,
+      "c2": false,
+      "c3": true,
+      "n_problems": 4,
+      "problems": [
+       "rule_a: 规则 A 违规：骨架 XFREE 字面 '积' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "rule_a: 规则 A 违规：骨架 XFREE 字面 '极' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "structure: 规则 A 违规：骨架 XFREE 字面 '积' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "structure: 规则 A 违规：骨架 XFREE 字面 '极' 既非形式词也非逻辑词（疑似实义词/专名）"
+      ],
+      "fail": "C1 谓词套 4 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     },
+     {
+      "name": "A2 分数/序差异理由",
+      "text": "",
+      "ok": false,
+      "na": true,
+      "c1": null,
+      "c2": null,
+      "c3": null,
+      "n_problems": 0,
+      "problems": [],
+      "fail": "N/A：无同卡对照候选（结构上不可得差异事实）"
+     },
+     {
+      "name": "A3 因果理由",
+      "text": "因为「亿人用」。",
+      "ok": false,
+      "na": false,
+      "c1": false,
+      "c2": false,
+      "c3": true,
+      "n_problems": 2,
+      "problems": [
+       "word_face: 词面守卫：逻辑词 '因为' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）",
+       "structure: 词面守卫：逻辑词 '因为' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）"
+      ],
+      "fail": "C1 谓词套 2 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     },
+     {
+      "name": "A4 纯复述（对照）",
+      "text": "「亿人用」。",
+      "ok": false,
+      "na": false,
+      "c1": true,
+      "c2": false,
+      "c3": true,
+      "n_problems": 0,
+      "problems": [],
+      "fail": "C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     }
+    ]
+   },
+   "R1": [],
+   "R2": []
+  },
+  {
+   "rid": "P[random:4]",
+   "input": "总结,示例代码应该包括:",
+   "既有输出_text": "你这句话里的『例』表达了积极。",
+   "既有 evidence": [
+    {
+     "card": "sentiment",
+     "span": [
+      4,
+      5
+     ],
+     "class_name": "积极"
+    }
+   ],
+   "candidates": [
+    {
+     "card": "pronoun",
+     "span": [
+      8,
+      9
+     ],
+     "span_text": "该",
+     "score": 0.7829,
+     "rank": null,
+     "score_rank": 1,
+     "eligible": false,
+     "ineligible_reason": "不在本轮 cards_run（计划未授权调用）"
+    },
+    {
+     "card": "sentiment",
+     "span": [
+      4,
+      5
+     ],
+     "span_text": "例",
+     "score": 0.9502,
+     "rank": 0,
+     "score_rank": 0,
+     "eligible": true,
+     "ineligible_reason": ""
+    }
+   ],
+   "chosen": [
+    {
+     "cid": "sentiment:0",
+     "card": "sentiment",
+     "span": [
+      4,
+      5
+     ],
+     "span_text": "例",
+     "score": 0.9502,
+     "score_provenance": "replay",
+     "rank": 0,
+     "score_rank": 0,
+     "eligible": true
+    }
+   ],
+   "scores_kind": "engine_confidence（原跑未持久化；重放取回。跨卡不可比 ⇒ 只作记录内一致性核对）",
+   "L1 解释文本": "「例」。",
+   "L1 ref_map": [
+    {
+     "unit_id": "P01#0",
+     "cls": "formal",
+     "text": "「",
+     "ref": "P01",
+     "span": null,
+     "out": [
+      0,
+      1
+     ]
+    },
+    {
+     "unit_id": "ref:1",
+     "cls": "content",
+     "text": "例",
+     "ref": 1,
+     "span": [
+      4,
+      5
+     ],
+     "out": [
+      1,
+      2
+     ]
+    },
+    {
+     "unit_id": "P01#1",
+     "cls": "formal",
+     "text": "」。",
+     "ref": "P01",
+     "span": null,
+     "out": [
+      2,
+      4
+     ]
+    }
+   ],
+   "L1 未入槽的 chosen": [],
+   "L2": {
+    "given": false,
+    "reason": "无法给出结构性理由",
+    "detail": "C1 谓词套 4 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）",
+    "first_problem": "rule_a: 规则 A 违规：骨架 XFREE 字面 '积' 既非形式词也非逻辑词（疑似实义词/专名）",
+    "attempts": [
+     {
+      "name": "A1 类名理由",
+      "text": "「例」积极。",
+      "ok": false,
+      "na": false,
+      "c1": false,
+      "c2": false,
+      "c3": true,
+      "n_problems": 4,
+      "problems": [
+       "rule_a: 规则 A 违规：骨架 XFREE 字面 '积' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "rule_a: 规则 A 违规：骨架 XFREE 字面 '极' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "structure: 规则 A 违规：骨架 XFREE 字面 '积' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "structure: 规则 A 违规：骨架 XFREE 字面 '极' 既非形式词也非逻辑词（疑似实义词/专名）"
+      ],
+      "fail": "C1 谓词套 4 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     },
+     {
+      "name": "A2 分数/序差异理由",
+      "text": "",
+      "ok": false,
+      "na": true,
+      "c1": null,
+      "c2": null,
+      "c3": null,
+      "n_problems": 0,
+      "problems": [],
+      "fail": "N/A：无同卡对照候选（结构上不可得差异事实）"
+     },
+     {
+      "name": "A3 因果理由",
+      "text": "因为「例」。",
+      "ok": false,
+      "na": false,
+      "c1": false,
+      "c2": false,
+      "c3": true,
+      "n_problems": 2,
+      "problems": [
+       "word_face: 词面守卫：逻辑词 '因为' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）",
+       "structure: 词面守卫：逻辑词 '因为' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）"
+      ],
+      "fail": "C1 谓词套 2 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     },
+     {
+      "name": "A4 纯复述（对照）",
+      "text": "「例」。",
+      "ok": false,
+      "na": false,
+      "c1": true,
+      "c2": false,
+      "c3": true,
+      "n_problems": 0,
+      "problems": [],
+      "fail": "C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     }
+    ]
+   },
+   "R1": [],
+   "R2": []
+  },
+  {
+   "rid": "P[random:5]",
+   "input": "| 任务描述 | 任务类型 | 说明 |",
+   "既有输出_text": "你这句话里的『描述 | 任务类型 | 说明』表达了愤怒；并且有否定成分『 任务描述 』。",
+   "既有 evidence": [
+    {
+     "card": "sentiment",
+     "span": [
+      4,
+      18
+     ],
+     "class_name": "愤怒"
+    },
+    {
+     "card": "negation",
+     "span": [
+      1,
+      7
+     ],
+     "class_name": "否定"
+    }
+   ],
+   "candidates": [
+    {
+     "card": "negation",
+     "span": [
+      1,
+      7
+     ],
+     "span_text": " 任务描述 ",
+     "score": 0.8654,
+     "rank": 1,
+     "score_rank": 1,
+     "eligible": true,
+     "ineligible_reason": ""
+    },
+    {
+     "card": "pronoun",
+     "span": [
+      5,
+      6
+     ],
+     "span_text": "述",
+     "score": 0.609,
+     "rank": null,
+     "score_rank": 2,
+     "eligible": false,
+     "ineligible_reason": "不在本轮 cards_run（计划未授权调用）"
+    },
+    {
+     "card": "sentiment",
+     "span": [
+      4,
+      18
+     ],
+     "span_text": "描述 | 任务类型 | 说明",
+     "score": 0.8771,
+     "rank": 0,
+     "score_rank": 0,
+     "eligible": true,
+     "ineligible_reason": ""
+    }
+   ],
+   "chosen": [
+    {
+     "cid": "sentiment:0",
+     "card": "sentiment",
+     "span": [
+      4,
+      18
+     ],
+     "span_text": "描述 | 任务类型 | 说明",
+     "score": 0.8771,
+     "score_provenance": "replay",
+     "rank": 0,
+     "score_rank": 0,
+     "eligible": true
+    },
+    {
+     "cid": "negation:0",
+     "card": "negation",
+     "span": [
+      1,
+      7
+     ],
+     "span_text": " 任务描述 ",
+     "score": 0.8654,
+     "score_provenance": "replay",
+     "rank": 1,
+     "score_rank": 1,
+     "eligible": true
+    }
+   ],
+   "scores_kind": "engine_confidence（原跑未持久化；重放取回。跨卡不可比 ⇒ 只作记录内一致性核对）",
+   "L1 解释文本": "「描述 | 任务类型 | 说明」。",
+   "L1 ref_map": [
+    {
+     "unit_id": "P01#0",
+     "cls": "formal",
+     "text": "「",
+     "ref": "P01",
+     "span": null,
+     "out": [
+      0,
+      1
+     ]
+    },
+    {
+     "unit_id": "ref:2",
+     "cls": "content",
+     "text": "描述 | 任务类型 | 说明",
+     "ref": 2,
+     "span": [
+      4,
+      18
+     ],
+     "out": [
+      1,
+      15
+     ]
+    },
+    {
+     "unit_id": "P01#1",
+     "cls": "formal",
+     "text": "」。",
+     "ref": "P01",
+     "span": null,
+     "out": [
+      15,
+      17
+     ]
+    }
+   ],
+   "L1 未入槽的 chosen": [
+    {
+     "card": "negation",
+     "span": [
+      1,
+      7
+     ],
+     "span_text": " 任务描述 ",
+     "why": "pos 不可得/不在 POS_TYPES ⇒ 不入受约束槽"
+    }
+   ],
+   "L2": {
+    "given": false,
+    "reason": "无法给出结构性理由",
+    "detail": "C1 谓词套 4 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）",
+    "first_problem": "rule_a: 规则 A 违规：骨架 XFREE 字面 '愤' 既非形式词也非逻辑词（疑似实义词/专名）",
+    "attempts": [
+     {
+      "name": "A1 类名理由",
+      "text": "「描述 | 任务类型 | 说明」愤怒。",
+      "ok": false,
+      "na": false,
+      "c1": false,
+      "c2": false,
+      "c3": true,
+      "n_problems": 4,
+      "problems": [
+       "rule_a: 规则 A 违规：骨架 XFREE 字面 '愤' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "rule_a: 规则 A 违规：骨架 XFREE 字面 '怒' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "structure: 规则 A 违规：骨架 XFREE 字面 '愤' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "structure: 规则 A 违规：骨架 XFREE 字面 '怒' 既非形式词也非逻辑词（疑似实义词/专名）"
+      ],
+      "fail": "C1 谓词套 4 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     },
+     {
+      "name": "A2 分数/序差异理由",
+      "text": "",
+      "ok": false,
+      "na": true,
+      "c1": null,
+      "c2": null,
+      "c3": null,
+      "n_problems": 0,
+      "problems": [],
+      "fail": "N/A：无同卡对照候选（结构上不可得差异事实）"
+     },
+     {
+      "name": "A3 因果理由",
+      "text": "因为「描述 | 任务类型 | 说明」。",
+      "ok": false,
+      "na": false,
+      "c1": false,
+      "c2": false,
+      "c3": true,
+      "n_problems": 2,
+      "problems": [
+       "word_face: 词面守卫：逻辑词 '因为' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）",
+       "structure: 词面守卫：逻辑词 '因为' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）"
+      ],
+      "fail": "C1 谓词套 2 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     },
+     {
+      "name": "A4 纯复述（对照）",
+      "text": "「描述 | 任务类型 | 说明」。",
+      "ok": false,
+      "na": false,
+      "c1": true,
+      "c2": false,
+      "c3": true,
+      "n_problems": 0,
+      "problems": [],
+      "fail": "C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     }
+    ]
+   },
+   "R1": [],
+   "R2": []
+  },
+  {
+   "rid": "P[enriched:0]",
+   "input": "改变的关键是“循序渐进”",
+   "既有输出_text": "你这句话里的『循序』表达了积极；并且有否定成分『改』。",
+   "既有 evidence": [
+    {
+     "card": "sentiment",
+     "span": [
+      7,
+      9
+     ],
+     "class_name": "积极"
+    },
+    {
+     "card": "negation",
+     "span": [
+      0,
+      1
+     ],
+     "class_name": "否定"
+    }
+   ],
+   "candidates": [
+    {
+     "card": "idiom",
+     "span": [
+      7,
+      9
+     ],
+     "span_text": "循序",
+     "score": 0.992,
+     "rank": null,
+     "score_rank": 2,
+     "eligible": false,
+     "ineligible_reason": "不在本轮 cards_run（计划未授权调用）"
+    },
+    {
+     "card": "negation",
+     "span": [
+      0,
+      1
+     ],
+     "span_text": "改",
+     "score": 0.9145,
+     "rank": 1,
+     "score_rank": 4,
+     "eligible": true,
+     "ineligible_reason": ""
+    },
+    {
+     "card": "pronoun",
+     "span": [
+      0,
+      9
+     ],
+     "span_text": "改变的关键是“循序",
+     "score": 0.4964,
+     "rank": null,
+     "score_rank": 5,
+     "eligible": false,
+     "ineligible_reason": "不在本轮 cards_run（计划未授权调用）"
+    },
+    {
+     "card": "relation",
+     "span": [
+      1,
+      9
+     ],
+     "span_text": "变的关键是“循序",
+     "score": 0.9964,
+     "rank": null,
+     "score_rank": 1,
+     "eligible": false,
+     "ineligible_reason": "不在本轮 cards_run（计划未授权调用）"
+    },
+    {
+     "card": "relation",
+     "span": [
+      8,
+      12
+     ],
+     "span_text": "序渐进”",
+     "score": 0.9996,
+     "rank": null,
+     "score_rank": 0,
+     "eligible": false,
+     "ineligible_reason": "不在本轮 cards_run（计划未授权调用）"
+    },
+    {
+     "card": "sentiment",
+     "span": [
+      7,
+      9
+     ],
+     "span_text": "循序",
+     "score": 0.9325,
+     "rank": 0,
+     "score_rank": 3,
+     "eligible": true,
+     "ineligible_reason": ""
+    }
+   ],
+   "chosen": [
+    {
+     "cid": "sentiment:0",
+     "card": "sentiment",
+     "span": [
+      7,
+      9
+     ],
+     "span_text": "循序",
+     "score": 0.9325,
+     "score_provenance": "replay",
+     "rank": 0,
+     "score_rank": 3,
+     "eligible": true
+    },
+    {
+     "cid": "negation:0",
+     "card": "negation",
+     "span": [
+      0,
+      1
+     ],
+     "span_text": "改",
+     "score": 0.9145,
+     "score_provenance": "replay",
+     "rank": 1,
+     "score_rank": 4,
+     "eligible": true
+    }
+   ],
+   "scores_kind": "engine_confidence（原跑未持久化；重放取回。跨卡不可比 ⇒ 只作记录内一致性核对）",
+   "L1 解释文本": "「循序」。",
+   "L1 ref_map": [
+    {
+     "unit_id": "P01#0",
+     "cls": "formal",
+     "text": "「",
+     "ref": "P01",
+     "span": null,
+     "out": [
+      0,
+      1
+     ]
+    },
+    {
+     "unit_id": "ref:5",
+     "cls": "content",
+     "text": "循序",
+     "ref": 5,
+     "span": [
+      7,
+      9
+     ],
+     "out": [
+      1,
+      3
+     ]
+    },
+    {
+     "unit_id": "P01#1",
+     "cls": "formal",
+     "text": "」。",
+     "ref": "P01",
+     "span": null,
+     "out": [
+      3,
+      5
+     ]
+    }
+   ],
+   "L1 未入槽的 chosen": [
+    {
+     "card": "negation",
+     "span": [
+      0,
+      1
+     ],
+     "span_text": "改",
+     "why": "pos 不可得/不在 POS_TYPES ⇒ 不入受约束槽"
+    }
+   ],
+   "L2": {
+    "given": false,
+    "reason": "无法给出结构性理由",
+    "detail": "C1 谓词套 4 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）",
+    "first_problem": "rule_a: 规则 A 违规：骨架 XFREE 字面 '积' 既非形式词也非逻辑词（疑似实义词/专名）",
+    "attempts": [
+     {
+      "name": "A1 类名理由",
+      "text": "「循序」积极。",
+      "ok": false,
+      "na": false,
+      "c1": false,
+      "c2": false,
+      "c3": true,
+      "n_problems": 4,
+      "problems": [
+       "rule_a: 规则 A 违规：骨架 XFREE 字面 '积' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "rule_a: 规则 A 违规：骨架 XFREE 字面 '极' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "structure: 规则 A 违规：骨架 XFREE 字面 '积' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "structure: 规则 A 违规：骨架 XFREE 字面 '极' 既非形式词也非逻辑词（疑似实义词/专名）"
+      ],
+      "fail": "C1 谓词套 4 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     },
+     {
+      "name": "A2 分数/序差异理由",
+      "text": "",
+      "ok": false,
+      "na": true,
+      "c1": null,
+      "c2": null,
+      "c3": null,
+      "n_problems": 0,
+      "problems": [],
+      "fail": "N/A：无同卡对照候选（结构上不可得差异事实）"
+     },
+     {
+      "name": "A3 因果理由",
+      "text": "因为「循序」。",
+      "ok": false,
+      "na": false,
+      "c1": false,
+      "c2": false,
+      "c3": true,
+      "n_problems": 2,
+      "problems": [
+       "word_face: 词面守卫：逻辑词 '因为' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）",
+       "structure: 词面守卫：逻辑词 '因为' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）"
+      ],
+      "fail": "C1 谓词套 2 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     },
+     {
+      "name": "A4 纯复述（对照）",
+      "text": "「循序」。",
+      "ok": false,
+      "na": false,
+      "c1": true,
+      "c2": false,
+      "c3": true,
+      "n_problems": 0,
+      "problems": [],
+      "fail": "C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     }
+    ]
+   },
+   "R1": [],
+   "R2": []
+  },
+  {
+   "rid": "P[enriched:1]",
+   "input": "2. **循序渐进**:从低强度开始,逐步增加时长和难度",
+   "既有输出_text": "你这句话里的『难度』表达了愤怒；并且有否定成分『循序渐进*』。",
+   "既有 evidence": [
+    {
+     "card": "sentiment",
+     "span": [
+      26,
+      28
+     ],
+     "class_name": "愤怒"
+    },
+    {
+     "card": "negation",
+     "span": [
+      5,
+      10
+     ],
+     "class_name": "否定"
+    }
+   ],
+   "candidates": [
+    {
+     "card": "negation",
+     "span": [
+      5,
+      10
+     ],
+     "span_text": "循序渐进*",
+     "score": 0.8634,
+     "rank": 1,
+     "score_rank": 2,
+     "eligible": true,
+     "ineligible_reason": ""
+    },
+    {
+     "card": "pronoun",
+     "span": [
+      4,
+      28
+     ],
+     "span_text": "*循序渐进**:从低强度开始,逐步增加时长和难度",
+     "score": 0.6585,
+     "rank": null,
+     "score_rank": 4,
+     "eligible": false,
+     "ineligible_reason": "不在本轮 cards_run（计划未授权调用）"
+    },
+    {
+     "card": "relation",
+     "span": [
+      12,
+      17
+     ],
+     "span_text": "从低强度开",
+     "score": 0.9803,
+     "rank": null,
+     "score_rank": 1,
+     "eligible": false,
+     "ineligible_reason": "不在本轮 cards_run（计划未授权调用）"
+    },
+    {
+     "card": "relation",
+     "span": [
+      19,
+      28
+     ],
+     "span_text": "逐步增加时长和难度",
+     "score": 0.9998,
+     "rank": null,
+     "score_rank": 0,
+     "eligible": false,
+     "ineligible_reason": "不在本轮 cards_run（计划未授权调用）"
+    },
+    {
+     "card": "sentiment",
+     "span": [
+      26,
+      28
+     ],
+     "span_text": "难度",
+     "score": 0.6872,
+     "rank": 0,
+     "score_rank": 3,
+     "eligible": true,
+     "ineligible_reason": ""
+    }
+   ],
+   "chosen": [
+    {
+     "cid": "sentiment:0",
+     "card": "sentiment",
+     "span": [
+      26,
+      28
+     ],
+     "span_text": "难度",
+     "score": 0.6872,
+     "score_provenance": "replay",
+     "rank": 0,
+     "score_rank": 3,
+     "eligible": true
+    },
+    {
+     "cid": "negation:0",
+     "card": "negation",
+     "span": [
+      5,
+      10
+     ],
+     "span_text": "循序渐进*",
+     "score": 0.8634,
+     "score_provenance": "replay",
+     "rank": 1,
+     "score_rank": 2,
+     "eligible": true
+    }
+   ],
+   "scores_kind": "engine_confidence（原跑未持久化；重放取回。跨卡不可比 ⇒ 只作记录内一致性核对）",
+   "L1 解释文本": "「难度」。",
+   "L1 ref_map": [
+    {
+     "unit_id": "P01#0",
+     "cls": "formal",
+     "text": "「",
+     "ref": "P01",
+     "span": null,
+     "out": [
+      0,
+      1
+     ]
+    },
+    {
+     "unit_id": "ref:4",
+     "cls": "content",
+     "text": "难度",
+     "ref": 4,
+     "span": [
+      26,
+      28
+     ],
+     "out": [
+      1,
+      3
+     ]
+    },
+    {
+     "unit_id": "P01#1",
+     "cls": "formal",
+     "text": "」。",
+     "ref": "P01",
+     "span": null,
+     "out": [
+      3,
+      5
+     ]
+    }
+   ],
+   "L1 未入槽的 chosen": [
+    {
+     "card": "negation",
+     "span": [
+      5,
+      10
+     ],
+     "span_text": "循序渐进*",
+     "why": "pos 不可得/不在 POS_TYPES ⇒ 不入受约束槽"
+    }
+   ],
+   "L2": {
+    "given": false,
+    "reason": "无法给出结构性理由",
+    "detail": "C1 谓词套 4 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）",
+    "first_problem": "rule_a: 规则 A 违规：骨架 XFREE 字面 '愤' 既非形式词也非逻辑词（疑似实义词/专名）",
+    "attempts": [
+     {
+      "name": "A1 类名理由",
+      "text": "「难度」愤怒。",
+      "ok": false,
+      "na": false,
+      "c1": false,
+      "c2": false,
+      "c3": true,
+      "n_problems": 4,
+      "problems": [
+       "rule_a: 规则 A 违规：骨架 XFREE 字面 '愤' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "rule_a: 规则 A 违规：骨架 XFREE 字面 '怒' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "structure: 规则 A 违规：骨架 XFREE 字面 '愤' 既非形式词也非逻辑词（疑似实义词/专名）",
+       "structure: 规则 A 违规：骨架 XFREE 字面 '怒' 既非形式词也非逻辑词（疑似实义词/专名）"
+      ],
+      "fail": "C1 谓词套 4 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     },
+     {
+      "name": "A2 分数/序差异理由",
+      "text": "",
+      "ok": false,
+      "na": true,
+      "c1": null,
+      "c2": null,
+      "c3": null,
+      "n_problems": 0,
+      "problems": [],
+      "fail": "N/A：无同卡对照候选（结构上不可得差异事实）"
+     },
+     {
+      "name": "A3 因果理由",
+      "text": "因为「难度」。",
+      "ok": false,
+      "na": false,
+      "c1": false,
+      "c2": false,
+      "c3": true,
+      "n_problems": 2,
+      "problems": [
+       "word_face: 词面守卫：逻辑词 '因为' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）",
+       "structure: 词面守卫：逻辑词 '因为' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）"
+      ],
+      "fail": "C1 谓词套 2 个问题; C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     },
+     {
+      "name": "A4 纯复述（对照）",
+      "text": "「难度」。",
+      "ok": false,
+      "na": false,
+      "c1": true,
+      "c2": false,
+      "c3": true,
+      "n_problems": 0,
+      "problems": [],
+      "fail": "C2 判别性不成立（无差异字面 / 差异重算不为真）"
+     }
+    ]
+   },
+   "R1": [],
+   "R2": []
+  }
+ ],
+ "arm_records": {
+  "P[random:0]": {
+   "G-free_strict": [
+    "free: 文本里没有任何可回溯内容单元"
+   ],
+   "G-free_generous": [
+    "rule_a: 规则 A 违规：骨架 XFREE 字面含实义词 '你'（实义词必须进槽）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面含实义词 '说'（实义词必须进槽）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面 '这' 既非形式词也非逻辑词（疑似实义词/专名）"
+   ],
+   "B-echo": [
+    "rule_a: 规则 A 违规：骨架 XFREE 字面含实义词 '你'（实义词必须进槽）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面 '你' 既非形式词也非逻辑词（疑似实义词/专名）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面 '这' 既非形式词也非逻辑词（疑似实义词/专名）"
+   ]
+  },
+  "P[random:1]": {
+   "G-free_strict": [
+    "free: 文本里没有任何可回溯内容单元"
+   ],
+   "G-free_generous": [
+    "rule_a: 规则 A 违规：骨架 XFREE 字面含实义词 '你'（实义词必须进槽）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面含实义词 '说'（实义词必须进槽）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面 '这' 既非形式词也非逻辑词（疑似实义词/专名）"
+   ],
+   "B-echo": [
+    "rule_a: 规则 A 违规：骨架 XFREE 字面含实义词 '你'（实义词必须进槽）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面 '你' 既非形式词也非逻辑词（疑似实义词/专名）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面 '这' 既非形式词也非逻辑词（疑似实义词/专名）"
+   ]
+  },
+  "P[random:2]": {
+   "G-free_strict": [
+    "free: 文本里没有任何可回溯内容单元"
+   ],
+   "G-free_generous": [
+    "rule_a: 规则 A 违规：骨架 XFREE 字面含实义词 '你'（实义词必须进槽）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面含实义词 '说'（实义词必须进槽）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面 '这' 既非形式词也非逻辑词（疑似实义词/专名）"
+   ],
+   "B-echo": [
+    "rule_a: 规则 A 违规：骨架 XFREE 字面含实义词 '你'（实义词必须进槽）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面 '你' 既非形式词也非逻辑词（疑似实义词/专名）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面 '这' 既非形式词也非逻辑词（疑似实义词/专名）"
+   ]
+  },
+  "P[random:3]": {
+   "G-free_strict": [
+    "free: 文本里没有任何可回溯内容单元"
+   ],
+   "G-free_generous": [
+    "rule_a: 规则 A 违规：骨架 XFREE 字面含实义词 '你'（实义词必须进槽）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面含实义词 '说'（实义词必须进槽）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面 '这' 既非形式词也非逻辑词（疑似实义词/专名）"
+   ],
+   "B-echo": [
+    "rule_a: 规则 A 违规：骨架 XFREE 字面含实义词 '你'（实义词必须进槽）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面 '你' 既非形式词也非逻辑词（疑似实义词/专名）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面 '这' 既非形式词也非逻辑词（疑似实义词/专名）"
+   ]
+  },
+  "P[random:4]": {
+   "G-free_strict": [
+    "free: 文本里没有任何可回溯内容单元"
+   ],
+   "G-free_generous": [
+    "rule_a: 规则 A 违规：骨架 XFREE 字面含实义词 '你'（实义词必须进槽）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面含实义词 '说'（实义词必须进槽）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面 '这' 既非形式词也非逻辑词（疑似实义词/专名）"
+   ],
+   "B-echo": [
+    "rule_a: 规则 A 违规：骨架 XFREE 字面含实义词 '你'（实义词必须进槽）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面 '你' 既非形式词也非逻辑词（疑似实义词/专名）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面 '这' 既非形式词也非逻辑词（疑似实义词/专名）"
+   ]
+  },
+  "P[random:5]": {
+   "G-free_strict": [
+    "free: 文本里没有任何可回溯内容单元"
+   ],
+   "G-free_generous": [
+    "rule_a: 规则 A 违规：骨架 XFREE 字面含实义词 '你'（实义词必须进槽）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面含实义词 '说'（实义词必须进槽）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面 '这' 既非形式词也非逻辑词（疑似实义词/专名）"
+   ],
+   "B-echo": [
+    "rule_a: 规则 A 违规：骨架 XFREE 字面含实义词 '你'（实义词必须进槽）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面 '你' 既非形式词也非逻辑词（疑似实义词/专名）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面 '这' 既非形式词也非逻辑词（疑似实义词/专名）"
+   ]
+  },
+  "P[enriched:0]": {
+   "G-free_strict": [
+    "free: 文本里没有任何可回溯内容单元"
+   ],
+   "G-free_generous": [
+    "rule_a: 规则 A 违规：骨架 XFREE 字面含实义词 '你'（实义词必须进槽）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面含实义词 '说'（实义词必须进槽）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面 '这' 既非形式词也非逻辑词（疑似实义词/专名）"
+   ],
+   "B-echo": [
+    "rule_a: 规则 A 违规：骨架 XFREE 字面含实义词 '你'（实义词必须进槽）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面 '你' 既非形式词也非逻辑词（疑似实义词/专名）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面 '这' 既非形式词也非逻辑词（疑似实义词/专名）"
+   ]
+  },
+  "P[enriched:1]": {
+   "G-free_strict": [
+    "free: 文本里没有任何可回溯内容单元"
+   ],
+   "G-free_generous": [
+    "rule_a: 规则 A 违规：骨架 XFREE 字面含实义词 '开始'（实义词必须进槽）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面含实义词 '你'（实义词必须进槽）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面含实义词 '说'（实义词必须进槽）"
+   ],
+   "B-echo": [
+    "rule_a: 规则 A 违规：骨架 XFREE 字面含实义词 '你'（实义词必须进槽）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面 '你' 既非形式词也非逻辑词（疑似实义词/专名）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面 '这' 既非形式词也非逻辑词（疑似实义词/专名）"
+   ]
+  },
+  "P[enriched:2]": {
+   "G-free_strict": [
+    "free: 文本里没有任何可回溯内容单元"
+   ],
+   "G-free_generous": [
+    "rule_a: 规则 A 违规：骨架 XFREE 字面含实义词 '你'（实义词必须进槽）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面含实义词 '说'（实义词必须进槽）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面 '这' 既非形式词也非逻辑词（疑似实义词/专名）"
+   ],
+   "B-echo": [
+    "rule_a: 规则 A 违规：骨架 XFREE 字面含实义词 '你'（实义词必须进槽）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面 '你' 既非形式词也非逻辑词（疑似实义词/专名）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面 '这' 既非形式词也非逻辑词（疑似实义词/专名）"
+   ]
+  },
+  "P[enriched:3]": {
+   "G-free_strict": [
+    "free: 文本里没有任何可回溯内容单元"
+   ],
+   "G-free_generous": [
+    "rule_a: 规则 A 违规：骨架 XFREE 字面含实义词 '你'（实义词必须进槽）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面含实义词 '说'（实义词必须进槽）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面 '这' 既非形式词也非逻辑词（疑似实义词/专名）"
+   ],
+   "B-echo": [
+    "rule_a: 规则 A 违规：骨架 XFREE 字面含实义词 '你'（实义词必须进槽）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面 '你' 既非形式词也非逻辑词（疑似实义词/专名）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面 '这' 既非形式词也非逻辑词（疑似实义词/专名）"
+   ]
+  },
+  "P[enriched:4]": {
+   "G-free_strict": [
+    "free: 文本里没有任何可回溯内容单元"
+   ],
+   "G-free_generous": [
+    "rule_a: 规则 A 违规：骨架 XFREE 字面含实义词 '重要'（实义词必须进槽）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面含实义词 '你'（实义词必须进槽）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面含实义词 '说'（实义词必须进槽）"
+   ],
+   "B-echo": [
+    "rule_a: 规则 A 违规：骨架 XFREE 字面含实义词 '你'（实义词必须进槽）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面 '你' 既非形式词也非逻辑词（疑似实义词/专名）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面 '这' 既非形式词也非逻辑词（疑似实义词/专名）"
+   ]
+  },
+  "P[enriched:5]": {
+   "G-free_strict": [
+    "free: 文本里没有任何可回溯内容单元"
+   ],
+   "G-free_generous": [
+    "rule_a: 规则 A 违规：骨架 XFREE 字面含实义词 '你'（实义词必须进槽）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面含实义词 '说'（实义词必须进槽）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面 '这' 既非形式词也非逻辑词（疑似实义词/专名）"
+   ],
+   "B-echo": [
+    "rule_a: 规则 A 违规：骨架 XFREE 字面含实义词 '你'（实义词必须进槽）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面 '你' 既非形式词也非逻辑词（疑似实义词/专名）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面 '这' 既非形式词也非逻辑词（疑似实义词/专名）"
+   ]
+  }
+ },
+ "predicate_calls_pass1": {
+  "rule_a_problems": 76,
+  "slot_schema_problems": 76,
+  "word_face_problems": 73,
+  "item_problems": 120,
+  "check_structure": 73,
+  "check_deref": 73
+ },
+ "predicate_nonempty_pass1": {
+  "rule_a_problems": 37,
+  "check_structure": 49,
+  "word_face_problems": 23,
+  "slot_schema_problems": 19,
+  "check_deref": 12
+ },
+ "verdict": "B 只能给机械层、给不出理由"
+}
