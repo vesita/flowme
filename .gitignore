@@ -23,9 +23,8 @@ checkpoints/
 out/
 logs/
 *.log
-# 例外：meme 是主线，它的实验日志量小且是主线的证据，要入库。
-# 过程日志仍不入库：关键数字必须复述进 REPORT/results.json，不能只活在 stdout 里。
-!meme/*.log
+# 日志一律不入库（过程证据）。因此：关键数字必须复述进 REPORT / results.json / 提交信息，
+# 不能只活在 stdout 里 —— 日志没有版本控制，随时会丢。
 
 # 其他常见模型权重格式
 *.bin
