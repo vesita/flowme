@@ -16,6 +16,10 @@ sys.path.insert(0, str(HERE))
 ROOT = HERE.parents[1]
 
 import labels as L  # noqa: E402
+
+
+def L_MODES(i: int) -> str:
+    return L.MODES[i]
 import mode_render as MR  # noqa: E402
 
 DATA = HERE / "data"
@@ -58,8 +62,15 @@ def main() -> int:
                 p = RESULTS / f"{a}_s{s}{suf}.json"
                 if p.exists():
                     runs[f"{a}_s{s}{suf}"] = loadj(p)
+    # PREREG rev.B 收敛档（steps=8000，敏感性，单列，不进主判据）
+    ext = {}
+    for p in sorted(RESULTS.glob("*_steps8000.json")):
+        d = loadj(p)
+        if "arm" in d:
+            ext[d["name"]] = d
 
-    out: dict = {"runs": sorted(runs), "battery": {}, "table": [], "M": {}}
+    out: dict = {"runs": sorted(runs), "ext_runs": sorted(ext),
+                 "battery": {}, "table": [], "M": {}}
 
     # ---------------- M6 / M0：电池 ----------------
     print("== M6 · max_naive 电池（fit=train，逐出口）==")
@@ -117,6 +128,25 @@ def main() -> int:
                   f"{r['over_max_naive_2se']:+8.4f} {pm:+.4f}±{pse:.4f}   "
                   f"{row['over_R2']:+7.4f} {row['over_R3']:+7.4f}")
 
+    # ---------------- 收敛档（rev.B 单列）----------------
+    if ext:
+        print("\n== 收敛档 steps=8000（PREREG rev.B 敏感性，单列，不进主判据）==")
+        out["ext"] = {}
+        for name, run in ext.items():
+            rr = run["eval"]["mask"]
+            rk = run["eval"]["keep"]
+            out["ext"][name] = {
+                "train_acc_last100": run["train_mode_acc_last100"],
+                "loss_last": run["loss_last"],
+                "mask_acc": rr["mode_acc"], "mask_over": rr["over_max_naive"],
+                "mask_over_2se": rr["over_max_naive_2se"],
+                "keep_acc": rk["mode_acc"], "keep_over": rk["over_max_naive"],
+                "trig_acc": rr["trig_acc"], "rec_text_rate": rr["record_text_rate"]}
+            print(f"  {name:22s} train_acc={run['train_mode_acc_last100']:.4f} "
+                  f"mask={rr['mode_acc']:.4f}(Δ={rr['over_max_naive']:+.4f}) "
+                  f"keep={rk['mode_acc']:.4f}(Δ={rk['over_max_naive']:+.4f}) "
+                  f"trig={rr['trig_acc']:.4f} rec_text={rr['record_text_rate']:.4f}")
+
     # ---------------- M1：遮蔽出口主判 ----------------
     m1 = {}
     for name, run in runs.items():
@@ -131,15 +161,44 @@ def main() -> int:
                     "paired_mean": round(pm, 4), "paired_se": round(pse, 5),
                     "pass_2se": bool(r["over_max_naive_2se"] > 0),
                     "pass_paired": bool(pm - 2 * pse > 0)}
-    same = all(v["over"] > 0 for k, v in m1.items()
-               if k.split("_")[0] in ARMS) and any(k.startswith("MASK") for k in m1)
-    m1["two_seed_same_sign_MASK"] = all(m1[f"MASK_s{s}"]["over"] > 0 for s in SEEDS
-                                        if f"MASK_s{s}" in m1)
-    m1["verdict_M1"] = all(m1[k]["pass_2se"] for k in m1
-                           if k.startswith(("KEEP_", "MASK_", "MIX_")))
+    # 主判据 = **MASK 臂**（设计主臂）两 seed；MIX 作同族支持；KEEP 臂的地板按定义是 1.0
+    #（= M2 的对照，不进 M1 判据 —— PREREG §7 M1 只写"E_mask 出口"，M2 单列 KEEP）。
+    _ov = [m1[f"MASK_s{s}"]["over"] for s in SEEDS if f"MASK_s{s}" in m1]
+    m1["two_seed_same_sign_MASK"] = len(_ov) == 2 and (_ov[0] > 0) == (_ov[1] > 0)
+    m1["two_seed_sign"] = "同为正" if all(x > 0 for x in _ov) else (
+        "同为负" if all(x < 0 for x in _ov) else "异号")
+    m1["verdict_M1"] = all(m1[f"MASK_s{s}"]["pass_2se"] for s in SEEDS
+                           if f"MASK_s{s}" in m1) and m1["two_seed_same_sign_MASK"]
+    m1["MIX_support"] = {k: v["pass_2se"] for k, v in m1.items() if k.startswith("MIX_")}
+    m1["KEEP_excluded_reason"] = "KEEP 臂地板按定义 = 1.0（R6=label_full），归 M2 对照"
     out["M"]["M1"] = m1
     print(f"\n[M1] 遮蔽出口：全部臂×seed 的 卡−max_naive−2SE>0 = {m1['verdict_M1']}；"
           f"MASK 两 seed 同号 = {m1['two_seed_same_sign_MASK']}")
+
+    # ---------------- 逐类拆解（MASK 臂 × mask 出口）----------------
+    percls: dict = {}
+    for s in SEEDS:
+        k = f"MASK_s{s}"
+        if k not in runs:
+            continue
+        r = runs[k]["eval"]["mask"]
+        g, pm = r["gold_mode"], r["pred_mode"]
+        rulep = bat["exits"]["mask"]["pred"]["R6_labeldef"]
+        cls = {}
+        for i in range(6):
+            idx = [j for j, x in enumerate(g) if x == i]
+            if not idx:
+                continue
+            cls[L_MODES(i)] = {
+                "n": len(idx),
+                "card_rec": round(sum(1 for j in idx if pm[j] == i) / len(idx), 4),
+                "R6_rec": round(sum(1 for j in idx if rulep[j] == i) / len(idx), 4),
+            }
+        percls[k] = cls
+        print(f"\n[逐类 recall · {k} @ mask] " + " ".join(
+            f"{n}({v['n']}) card={v['card_rec']:.3f}/R6={v['R6_rec']:.3f}"
+            for n, v in cls.items()))
+    out["per_class"] = percls
 
     # ---------------- M2 ----------------
     keep_max = bat["exits"]["keep"]["pool"]["max_naive"]
@@ -150,12 +209,18 @@ def main() -> int:
                         for s in SEEDS if f"MASK_s{s}" in runs},
           "card_mask": {f"MASK_s{s}": runs[f"MASK_s{s}"]["eval"]["mask"]["mode_acc"]
                         for s in SEEDS if f"MASK_s{s}" in runs}}
-    m2["card_drop"] = {k: round(m2["card_keep"][k] - m2["card_mask"][k], 4)
-                       for k in m2["card_keep"]}
+    # 卡自己的"遮蔽后崩"要看**用标点训出来的卡**（KEEP 臂）：keep 出口 → mask 出口
+    m2["card_drop_KEEP_arm"] = {
+        f"KEEP_s{s}": round(runs[f"KEEP_s{s}"]["eval"]["keep"]["mode_acc"]
+                            - runs[f"KEEP_s{s}"]["eval"]["mask"]["mode_acc"], 4)
+        for s in SEEDS if f"KEEP_s{s}" in runs}
+    m2["card_keep_vs_rule_KEEP_arm"] = {
+        f"KEEP_s{s}": round(runs[f"KEEP_s{s}"]["eval"]["keep"]["mode_acc"] - keep_max, 4)
+        for s in SEEDS if f"KEEP_s{s}" in runs}
     out["M"]["M2"] = m2
     print(f"[M2] 标点给多少：max_naive keep {keep_max:.4f} → mask {mask_max:.4f} "
-          f"（{m2['punct_gives']:+.4f}）；MASK 臂卡 keep→mask 掉 "
-          f"{m2['card_drop']}")
+          f"（地板 {m2['punct_gives']:+.4f}）；KEEP 臂卡 keep→mask 掉 "
+          f"{m2['card_drop_KEEP_arm']}；KEEP 臂卡−地板(keep)={m2['card_keep_vs_rule_KEEP_arm']}")
 
     # ---------------- M3 ----------------
     r = bat["exits"]["mask"]["pool"]
@@ -228,15 +293,21 @@ def main() -> int:
     rows = load_rows("test")
     run = runs.get("MASK_s42") or next(iter(runs.values()))
     samples = []
-    want = [0, 1, 2, 3, 4, 5]
-    picked: dict[int, int] = {}
-    for i, r in enumerate(rows):
-        g = r["mode"]
-        if g in want and g not in picked and run["eval"]["mask"]["pred_mode"][i] == g:
-            picked[g] = i
-        if len(picked) == 6:
+    picked: dict[int, list[int]] = {k: [] for k in range(6)}
+    for i, r in enumerate(rows):                      # 每类取前 1 条 + 前 1 条预测错的
+        if len(picked[r["mode"]]) >= 2:
+            continue
+        wrong = run["eval"]["mask"]["pred_mode"][i] != r["mode"]
+        tag = 1 if wrong else 0
+        if tag not in picked[r["mode"]]:
+            picked[r["mode"]].append(i)
+        if all(len(v) >= 2 for v in picked.values()):
             break
-    for g, i in sorted(picked.items()):
+    # 先保证六类各有一条（含反问），再补预测错的，总数 ≤10
+    head = [(g, picked[g][0]) for g in sorted(picked) if picked[g]]
+    tail = [(g, i) for g in sorted(picked) for i in picked[g][1:]]
+    sel = (head + tail)[:10]
+    for g, i in sel:
         r = rows[i]
         mi = run["eval"]["mask"]["pred_mode"][i]
         sp = r["trig"]["mask"]
@@ -244,6 +315,7 @@ def main() -> int:
         samples.append({
             "原文": r["text"], "输入(遮蔽)": r["exit"]["mask"],
             "gold": r["mode_name"], "pred": L.MODES[mi],
+            "对错": "对" if mi == r["mode"] else "错",
             "触发词span": list(sp) if sp else None,
             "触发词": r["exit"]["mask"][sp[0]:sp[1]] if sp else "∅",
             "kind": rec["kind"], "instruction": rec["instruction"],
@@ -255,7 +327,7 @@ def main() -> int:
     out["samples"] = samples
     print("\n== 真实样例（MASK 臂 s42，遮蔽出口）==")
     for s_ in samples:
-        print(f"  原文={s_['原文']!r}\n    遮蔽输入={s_['输入(遮蔽)']!r} "
+        print(f"  [{s_['对错']}] 原文={s_['原文']!r}\n    遮蔽输入={s_['输入(遮蔽)']!r} "
               f"gold={s_['gold']} pred={s_['pred']} 触发词={s_['触发词']!r} "
               f"span={s_['触发词span']} kind={s_['kind']}\n    依据={s_['依据']}")
 

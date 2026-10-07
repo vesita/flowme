@@ -150,6 +150,7 @@ def battery() -> dict:
         rec["R6_labeldef_fit"] = round(
             sum(1 for a, b in zip(r6_fit, fit_y) if a == b) / len(fit_y), 4)
         preds["R6_labeldef"] = r6
+        preds["R1_punct_full"] = r6   # 同一函数（PREREG §4：full ≡ R6）
 
         # ---- M0 恒等式断言：E_mask 上 R-punct(simple) 必须 ≡ majority ----
         if ename in ("mask", "colloq_mask"):
