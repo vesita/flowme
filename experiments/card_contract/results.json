@@ -1,0 +1,416 @@
+{
+ "V0": {
+  "a_deprecated": 1,
+  "a_match": 35,
+  "a_mismatch": 0,
+  "a_n": 36,
+  "a_reject": [],
+  "a_status": {
+   "deprecated": 1,
+   "match": 35
+  },
+  "g_mismatch": 0,
+  "g_n": 10,
+  "g_pos_check": {
+   "n": 10,
+   "note": "bag_pos = 整袋 pos 直方图（不按 ref）⇒ 只能做 ⊆ 不等式佐证（推断级）",
+   "violations": []
+  },
+  "g_reject": 0,
+  "g_replay_diff_n": 0,
+  "g_status": {
+   "match": 10
+  },
+  "official_fixture_diff_n": 0,
+  "official_table_diff_n": 0,
+  "raw_reject_diff_n": 0
+ },
+ "V1": {
+  "deprecated_sneaked_in_home": [],
+  "disposition_per_id": [
+   {
+    "kind": "migrated",
+    "new": "CF02",
+    "old": "S02",
+    "reason": "",
+    "records": 8
+   },
+   {
+    "kind": "deprecated",
+    "new": null,
+    "old": "S04",
+    "reason": "含 `否` 槽 ⊄ POS_TYPES={名,动,形}；与官方 S04 `[1][2]。` **同 id 不同签名** ⇒ 不进表",
+    "records": 1
+   },
+   {
+    "kind": "migrated",
+    "new": "CF06",
+    "old": "S06",
+    "reason": "",
+    "records": 2
+   },
+   {
+    "kind": "migrated",
+    "new": "CF11",
+    "old": "S11",
+    "reason": "",
+    "records": 25
+   }
+  ],
+  "gate": {
+   "after_mtime": 1791351539.8461747,
+   "prereg_iso": "2026-10-07 13:08:17",
+   "prereg_mtime": 1791349697.2208288,
+   "src_iso": {
+    "src/dtseek/tasks/card_contract.py": "2026-10-07 13:30:44",
+    "src/dtseek/tasks/render.py": "2026-10-07 13:33:00"
+   },
+   "src_mtime": {
+    "src/dtseek/tasks/card_contract.py": 1791351044.5788236,
+    "src/dtseek/tasks/render.py": 1791351180.1469517
+   }
+  },
+  "home_dup_ids": [],
+  "home_pos_out_of_domain": [],
+  "home_same_id_diff_sign": [],
+  "migrated_sig_mismatch": [],
+  "migration_counts": {
+   "deprecated": 9,
+   "merged": 3,
+   "migrated": 13
+  },
+  "missing_in_home": [],
+  "n_cf": 13,
+  "n_home": 29,
+  "n_official": 16,
+  "n_records_disposed": 36,
+  "naive_clash_detail": [
+   {
+    "official_pattern": "[1][2][3]。",
+    "official_sign_same": false,
+    "old": "S01"
+   },
+   {
+    "official_pattern": "[1][2][3]吗？",
+    "official_sign_same": false,
+    "old": "S02"
+   },
+   {
+    "official_pattern": "[1][2][3]！",
+    "official_sign_same": false,
+    "old": "S03"
+   },
+   {
+    "official_pattern": "[1][2]。",
+    "official_sign_same": false,
+    "old": "S04"
+   },
+   {
+    "official_pattern": "[1][2]，[3][4]。",
+    "official_sign_same": false,
+    "old": "S05"
+   },
+   {
+    "official_pattern": "[1]们[2]。",
+    "official_sign_same": false,
+    "old": "S06"
+   },
+   {
+    "official_pattern": "[1]和[2][3]。",
+    "official_sign_same": false,
+    "old": "S07"
+   },
+   {
+    "official_pattern": "[1]与[2][3]。",
+    "official_sign_same": false,
+    "old": "S08"
+   },
+   {
+    "official_pattern": "[1][2]吗？",
+    "official_sign_same": false,
+    "old": "S09"
+   },
+   {
+    "official_pattern": "[1][2][3][4]。",
+    "official_sign_same": false,
+    "old": "S10"
+   },
+   {
+    "official_pattern": "[1][2][3][4]，[5][6]要[7]。",
+    "official_sign_same": false,
+    "old": "S11"
+   },
+   {
+    "official_pattern": "[1][2]，[3][4]要[5]。",
+    "official_sign_same": false,
+    "old": "S12"
+   },
+   {
+    "official_pattern": "因为[1][2]，[3][4]要[5]。",
+    "official_sign_same": false,
+    "old": "S13"
+   }
+  ],
+  "naive_clash_ids": [
+   "S01",
+   "S02",
+   "S03",
+   "S04",
+   "S05",
+   "S06",
+   "S07",
+   "S08",
+   "S09",
+   "S10",
+   "S11",
+   "S12",
+   "S13"
+  ],
+  "naive_clash_same": [],
+  "namespace_overlap": [],
+  "records_naive_clash": 36,
+  "unresolved": []
+ },
+ "V2": {
+  "n_raw": 26,
+  "norm_agree": 26,
+  "norm_ours_violate": 0,
+  "norm_reason_empty": 0,
+  "norm_theirs_violate": 0,
+  "norm_violation_detail": [],
+  "norm_with_text": 0,
+  "raw_both_agree": 26,
+  "raw_examples": [
+   {
+    "ours": [
+     "C1 channel=None 不在 ('pointer', 'generate', 'reject')",
+     "C2 拒答记录带 text（= \"（拒答）evidence 不齐备：袋 4 '我' 不是输入逐字子串（span 给出的是 '欢'）；题元方向冲突（规则 B）：槽1 要 施事，指派了 '我'（受事）⇒ 拒（字符串全过、命题相反的靶子）；evidence 不齐备：袋 3 '喜欢' 不是输入逐字子串（span 给出的是 '说喜'）；题元方向冲突（规则 B）：槽3 要 受事，指派了 '你'（施事）⇒ 拒（字符串全过、命题相反的靶子）\"）：按契约必须缺省"
+    ],
+    "src": "render:theta_conflict",
+    "theirs": [
+     "C2 拒答记录带 text（= \"（拒答）evidence 不齐备：袋 4 '我' 不是输入逐字子串（span 给出的是 '欢'）；题元方向冲突（规则 B）：槽1 要 施事，指派了 '我'（受事）⇒ 拒（字符串全过、命题相反的靶子）；evidence 不齐备：袋 3 '喜欢' 不是输入逐字子串（span 给出的是 '说喜'）；题元方向冲突（规则 B）：槽3 要 受事，指派了 '你'（施事）⇒ 拒（字符串全过、命题相反的靶子）\"）：按契约必须缺省"
+    ]
+   },
+   {
+    "ours": [
+     "C1 channel=None 不在 ('pointer', 'generate', 'reject')",
+     "C2 拒答记录带 text（= \"（拒答）规则 A 违规：骨架 BAD 字面含实义词 '用户'（实义词必须进槽）；规则 A 违规：骨架 BAD 字面含实义词 '说'（实义词必须进槽）；规则 A 违规：骨架 BAD 字面 '用' 既非形式词也非逻辑词（疑似实义词/专名）；规则 A 违规：骨架 BAD 字面 '户' 既非形式词也非逻辑词（疑似实义词/专名）；规则 A 违规：骨架 BAD 字面 '说' 既非形式词也非逻辑词（疑似实义词/专名）；evidence 不齐备：袋 2 '说' 不是输入逐字子串（span 给出的是 '载'）\"）：按契约必须缺省"
+    ],
+    "src": "render:rule_a",
+    "theirs": [
+     "C2 拒答记录带 text（= \"（拒答）规则 A 违规：骨架 BAD 字面含实义词 '用户'（实义词必须进槽）；规则 A 违规：骨架 BAD 字面含实义词 '说'（实义词必须进槽）；规则 A 违规：骨架 BAD 字面 '用' 既非形式词也非逻辑词（疑似实义词/专名）；规则 A 违规：骨架 BAD 字面 '户' 既非形式词也非逻辑词（疑似实义词/专名）；规则 A 违规：骨架 BAD 字面 '说' 既非形式词也非逻辑词（疑似实义词/专名）；evidence 不齐备：袋 2 '说' 不是输入逐字子串（span 给出的是 '载'）\"）：按契约必须缺省"
+    ]
+   },
+   {
+    "ours": [
+     "C1 channel=None 不在 ('pointer', 'generate', 'reject')",
+     "C2 拒答记录带 text（= \"（拒答）词面守卫：逻辑词 '因为' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）；词面守卫：逻辑词 '要' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）；规则 0/B 违规：袋 1 被指派到多个槽（内容词只回溯一次）；规则 0/B 违规：袋 1 被指派到多个槽（内容词只回溯一次）\"）：按契约必须缺省"
+    ],
+    "src": "render:word_face",
+    "theirs": [
+     "C2 拒答记录带 text（= \"（拒答）词面守卫：逻辑词 '因为' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）；词面守卫：逻辑词 '要' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）；规则 0/B 违规：袋 1 被指派到多个槽（内容词只回溯一次）；规则 0/B 违规：袋 1 被指派到多个槽（内容词只回溯一次）\"）：按契约必须缺省"
+    ]
+   }
+  ],
+  "raw_ours_violate": 26,
+  "raw_theirs_violate": 26,
+  "raw_with_text": 18
+ },
+ "V3": {
+  "git_diff_stat_src": "src/dtseek/tasks/render.py | 56 ++++++++++++++++++++++++++++++++++++++++++----\n 1 file changed, 52 insertions(+), 4 deletions(-)",
+  "git_status": [
+   "M src/dtseek/tasks/render.py",
+   "?? experiments/card_contract/",
+   "?? experiments/entity_identity/",
+   "?? experiments/prod_card_audit/",
+   "?? src/dtseek/tasks/card_contract.py"
+  ],
+  "pytest_exit": "0",
+  "pytest_tail": [
+   "........................................................................ [ 27%]",
+   "........................................................................ [ 55%]",
+   "........................................................................ [ 83%]",
+   "..........................................                               [100%]",
+   "258 passed in 21.71s",
+   "EXIT=0"
+  ]
+ },
+ "V4": {
+  "classes": {
+   "gen_dispatch": {
+    "explainable": 30,
+    "n": 30,
+    "problems_total": 0,
+    "why_not": [],
+    "with_problems": 0
+   },
+   "pointer": {
+    "explainable": 12,
+    "n": 12,
+    "problems_total": 0,
+    "why_not": [],
+    "with_problems": 0
+   },
+   "render": {
+    "explainable": 35,
+    "n": 35,
+    "problems_total": 0,
+    "why_not": [],
+    "with_problems": 0
+   }
+  },
+  "explainable_all": true,
+  "pointer_baseline_covered": 0,
+  "pointer_contract_violate_with_structure": 0,
+  "pointer_contract_violate_without_structure": 12,
+  "pointer_covered": 12,
+  "pointer_n": 12,
+  "pointer_samples": [
+   {
+    "problems": [],
+    "rid": "P[random:0]",
+    "text": "「满」。"
+   },
+   {
+    "problems": [],
+    "rid": "P[random:1]",
+    "text": "「落叶书签」。"
+   },
+   {
+    "problems": [],
+    "rid": "P[random:2]",
+    "text": "「优势:适」。"
+   },
+   {
+    "problems": [],
+    "rid": "P[random:3]",
+    "text": "「亿人用」。"
+   }
+  ],
+  "samples": [
+   {
+    "rid": "A[0]",
+    "suite": "explain_card.x0",
+    "text": "「我让」；「发挥最」。",
+    "why": ""
+   },
+   {
+    "rid": "A[1]",
+    "suite": "explain_card.x0",
+    "text": "「你」；「睡」。",
+    "why": ""
+   },
+   {
+    "rid": "A[6]",
+    "suite": "explain_card.x0",
+    "text": "「那个送」。",
+    "why": ""
+   },
+   {
+    "rid": "A[7]",
+    "suite": "explain_card.x0",
+    "text": "「我」；「糟」。",
+    "why": ""
+   },
+   {
+    "rid": "A[13]",
+    "suite": "explain_card.x0",
+    "text": "「美」；「背影」。",
+    "why": ""
+   },
+   {
+    "rid": "A[15]",
+    "suite": "explain_card.x0",
+    "text": "「因为开」。",
+    "why": ""
+   }
+  ]
+ },
+ "V5": {
+  "inj1_tamper_ref": {
+   "caught": 90,
+   "injected": 90,
+   "missed": 0,
+   "sample": "回溯: 内容条目 ref=999 不在袋里"
+  },
+  "inj2_reject_with_text": {
+   "caught": 26,
+   "injected": 26,
+   "missed": 0,
+   "sample": "X2 违规：kind=reject 的解释卡带了 text 键（拒答不许有文本）"
+  },
+  "inj2b_contract_reject_text": {
+   "caught": 26,
+   "injected": 26,
+   "missed": 0
+  },
+  "inj3_skeleton_content_word": {
+   "caught": 3,
+   "gate_sample": "规则 A 违规：骨架 EVIL 字面含实义词 '用户'（实义词必须进槽）",
+   "injected": 3,
+   "missed": 0,
+   "render_reason": "规则 A 违规：骨架 EVIL 字面含实义词 '用户'（实义词必须进槽）；规则 A 违规：骨架 EVIL 字面含实义词 '说'（实义词必须进槽）；规则 A 违规：骨架 EVIL 字面 '用' 既非形式词也非逻辑词（疑似实义词/专名）；规则 A 违规：骨架 EVIL 字面 '户' 既非形式词也非逻辑词（疑似实义词/专名）；规则 A 违规：骨架 EVIL 字面 '说' 既非形式词也非逻辑词（疑似实义词/专名）；evidence 不齐备：袋 2 '说' 不是输入逐字子串（span 给出的是 '载'）",
+   "sample": "规则 A 违规：骨架 EVIL 字面含实义词 '用户'（实义词必须进槽）"
+  },
+  "missed": 0
+ },
+ "diff": {
+  "a_after": {
+   "deprecated": 1,
+   "match": 35
+  },
+  "a_before": {
+   "deprecated": 1,
+   "no_skeleton": 35
+  },
+  "g_after": {
+   "match": 10
+  },
+  "g_before": {
+   "match": 10
+  },
+  "g_replay_diff": {},
+  "official_fixture_diff": {},
+  "official_table_diff": {},
+  "raw_reject_diff": {},
+  "table_added": [
+   "CF01",
+   "CF02",
+   "CF03",
+   "CF06",
+   "CF07",
+   "CF08",
+   "CF09",
+   "CF11",
+   "CF18",
+   "CF19",
+   "CF20",
+   "CF21",
+   "CF25"
+  ]
+ },
+ "gate": {
+  "after_mtime": 1791351348.4297416,
+  "prereg_iso": "2026-10-07 13:08:17",
+  "prereg_mtime": 1791349697.2208288,
+  "src_iso": {
+   "src/dtseek/tasks/card_contract.py": "2026-10-07 13:30:44",
+   "src/dtseek/tasks/render.py": "2026-10-07 13:33:00"
+  },
+  "src_mtime": {
+   "src/dtseek/tasks/card_contract.py": 1791351044.5788236,
+   "src/dtseek/tasks/render.py": 1791351180.1469517
+  }
+ },
+ "verdict_inputs": {
+  "flags": {
+   "V0": true,
+   "V1": true,
+   "V2": true,
+   "V3": true,
+   "V4": true,
+   "V5": true
+  },
+  "verdict": "契约统一成立"
+ }
+}

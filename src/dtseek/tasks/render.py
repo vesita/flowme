@@ -48,6 +48,8 @@ __all__ = [
     "LOGIC_WORDS",
     "POS_TYPES",
     "SKELETONS",
+    "SKELETON_CF",
+    "SKELETON_OFFICIAL",
     "SKELETON_TABLE_LIMIT",
     "THETAS",
     "BagItem",
@@ -178,6 +180,8 @@ DECLARED_NONE = Declared()
 
 # ---- 骨架表（手写、封闭、可枚举） --------------------------------------------
 
+#: 骨架表（**官方族**，P13 之前就存在的 16 条，一字未改）。
+#: 顺序 = 穷举式调用方的优先序（`_SKELETON_LIST` 保持官方族 ⇒ 这些调用方看到的序列不变）。
 _SKELETON_LIST: tuple[Skeleton, ...] = (
     Skeleton("S01", "[1][2][3]。", (SlotSpec("名", "施事"), SlotSpec("动"), SlotSpec("名", "受事"))),
     Skeleton("S02", "[1][2][3]吗？", (SlotSpec("名", "施事"), SlotSpec("动"), SlotSpec("名", "受事"))),
@@ -208,8 +212,50 @@ _SKELETON_LIST: tuple[Skeleton, ...] = (
              direction_safe=True),
 )
 
-#: 骨架表：封闭、手写、可枚举。import 时即跑 `validate_skeleton_table`（带病不进表）。
-SKELETONS: dict[str, Skeleton] = {sk.sid: sk for sk in _SKELETON_LIST}
+#: 迁移族（**P13 卡片契约统一**）：`experiments/card_flow/skeletons.py` 的 25 条里
+#: 语义归并进官方 3 条（S13→S01 / S14→S02 / S12→S04）、废弃 9 条（含 `否`/`数` 槽，
+#: 不在 `POS_TYPES` ⇒ 过不了 `slot_schema_problems` 门禁）、其余 **13 条**落在这里，
+#: id 改到 **`CF##` 命名空间**（`##` = 原 card_flow 编号）⇒ 与官方族 id 不相交，
+#: 从结构上杜绝「同 id 不同签名」。逐 id 的 `旧 → 新` 见 `experiments/card_contract/migration.py`。
+#:
+#: 构造规定：`[n1]→[1]` 顺序重编号、**题元一律丢弃** ⇒ `direction_safe=True`
+#: （实测 card_flow A 集 48/48 个候选 `theme=None`，真卡不产题元；保留题元会让这些记录
+#: 全被「无角色标签 ⇒ fail-closed」拒掉）。
+_CF_SKELETON_LIST: tuple[Skeleton, ...] = (
+    Skeleton("CF01", "[1]。", (SlotSpec("名"),), direction_safe=True),
+    Skeleton("CF02", "[1][2]。", (SlotSpec("名"), SlotSpec("形")), direction_safe=True),
+    Skeleton("CF03", "[1][2]吗？", (SlotSpec("名"), SlotSpec("形")), direction_safe=True),
+    Skeleton("CF06", "[1]和[2]。", (SlotSpec("名"), SlotSpec("名")), direction_safe=True),
+    Skeleton("CF07", "[1]与[2]。", (SlotSpec("名"), SlotSpec("名")), direction_safe=True),
+    Skeleton("CF08", "[1]和[2]和[3]。",
+             (SlotSpec("名"), SlotSpec("名"), SlotSpec("名")), direction_safe=True),
+    Skeleton("CF09", "[1][2]，[3][4]。",
+             (SlotSpec("名"), SlotSpec("形"), SlotSpec("名"), SlotSpec("形")),
+             direction_safe=True),
+    Skeleton("CF11", "[1]吗？", (SlotSpec("名"),), direction_safe=True),
+    Skeleton("CF18", "[1][2]，但[3][4]。",
+             (SlotSpec("名"), SlotSpec("形"), SlotSpec("名"), SlotSpec("形")),
+             direction_safe=True),
+    Skeleton("CF19", "[1][2]，所以[3][4]。",
+             (SlotSpec("名"), SlotSpec("形"), SlotSpec("名"), SlotSpec("形")),
+             direction_safe=True),
+    Skeleton("CF20", "因为[1][2]，[3][4]。",
+             (SlotSpec("名"), SlotSpec("形"), SlotSpec("名"), SlotSpec("形")),
+             direction_safe=True),
+    Skeleton("CF21", "[1]要[2]。", (SlotSpec("名"), SlotSpec("动")), direction_safe=True),
+    Skeleton("CF25", "[1][2]！", (SlotSpec("名"), SlotSpec("形")), direction_safe=True),
+)
+
+#: 手写表全集（唯一一家的全部手写条目；`_SKELETON_LIST` 仍是官方族的封闭序列）。
+_ALL_SKELETON_LIST: tuple[Skeleton, ...] = _SKELETON_LIST + _CF_SKELETON_LIST
+
+#: **骨架表（唯一一家）**：官方 16 条 + 迁移族 13 条 = 29 条，封闭、手写、可枚举。
+#: import 时即跑 `validate_skeleton_table`（带病不进表）。
+SKELETONS: dict[str, Skeleton] = {sk.sid: sk for sk in _ALL_SKELETON_LIST}
+
+#: 官方族视图（id 前缀 `S`/`R`）与迁移族视图（id 前缀 `CF`）—— 两族 id 不相交（V1 的隔离证明）。
+SKELETON_OFFICIAL: dict[str, Skeleton] = {sk.sid: sk for sk in _SKELETON_LIST}
+SKELETON_CF: dict[str, Skeleton] = {sk.sid: sk for sk in _CF_SKELETON_LIST}
 
 
 # ---- 读表：骨架 pattern → token 序列（无损分词） -----------------------------
@@ -667,11 +713,13 @@ def validate_skeleton_table(table: dict[str, Skeleton] | None = None) -> list[st
     probs: list[str] = []
     if len(table) > SKELETON_TABLE_LIMIT:
         probs.append(f"骨架表规模 {len(table)} 超过上限 {SKELETON_TABLE_LIMIT}")
-    sids = [sk.sid for sk in _SKELETON_LIST]
+    sids = [sk.sid for sk in _ALL_SKELETON_LIST]
     if len(set(sids)) != len(sids):
         probs.append(f"骨架 id 重复：{sids}")
     if set(table) != set(sids):
-        probs.append("骨架表与手写表 _SKELETON_LIST 不一致（表被改动过）")
+        probs.append("骨架表与手写表 _ALL_SKELETON_LIST（官方族 + CF 迁移族）不一致（表被改动过）")
+    if set(SKELETON_OFFICIAL) & set(SKELETON_CF):
+        probs.append(f"命名空间相交（V1 违例）：{sorted(set(SKELETON_OFFICIAL) & set(SKELETON_CF))}")
     for sk in table.values():
         probs += rule_a_problems(sk)
         probs += slot_schema_problems(sk)

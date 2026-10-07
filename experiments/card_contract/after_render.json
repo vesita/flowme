@@ -1,0 +1,1901 @@
+{
+ "a_replay": [
+  {
+   "new": "CF02",
+   "old": "S02",
+   "replay": "我让发挥最。",
+   "rid": "A[0]",
+   "status": "match",
+   "stored": "我让发挥最。"
+  },
+  {
+   "new": "CF02",
+   "old": "S02",
+   "replay": "你睡。",
+   "rid": "A[1]",
+   "status": "match",
+   "stored": "你睡。"
+  },
+  {
+   "new": "CF11",
+   "old": "S11",
+   "replay": "那个送吗？",
+   "rid": "A[6]",
+   "status": "match",
+   "stored": "那个送吗？"
+  },
+  {
+   "new": "CF02",
+   "old": "S02",
+   "replay": "我糟。",
+   "rid": "A[7]",
+   "status": "match",
+   "stored": "我糟。"
+  },
+  {
+   "new": "CF02",
+   "old": "S02",
+   "replay": "美背影。",
+   "rid": "A[13]",
+   "status": "match",
+   "stored": "美背影。"
+  },
+  {
+   "new": "CF11",
+   "old": "S11",
+   "replay": "因为开吗？",
+   "rid": "A[15]",
+   "status": "match",
+   "stored": "因为开吗？"
+  },
+  {
+   "new": "CF11",
+   "old": "S11",
+   "replay": "昕昕生日快吗？",
+   "rid": "A[18]",
+   "status": "match",
+   "stored": "昕昕生日快吗？"
+  },
+  {
+   "new": "CF11",
+   "old": "S11",
+   "replay": "我吗？",
+   "rid": "A[21]",
+   "status": "match",
+   "stored": "我吗？"
+  },
+  {
+   "new": "CF11",
+   "old": "S11",
+   "replay": "午吃早吗？",
+   "rid": "A[22]",
+   "status": "match",
+   "stored": "午吃早吗？"
+  },
+  {
+   "new": "CF11",
+   "old": "S11",
+   "replay": "幻想还是吗？",
+   "rid": "A[24]",
+   "status": "match",
+   "stored": "幻想还是吗？"
+  },
+  {
+   "new": "CF11",
+   "old": "S11",
+   "replay": "18度挺吗？",
+   "rid": "A[26]",
+   "status": "match",
+   "stored": "18度挺吗？"
+  },
+  {
+   "new": "CF06",
+   "old": "S06",
+   "replay": "天和你。",
+   "rid": "A[31]",
+   "status": "match",
+   "stored": "天和你。"
+  },
+  {
+   "new": "CF11",
+   "old": "S11",
+   "replay": "我吗？",
+   "rid": "A[35]",
+   "status": "match",
+   "stored": "我吗？"
+  },
+  {
+   "new": "CF11",
+   "old": "S11",
+   "replay": "要上吗？",
+   "rid": "A[37]",
+   "status": "match",
+   "stored": "要上吗？"
+  },
+  {
+   "new": "CF02",
+   "old": "S02",
+   "replay": "己的爱好不。",
+   "rid": "A[40]",
+   "status": "match",
+   "stored": "己的爱好不。"
+  },
+  {
+   "new": "CF11",
+   "old": "S11",
+   "replay": "含吗？",
+   "rid": "A[49]",
+   "status": "match",
+   "stored": "含吗？"
+  },
+  {
+   "new": "CF11",
+   "old": "S11",
+   "replay": "不吗？",
+   "rid": "A[51]",
+   "status": "match",
+   "stored": "不吗？"
+  },
+  {
+   "new": "CF11",
+   "old": "S11",
+   "replay": "回就呆西安吗？",
+   "rid": "A[53]",
+   "status": "match",
+   "stored": "回就呆西安吗？"
+  },
+  {
+   "new": "CF11",
+   "old": "S11",
+   "replay": "最喜欢龙吗？",
+   "rid": "A[54]",
+   "status": "match",
+   "stored": "最喜欢龙吗？"
+  },
+  {
+   "new": "CF11",
+   "old": "S11",
+   "replay": "超级甜吗？",
+   "rid": "A[57]",
+   "status": "match",
+   "stored": "超级甜吗？"
+  },
+  {
+   "new": "CF11",
+   "old": "S11",
+   "replay": "应该吗？",
+   "rid": "A[59]",
+   "status": "match",
+   "stored": "应该吗？"
+  },
+  {
+   "new": "CF02",
+   "old": "S02",
+   "replay": "专文秘】通知公文标准。",
+   "rid": "A[62]",
+   "status": "match",
+   "stored": "专文秘】通知公文标准。"
+  },
+  {
+   "new": "CF02",
+   "old": "S02",
+   "replay": "界杯决赛在哪座球。",
+   "rid": "A[65]",
+   "status": "match",
+   "stored": "界杯决赛在哪座球。"
+  },
+  {
+   "new": "CF11",
+   "old": "S11",
+   "replay": "不吗？",
+   "rid": "A[70]",
+   "status": "match",
+   "stored": "不吗？"
+  },
+  {
+   "old": "S04",
+   "reason": "含 `否` 槽 ⊄ POS_TYPES={名,动,形}；与官方 S04 `[1][2]。` **同 id 不同签名** ⇒ 不进表",
+   "replay": null,
+   "rid": "A[71]",
+   "status": "deprecated",
+   "stored": "微头不。"
+  },
+  {
+   "new": "CF11",
+   "old": "S11",
+   "replay": "温吗？",
+   "rid": "A[72]",
+   "status": "match",
+   "stored": "温吗？"
+  },
+  {
+   "new": "CF11",
+   "old": "S11",
+   "replay": "出行吗？",
+   "rid": "A[79]",
+   "status": "match",
+   "stored": "出行吗？"
+  },
+  {
+   "new": "CF06",
+   "old": "S06",
+   "replay": "我和们去郊外。",
+   "rid": "A[80]",
+   "status": "match",
+   "stored": "我和们去郊外。"
+  },
+  {
+   "new": "CF02",
+   "old": "S02",
+   "replay": "失眠躺两小时睡。",
+   "rid": "A[100]",
+   "status": "match",
+   "stored": "失眠躺两小时睡。"
+  },
+  {
+   "new": "CF11",
+   "old": "S11",
+   "replay": "一段吗？",
+   "rid": "A[102]",
+   "status": "match",
+   "stored": "一段吗？"
+  },
+  {
+   "new": "CF11",
+   "old": "S11",
+   "replay": "理的吗？",
+   "rid": "A[104]",
+   "status": "match",
+   "stored": "理的吗？"
+  },
+  {
+   "new": "CF11",
+   "old": "S11",
+   "replay": "高速节假日免费通吗？",
+   "rid": "A[105]",
+   "status": "match",
+   "stored": "高速节假日免费通吗？"
+  },
+  {
+   "new": "CF11",
+   "old": "S11",
+   "replay": "小学吗？",
+   "rid": "A[107]",
+   "status": "match",
+   "stored": "小学吗？"
+  },
+  {
+   "new": "CF11",
+   "old": "S11",
+   "replay": "补丁更新后T0羁绊会吗？",
+   "rid": "A[108]",
+   "status": "match",
+   "stored": "补丁更新后T0羁绊会吗？"
+  },
+  {
+   "new": "CF11",
+   "old": "S11",
+   "replay": "适合喜欢自由探吗？",
+   "rid": "A[111]",
+   "status": "match",
+   "stored": "适合喜欢自由探吗？"
+  },
+  {
+   "new": "CF11",
+   "old": "S11",
+   "replay": "计】什么是标准吗？",
+   "rid": "A[114]",
+   "status": "match",
+   "stored": "计】什么是标准吗？"
+  }
+ ],
+ "cf_fixtures": {
+  "CF01": {
+   "assignment": [
+    1
+   ],
+   "kind": "text",
+   "pattern": "[1]。",
+   "reason": "",
+   "signature": [
+    [
+     "名",
+     null
+    ]
+   ],
+   "text": "用户。"
+  },
+  "CF02": {
+   "assignment": [
+    1,
+    4
+   ],
+   "kind": "text",
+   "pattern": "[1][2]。",
+   "reason": "",
+   "signature": [
+    [
+     "名",
+     null
+    ],
+    [
+     "形",
+     null
+    ]
+   ],
+   "text": "用户太慢。"
+  },
+  "CF03": {
+   "assignment": [
+    1,
+    4
+   ],
+   "kind": "text",
+   "pattern": "[1][2]吗？",
+   "reason": "",
+   "signature": [
+    [
+     "名",
+     null
+    ],
+    [
+     "形",
+     null
+    ]
+   ],
+   "text": "用户太慢吗？"
+  },
+  "CF06": {
+   "assignment": [
+    1,
+    5
+   ],
+   "kind": "text",
+   "pattern": "[1]和[2]。",
+   "reason": "",
+   "signature": [
+    [
+     "名",
+     null
+    ],
+    [
+     "名",
+     null
+    ]
+   ],
+   "text": "用户和我们。"
+  },
+  "CF07": {
+   "assignment": [
+    1,
+    5
+   ],
+   "kind": "text",
+   "pattern": "[1]与[2]。",
+   "reason": "",
+   "signature": [
+    [
+     "名",
+     null
+    ],
+    [
+     "名",
+     null
+    ]
+   ],
+   "text": "用户与我们。"
+  },
+  "CF08": {
+   "assignment": [
+    1,
+    5,
+    10
+   ],
+   "kind": "text",
+   "pattern": "[1]和[2]和[3]。",
+   "reason": "",
+   "signature": [
+    [
+     "名",
+     null
+    ],
+    [
+     "名",
+     null
+    ],
+    [
+     "名",
+     null
+    ]
+   ],
+   "text": "用户和我们和方案。"
+  },
+  "CF09": {
+   "assignment": [
+    1,
+    4,
+    5,
+    11
+   ],
+   "kind": "text",
+   "pattern": "[1][2]，[3][4]。",
+   "reason": "",
+   "signature": [
+    [
+     "名",
+     null
+    ],
+    [
+     "形",
+     null
+    ],
+    [
+     "名",
+     null
+    ],
+    [
+     "形",
+     null
+    ]
+   ],
+   "text": "用户太慢，我们太慢。"
+  },
+  "CF11": {
+   "assignment": [
+    1
+   ],
+   "kind": "text",
+   "pattern": "[1]吗？",
+   "reason": "",
+   "signature": [
+    [
+     "名",
+     null
+    ]
+   ],
+   "text": "用户吗？"
+  },
+  "CF18": {
+   "assignment": [
+    1,
+    4,
+    5,
+    11
+   ],
+   "kind": "text",
+   "pattern": "[1][2]，但[3][4]。",
+   "reason": "",
+   "signature": [
+    [
+     "名",
+     null
+    ],
+    [
+     "形",
+     null
+    ],
+    [
+     "名",
+     null
+    ],
+    [
+     "形",
+     null
+    ]
+   ],
+   "text": "用户太慢，但我们太慢。"
+  },
+  "CF19": {
+   "assignment": [
+    1,
+    4,
+    5,
+    11
+   ],
+   "kind": "text",
+   "pattern": "[1][2]，所以[3][4]。",
+   "reason": "",
+   "signature": [
+    [
+     "名",
+     null
+    ],
+    [
+     "形",
+     null
+    ],
+    [
+     "名",
+     null
+    ],
+    [
+     "形",
+     null
+    ]
+   ],
+   "text": "用户太慢，所以我们太慢。"
+  },
+  "CF20": {
+   "assignment": [
+    1,
+    4,
+    5,
+    11
+   ],
+   "kind": "text",
+   "pattern": "因为[1][2]，[3][4]。",
+   "reason": "",
+   "signature": [
+    [
+     "名",
+     null
+    ],
+    [
+     "形",
+     null
+    ],
+    [
+     "名",
+     null
+    ],
+    [
+     "形",
+     null
+    ]
+   ],
+   "text": "因为用户太慢，我们太慢。"
+  },
+  "CF21": {
+   "assignment": [
+    5,
+    7
+   ],
+   "kind": "text",
+   "pattern": "[1]要[2]。",
+   "reason": "",
+   "signature": [
+    [
+     "名",
+     null
+    ],
+    [
+     "动",
+     null
+    ]
+   ],
+   "text": "我们要修。"
+  },
+  "CF25": {
+   "assignment": [
+    1,
+    4
+   ],
+   "kind": "text",
+   "pattern": "[1][2]！",
+   "reason": "",
+   "signature": [
+    [
+     "名",
+     null
+    ],
+    [
+     "形",
+     null
+    ]
+   ],
+   "text": "用户太慢！"
+  }
+ },
+ "g_replay": [
+  {
+   "replay": "她喜欢。",
+   "rid": "G[random:0]",
+   "status": "match",
+   "stored": "她喜欢。"
+  },
+  {
+   "replay": "目说。",
+   "rid": "G[random:1]",
+   "status": "match",
+   "stored": "目说。"
+  },
+  {
+   "replay": "点锦上添花。",
+   "rid": "G[enriched:0]",
+   "status": "match",
+   "stored": "点锦上添花。"
+  },
+  {
+   "replay": "小开始。",
+   "rid": "G[enriched:1]",
+   "status": "match",
+   "stored": "小开始。"
+  },
+  {
+   "replay": "它画蛇添足。",
+   "rid": "G[enriched:2]",
+   "status": "match",
+   "stored": "它画蛇添足。"
+  },
+  {
+   "replay": "代养家糊口。",
+   "rid": "G[enriched:3]",
+   "status": "match",
+   "stored": "代养家糊口。"
+  },
+  {
+   "replay": "你挑三拣四。",
+   "rid": "G[enriched:4]",
+   "status": "match",
+   "stored": "你挑三拣四。"
+  },
+  {
+   "replay": "他呼风唤雨遗憾。",
+   "rid": "G[enriched:5]",
+   "status": "match",
+   "stored": "他呼风唤雨遗憾。"
+  },
+  {
+   "replay": "他们固执己见。",
+   "rid": "G[enriched:6]",
+   "status": "match",
+   "stored": "他们固执己见。"
+  },
+  {
+   "replay": "我一意孤行孤行。",
+   "rid": "G[enriched:7]",
+   "status": "match",
+   "stored": "我一意孤行孤行。"
+  }
+ ],
+ "n_skeletons": 29,
+ "official_fixtures": {
+  "R01": {
+   "assignment": [
+    1,
+    2,
+    4
+   ],
+   "kind": "text",
+   "pattern": "[1][2][3]。",
+   "reason": "",
+   "signature": [
+    [
+     "名",
+     null
+    ],
+    [
+     "动",
+     null
+    ],
+    [
+     "形",
+     null
+    ]
+   ],
+   "text": "用户说太慢。"
+  },
+  "R02": {
+   "assignment": [
+    1,
+    2
+   ],
+   "kind": "text",
+   "pattern": "[1][2]。",
+   "reason": "",
+   "signature": [
+    [
+     "名",
+     null
+    ],
+    [
+     "动",
+     null
+    ]
+   ],
+   "text": "用户说。"
+  },
+  "R03": {
+   "assignment": [
+    1,
+    2,
+    3,
+    4
+   ],
+   "kind": "text",
+   "pattern": "[1][2][3][4]。",
+   "reason": "",
+   "signature": [
+    [
+     "名",
+     null
+    ],
+    [
+     "动",
+     null
+    ],
+    [
+     "动",
+     null
+    ],
+    [
+     "形",
+     null
+    ]
+   ],
+   "text": "用户说加载太慢。"
+  },
+  "S01": {
+   "assignment": [
+    1,
+    2,
+    9
+   ],
+   "kind": "text",
+   "pattern": "[1][2][3]。",
+   "reason": "",
+   "signature": [
+    [
+     "名",
+     "施事"
+    ],
+    [
+     "动",
+     null
+    ],
+    [
+     "名",
+     "受事"
+    ]
+   ],
+   "text": "用户说用户。"
+  },
+  "S02": {
+   "assignment": [
+    1,
+    2,
+    9
+   ],
+   "kind": "text",
+   "pattern": "[1][2][3]吗？",
+   "reason": "",
+   "signature": [
+    [
+     "名",
+     "施事"
+    ],
+    [
+     "动",
+     null
+    ],
+    [
+     "名",
+     "受事"
+    ]
+   ],
+   "text": "用户说用户吗？"
+  },
+  "S03": {
+   "assignment": [
+    1,
+    2,
+    9
+   ],
+   "kind": "text",
+   "pattern": "[1][2][3]！",
+   "reason": "",
+   "signature": [
+    [
+     "名",
+     "施事"
+    ],
+    [
+     "动",
+     null
+    ],
+    [
+     "名",
+     "受事"
+    ]
+   ],
+   "text": "用户说用户！"
+  },
+  "S04": {
+   "assignment": [
+    1,
+    2
+   ],
+   "kind": "text",
+   "pattern": "[1][2]。",
+   "reason": "",
+   "signature": [
+    [
+     "名",
+     "施事"
+    ],
+    [
+     "动",
+     null
+    ]
+   ],
+   "text": "用户说。"
+  },
+  "S05": {
+   "assignment": [
+    1,
+    2,
+    5,
+    3
+   ],
+   "kind": "text",
+   "pattern": "[1][2]，[3][4]。",
+   "reason": "",
+   "signature": [
+    [
+     "名",
+     "施事"
+    ],
+    [
+     "动",
+     null
+    ],
+    [
+     "名",
+     "施事"
+    ],
+    [
+     "动",
+     null
+    ]
+   ],
+   "text": "用户说，我们加载。"
+  },
+  "S06": {
+   "assignment": [
+    1,
+    2
+   ],
+   "kind": "text",
+   "pattern": "[1]们[2]。",
+   "reason": "",
+   "signature": [
+    [
+     "名",
+     "施事"
+    ],
+    [
+     "动",
+     null
+    ]
+   ],
+   "text": "用户们说。"
+  },
+  "S07": {
+   "assignment": [
+    1,
+    9,
+    2
+   ],
+   "kind": "text",
+   "pattern": "[1]和[2][3]。",
+   "reason": "",
+   "signature": [
+    [
+     "名",
+     "施事"
+    ],
+    [
+     "名",
+     "受事"
+    ],
+    [
+     "动",
+     null
+    ]
+   ],
+   "text": "用户和用户说。"
+  },
+  "S08": {
+   "assignment": [
+    1,
+    9,
+    2
+   ],
+   "kind": "text",
+   "pattern": "[1]与[2][3]。",
+   "reason": "",
+   "signature": [
+    [
+     "名",
+     "施事"
+    ],
+    [
+     "名",
+     "受事"
+    ],
+    [
+     "动",
+     null
+    ]
+   ],
+   "text": "用户与用户说。"
+  },
+  "S09": {
+   "assignment": [
+    1,
+    2
+   ],
+   "kind": "text",
+   "pattern": "[1][2]吗？",
+   "reason": "",
+   "signature": [
+    [
+     "名",
+     "施事"
+    ],
+    [
+     "动",
+     null
+    ]
+   ],
+   "text": "用户说吗？"
+  },
+  "S10": {
+   "assignment": [
+    1,
+    2,
+    3,
+    4
+   ],
+   "kind": "text",
+   "pattern": "[1][2][3][4]。",
+   "reason": "",
+   "signature": [
+    [
+     "名",
+     "施事"
+    ],
+    [
+     "动",
+     null
+    ],
+    [
+     "动",
+     null
+    ],
+    [
+     "形",
+     null
+    ]
+   ],
+   "text": "用户说加载太慢。"
+  },
+  "S11": {
+   "assignment": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "kind": "text",
+   "pattern": "[1][2][3][4]，[5][6]要[7]。",
+   "reason": "",
+   "signature": [
+    [
+     "名",
+     "施事"
+    ],
+    [
+     "动",
+     null
+    ],
+    [
+     "动",
+     null
+    ],
+    [
+     "形",
+     null
+    ],
+    [
+     "名",
+     "施事"
+    ],
+    [
+     "名",
+     "时"
+    ],
+    [
+     "动",
+     null
+    ]
+   ],
+   "text": "用户说加载太慢，我们下周要修。"
+  },
+  "S12": {
+   "assignment": [
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "kind": "text",
+   "pattern": "[1][2]，[3][4]要[5]。",
+   "reason": "",
+   "signature": [
+    [
+     "动",
+     null
+    ],
+    [
+     "形",
+     null
+    ],
+    [
+     "名",
+     "施事"
+    ],
+    [
+     "名",
+     "时"
+    ],
+    [
+     "动",
+     null
+    ]
+   ],
+   "text": "加载太慢，我们下周要修。"
+  },
+  "S13": {
+   "assignment": [
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "kind": "text",
+   "pattern": "因为[1][2]，[3][4]要[5]。",
+   "reason": "",
+   "signature": [
+    [
+     "动",
+     null
+    ],
+    [
+     "形",
+     null
+    ],
+    [
+     "名",
+     "施事"
+    ],
+    [
+     "名",
+     "时"
+    ],
+    [
+     "动",
+     null
+    ]
+   ],
+   "text": "因为加载太慢，我们下周要修。"
+  }
+ },
+ "raw_rejects": [
+  {
+   "rec": {
+    "evidence": [],
+    "instruction": {
+     "assignment": [
+      4,
+      3,
+      1
+     ],
+     "skeleton_id": "S01"
+    },
+    "kind": "reject",
+    "plan_step_id": "step:0",
+    "reason": "evidence 不齐备：袋 4 '我' 不是输入逐字子串（span 给出的是 '欢'）；题元方向冲突（规则 B）：槽1 要 施事，指派了 '我'（受事）⇒ 拒（字符串全过、命题相反的靶子）；evidence 不齐备：袋 3 '喜欢' 不是输入逐字子串（span 给出的是 '说喜'）；题元方向冲突（规则 B）：槽3 要 受事，指派了 '你'（施事）⇒ 拒（字符串全过、命题相反的靶子）",
+    "ref_map": [],
+    "text": "（拒答）evidence 不齐备：袋 4 '我' 不是输入逐字子串（span 给出的是 '欢'）；题元方向冲突（规则 B）：槽1 要 施事，指派了 '我'（受事）⇒ 拒（字符串全过、命题相反的靶子）；evidence 不齐备：袋 3 '喜欢' 不是输入逐字子串（span 给出的是 '说喜'）；题元方向冲突（规则 B）：槽3 要 受事，指派了 '你'（施事）⇒ 拒（字符串全过、命题相反的靶子）"
+   },
+   "src": "render:theta_conflict"
+  },
+  {
+   "rec": {
+    "evidence": [],
+    "instruction": {
+     "assignment": [
+      2
+     ],
+     "skeleton_id": "BAD"
+    },
+    "kind": "reject",
+    "plan_step_id": "step:0",
+    "reason": "规则 A 违规：骨架 BAD 字面含实义词 '用户'（实义词必须进槽）；规则 A 违规：骨架 BAD 字面含实义词 '说'（实义词必须进槽）；规则 A 违规：骨架 BAD 字面 '用' 既非形式词也非逻辑词（疑似实义词/专名）；规则 A 违规：骨架 BAD 字面 '户' 既非形式词也非逻辑词（疑似实义词/专名）；规则 A 违规：骨架 BAD 字面 '说' 既非形式词也非逻辑词（疑似实义词/专名）；evidence 不齐备：袋 2 '说' 不是输入逐字子串（span 给出的是 '载'）",
+    "ref_map": [],
+    "text": "（拒答）规则 A 违规：骨架 BAD 字面含实义词 '用户'（实义词必须进槽）；规则 A 违规：骨架 BAD 字面含实义词 '说'（实义词必须进槽）；规则 A 违规：骨架 BAD 字面 '用' 既非形式词也非逻辑词（疑似实义词/专名）；规则 A 违规：骨架 BAD 字面 '户' 既非形式词也非逻辑词（疑似实义词/专名）；规则 A 违规：骨架 BAD 字面 '说' 既非形式词也非逻辑词（疑似实义词/专名）；evidence 不齐备：袋 2 '说' 不是输入逐字子串（span 给出的是 '载'）"
+   },
+   "src": "render:rule_a"
+  },
+  {
+   "rec": {
+    "evidence": [],
+    "instruction": {
+     "assignment": [
+      1,
+      1,
+      0,
+      3,
+      1
+     ],
+     "skeleton_id": "S13"
+    },
+    "kind": "reject",
+    "plan_step_id": "step:1",
+    "reason": "词面守卫：逻辑词 '因为' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）；词面守卫：逻辑词 '要' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）；规则 0/B 违规：袋 1 被指派到多个槽（内容词只回溯一次）；规则 0/B 违规：袋 1 被指派到多个槽（内容词只回溯一次）",
+    "ref_map": [],
+    "text": "（拒答）词面守卫：逻辑词 '因为' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）；词面守卫：逻辑词 '要' 输入无据、意图卡未声明 ⇒ 拒（编的因果/情态/否定）；规则 0/B 违规：袋 1 被指派到多个槽（内容词只回溯一次）；规则 0/B 违规：袋 1 被指派到多个槽（内容词只回溯一次）"
+   },
+   "src": "render:word_face"
+  },
+  {
+   "rec": {
+    "evidence": [],
+    "instruction": {
+     "assignment": [
+      0,
+      1
+     ],
+     "skeleton_id": "S01"
+    },
+    "kind": "reject",
+    "plan_step_id": "step:0",
+    "reason": "规则 B 违规：骨架 S01 有 3 个槽，指派了 2 项（缺块/多块 ⇒ 拒）",
+    "ref_map": [],
+    "text": "（拒答）规则 B 违规：骨架 S01 有 3 个槽，指派了 2 项（缺块/多块 ⇒ 拒）"
+   },
+   "src": "render:missing_slot"
+  },
+  {
+   "rec": {
+    "evidence": [],
+    "instruction": {
+     "assignment": [
+      1,
+      0,
+      2
+     ],
+     "skeleton_id": "S01"
+    },
+    "kind": "reject",
+    "plan_step_id": "step:0",
+    "reason": "规则 B 违规（类型不匹配）：槽1 要 名，指派了 '打'（动）；规则 B 违规（类型不匹配）：槽2 要 动，指派了 '我'（名）",
+    "ref_map": [],
+    "text": "（拒答）规则 B 违规（类型不匹配）：槽1 要 名，指派了 '打'（动）；规则 B 违规（类型不匹配）：槽2 要 动，指派了 '我'（名）"
+   },
+   "src": "render:type_mismatch"
+  },
+  {
+   "rec": {
+    "evidence": [],
+    "instruction": {
+     "assignment": [
+      1,
+      3,
+      4
+     ],
+     "skeleton_id": "S01"
+    },
+    "kind": "reject",
+    "plan_step_id": "step:2",
+    "reason": "零信息新增违规：袋 1 '你' 未回溯到「被筛为有效」的候选（candidate_id='c1', screened=False）；evidence 不齐备：袋 3 '喜欢' 不是输入逐字子串（span 给出的是 '说喜'）；evidence 不齐备：袋 4 '我' 不是输入逐字子串（span 给出的是 '欢'）",
+    "ref_map": [],
+    "text": "（拒答）零信息新增违规：袋 1 '你' 未回溯到「被筛为有效」的候选（candidate_id='c1', screened=False）；evidence 不齐备：袋 3 '喜欢' 不是输入逐字子串（span 给出的是 '说喜'）；evidence 不齐备：袋 4 '我' 不是输入逐字子串（span 给出的是 '欢'）"
+   },
+   "src": "render:zero_info"
+  },
+  {
+   "rec": {
+    "evidence": [],
+    "instruction": {
+     "assignment": [
+      0,
+      1
+     ],
+     "skeleton_id": "R02"
+    },
+    "kind": "reject",
+    "plan_step_id": "step:1",
+    "reason": "evidence 不齐备：袋 0 '2' 不是输入逐字子串（span 给出的是 '3'）；只复述子集违规：骨架 R02 的指派不随原文 span 升序（换了方向）",
+    "ref_map": [],
+    "text": "（拒答）evidence 不齐备：袋 0 '2' 不是输入逐字子串（span 给出的是 '3'）；只复述子集违规：骨架 R02 的指派不随原文 span 升序（换了方向）"
+   },
+   "src": "render:span_not_verbatim"
+  },
+  {
+   "rec": {
+    "evidence": [],
+    "instruction": {
+     "assignment": [
+      0,
+      1
+     ],
+     "skeleton_id": "ZZ99"
+    },
+    "kind": "reject",
+    "plan_step_id": "step:0",
+    "reason": "骨架 id 不存在：'ZZ99'（封闭表，不猜）",
+    "ref_map": [],
+    "text": "（拒答）骨架 id 不存在：'ZZ99'（封闭表，不猜）"
+   },
+   "src": "render:unknown_skeleton"
+  },
+  {
+   "rec": {
+    "evidence": [],
+    "instruction": {
+     "assignment": [
+      1,
+      2,
+      3,
+      3
+     ],
+     "skeleton_id": "S10"
+    },
+    "kind": "reject",
+    "plan_step_id": "step:0",
+    "reason": "无角色标签 ⇒ fail-closed：'用户' 只能进「只复述、不换方向」的骨架子集（不猜方向）；规则 0/B 违规：袋 3 被指派到多个槽（内容词只回溯一次）",
+    "ref_map": [],
+    "text": "（拒答）无角色标签 ⇒ fail-closed：'用户' 只能进「只复述、不换方向」的骨架子集（不猜方向）；规则 0/B 违规：袋 3 被指派到多个槽（内容词只回溯一次）"
+   },
+   "src": "render:no_theta_fail_closed"
+  },
+  {
+   "rec": {
+    "cards_run": [],
+    "evidence": [],
+    "kind": "reject",
+    "plan": [],
+    "reason": "输入为空",
+    "terminal": "reject",
+    "text": "（拒答）输入为空",
+    "type": null
+   },
+   "src": "dialogue:unknown_type"
+  },
+  {
+   "rec": {
+    "cards_run": [],
+    "evidence": [],
+    "kind": "reject",
+    "plan": [],
+    "reason": "本轮只支持 type=plain，声明了 'cloze'：不猜",
+    "terminal": "reject",
+    "text": "（拒答）本轮只支持 type=plain，声明了 'cloze'：不猜",
+    "type": "cloze"
+   },
+   "src": "dialogue:unsupported_type"
+  },
+  {
+   "rec": {
+    "cards_run": [],
+    "evidence": [],
+    "kind": "reject",
+    "plan": [],
+    "reason": "输入为空",
+    "terminal": "reject",
+    "text": "（拒答）输入为空",
+    "type": "plain"
+   },
+   "src": "dialogue:empty_input"
+  },
+  {
+   "rec": {
+    "cards_run": [
+     "sentiment"
+    ],
+    "evidence": [],
+    "kind": "reject",
+    "plan": [
+     "计划：调 sentiment"
+    ],
+    "reason": "必需卡未挂载（引擎里没有）：['negation']：不许静默跳过",
+    "terminal": "reject",
+    "text": "（拒答）必需卡未挂载（引擎里没有）：['negation']：不许静默跳过",
+    "type": "plain"
+   },
+   "src": "dialogue:card_unmounted"
+  },
+  {
+   "rec": {
+    "cards_run": [
+     "sentiment"
+    ],
+    "evidence": [],
+    "kind": "reject",
+    "plan": [
+     "计划：调 sentiment"
+    ],
+    "reason": "调卡失败（调用抛错）：RuntimeError: boom",
+    "terminal": "reject",
+    "text": "（拒答）调卡失败（调用抛错）：RuntimeError: boom",
+    "type": "plain"
+   },
+   "src": "dialogue:call_failed"
+  },
+  {
+   "rec": {
+    "cards_run": [
+     "sentiment"
+    ],
+    "evidence": [],
+    "kind": "reject",
+    "plan": [
+     "计划：调 sentiment"
+    ],
+    "reason": "缺必需信息（抽取位 人物=无）⇒ 拒答",
+    "terminal": "reject",
+    "text": "（拒答）缺必需信息（抽取位 人物=无）⇒ 拒答",
+    "type": "plain"
+   },
+   "src": "dialogue:missing_required"
+  },
+  {
+   "rec": {
+    "cards_run": [
+     "sentiment"
+    ],
+    "evidence": [],
+    "kind": "reject",
+    "plan": [
+     "计划：重复调用"
+    ],
+    "reason": "计划要求重复调用同一张卡：不许",
+    "terminal": "reject",
+    "text": "（拒答）计划要求重复调用同一张卡：不许",
+    "type": "plain"
+   },
+   "src": "dialogue:repeat_call"
+  },
+  {
+   "rec": {
+    "cards_run": [
+     "sentiment"
+    ],
+    "evidence": [],
+    "kind": "reject",
+    "plan": [
+     "计划：调 sentiment"
+    ],
+    "reason": "没有任何可引用的切片：不编句子",
+    "terminal": "reject",
+    "text": "（拒答）没有任何可引用的切片：不编句子",
+    "type": "plain"
+   },
+   "src": "dialogue:no_slice"
+  },
+  {
+   "rec": {
+    "cards_run": [
+     "sentiment"
+    ],
+    "evidence": [],
+    "kind": "reject",
+    "plan": [
+     "计划：停在非终止动作"
+    ],
+    "reason": "计划停在非终止动作：判不动",
+    "terminal": "reject",
+    "text": "（拒答）计划停在非终止动作：判不动",
+    "type": "plain"
+   },
+   "src": "dialogue:non_terminal"
+  }
+ ],
+ "table": {
+  "CF01": [
+   "[1]。",
+   [
+    [
+     "名",
+     null
+    ]
+   ]
+  ],
+  "CF02": [
+   "[1][2]。",
+   [
+    [
+     "名",
+     null
+    ],
+    [
+     "形",
+     null
+    ]
+   ]
+  ],
+  "CF03": [
+   "[1][2]吗？",
+   [
+    [
+     "名",
+     null
+    ],
+    [
+     "形",
+     null
+    ]
+   ]
+  ],
+  "CF06": [
+   "[1]和[2]。",
+   [
+    [
+     "名",
+     null
+    ],
+    [
+     "名",
+     null
+    ]
+   ]
+  ],
+  "CF07": [
+   "[1]与[2]。",
+   [
+    [
+     "名",
+     null
+    ],
+    [
+     "名",
+     null
+    ]
+   ]
+  ],
+  "CF08": [
+   "[1]和[2]和[3]。",
+   [
+    [
+     "名",
+     null
+    ],
+    [
+     "名",
+     null
+    ],
+    [
+     "名",
+     null
+    ]
+   ]
+  ],
+  "CF09": [
+   "[1][2]，[3][4]。",
+   [
+    [
+     "名",
+     null
+    ],
+    [
+     "形",
+     null
+    ],
+    [
+     "名",
+     null
+    ],
+    [
+     "形",
+     null
+    ]
+   ]
+  ],
+  "CF11": [
+   "[1]吗？",
+   [
+    [
+     "名",
+     null
+    ]
+   ]
+  ],
+  "CF18": [
+   "[1][2]，但[3][4]。",
+   [
+    [
+     "名",
+     null
+    ],
+    [
+     "形",
+     null
+    ],
+    [
+     "名",
+     null
+    ],
+    [
+     "形",
+     null
+    ]
+   ]
+  ],
+  "CF19": [
+   "[1][2]，所以[3][4]。",
+   [
+    [
+     "名",
+     null
+    ],
+    [
+     "形",
+     null
+    ],
+    [
+     "名",
+     null
+    ],
+    [
+     "形",
+     null
+    ]
+   ]
+  ],
+  "CF20": [
+   "因为[1][2]，[3][4]。",
+   [
+    [
+     "名",
+     null
+    ],
+    [
+     "形",
+     null
+    ],
+    [
+     "名",
+     null
+    ],
+    [
+     "形",
+     null
+    ]
+   ]
+  ],
+  "CF21": [
+   "[1]要[2]。",
+   [
+    [
+     "名",
+     null
+    ],
+    [
+     "动",
+     null
+    ]
+   ]
+  ],
+  "CF25": [
+   "[1][2]！",
+   [
+    [
+     "名",
+     null
+    ],
+    [
+     "形",
+     null
+    ]
+   ]
+  ],
+  "R01": [
+   "[1][2][3]。",
+   [
+    [
+     "名",
+     null
+    ],
+    [
+     "动",
+     null
+    ],
+    [
+     "形",
+     null
+    ]
+   ]
+  ],
+  "R02": [
+   "[1][2]。",
+   [
+    [
+     "名",
+     null
+    ],
+    [
+     "动",
+     null
+    ]
+   ]
+  ],
+  "R03": [
+   "[1][2][3][4]。",
+   [
+    [
+     "名",
+     null
+    ],
+    [
+     "动",
+     null
+    ],
+    [
+     "动",
+     null
+    ],
+    [
+     "形",
+     null
+    ]
+   ]
+  ],
+  "S01": [
+   "[1][2][3]。",
+   [
+    [
+     "名",
+     "施事"
+    ],
+    [
+     "动",
+     null
+    ],
+    [
+     "名",
+     "受事"
+    ]
+   ]
+  ],
+  "S02": [
+   "[1][2][3]吗？",
+   [
+    [
+     "名",
+     "施事"
+    ],
+    [
+     "动",
+     null
+    ],
+    [
+     "名",
+     "受事"
+    ]
+   ]
+  ],
+  "S03": [
+   "[1][2][3]！",
+   [
+    [
+     "名",
+     "施事"
+    ],
+    [
+     "动",
+     null
+    ],
+    [
+     "名",
+     "受事"
+    ]
+   ]
+  ],
+  "S04": [
+   "[1][2]。",
+   [
+    [
+     "名",
+     "施事"
+    ],
+    [
+     "动",
+     null
+    ]
+   ]
+  ],
+  "S05": [
+   "[1][2]，[3][4]。",
+   [
+    [
+     "名",
+     "施事"
+    ],
+    [
+     "动",
+     null
+    ],
+    [
+     "名",
+     "施事"
+    ],
+    [
+     "动",
+     null
+    ]
+   ]
+  ],
+  "S06": [
+   "[1]们[2]。",
+   [
+    [
+     "名",
+     "施事"
+    ],
+    [
+     "动",
+     null
+    ]
+   ]
+  ],
+  "S07": [
+   "[1]和[2][3]。",
+   [
+    [
+     "名",
+     "施事"
+    ],
+    [
+     "名",
+     "受事"
+    ],
+    [
+     "动",
+     null
+    ]
+   ]
+  ],
+  "S08": [
+   "[1]与[2][3]。",
+   [
+    [
+     "名",
+     "施事"
+    ],
+    [
+     "名",
+     "受事"
+    ],
+    [
+     "动",
+     null
+    ]
+   ]
+  ],
+  "S09": [
+   "[1][2]吗？",
+   [
+    [
+     "名",
+     "施事"
+    ],
+    [
+     "动",
+     null
+    ]
+   ]
+  ],
+  "S10": [
+   "[1][2][3][4]。",
+   [
+    [
+     "名",
+     "施事"
+    ],
+    [
+     "动",
+     null
+    ],
+    [
+     "动",
+     null
+    ],
+    [
+     "形",
+     null
+    ]
+   ]
+  ],
+  "S11": [
+   "[1][2][3][4]，[5][6]要[7]。",
+   [
+    [
+     "名",
+     "施事"
+    ],
+    [
+     "动",
+     null
+    ],
+    [
+     "动",
+     null
+    ],
+    [
+     "形",
+     null
+    ],
+    [
+     "名",
+     "施事"
+    ],
+    [
+     "名",
+     "时"
+    ],
+    [
+     "动",
+     null
+    ]
+   ]
+  ],
+  "S12": [
+   "[1][2]，[3][4]要[5]。",
+   [
+    [
+     "动",
+     null
+    ],
+    [
+     "形",
+     null
+    ],
+    [
+     "名",
+     "施事"
+    ],
+    [
+     "名",
+     "时"
+    ],
+    [
+     "动",
+     null
+    ]
+   ]
+  ],
+  "S13": [
+   "因为[1][2]，[3][4]要[5]。",
+   [
+    [
+     "动",
+     null
+    ],
+    [
+     "形",
+     null
+    ],
+    [
+     "名",
+     "施事"
+    ],
+    [
+     "名",
+     "时"
+    ],
+    [
+     "动",
+     null
+    ]
+   ]
+  ]
+ },
+ "validate": []
+}
