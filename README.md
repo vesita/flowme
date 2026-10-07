@@ -21,7 +21,8 @@
 **模因** = 网络的 **I/O 张量**（不是隐层）；它**不是被设计的，而是由卡片组合涌现**的"神经网络语言"。
 **规范与涌现分开**：形状规范（硬，`[n,d]` 变长有序 + mask）/ 语义规范（弱，训练涌现）/ 对齐规范（可判，IO 检查 + 读出探针）。
 
-**设计全文见 [`MEME_FRAMEWORK.md`](MEME_FRAMEWORK.md)** —— 它是本框架的**唯一真相源**（三层规范 / 黑板+手写调度 / 四层度量 L0–L5 / 四阶段 / 经验 E1–E17）。
+**设计全文见 [`MEME_FRAMEWORK.md`](MEME_FRAMEWORK.md)** —— 它是本框架的**唯一真相源**（三层规范 / 黑板+手写调度 / 四层度量 L0–L5 / 四阶段 / 经验）。
+**纪律总表见 [`methodology/RULES.md`](methodology/RULES.md)（R1–R26）** —— 由原 `dev-notes/21` 的 D1–D15 与 `MEME_FRAMEWORK §7` 的 E1–E17 合并去重而来。
 
 ---
 
@@ -41,9 +42,9 @@
 | 项 | 证据 |
 |---|---|
 | **简单任务上"思维卡是装饰"** | `stages/01_recon_fidelity.py`：P5 恒等消融**逐位相同**（`.0001` = 正常），且 M 臂触到 copy 地板 `0.0` |
-| **"删掉卡就崩"是 off-distribution 假象** | `stages/04_true_bypass.py`：**A0（从头不带卡）= 0.82** ≫ 地板 0.53 ⇒ 训练后删卡的暴跌是"head 没见过未过卡的模因"。⇒ **纪律 E17：消融必须 retrain-without，不是 post-hoc removal** |
+| **"删掉卡就崩"是 off-distribution 假象** | `stages/04_true_bypass.py`：**A0（从头不带卡）= 0.82** ≫ 地板 0.53 ⇒ 训练后删卡的暴跌是"head 没见过未过卡的模因"。⇒ **纪律 [`R16`](methodology/RULES.md)（原 E17）：消融必须 retrain-without** |
 | **瓶颈（`d_mid<d`）无增益** | `stages/04_true_bypass.py`：C−B 2 seed **反号** |
-| **离散中介（T 臂）结论作废** | `stages/01_recon_fidelity.py`：`argmax` 不可导 ⇒ 上游卡 `grad=None`（冻结随机权重）⇒ **测的是"训练了一半 vs 训练完整"**。⇒ **纪律 E16：离散中介必须 STE/Gumbel** |
+| **离散中介（T 臂）结论作废** | `stages/01_recon_fidelity.py`：`argmax` 不可导 ⇒ 上游卡 `grad=None`（冻结随机权重）⇒ **测的是"训练了一半 vs 训练完整"**。⇒ **纪律 [`R15`](methodology/RULES.md)（原 E16）：离散中介必须 STE/Gumbel** |
 | **两次实现数值不稳** | B−A0：`stages/06` 报 **+1.05pp**（CPU）vs `stages/07` 报 **+2.55pp**（GPU，自写实现）⇒ **方向一致、幅度未定** |
 | **幅度小** | 全部结论在 **+1~3pp** 量级，**非数量级差别** |
 
@@ -82,10 +83,10 @@ uv run --no-sync python stages/07_card_vs_params.py                           # 
 
 | 路径 | 是什么 |
 |---|---|
-| **`MEME_FRAMEWORK.md`** | **本框架的设计（唯一真相源）**：三层规范 / 黑板调度 / L0–L5 度量 / 四阶段 / **E1–E17** |
+| **`MEME_FRAMEWORK.md`** | **本框架的设计（唯一真相源）**：三层规范 / 黑板调度 / L0–L5 度量 / 四阶段 / 经验 |
 | **`stages/`** | 主线实验，**按"回答什么问题"命名**（`NN_<问题>.py`）|
-| `dev-notes/` | 经验与裁定的家：**`21-口径裁定与新增纪律`**（**D1–D15** + 逐条裁定 + §29 效力表）|
-| `methodology/` | 纪律与测量方法的家 |
+| `dev-notes/` | 经验与裁定的家：**`21-口径裁定与新增纪律`**（口径裁定 + 证据现场 + §29 效力表；纪律表已并入 `methodology/RULES.md`）|
+| `methodology/` | 纪律与测量方法的家 —— **纪律总表 [`methodology/RULES.md`](methodology/RULES.md)（R1–R26）** |
 | **`LEGACY.md`** | **旧框架**（DTSeek 决策模型引擎）的原 README |
 | `src/` `tests/` `experiments/` `checkpoints/` `scripts/` | **旧框架**的代码/测试/实验/权重 —— **原地保留，只作「证据与经验来源」**（见 §5）|
 
@@ -109,7 +110,8 @@ uv run --no-sync python stages/07_card_vs_params.py                           # 
 
 | 在哪 | 是什么 |
 |---|---|
-| **`MEME_FRAMEWORK.md` §7** | **E1–E17**（新框架经验）：手写元决策 / 先比免费规则(含计数类) / 构念门双类规则 / 读出≠会用 / 事后挑选必须独立出口预注册 / **E16 离散中介必须 STE** / **E17 消融必须 retrain-without** |
-| **`dev-notes/21`** | **D1–D15**（口径裁定与测量纪律）+ 逐条裁定 + 我的失误更正记录 |
+| **`methodology/RULES.md`** | **纪律总表 R1–R26**（原 `dev-notes/21` 的 **D1–D15** + `MEME_FRAMEWORK §7` 的 **E1–E17** 合并去重），按「测量与统计 → 数据与构念 → 实验设计 → 工程与资产 → 模型能力结论」分组，每条 `一句话规则 \| 依据（文件:行 或实验号）\| 原编号 D#/E#` |
+| **`MEME_FRAMEWORK.md` §7** | **只留指针**（原 E1–E17 的表体已并入上行） |
+| **`dev-notes/21`** | **只留指针 + 证据现场**（原 D1–D15 的表体已并入上行）+ 逐条裁定 + 我的失误更正记录 |
 
 **日志一律不入库**（`.gitignore`）⇒ **关键数字必须复述进 REPORT / results.json / 提交信息**，不能只活在 stdout 里。
