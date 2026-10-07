@@ -288,60 +288,70 @@ def surface_audit(items: list[dict]) -> dict:
 Q_LEX = {"所有": 0, "每个": 0, "有的": 1, "某些": 1}
 
 
-def _split(p: str) -> tuple[str, str, str] | None:
-    """纯字符串拆分：量词(2字) + 主(2字) + 关系 + 宾(2字)；关系为空 ⇒ 单前提。"""
-    if len(p) < 2 + ENT_LEN:
-        return None
+def _split(p: str) -> tuple[str, str, str, str]:
+    """纯字符串拆分：量词(前2字) + 主(下2字) + 关系(中) + 宾(后2字)。
+
+    关系区为空 ⇒ 单前提。**不查任何关系词表**（这是「符号层可解」的定义）。
+    """
+    if len(p) < 3:
+        return "", "", "", ""
     q = p[:2]
     body = p[2:]
-    if len(body) <= 2 * ENT_LEN:
-        return q, "", ""          # 单前提（宾/关系不存在）
-    main, rel, last = body[:ENT_LEN], body[ENT_LEN:-ENT_LEN], body[-ENT_LEN:]
+    if len(body) < 5:                    # 单前提：主 + 2 字谓词
+        return q, body, "", ""
+    first, rel, last = body[:2], body[2:-2], body[-2:]
     if not rel:
-        return q, "", ""
-    return q, main + "|" + last, rel   # 主/宾用 '|' 拼接以便与 q 分离
+        return q, first, "", ""
+    return q, first, rel, last
 
 
-def _unpack(s: str) -> tuple[str, str]:
-    a, b = s.split("|")
-    return a, b
+def _idmap(premises: list[str]) -> dict:
+    """实体 id = 按表面顺序首次出现（与卡的接口约定一致，规则自己从字符串提取）。"""
+    ids: dict[str, int] = {}
+    for p in premises:
+        _, first, rel, last = _split(p)
+        for nm in ([first, last] if rel else [first]):
+            if nm and nm not in ids:
+                ids[nm] = len(ids)
+    return ids
 
 
-def r_chain(premises: list[str], two_way: bool = False) -> int:
-    """R-chain：模板出口的表面协议（首段=主、末段=宾），不带关系方向词表。"""
-    ps = [_split(p) for p in premises]
-    if len(ps) != 2 or any(x is None or x[1] == "" for x in ps):
-        return REJECT
-    (q1, m1, r1), (q2, m2, r2) = ps  # type: ignore[misc]
-    a1, b1 = _unpack(m1)
-    a2, b2 = _unpack(m2)
+def r_chain(premises: list[str], two_way: bool = False):
+    """R-chain：模板出口表面协议（首段=主、末段=宾），无关系方向词表。"""
+    if len(premises) != 2:
+        return None
+    sp = [_split(p) for p in premises]
+    if any(not s[2] for s in sp):        # 任一为单前提 ⇒ 无链
+        return None
+    (_, a1, r1, b1), (_, a2, r2, b2) = sp
     if b1 == a2:
         x, y = a1, b2
     elif two_way and b2 == a1:
         x, y = a2, b1
     else:
-        return REJECT
+        return None
     neg = neg_of(r1) or neg_of(r2)
-    quant = min(Q_LEX.get(q1, 0), Q_LEX.get(q2, 0))
-    return enc_label(1 if neg else 0, quant, x, y)
+    quant = min(Q_LEX.get(_[0], 0) for _ in sp)
+    return (1 if neg else 0, quant, x, y)
 
 
-def r_keyword(premises: list[str]) -> int:
-    """R-keyword：词重叠匹配（无序）——两前提实体集恰差 1 才连链。"""
+def r_keyword(premises: list[str]):
+    """R-keyword：词重叠匹配（无序）—— 两前提实体集恰差 1 才连链。"""
+    if len(premises) != 2:
+        return None
     sets = []
     for p in premises:
-        sp = _split(p)
-        if sp is None or sp[1] == "":
-            return REJECT
-        a, b = _unpack(sp[1])
-        sets.append((sp[0], sp[2], {a, b}))
-    if len(sets) != 2 or len(sets[0][2] & sets[1][2]) != 1:
-        return REJECT
+        _, first, rel, last = _split(p)
+        if not rel:
+            return None
+        sets.append((p[:2], rel, {first, last}))
+    if len(sets[0][2] & sets[1][2]) != 1:
+        return None
     x = (sets[0][2] - sets[1][2]).pop()
     y = (sets[1][2] - sets[0][2]).pop()
     neg = neg_of(sets[0][1]) or neg_of(sets[1][1])
     quant = min(Q_LEX.get(sets[0][0], 0), Q_LEX.get(sets[1][0], 0))
-    return enc_label(1 if neg else 0, quant, x, y)
+    return (1 if neg else 0, quant, x, y)
 
 
 #: 关系方向词表（两出口全量）—— **披露项 R-lexdir 专用，不计入 max_naive**
@@ -349,44 +359,59 @@ REL_DIR = {"是": (0, 1), "属于": (0, 1), "包含": (1, 0)}   # (lo, hi) 相�
 REL_NEG = {"不是", "并非属于"}
 
 
-def r_lexdir(premises: list[str]) -> int:
-    """带关系方向词表的链规则：含量词传播，**不含逆否转换**。"""
+def r_lexdir(premises: list[str]):
+    """带关系方向词表的链规则：含量词传播，**不含逆否转换**（非免费项，单列披露）。"""
     parsed = []
     for p in premises:
-        sp = _split(p)
-        if sp is None or sp[1] == "":
-            return REJECT
-        a, b = _unpack(sp[1])
-        q, rel = sp[0], sp[2]
+        _, a, rel, b = _split(p)
+        if not rel:
+            return None                    # 单前提
+        q = p[:2]
+        qv = Q_LEX.get(q, 0)
         if rel in REL_NEG:
-            lo, hi = a, b          # 全异：表面首 = 链端（数据构造保证）
-            parsed.append(("disj", lo, hi, q))
+            parsed.append(("disj", a, b, qv))
         elif rel in REL_DIR:
             i, j = REL_DIR[rel]
             lo, hi = (a, b) if i == 0 else (b, a)
-            parsed.append(("sub", lo, hi, q))
+            parsed.append(("sub", lo, hi, qv))
         else:
-            return REJECT
+            return None                    # 关系不在词表 ⇒ 判不出
     if len(parsed) != 2:
-        return REJECT
+        return None
     p1, p2 = parsed
     if p1[0] == "sub" and p2[0] == "sub":
         if p1[2] == p2[1]:
-            return enc_label(0, min(p1[3], p2[3]), p1[1], p2[2])
+            return (0, min(p1[3], p2[3]), p1[1], p2[2])
         if p2[2] == p1[1]:
-            return enc_label(0, min(p1[3], p2[3]), p2[1], p1[2])
-        return REJECT
+            return (0, min(p1[3], p2[3]), p2[1], p1[2])
+        return None
     if p1[0] == "sub" and p2[0] == "disj":
         sub, dis = p1, p2
     elif p2[0] == "sub" and p1[0] == "disj":
         sub, dis = p2, p1
     else:
-        return REJECT
+        return None
     if sub[2] == dis[1]:
-        return enc_label(1, sub[3], sub[1], dis[2])
+        return (1, sub[3], sub[1], dis[2])
     if sub[2] == dis[2]:
-        return enc_label(1, sub[3], sub[1], dis[1])
-    return REJECT
+        return (1, sub[3], sub[1], dis[1])
+    return None
+
+
+_RULES = {"R-chain": r_chain, "R-chain2": lambda p: r_chain(p, True),
+          "R-keyword": r_keyword, "R-lexdir": r_lexdir}
+
+
+def rule_label(kind: str, premises: list[str]) -> int:
+    """规则名 → 65 类标签（实体 id 按表面首次出现序归一，与卡同一口径）。"""
+    out = _RULES[kind](premises)
+    if out is None:
+        return REJECT
+    form, quant, n1, n2 = out
+    ids = _idmap(premises)
+    if n1 not in ids or n2 not in ids:
+        return REJECT
+    return enc_label(form, quant, ids[n1], ids[n2])
 
 
 def majority_rule(train_labels: Counter) -> callable:

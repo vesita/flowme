@@ -305,9 +305,13 @@ def main() -> int:
         pr = torch.Generator().manual_seed(a.seed * 1000 + 7)
         y_c = y_c[torch.randperm(len(y_c), generator=pr)]
         y_a = y_a[torch.randperm(len(y_a), generator=pr)]
+        y_c = y_c.to(a.device)
+        y_a = y_a.to(a.device)
         say(f"[s2] 随机标签对照：train 标签已 randperm（分布="
             f"{dict(Counter(y_c.tolist()).most_common(3))}）")
 
+    y_c = y_c.to(a.device)
+    y_a = y_a.to(a.device)
     rs = Reasoner().to(a.device)
     n_priv = sum(p.numel() for p in tg.parameters()) + sum(p.numel() for p in rs.parameters())
     say(f"[priv] tagger={sum(p.numel() for p in tg.parameters())} "
