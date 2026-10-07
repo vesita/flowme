@@ -1,0 +1,248 @@
+{
+ "prereg_mtime": 1791336885.5578778,
+ "run_start": 1791337277.2560444,
+ "tier2_table_audit": {
+  "gap_formal": [
+   "，",
+   "、",
+   "；",
+   "：",
+   "和",
+   "与"
+  ],
+  "gap_logic": [
+   "因为",
+   "所以",
+   "但",
+   "要",
+   "能",
+   "可以"
+  ],
+  "terminal": [
+   "。",
+   "！",
+   "？",
+   "!",
+   "?",
+   "…"
+  ],
+  "n_entries": 18
+ },
+ "modes": [
+  "adv"
+ ],
+ "n_sentences": 120,
+ "sample_preview": [
+  "我让它发挥最大的价值",
+  "你才得早睡呢",
+  "北京还是兰州呢",
+  "据我的经验学理工大多洗澡不勤",
+  "啊现在这么快了"
+ ],
+ "corpus_files": {
+  "lccc_dialogue.txt": "/home/vesita/coding/my/nanoSeek/data/chinese/clean_v3/lccc_dialogue.txt",
+  "dailychat_dialogue.txt": "/home/vesita/coding/my/nanoSeek/data/chinese/clean_v3/dailychat_dialogue.txt"
+ },
+ "corpus_stats": [
+  {
+   "file": "lccc_dialogue.txt",
+   "chars": 7429811,
+   "han_ratio": 0.8539,
+   "dev_notes_19_ratio": 0.854
+  },
+  {
+   "file": "dailychat_dialogue.txt",
+   "chars": 36979,
+   "han_ratio": 0.8286,
+   "dev_notes_19_ratio": 0.829
+  }
+ ],
+ "adversarial": {
+  "tier2": {
+   "n_cases": 14,
+   "n_pass": 14,
+   "mismatch": [],
+   "cases": [
+    {
+     "id": "T01-题元方向互换",
+     "expect": {
+      "status": "reject",
+      "reason": "tier2_reorder_unjustified"
+     },
+     "status": "reject",
+     "reason": "tier2_reorder_unjustified",
+     "text": null,
+     "has_text_field": false,
+     "input": "我打你。"
+    },
+    {
+     "id": "T02-无据逻辑词",
+     "expect": {
+      "status": "reject",
+      "reason": "tier2_logic_no_evidence"
+     },
+     "status": "reject",
+     "reason": "tier2_logic_no_evidence",
+     "text": null,
+     "has_text_field": false,
+     "input": "我打你。"
+    },
+    {
+     "id": "T03-数字改动",
+     "expect": {
+      "status": "reject",
+      "reason": "tier2_span_not_verbatim"
+     },
+     "status": "reject",
+     "reason": "tier2_span_not_verbatim",
+     "text": null,
+     "has_text_field": false,
+     "input": "我3点难过。"
+    },
+    {
+     "id": "T04-专名改动",
+     "expect": {
+      "status": "reject",
+      "reason": "tier2_span_not_verbatim"
+     },
+     "status": "reject",
+     "reason": "tier2_span_not_verbatim",
+     "text": null,
+     "has_text_field": false,
+     "input": "张伟和王强。"
+    },
+    {
+     "id": "T05-否定块丢失",
+     "expect": {
+      "status": "reject",
+      "reason": "tier2_ref_render_mismatch"
+     },
+     "status": "reject",
+     "reason": "tier2_ref_render_mismatch",
+     "text": null,
+     "has_text_field": false,
+     "input": "我不难过。"
+    },
+    {
+     "id": "T06-缺块",
+     "expect": {
+      "status": "reject",
+      "reason": "tier2_schema_missing_slot"
+     },
+     "status": "reject",
+     "reason": "tier2_schema_missing_slot",
+     "text": null,
+     "has_text_field": false,
+     "input": "我不难过。"
+    },
+    {
+     "id": "T07-类型不符",
+     "expect": {
+      "status": "reject",
+      "reason": "tier2_type_mismatch"
+     },
+     "status": "reject",
+     "reason": "tier2_type_mismatch",
+     "text": null,
+     "has_text_field": false,
+     "input": "我不难过。"
+    },
+    {
+     "id": "T08-越界",
+     "expect": {
+      "status": "reject",
+      "reason": "tier2_span_not_verbatim"
+     },
+     "status": "reject",
+     "reason": "tier2_span_not_verbatim",
+     "text": null,
+     "has_text_field": false,
+     "input": "我不难过。"
+    },
+    {
+     "id": "T09-表外功能词",
+     "expect": {
+      "status": "reject",
+      "reason": "tier2_func_not_in_table"
+     },
+     "status": "reject",
+     "reason": "tier2_func_not_in_table",
+     "text": null,
+     "has_text_field": false,
+     "input": "我不难过。"
+    },
+    {
+     "id": "T10-未筛有效候选",
+     "expect": {
+      "status": "reject",
+      "reason": "tier2_not_in_valid_set"
+     },
+     "status": "reject",
+     "reason": "tier2_not_in_valid_set",
+     "text": null,
+     "has_text_field": false,
+     "input": "我不难过。"
+    },
+    {
+     "id": "T11-未知类型进槽",
+     "expect": {
+      "status": "reject",
+      "reason": "tier2_type_mismatch"
+     },
+     "status": "reject",
+     "reason": "tier2_type_mismatch",
+     "text": null,
+     "has_text_field": false,
+     "input": "这事儿莫名其妙。"
+    },
+    {
+     "id": "T12-渲染注入",
+     "expect": {
+      "status": "reject",
+      "reason": "tier2_unmapped_output"
+     },
+     "status": "reject",
+     "reason": "tier2_unmapped_output",
+     "text": null,
+     "has_text_field": false,
+     "input": "我不难过。"
+    },
+    {
+     "id": "T13-解析歧义",
+     "expect": {
+      "status": "reject",
+      "reason": "tier2_parse_ambiguous"
+     },
+     "status": "reject",
+     "reason": "tier2_parse_ambiguous",
+     "text": null,
+     "has_text_field": false,
+     "input": "我不难过。"
+    },
+    {
+     "id": "T14-正例",
+     "expect": {
+      "status": "ok",
+      "text": "我打你。"
+     },
+     "status": "ok",
+     "reason": null,
+     "text": "我打你。",
+     "has_text_field": true,
+     "input": "我打你。"
+    }
+   ]
+  },
+  "tier1_rerun": {
+   "n_cases": 17,
+   "must_reject": 13,
+   "reject_hit": 13,
+   "must_ok": 4,
+   "ok_hit": 4,
+   "g1_reject_rate": 1.0,
+   "g1_false_reject": 0,
+   "mismatch": []
+  },
+  "g1_adv_problems": []
+ }
+}

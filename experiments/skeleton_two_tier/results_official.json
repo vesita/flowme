@@ -1,0 +1,80 @@
+{
+ "prereg_mtime": 1791336885.5578778,
+ "run_start": 1791337255.1648602,
+ "tier2_table_audit": {
+  "gap_formal": [
+   "，",
+   "、",
+   "；",
+   "：",
+   "和",
+   "与"
+  ],
+  "gap_logic": [
+   "因为",
+   "所以",
+   "但",
+   "要",
+   "能",
+   "可以"
+  ],
+  "terminal": [
+   "。",
+   "！",
+   "？",
+   "!",
+   "?",
+   "…"
+  ],
+  "n_entries": 18
+ },
+ "modes": [
+  "official"
+ ],
+ "official_src": "/home/vesita/coding/my/DTSeek/experiments/skeleton_two_tier/results_real.json",
+ "g1_contract_demo": {
+  "raw": {
+   "official_render": {
+    "kind": "reject",
+    "text": "（拒答）骨架 id 不存在：'NOPE'（封闭表，不猜）",
+    "reason": "骨架 id 不存在：'NOPE'（封闭表，不猜）"
+   },
+   "dialogue_reject": {
+    "kind": "reject",
+    "text": "（拒答）demo 原因",
+    "reason": "demo 原因"
+   },
+   "ours": {
+    "status": "reject",
+    "stage": "tier2",
+    "reason": "demo"
+   }
+  },
+  "normalized_has_text": {
+   "official_render": false,
+   "dialogue_reject": false,
+   "ours": false
+  },
+  "placeholder_prefix_ok": {
+   "official_render": true,
+   "dialogue_reject": true
+  },
+  "is_reject": {
+   "official_render": true,
+   "dialogue_reject": true
+  }
+ },
+ "official_crosscheck": {
+  "n_tier2_ok": 72,
+  "n_translatable": 53,
+  "n_match": 53,
+  "n_skipped_type": 19,
+  "skipped_types": {
+   "否": 19
+  },
+  "problems": [],
+  "n_official_reject_with_text_raw": 0,
+  "n_official_reject_with_text_norm": 0
+ },
+ "g1_on_real_records": []
+}
