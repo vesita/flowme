@@ -1,0 +1,942 @@
+{
+ "prereg_mtime": 1791345099.5226521,
+ "run_start": 1791345537.238482,
+ "gate_problems": [],
+ "n_records": 165,
+ "kinds": {
+  "text": 46,
+  "reject": 107,
+  "pointer": 12
+ },
+ "source_recheck": {
+  "n_text": 46,
+  "n_violation_records": 1,
+  "examples": {
+   "A[71]": [
+    "slot_schema: 规则 B 违规：骨架 S04 槽2 类型 '否' 不在 ('名', '动', '形')",
+    "structure: 规则 B 违规：骨架 S04 槽2 类型 '否' 不在 ('名', '动', '形')",
+    "structure: evidence 不齐备：袋 2 类型 '否' 不在 ('名', '动', '形')"
+   ]
+  }
+ },
+ "X0": {
+  "n_explainable_text": 45,
+  "n_violation_cards": 0,
+  "n_violations": 0,
+  "examples": {}
+ },
+ "X1": {
+  "①加输入没有的内容词": {
+   "injected": 45,
+   "caught": 45,
+   "missed": 0,
+   "first_problem": "回溯断言: 内容单元 '方案' span=(0, 2) 不在源记录 ref_map 的 content 条目里（解释引入了新内容）"
+  },
+  "②a引用指向不存在的 ref": {
+   "injected": 45,
+   "caught": 45,
+   "missed": 0,
+   "first_problem": "回溯: 内容条目 ref=999 不在袋里"
+  },
+  "②b引用指向不存在的 span": {
+   "injected": 45,
+   "caught": 45,
+   "missed": 0,
+   "first_problem": "回溯断言: 内容单元 '我让' span=(0, 999) 不在源记录 ref_map 的 content 条目里（解释引入了新内容）"
+  },
+  "③拒答解释带上 text": {
+   "injected": 107,
+   "caught": 107,
+   "missed": 0,
+   "first_problem": "X2 违规：kind=reject 的解释卡带了 text 键（拒答不许有文本）"
+  }
+ },
+ "X2": {
+  "n_reject_cards": 107,
+  "n_violation_cards": 0,
+  "n_violations": 0,
+  "examples": {}
+ },
+ "X3": {
+  "n_cards": 165,
+  "n_mismatch": 0,
+  "mismatch": []
+ },
+ "X4": {
+  "n_tested": 45,
+  "n_violation_cards": 45,
+  "n_violations": 4576,
+  "by_category": {
+   "rule_a": 2131,
+   "word_face": 65,
+   "structure": 2335,
+   "deref": 45
+  },
+  "render_kind": {
+   "text": 45
+  },
+  "examples": {
+   "A[0]": [
+    "rule_a: 规则 A 违规：骨架 XFREE 字面含实义词 '说'（实义词必须进槽）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面 '这' 既非形式词也非逻辑词（疑似实义词/专名）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面 '句' 既非形式词也非逻辑词（疑似实义词/专名）"
+   ],
+   "A[1]": [
+    "rule_a: 规则 A 违规：骨架 XFREE 字面含实义词 '说'（实义词必须进槽）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面 '这' 既非形式词也非逻辑词（疑似实义词/专名）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面 '句' 既非形式词也非逻辑词（疑似实义词/专名）"
+   ],
+   "A[6]": [
+    "rule_a: 规则 A 违规：骨架 XFREE 字面含实义词 '你'（实义词必须进槽）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面含实义词 '我'（实义词必须进槽）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面含实义词 '说'（实义词必须进槽）"
+   ],
+   "A[7]": [
+    "rule_a: 规则 A 违规：骨架 XFREE 字面含实义词 '说'（实义词必须进槽）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面 '这' 既非形式词也非逻辑词（疑似实义词/专名）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面 '句' 既非形式词也非逻辑词（疑似实义词/专名）"
+   ],
+   "A[13]": [
+    "rule_a: 规则 A 违规：骨架 XFREE 字面含实义词 '看'（实义词必须进槽）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面含实义词 '说'（实义词必须进槽）",
+    "rule_a: 规则 A 违规：骨架 XFREE 字面 '这' 既非形式词也非逻辑词（疑似实义词/专名）"
+   ]
+  }
+ },
+ "X5": {
+  "成功_text": {
+   "n": 46,
+   "explained": 45,
+   "ratio": 0.9783,
+   "uncovered_reasons": {
+    "未覆盖": 1
+   }
+  },
+  "指针_pointer": {
+   "n": 12,
+   "explained": 0,
+   "ratio": 0.0,
+   "uncovered_reasons": {
+    "未覆盖": 12
+   }
+  },
+  "拒答_reject": {
+   "n": 107,
+   "explained": 107,
+   "ratio": 1.0,
+   "uncovered_reasons": {}
+  },
+  "全体": {
+   "n": 165,
+   "explained": 152,
+   "ratio": 0.9212,
+   "uncovered_reasons": {
+    "未覆盖": 13
+   }
+  },
+  "按集": {
+   "A": {
+    "n": 120,
+    "explained": 119,
+    "ratio": 0.9917,
+    "uncovered_reasons": {
+     "未覆盖": 1
+    }
+   },
+   "B": {
+    "n": 30,
+    "explained": 18,
+    "ratio": 0.6,
+    "uncovered_reasons": {
+     "未覆盖": 12
+    }
+   },
+   "B'": {
+    "n": 15,
+    "explained": 15,
+    "ratio": 1.0,
+    "uncovered_reasons": {}
+   }
+  }
+ },
+ "samples": [
+  {
+   "rid": "A[0]",
+   "input": "我让它发挥最大的价值",
+   "record": {
+    "kind": "text",
+    "skeleton": "S02",
+    "instruction": {
+     "skeleton_id": "S02",
+     "assignment": [
+      1,
+      3
+     ]
+    },
+    "text": "我让发挥最。",
+    "ref_map": [
+     {
+      "unit_id": "ref:1",
+      "cls": "content",
+      "text": "我让",
+      "ref": 1,
+      "span": [
+       0,
+       2
+      ],
+      "out": [
+       0,
+       2
+      ]
+     },
+     {
+      "unit_id": "ref:3",
+      "cls": "content",
+      "text": "发挥最",
+      "ref": 3,
+      "span": [
+       3,
+       6
+      ],
+      "out": [
+       2,
+       5
+      ]
+     },
+     {
+      "unit_id": "S02#0",
+      "cls": "formal",
+      "text": "。",
+      "ref": "S02",
+      "span": null,
+      "out": [
+       5,
+       6
+      ]
+     }
+    ]
+   },
+   "explain_card": {
+    "kind": "text",
+    "text": "「我让」；「发挥最」。",
+    "ref_map": [
+     {
+      "unit_id": "E02#0",
+      "cls": "formal",
+      "text": "「",
+      "ref": "E02",
+      "span": null,
+      "out": [
+       0,
+       1
+      ]
+     },
+     {
+      "unit_id": "ref:1",
+      "cls": "content",
+      "text": "我让",
+      "ref": 1,
+      "span": [
+       0,
+       2
+      ],
+      "out": [
+       1,
+       3
+      ]
+     },
+     {
+      "unit_id": "E02#1",
+      "cls": "formal",
+      "text": "」；「",
+      "ref": "E02",
+      "span": null,
+      "out": [
+       3,
+       6
+      ]
+     },
+     {
+      "unit_id": "ref:3",
+      "cls": "content",
+      "text": "发挥最",
+      "ref": 3,
+      "span": [
+       3,
+       6
+      ],
+      "out": [
+       6,
+       9
+      ]
+     },
+     {
+      "unit_id": "E02#2",
+      "cls": "formal",
+      "text": "」。",
+      "ref": "E02",
+      "span": null,
+      "out": [
+       9,
+       11
+      ]
+     }
+    ],
+    "instruction": {
+     "skeleton_id": "E02",
+     "assignment": [
+      1,
+      3
+     ]
+    }
+   },
+   "x0_problems": []
+  },
+  {
+   "rid": "A[1]",
+   "input": "你才得早睡呢",
+   "record": {
+    "kind": "text",
+    "skeleton": "S02",
+    "instruction": {
+     "skeleton_id": "S02",
+     "assignment": [
+      1,
+      5
+     ]
+    },
+    "text": "你睡。",
+    "ref_map": [
+     {
+      "unit_id": "ref:1",
+      "cls": "content",
+      "text": "你",
+      "ref": 1,
+      "span": [
+       0,
+       1
+      ],
+      "out": [
+       0,
+       1
+      ]
+     },
+     {
+      "unit_id": "ref:5",
+      "cls": "content",
+      "text": "睡",
+      "ref": 5,
+      "span": [
+       4,
+       5
+      ],
+      "out": [
+       1,
+       2
+      ]
+     },
+     {
+      "unit_id": "S02#0",
+      "cls": "formal",
+      "text": "。",
+      "ref": "S02",
+      "span": null,
+      "out": [
+       2,
+       3
+      ]
+     }
+    ]
+   },
+   "explain_card": {
+    "kind": "text",
+    "text": "「你」；「睡」。",
+    "ref_map": [
+     {
+      "unit_id": "E02#0",
+      "cls": "formal",
+      "text": "「",
+      "ref": "E02",
+      "span": null,
+      "out": [
+       0,
+       1
+      ]
+     },
+     {
+      "unit_id": "ref:1",
+      "cls": "content",
+      "text": "你",
+      "ref": 1,
+      "span": [
+       0,
+       1
+      ],
+      "out": [
+       1,
+       2
+      ]
+     },
+     {
+      "unit_id": "E02#1",
+      "cls": "formal",
+      "text": "」；「",
+      "ref": "E02",
+      "span": null,
+      "out": [
+       2,
+       5
+      ]
+     },
+     {
+      "unit_id": "ref:5",
+      "cls": "content",
+      "text": "睡",
+      "ref": 5,
+      "span": [
+       4,
+       5
+      ],
+      "out": [
+       5,
+       6
+      ]
+     },
+     {
+      "unit_id": "E02#2",
+      "cls": "formal",
+      "text": "」。",
+      "ref": "E02",
+      "span": null,
+      "out": [
+       6,
+       8
+      ]
+     }
+    ],
+    "instruction": {
+     "skeleton_id": "E02",
+     "assignment": [
+      1,
+      5
+     ]
+    }
+   },
+   "x0_problems": []
+  },
+  {
+   "rid": "A[2]",
+   "input": "北京还是兰州呢",
+   "record": {
+    "kind": "reject",
+    "reason": "type_inventory",
+    "note": "stage=compose"
+   },
+   "explain_card": {
+    "kind": "reject",
+    "reason": "type_inventory"
+   },
+   "has_text_key": false,
+   "x2_problems": []
+  },
+  {
+   "rid": "A[3]",
+   "input": "据我的经验学理工大多洗澡不勤",
+   "record": {
+    "kind": "reject",
+    "reason": "type_inventory",
+    "note": "stage=compose"
+   },
+   "explain_card": {
+    "kind": "reject",
+    "reason": "type_inventory"
+   },
+   "has_text_key": false,
+   "x2_problems": []
+  },
+  {
+   "rid": "A[4]",
+   "input": "啊现在这么快了",
+   "record": {
+    "kind": "reject",
+    "reason": "type_inventory",
+    "note": "stage=compose"
+   },
+   "explain_card": {
+    "kind": "reject",
+    "reason": "type_inventory"
+   },
+   "has_text_key": false,
+   "x2_problems": []
+  },
+  {
+   "rid": "A[6]",
+   "input": "死了记得把你家那个送我",
+   "record": {
+    "kind": "text",
+    "skeleton": "S11",
+    "instruction": {
+     "skeleton_id": "S11",
+     "assignment": [
+      4
+     ]
+    },
+    "text": "那个送吗？",
+    "ref_map": [
+     {
+      "unit_id": "ref:4",
+      "cls": "content",
+      "text": "那个送",
+      "ref": 4,
+      "span": [
+       7,
+       10
+      ],
+      "out": [
+       0,
+       3
+      ]
+     },
+     {
+      "unit_id": "S11#0",
+      "cls": "formal",
+      "text": "吗",
+      "ref": "S11",
+      "span": null,
+      "out": [
+       3,
+       4
+      ]
+     },
+     {
+      "unit_id": "S11#1",
+      "cls": "formal",
+      "text": "？",
+      "ref": "S11",
+      "span": null,
+      "out": [
+       4,
+       5
+      ]
+     }
+    ]
+   },
+   "explain_card": {
+    "kind": "text",
+    "text": "「那个送」。",
+    "ref_map": [
+     {
+      "unit_id": "E01#0",
+      "cls": "formal",
+      "text": "「",
+      "ref": "E01",
+      "span": null,
+      "out": [
+       0,
+       1
+      ]
+     },
+     {
+      "unit_id": "ref:4",
+      "cls": "content",
+      "text": "那个送",
+      "ref": 4,
+      "span": [
+       7,
+       10
+      ],
+      "out": [
+       1,
+       4
+      ]
+     },
+     {
+      "unit_id": "E01#1",
+      "cls": "formal",
+      "text": "」。",
+      "ref": "E01",
+      "span": null,
+      "out": [
+       4,
+       6
+      ]
+     }
+    ],
+    "instruction": {
+     "skeleton_id": "E01",
+     "assignment": [
+      4
+     ]
+    }
+   },
+   "x0_problems": []
+  },
+  {
+   "rid": "A[7]",
+   "input": "我们这前两天沙尘暴，天气要多糟糕有多糟糕，真是烦人",
+   "record": {
+    "kind": "text",
+    "skeleton": "S02",
+    "instruction": {
+     "skeleton_id": "S02",
+     "assignment": [
+      0,
+      4
+     ]
+    },
+    "text": "我糟。",
+    "ref_map": [
+     {
+      "unit_id": "ref:0",
+      "cls": "content",
+      "text": "我",
+      "ref": 0,
+      "span": [
+       0,
+       1
+      ],
+      "out": [
+       0,
+       1
+      ]
+     },
+     {
+      "unit_id": "ref:4",
+      "cls": "content",
+      "text": "糟",
+      "ref": 4,
+      "span": [
+       18,
+       19
+      ],
+      "out": [
+       1,
+       2
+      ]
+     },
+     {
+      "unit_id": "S02#0",
+      "cls": "formal",
+      "text": "。",
+      "ref": "S02",
+      "span": null,
+      "out": [
+       2,
+       3
+      ]
+     }
+    ]
+   },
+   "explain_card": {
+    "kind": "text",
+    "text": "「我」；「糟」。",
+    "ref_map": [
+     {
+      "unit_id": "E02#0",
+      "cls": "formal",
+      "text": "「",
+      "ref": "E02",
+      "span": null,
+      "out": [
+       0,
+       1
+      ]
+     },
+     {
+      "unit_id": "ref:0",
+      "cls": "content",
+      "text": "我",
+      "ref": 0,
+      "span": [
+       0,
+       1
+      ],
+      "out": [
+       1,
+       2
+      ]
+     },
+     {
+      "unit_id": "E02#1",
+      "cls": "formal",
+      "text": "」；「",
+      "ref": "E02",
+      "span": null,
+      "out": [
+       2,
+       5
+      ]
+     },
+     {
+      "unit_id": "ref:4",
+      "cls": "content",
+      "text": "糟",
+      "ref": 4,
+      "span": [
+       18,
+       19
+      ],
+      "out": [
+       5,
+       6
+      ]
+     },
+     {
+      "unit_id": "E02#2",
+      "cls": "formal",
+      "text": "」。",
+      "ref": "E02",
+      "span": null,
+      "out": [
+       6,
+       8
+      ]
+     }
+    ],
+    "instruction": {
+     "skeleton_id": "E02",
+     "assignment": [
+      0,
+      4
+     ]
+    }
+   },
+   "x0_problems": []
+  },
+  {
+   "rid": "A[13]",
+   "input": "美美哒看到寄几的背影了",
+   "record": {
+    "kind": "text",
+    "skeleton": "S02",
+    "instruction": {
+     "skeleton_id": "S02",
+     "assignment": [
+      1,
+      3
+     ]
+    },
+    "text": "美背影。",
+    "ref_map": [
+     {
+      "unit_id": "ref:1",
+      "cls": "content",
+      "text": "美",
+      "ref": 1,
+      "span": [
+       1,
+       2
+      ],
+      "out": [
+       0,
+       1
+      ]
+     },
+     {
+      "unit_id": "ref:3",
+      "cls": "content",
+      "text": "背影",
+      "ref": 3,
+      "span": [
+       8,
+       10
+      ],
+      "out": [
+       1,
+       3
+      ]
+     },
+     {
+      "unit_id": "S02#0",
+      "cls": "formal",
+      "text": "。",
+      "ref": "S02",
+      "span": null,
+      "out": [
+       3,
+       4
+      ]
+     }
+    ]
+   },
+   "explain_card": {
+    "kind": "text",
+    "text": "「美」；「背影」。",
+    "ref_map": [
+     {
+      "unit_id": "E02#0",
+      "cls": "formal",
+      "text": "「",
+      "ref": "E02",
+      "span": null,
+      "out": [
+       0,
+       1
+      ]
+     },
+     {
+      "unit_id": "ref:1",
+      "cls": "content",
+      "text": "美",
+      "ref": 1,
+      "span": [
+       1,
+       2
+      ],
+      "out": [
+       1,
+       2
+      ]
+     },
+     {
+      "unit_id": "E02#1",
+      "cls": "formal",
+      "text": "」；「",
+      "ref": "E02",
+      "span": null,
+      "out": [
+       2,
+       5
+      ]
+     },
+     {
+      "unit_id": "ref:3",
+      "cls": "content",
+      "text": "背影",
+      "ref": 3,
+      "span": [
+       8,
+       10
+      ],
+      "out": [
+       5,
+       7
+      ]
+     },
+     {
+      "unit_id": "E02#2",
+      "cls": "formal",
+      "text": "」。",
+      "ref": "E02",
+      "span": null,
+      "out": [
+       7,
+       9
+      ]
+     }
+    ],
+    "instruction": {
+     "skeleton_id": "E02",
+     "assignment": [
+      1,
+      3
+     ]
+    }
+   },
+   "x0_problems": []
+  },
+  {
+   "rid": "A[15]",
+   "input": "脸大不是因为开心，是本来就这么大",
+   "record": {
+    "kind": "text",
+    "skeleton": "S11",
+    "instruction": {
+     "skeleton_id": "S11",
+     "assignment": [
+      2
+     ]
+    },
+    "text": "因为开吗？",
+    "ref_map": [
+     {
+      "unit_id": "ref:2",
+      "cls": "content",
+      "text": "因为开",
+      "ref": 2,
+      "span": [
+       4,
+       7
+      ],
+      "out": [
+       0,
+       3
+      ]
+     },
+     {
+      "unit_id": "S11#0",
+      "cls": "formal",
+      "text": "吗",
+      "ref": "S11",
+      "span": null,
+      "out": [
+       3,
+       4
+      ]
+     },
+     {
+      "unit_id": "S11#1",
+      "cls": "formal",
+      "text": "？",
+      "ref": "S11",
+      "span": null,
+      "out": [
+       4,
+       5
+      ]
+     }
+    ]
+   },
+   "explain_card": {
+    "kind": "text",
+    "text": "「因为开」。",
+    "ref_map": [
+     {
+      "unit_id": "E01#0",
+      "cls": "formal",
+      "text": "「",
+      "ref": "E01",
+      "span": null,
+      "out": [
+       0,
+       1
+      ]
+     },
+     {
+      "unit_id": "ref:2",
+      "cls": "content",
+      "text": "因为开",
+      "ref": 2,
+      "span": [
+       4,
+       7
+      ],
+      "out": [
+       1,
+       4
+      ]
+     },
+     {
+      "unit_id": "E01#1",
+      "cls": "formal",
+      "text": "」。",
+      "ref": "E01",
+      "span": null,
+      "out": [
+       4,
+       6
+      ]
+     }
+    ],
+    "instruction": {
+     "skeleton_id": "E01",
+     "assignment": [
+      2
+     ]
+    }
+   },
+   "x0_problems": []
+  }
+ ],
+ "verdict": "T1 解释可被约束为不可编"
+}
