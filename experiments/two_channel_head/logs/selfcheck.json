@@ -1,0 +1,85 @@
+{
+  "device": "cuda",
+  "freeze": {
+    "encoder_params": 1688460,
+    "encoder_trainable": 0,
+    "encoder_training": false,
+    "hidden": 128,
+    "max_len": 128
+  },
+  "params": {
+    "A": {
+      "arm": "A",
+      "trunk_ptr": 164224,
+      "trunk_gen": 0,
+      "shared_trunk": false,
+      "ptr_out": 129,
+      "gen_skel": 0,
+      "gen_assign": 0,
+      "head_trainable": 164353
+    },
+    "B": {
+      "arm": "B",
+      "trunk_ptr": 0,
+      "trunk_gen": 164224,
+      "shared_trunk": false,
+      "ptr_out": 0,
+      "gen_skel": 5160,
+      "gen_assign": 16704,
+      "head_trainable": 186088
+    },
+    "C": {
+      "arm": "C",
+      "trunk_ptr": 164224,
+      "trunk_gen": 164224,
+      "shared_trunk": true,
+      "ptr_out": 129,
+      "gen_skel": 5160,
+      "gen_assign": 16704,
+      "head_trainable": 186217
+    },
+    "D": {
+      "arm": "D",
+      "trunk_ptr": 164224,
+      "trunk_gen": 164224,
+      "shared_trunk": false,
+      "ptr_out": 129,
+      "gen_skel": 5160,
+      "gen_assign": 16704,
+      "head_trainable": 350441
+    }
+  },
+  "init_identical": {
+    "trunk A==B==C==D.ptr": true,
+    "trunk D.gen == trunk": true,
+    "ptr_out A==C==D": true,
+    "gen B==C==D": true
+  },
+  "share_evidence": {
+    "C.trunk_ptr is C.trunk_gen": true,
+    "D.trunk_ptr is D.trunk_gen": false,
+    "C named_parameters 里 trunk 出现次数": 4,
+    "C trunk 参数名（前 4）": [
+      "trunk_ptr.net.0.weight",
+      "trunk_ptr.net.0.bias",
+      "trunk_ptr.net.2.weight",
+      "trunk_ptr.net.2.bias"
+    ],
+    "C 指针分支用的主干 id": 140084019445056,
+    "C 生成分支用的主干 id": 140084019445056,
+    "C head_params": 186217,
+    "D head_params": 350441,
+    "C = D − 一个主干": true
+  },
+  "grad_evidence": {
+    "指针单独回传：主干梯度非零": true,
+    "生成单独回传：主干梯度非零": true,
+    "两条梯度不同（不是同一条）": true,
+    "L_ptr =": 0.7015976905822754,
+    "L_gen =": 5.084822654724121
+  },
+  "ptr_equivariance_ok": true,
+  "gen_bag_invariant_ok": true,
+  "gen_assign_changes_with_bag": true,
+  "tokenizer_char_aligned": true
+}
