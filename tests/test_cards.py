@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import ast
 import dataclasses
+import math
 import pathlib
 import sys
 
@@ -21,6 +22,8 @@ from cards import (CardPipeline, Contract, InputCard, OutputCard, TargetCard,  #
                    load_snapshot, make_mv, snapshot_is_readonly)
 from cards import blackboard as bb_mod  # noqa: E402
 from cards import version as ver_mod  # noqa: E402
+from cards.example_attribution import (IdentityCard, iv_all, iv_ident,  # noqa: E402
+                                       top_share, with_intervention)
 
 D, V, FF, NH, MAXLEN = 16, 64, 32, 2, 64
 
@@ -187,3 +190,100 @@ def test_cards_package_does_not_import_dtseek():
                 mods.append(node.module or "")
         assert not any("dtseek" in m or "stages" in m for m in mods), (src.name, mods)
     assert ver_mod.W_VERSION and ver_mod.MV(interface_sha256="x").short()
+
+
+# ================================================ ⑤ 可归因（卖点①：整块可替换/可消融）
+def test_identity_card_dtod_and_pipeline_swap_keeps_mv():
+    """IdentityCard：io=d->d / 零参数 / 形状保持；换掉目标卡=换实现 ⇒ MV 不变、行为变。"""
+    ic = IdentityCard(D, MAXLEN)
+    assert ic.io == "d->d" and ic.n_params() == 0
+    flat = torch.randn(7, D)
+    assert torch.equal(ic(flat), flat)                   # 恒等：逐位相同
+    with pytest.raises(AssertionError, match="输入最后两维"):
+        ic(torch.randn(7, D + 1))
+
+    p = tiny_pipeline()
+    p.eval()
+    ids = tiny_ids()
+    mv0 = p.mv()
+    with torch.no_grad():
+        y0 = p(ids).clone()
+    p.target = IdentityCard(D, MAXLEN)                   # ★门 B：整块替换目标卡
+    assert p.mv() == mv0                                 # 接口 = input + output ⇒ MV 不动
+    with torch.no_grad():
+        y1 = p(ids)
+    assert not torch.equal(y0, y1)                       # 实现换了 ⇒ 行为确实变
+    assert p.who_reads_whom() == [("input", bb_mod.EXTERNAL), ("target", "input"),
+                                  ("output", "target")]
+
+
+def test_intervention_hook_is_non_destructive_and_identity_exact():
+    """干预钩子挂在目标卡输入侧（S21/S18 side=in）：零干预逐位不变，消融真的改变被测量。"""
+    p = tiny_pipeline()
+    p.eval()
+    ids = tiny_ids()
+    with torch.no_grad():
+        base = p(ids).clone()
+    same = with_intervention(p, iv_ident(), lambda: None) is None      # 注册即摘除
+    assert same
+    with torch.no_grad():
+        got = with_intervention(p, iv_ident(), lambda: p(ids))
+    assert torch.equal(got, base)                        # ★零干预恒等：Δ 精确为 0
+    with torch.no_grad():
+        zeroed = with_intervention(p, iv_all(), lambda: p(ids))
+    assert not torch.equal(zeroed, base)                 # ★R29：干预非空、真的改了读数
+    with torch.no_grad():
+        after = p(ids)                                   # 钩子已摘除
+    assert torch.equal(after, base)                      # 非破坏性：不动权重、不留副作用
+
+
+def test_top_share_ranks_units_by_effect():
+    """前 20% 因果占比（S21 curve_stats 口径）：按 |Δ| 降序累积。"""
+    assert top_share([10.0, 0.0, 0.0, 0.0, 0.0], 0.2) == 1.0
+    assert abs(top_share([1.0] * 5, 0.2) - 0.2) < 1e-12
+    assert math.isnan(top_share([0.0] * 4, 0.2))
+    assert top_share([5.0, 4.0, 0.0, 0.0], 0.5) == 1.0   # ceil(0.5*4)=2 ⇒ 前两名
+
+
+# ============================================ ⑥ 硬版本化（卖点②：实现可换、版本可判）
+def test_versioning_contract_change_yields_new_mv(tmp_path):
+    """同一份接口权重：换 MAXLEN ⇒ 换 MV；换目标卡（实现）⇒ MV 不变；卡快照只读可复核。"""
+    from cards.example_versioning import PREF, load_pipeline
+
+    p = tiny_pipeline()
+    rev = {v: k for k, v in PREF.items()}
+    sd = {}
+    for k, t in p.state_dict().items():
+        for dst, src in rev.items():
+            if k.startswith(dst):
+                sd[src + k[len(dst):]] = t
+                break
+    q = load_pipeline(sd, MAXLEN, ff=FF, nhead=NH, pad_id=0)
+    assert q.mv() == p.mv()                              # 同接口权重 + 同契约 ⇒ 同 MV
+    qs = load_pipeline(sd, MAXLEN // 2, ff=FF, nhead=NH, pad_id=0)
+    assert qs.mv().sha256() != q.mv().sha256()           # ★换契约一项 ⇒ 换 MV
+    q.target = IdentityCard(D, MAXLEN)                   # ★换实现 ⇒ MV 不变
+    assert q.mv() == p.mv()
+
+    s = ver_mod.snapshot(q.input, tmp_path / "q_input.json")   # 卡级只读快照
+    assert snapshot_is_readonly(s.path)
+    assert load_snapshot(s.path).sha256 == s.sha256
+
+
+# ============================================ ⑦ 两个新演示脚本的规格守卫（源文本级）
+def test_example_add3d_saturation_default_and_two_stream_rng():
+    """★默认 6000 = E6 饱和点口径；★R34 两条随机流结构 + 两栏报告 + E6 锚不许被改掉。"""
+    src = (ROOT / "cards" / "example_add3d.py").read_text(encoding="utf-8")
+    assert 'os.environ.get("CARDS_STEPS", "6000")' in src
+    assert 'os.environ.get("CARDS_RNG", "s19-two-stream")' in src
+    assert "DROP_GEN.set_state(torch.random.get_rng_state())" in src
+    assert "0.85625" in src and "0.74375" in src         # E6 res 臂锚（seed1234/5678）
+    assert "[TABLE]" in src and "是否饱和" in src         # @3000/@6000 两栏 + 饱和标注
+
+
+def test_example_attribution_retrains_gate_b_under_r16():
+    """门 B 必须是**重训**（R16），不是推理期破坏；且要报前 20% 因果占比 + R29/R28。"""
+    src = (ROOT / "cards" / "example_attribution.py").read_text(encoding="utf-8")
+    assert "IdentityCard" in src and "ex.masked_ce(idpipe" in src
+    assert "top_share" in src and "前 10/20/50%" in src
+    assert "[R29]" in src and "[R28]" in src
