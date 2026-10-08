@@ -1,0 +1,118 @@
+{
+  "device": "cuda",
+  "vocab_size": 4393,
+  "freeze": {
+    "encoder_params": 1688460,
+    "encoder_trainable": 0,
+    "encoder_training": false,
+    "placeholder_trainable": 0
+  },
+  "params": {
+    "A": {
+      "arm": "A",
+      "trunk": 164224,
+      "gen_skel": 0,
+      "gen_assign": 0,
+      "sent_head": 1028841,
+      "head_trainable": 1193065,
+      "heads_frozen": [
+        "gen"
+      ]
+    },
+    "B": {
+      "arm": "B",
+      "trunk": 164224,
+      "gen_skel": 5160,
+      "gen_assign": 16704,
+      "sent_head": 0,
+      "head_trainable": 186088,
+      "heads_frozen": [
+        "sent"
+      ]
+    },
+    "C": {
+      "arm": "C",
+      "trunk": 164224,
+      "gen_skel": 5160,
+      "gen_assign": 16704,
+      "sent_head": 1028841,
+      "head_trainable": 1214929,
+      "heads_frozen": []
+    }
+  },
+  "init_identical_to_two_channel": {
+    "trunk": true,
+    "gen": true
+  },
+  "gen_loss_equal": true,
+  "parse_roundtrip": {
+    "ok": 8000,
+    "bad": 0
+  },
+  "adv2_signatures_novel": 1000,
+  "adv": {
+    "adv1": {
+      "n": 1220,
+      "overlap": 0,
+      "ids": [
+        16,
+        21,
+        24,
+        27,
+        28,
+        29,
+        30,
+        32,
+        33,
+        34
+      ]
+    },
+    "adv2": {
+      "n": 1000,
+      "overlap": 0,
+      "ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        17,
+        18,
+        19,
+        20,
+        22,
+        23,
+        25,
+        26,
+        31,
+        38,
+        39
+      ]
+    }
+  },
+  "vocab_oov": 0,
+  "sent_ids_shape": [
+    8,
+    66
+  ],
+  "encode_log": "[cache] 命中 gen_a1ea86699c61_L64_M4.pt（n=64）",
+  "tch_cache": "gen_bac00ff05e35_L64_M4.pt",
+  "encode_same_as_two_channel": {
+    "v_sent": 8.344650268554688e-07,
+    "v_items": 1.430511474609375e-06,
+    "item_mask_equal": true,
+    "skel_equal": true,
+    "assign_equal": true
+  },
+  "encode_rows_ok": true
+}

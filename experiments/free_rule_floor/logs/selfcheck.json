@@ -1,0 +1,151 @@
+{
+  "device": "cuda",
+  "bag_modules_selfcheck": {
+    "device": "cuda",
+    "freeze": {
+      "encoder_params": 1688460,
+      "encoder_trainable": 0,
+      "encoder_training": false,
+      "placeholder_trainable": 0
+    },
+    "params": {
+      "A": {
+        "arm": "A",
+        "mods": [
+          "type",
+          "role",
+          "cls"
+        ],
+        "trunk": 164224,
+        "gen_skel": 5160,
+        "gen_assign": 16704,
+        "label_enc": 0,
+        "pos_pool": 0,
+        "head_trainable": 186088
+      },
+      "U": {
+        "arm": "U",
+        "mods": [
+          "type",
+          "role",
+          "cls"
+        ],
+        "trunk": 164224,
+        "gen_skel": 5160,
+        "gen_assign": 16704,
+        "label_enc": 5456,
+        "pos_pool": 0,
+        "head_trainable": 191544
+      },
+      "P": {
+        "arm": "P",
+        "mods": [
+          "type",
+          "role",
+          "cls"
+        ],
+        "trunk": 164224,
+        "gen_skel": 5160,
+        "gen_assign": 16704,
+        "label_enc": 0,
+        "pos_pool": 1544,
+        "head_trainable": 187632
+      },
+      "UP": {
+        "arm": "UP",
+        "mods": [
+          "type",
+          "role",
+          "cls"
+        ],
+        "trunk": 164224,
+        "gen_skel": 5160,
+        "gen_assign": 16704,
+        "label_enc": 5456,
+        "pos_pool": 1544,
+        "head_trainable": 193088
+      }
+    },
+    "init_identical_across_arms": true,
+    "init_equal_struct_B": true,
+    "armA_equals_structB_forward": true,
+    "U_step0_equals_A": true,
+    "P_step0_equals_mean": true,
+    "U_bag_invariant": true,
+    "aux_gets_grad": true,
+    "pool_gets_grad": true,
+    "tokenizer_char_aligned": true
+  },
+  "init_identical_across_arms": true,
+  "params": {
+    "A": {
+      "arm": "A",
+      "mods": [
+        "type",
+        "role",
+        "cls"
+      ],
+      "trunk": 164224,
+      "gen_skel": 5160,
+      "gen_assign": 16704,
+      "label_enc": 0,
+      "pos_pool": 0,
+      "head_trainable": 186088
+    },
+    "N": {
+      "arm": "N",
+      "mods": [
+        "type",
+        "role",
+        "cls"
+      ],
+      "trunk": 164224,
+      "gen_skel": 5160,
+      "gen_assign": 16704,
+      "label_enc": 5320,
+      "pos_pool": 0,
+      "head_trainable": 191408
+    },
+    "U": {
+      "arm": "U",
+      "mods": [
+        "type",
+        "role",
+        "cls"
+      ],
+      "trunk": 164224,
+      "gen_skel": 5160,
+      "gen_assign": 16704,
+      "label_enc": 5456,
+      "pos_pool": 0,
+      "head_trainable": 191544
+    },
+    "UP": {
+      "arm": "UP",
+      "mods": [
+        "type",
+        "role",
+        "cls"
+      ],
+      "trunk": 164224,
+      "gen_skel": 5160,
+      "gen_assign": 16704,
+      "label_enc": 5456,
+      "pos_pool": 1544,
+      "head_trainable": 193088
+    }
+  },
+  "delta_vs_A": {
+    "N": 5320,
+    "U": 5456,
+    "U_minus_N": 136
+  },
+  "N_step0_equals_A": true,
+  "N_aux_nonzero_actually_outputs": true,
+  "N_ignores_label_content": true,
+  "z_distinct_per_n": true,
+  "N_sensitive_to_n_slots": true,
+  "N_sensitivity_maxabs": 0.013723,
+  "aux_gets_grad": true,
+  "ok": true
+}

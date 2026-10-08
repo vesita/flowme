@@ -67,3 +67,10 @@ experiments/**/results/*
 !experiments/**/results/gates.json
 !experiments/**/results/ecriteria.json
 # 注：REPORT.md / PREREG.md / 实验代码都在实验根目录，不受影响；结论要写在那里。
+
+# 各实验目录下的 logs/ 同样是【过程日志】（实测 876K / 192 文件，183 个 .log）⇒ 不入库；
+# 只保留结论性产物（*.json 摘要 / *.done 完成标记）。
+# 依据：上面 `logs/*` 只忽略仓库根的 logs/，会误放开 experiments/*/logs/。
+experiments/*/logs/*
+!experiments/*/logs/*.json
+!experiments/*/logs/*.done
