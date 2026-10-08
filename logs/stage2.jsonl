@@ -1,0 +1,10 @@
+{"kind": "gate", "name": "uniform_ref", "test_ce": 4.1589}
+{"kind": "gate", "name": "copy", "test_ce": 9.2325, "test_acc": 0.077}
+{"kind": "gate", "name": "random_perm", "test_ce": 9.2491, "test_acc": 0.0754}
+{"tag": "gate_identity_m", "kind": "train", "step": 1000, "loss": 0.755, "sec": 46.6}
+{"tag": "gate_identity_m", "kind": "train", "step": 2000, "loss": 0.5587, "sec": 96.3}
+{"tag": "gate_identity_m", "kind": "train", "step": 3000, "loss": 0.5051, "sec": 142.6}
+{"tag": "gate_identity_m", "kind": "result", "v_mid": null, "identity": true, "seed": 42, "test_ce": 0.3086, "test_acc": 0.899, "sec": 142.8}
+{"kind": "gate", "name": "identity_mid", "test_ce": 0.3086, "test_acc": 0.899}
+{"kind": "gate_verdict", "gate_pass": false, "rule": "copy CE >= 4.0 AND identity_mid CE >= 1.0"}
+{"kind": "abort", "reason": "trivial solution dominates: gate failed"}

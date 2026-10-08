@@ -1,0 +1,2671 @@
+{
+ "stage": "E7/39",
+ "device": "cpu",
+ "wall_s": 267.4935781955719,
+ "n_files": 115,
+ "n_loadable": 115,
+ "n_unique_weights": 86,
+ "e4_baseline": {
+  "n_files": 83,
+  "n_unique": 64
+ },
+ "n_sig_groups": 7,
+ "n_pairs_compared": 4309,
+ "same_weight_groups": [
+  [
+   "14_ckpt_add_1d_seed1234.pt",
+   "19_ckpt_add_1d_nores_seed1234.pt"
+  ],
+  [
+   "14_ckpt_add_1d_seed5678.pt",
+   "19_ckpt_add_1d_nores_seed5678.pt"
+  ],
+  [
+   "14_ckpt_add_2d_seed1234.pt",
+   "15_ckpt_add2d_k1_seed1234.pt",
+   "19_ckpt_add_2d_nores_seed1234.pt"
+  ],
+  [
+   "14_ckpt_add_3d_seed1234.pt",
+   "15_ckpt_add3d_k1_seed1234.pt",
+   "19_ckpt_add_3d_nores_seed1234.pt"
+  ],
+  [
+   "14_ckpt_add_3d_seed5678.pt",
+   "15_ckpt_add3d_k1_seed5678.pt",
+   "19_ckpt_add_3d_nores_seed5678.pt"
+  ],
+  [
+   "14_ckpt_mul_2d_seed1234.pt",
+   "19_ckpt_mul_2d_nores_seed1234.pt"
+  ],
+  [
+   "14_ckpt_sub_2d_seed1234.pt",
+   "19_ckpt_sub_2d_nores_seed1234.pt"
+  ],
+  [
+   "15_ckpt_add2d_k1_seed5678.pt",
+   "19_ckpt_add_2d_nores_seed5678.pt"
+  ],
+  [
+   "15_ckpt_add3d_always_k1_seed1234.pt",
+   "19_ckpt_add_3d_res_seed1234.pt",
+   "20_ckpt_add3d_nopos_seed1234.pt",
+   "22_ckpt_add_3d_A_seed1234.pt",
+   "25_ckpt_e2e_seed1234.pt",
+   "34_ckpt_e2e3000_seed1234.pt"
+  ],
+  [
+   "15_ckpt_add3d_always_k1_seed5678.pt",
+   "19_ckpt_add_3d_res_seed5678.pt",
+   "20_ckpt_add3d_nopos_seed5678.pt",
+   "22_ckpt_add_3d_A_seed5678.pt",
+   "25_ckpt_e2e_seed5678.pt",
+   "34_ckpt_e2e3000_seed5678.pt"
+  ],
+  [
+   "25_ckpt_anchor_seed1234.pt",
+   "34_ckpt_frozen6000_seed1234.pt"
+  ],
+  [
+   "25_ckpt_anchor_seed5678.pt",
+   "34_ckpt_frozen6000_seed5678.pt"
+  ],
+  [
+   "28_ckpt_e2e6000_seed1234.pt",
+   "36_ckpt_A_s6000_seed1234.pt",
+   "36_ckpt_res_s6000_seed1234.pt",
+   "37_ckpt_w1_s6000_seed1234.pt"
+  ],
+  [
+   "28_ckpt_e2e6000_seed5678.pt",
+   "36_ckpt_A_s6000_seed5678.pt",
+   "36_ckpt_res_s6000_seed5678.pt",
+   "37_ckpt_w1_s6000_seed5678.pt"
+  ]
+ ],
+ "new_same_weight_groups": [
+  [
+   "25_ckpt_anchor_seed1234.pt",
+   "34_ckpt_frozen6000_seed1234.pt"
+  ],
+  [
+   "25_ckpt_anchor_seed5678.pt",
+   "34_ckpt_frozen6000_seed5678.pt"
+  ],
+  [
+   "28_ckpt_e2e6000_seed1234.pt",
+   "36_ckpt_A_s6000_seed1234.pt",
+   "36_ckpt_res_s6000_seed1234.pt",
+   "37_ckpt_w1_s6000_seed1234.pt"
+  ],
+  [
+   "28_ckpt_e2e6000_seed5678.pt",
+   "36_ckpt_A_s6000_seed5678.pt",
+   "36_ckpt_res_s6000_seed5678.pt",
+   "37_ckpt_w1_s6000_seed5678.pt"
+  ]
+ ],
+ "expanded_same_weight_groups": [
+  {
+   "files": [
+    "15_ckpt_add3d_always_k1_seed1234.pt",
+    "19_ckpt_add_3d_res_seed1234.pt",
+    "20_ckpt_add3d_nopos_seed1234.pt",
+    "22_ckpt_add_3d_A_seed1234.pt",
+    "25_ckpt_e2e_seed1234.pt",
+    "34_ckpt_e2e3000_seed1234.pt"
+   ],
+   "expanded_from": [
+    [
+     "15_ckpt_add3d_always_k1_seed1234.pt",
+     "19_ckpt_add_3d_res_seed1234.pt",
+     "20_ckpt_add3d_nopos_seed1234.pt",
+     "22_ckpt_add_3d_A_seed1234.pt",
+     "25_ckpt_e2e_seed1234.pt"
+    ]
+   ]
+  },
+  {
+   "files": [
+    "15_ckpt_add3d_always_k1_seed5678.pt",
+    "19_ckpt_add_3d_res_seed5678.pt",
+    "20_ckpt_add3d_nopos_seed5678.pt",
+    "22_ckpt_add_3d_A_seed5678.pt",
+    "25_ckpt_e2e_seed5678.pt",
+    "34_ckpt_e2e3000_seed5678.pt"
+   ],
+   "expanded_from": [
+    [
+     "15_ckpt_add3d_always_k1_seed5678.pt",
+     "19_ckpt_add_3d_res_seed5678.pt",
+     "20_ckpt_add3d_nopos_seed5678.pt",
+     "22_ckpt_add_3d_A_seed5678.pt",
+     "25_ckpt_e2e_seed5678.pt"
+    ]
+   ]
+  }
+ ],
+ "pair_checks": [
+  {
+   "group": "S37 w1 vs E6 res（应同：都权重1/同 seed/同步数）",
+   "a": "37_ckpt_w1_s6000_seed1234.pt",
+   "b": "36_ckpt_res_s6000_seed1234.pt",
+   "verdict": "同一权重（max|Δ|=0）",
+   "max_abs_d": 0.0,
+   "at": null,
+   "n_tensors_diff": 0,
+   "n_tensors": 27
+  },
+  {
+   "group": "S37 w1 vs E6 res（应同：都权重1/同 seed/同步数）",
+   "a": "37_ckpt_w1_s6000_seed5678.pt",
+   "b": "36_ckpt_res_s6000_seed5678.pt",
+   "verdict": "同一权重（max|Δ|=0）",
+   "max_abs_d": 0.0,
+   "at": null,
+   "n_tensors_diff": 0,
+   "n_tensors": 27
+  },
+  {
+   "group": "E6 A vs E6 res（同构造顺序？）",
+   "a": "36_ckpt_A_s6000_seed1234.pt",
+   "b": "36_ckpt_res_s6000_seed1234.pt",
+   "verdict": "同一权重（max|Δ|=0）",
+   "max_abs_d": 0.0,
+   "at": null,
+   "n_tensors_diff": 0,
+   "n_tensors": 27
+  },
+  {
+   "group": "E6 A vs E6 res（同构造顺序？）",
+   "a": "36_ckpt_A_s6000_seed5678.pt",
+   "b": "36_ckpt_res_s6000_seed5678.pt",
+   "verdict": "同一权重（max|Δ|=0）",
+   "max_abs_d": 0.0,
+   "at": null,
+   "n_tensors_diff": 0,
+   "n_tensors": 27
+  },
+  {
+   "group": "E6 res/A vs S19-res@3000（同步数? 不，3000 vs 6000）",
+   "a": "36_ckpt_res_s6000_seed1234.pt",
+   "b": "19_ckpt_add_3d_res_seed1234.pt",
+   "verdict": "不同权重",
+   "max_abs_d": 0.49318838119506836,
+   "at": "emb.weight",
+   "n_tensors_diff": 27,
+   "n_tensors": 27
+  },
+  {
+   "group": "E6 res/A vs S19-res@3000（同步数? 不，3000 vs 6000）",
+   "a": "36_ckpt_A_s6000_seed5678.pt",
+   "b": "19_ckpt_add_3d_res_seed5678.pt",
+   "verdict": "不同权重",
+   "max_abs_d": 0.4151751399040222,
+   "at": "in_enc.linear2.weight",
+   "n_tensors_diff": 27,
+   "n_tensors": 27
+  },
+  {
+   "group": "E6 A vs S22-A@3000",
+   "a": "36_ckpt_A_s6000_seed1234.pt",
+   "b": "22_ckpt_add_3d_A_seed1234.pt",
+   "verdict": "不同权重",
+   "max_abs_d": 0.49318838119506836,
+   "at": "emb.weight",
+   "n_tensors_diff": 27,
+   "n_tensors": 27
+  },
+  {
+   "group": "E6 A vs S22-A@3000",
+   "a": "36_ckpt_A_s6000_seed5678.pt",
+   "b": "22_ckpt_add_3d_A_seed5678.pt",
+   "verdict": "不同权重",
+   "max_abs_d": 0.4151751399040222,
+   "at": "in_enc.linear2.weight",
+   "n_tensors_diff": 27,
+   "n_tensors": 27
+  },
+  {
+   "group": "E6 res/A vs S25 e2e@3000（E4 里同一组）",
+   "a": "36_ckpt_res_s6000_seed1234.pt",
+   "b": "25_ckpt_e2e_seed1234.pt",
+   "verdict": "不同权重",
+   "max_abs_d": 0.49318838119506836,
+   "at": "emb.weight",
+   "n_tensors_diff": 27,
+   "n_tensors": 27
+  },
+  {
+   "group": "E6 res/A vs S25 e2e@3000（E4 里同一组）",
+   "a": "36_ckpt_A_s6000_seed5678.pt",
+   "b": "25_ckpt_e2e_seed5678.pt",
+   "verdict": "不同权重",
+   "max_abs_d": 0.4151751399040222,
+   "at": "in_enc.linear2.weight",
+   "n_tensors_diff": 27,
+   "n_tensors": 27
+  },
+  {
+   "group": "★用户点名：E1 cards_s6000 vs E6 res_s6000",
+   "a": "35_ckpt_cards_s6000_seed1234.pt",
+   "b": "36_ckpt_res_s6000_seed1234.pt",
+   "verdict": "不同权重",
+   "max_abs_d": 0.5796014666557312,
+   "at": "linear2.weight",
+   "n_tensors_diff": 27,
+   "n_tensors": 27
+  },
+  {
+   "group": "★用户点名：E1 cards_s6000 vs E6 res_s6000",
+   "a": "35_ckpt_cards_s6000_seed5678.pt",
+   "b": "36_ckpt_res_s6000_seed5678.pt",
+   "verdict": "不同权重",
+   "max_abs_d": 0.6294525861740112,
+   "at": "self_attn.in_proj_weight",
+   "n_tensors_diff": 27,
+   "n_tensors": 27
+  },
+  {
+   "group": "E1 cards_s3000 vs S19-res@3000（E1 切了 dev，应不同）",
+   "a": "35_ckpt_cards_s3000_seed1234.pt",
+   "b": "19_ckpt_add_3d_res_seed1234.pt",
+   "verdict": "不同权重",
+   "max_abs_d": 0.36249101161956787,
+   "at": "emb.weight",
+   "n_tensors_diff": 27,
+   "n_tensors": 27
+  },
+  {
+   "group": "E1 cards_s3000 vs S19-res@3000（E1 切了 dev，应不同）",
+   "a": "35_ckpt_cards_s3000_seed5678.pt",
+   "b": "19_ckpt_add_3d_res_seed5678.pt",
+   "verdict": "不同权重",
+   "max_abs_d": 0.34888577461242676,
+   "at": "emb.weight",
+   "n_tensors_diff": 27,
+   "n_tensors": 27
+  },
+  {
+   "group": "S37 w1/w3/w10 内部",
+   "a": "37_ckpt_w1_s6000_seed1234.pt",
+   "b": "37_ckpt_w3_s6000_seed1234.pt",
+   "verdict": "不同权重",
+   "max_abs_d": 0.6414499282836914,
+   "at": "in_enc.linear1.weight",
+   "n_tensors_diff": 27,
+   "n_tensors": 27
+  },
+  {
+   "group": "S37 w1/w3/w10 内部",
+   "a": "37_ckpt_w1_s6000_seed1234.pt",
+   "b": "37_ckpt_w10_s6000_seed1234.pt",
+   "verdict": "不同权重",
+   "max_abs_d": 0.7185834646224976,
+   "at": "emb.weight",
+   "n_tensors_diff": 27,
+   "n_tensors": 27
+  },
+  {
+   "group": "S37 w1/w3/w10 内部",
+   "a": "37_ckpt_w3_s6000_seed1234.pt",
+   "b": "37_ckpt_w10_s6000_seed1234.pt",
+   "verdict": "不同权重",
+   "max_abs_d": 0.7096757292747498,
+   "at": "emb.weight",
+   "n_tensors_diff": 27,
+   "n_tensors": 27
+  },
+  {
+   "group": "S37 w3/w10 vs E1 cards_s6000",
+   "a": "37_ckpt_w3_s6000_seed1234.pt",
+   "b": "35_ckpt_cards_s6000_seed1234.pt",
+   "verdict": "不同权重",
+   "max_abs_d": 0.7448188066482544,
+   "at": "linear2.weight",
+   "n_tensors_diff": 27,
+   "n_tensors": 27
+  },
+  {
+   "group": "S37 w3/w10 vs E1 cards_s6000",
+   "a": "37_ckpt_w10_s6000_seed1234.pt",
+   "b": "35_ckpt_cards_s6000_seed1234.pt",
+   "verdict": "不同权重",
+   "max_abs_d": 0.8149712085723877,
+   "at": "emb.weight",
+   "n_tensors_diff": 27,
+   "n_tensors": 27
+  },
+  {
+   "group": "S37 w3/w10 vs E1 cards_s6000",
+   "a": "37_ckpt_w3_s6000_seed5678.pt",
+   "b": "35_ckpt_cards_s6000_seed5678.pt",
+   "verdict": "不同权重",
+   "max_abs_d": 0.8337337970733643,
+   "at": "head.weight",
+   "n_tensors_diff": 27,
+   "n_tensors": 27
+  },
+  {
+   "group": "S37 w3/w10 vs E1 cards_s6000",
+   "a": "37_ckpt_w10_s6000_seed5678.pt",
+   "b": "35_ckpt_cards_s6000_seed5678.pt",
+   "verdict": "不同权重",
+   "max_abs_d": 0.7038772106170654,
+   "at": "emb.weight",
+   "n_tensors_diff": 27,
+   "n_tensors": 27
+  },
+  {
+   "group": "S37 w3/w10 vs E1 mono_s6000",
+   "a": "37_ckpt_w3_s6000_seed1234.pt",
+   "b": "35_ckpt_mono_s6000_seed1234.pt",
+   "verdict": "结构不可比（键集/形状不同）⇒不同权重",
+   "only_a": [
+    "in_enc.linear1.bias",
+    "in_enc.linear1.weight",
+    "in_enc.linear2.bias",
+    "in_enc.linear2.weight",
+    "in_enc.norm1.bias",
+    "in_enc.norm1.weight"
+   ],
+   "only_b": [
+    "enc.0.linear1.bias",
+    "enc.0.linear1.weight",
+    "enc.0.linear2.bias",
+    "enc.0.linear2.weight",
+    "enc.0.norm1.bias",
+    "enc.0.norm1.weight"
+   ],
+   "n_param_a": 2501888,
+   "n_param_b": 2501888
+  },
+  {
+   "group": "S37 w3/w10 vs E1 mono_s6000",
+   "a": "37_ckpt_w10_s6000_seed1234.pt",
+   "b": "35_ckpt_mono_s6000_seed1234.pt",
+   "verdict": "结构不可比（键集/形状不同）⇒不同权重",
+   "only_a": [
+    "in_enc.linear1.bias",
+    "in_enc.linear1.weight",
+    "in_enc.linear2.bias",
+    "in_enc.linear2.weight",
+    "in_enc.norm1.bias",
+    "in_enc.norm1.weight"
+   ],
+   "only_b": [
+    "enc.0.linear1.bias",
+    "enc.0.linear1.weight",
+    "enc.0.linear2.bias",
+    "enc.0.linear2.weight",
+    "enc.0.norm1.bias",
+    "enc.0.norm1.weight"
+   ],
+   "n_param_a": 2501888,
+   "n_param_b": 2501888
+  },
+  {
+   "group": "S37 w3/w10 vs E1 mono_s6000",
+   "a": "37_ckpt_w10_s6000_seed5678.pt",
+   "b": "35_ckpt_mono_s6000_seed5678.pt",
+   "verdict": "结构不可比（键集/形状不同）⇒不同权重",
+   "only_a": [
+    "in_enc.linear1.bias",
+    "in_enc.linear1.weight",
+    "in_enc.linear2.bias",
+    "in_enc.linear2.weight",
+    "in_enc.norm1.bias",
+    "in_enc.norm1.weight"
+   ],
+   "only_b": [
+    "enc.0.linear1.bias",
+    "enc.0.linear1.weight",
+    "enc.0.linear2.bias",
+    "enc.0.linear2.weight",
+    "enc.0.norm1.bias",
+    "enc.0.norm1.weight"
+   ],
+   "n_param_a": 2501888,
+   "n_param_b": 2501888
+  },
+  {
+   "group": "E1 cards vs mono（同参数量、不同容器）",
+   "a": "35_ckpt_cards_s6000_seed1234.pt",
+   "b": "35_ckpt_mono_s6000_seed1234.pt",
+   "verdict": "结构不可比（键集/形状不同）⇒不同权重",
+   "only_a": [
+    "in_enc.linear1.bias",
+    "in_enc.linear1.weight",
+    "in_enc.linear2.bias",
+    "in_enc.linear2.weight",
+    "in_enc.norm1.bias",
+    "in_enc.norm1.weight"
+   ],
+   "only_b": [
+    "enc.0.linear1.bias",
+    "enc.0.linear1.weight",
+    "enc.0.linear2.bias",
+    "enc.0.linear2.weight",
+    "enc.0.norm1.bias",
+    "enc.0.norm1.weight"
+   ],
+   "n_param_a": 2501888,
+   "n_param_b": 2501888
+  },
+  {
+   "group": "E1 cards vs mono（同参数量、不同容器）",
+   "a": "35_ckpt_cards_s6000_seed5678.pt",
+   "b": "35_ckpt_mono_s6000_seed5678.pt",
+   "verdict": "结构不可比（键集/形状不同）⇒不同权重",
+   "only_a": [
+    "in_enc.linear1.bias",
+    "in_enc.linear1.weight",
+    "in_enc.linear2.bias",
+    "in_enc.linear2.weight",
+    "in_enc.norm1.bias",
+    "in_enc.norm1.weight"
+   ],
+   "only_b": [
+    "enc.0.linear1.bias",
+    "enc.0.linear1.weight",
+    "enc.0.linear2.bias",
+    "enc.0.linear2.weight",
+    "enc.0.norm1.bias",
+    "enc.0.norm1.weight"
+   ],
+   "n_param_a": 2501888,
+   "n_param_b": 2501888
+  },
+  {
+   "group": "E5 34 frozen6000 vs 28 e2e6000",
+   "a": "34_ckpt_frozen6000_seed1234.pt",
+   "b": "28_ckpt_e2e6000_seed1234.pt",
+   "verdict": "不同权重",
+   "max_abs_d": 0.49318838119506836,
+   "at": "emb.weight",
+   "n_tensors_diff": 27,
+   "n_tensors": 27
+  },
+  {
+   "group": "E5 34 frozen6000 vs 28 e2e6000",
+   "a": "34_ckpt_frozen6000_seed5678.pt",
+   "b": "28_ckpt_e2e6000_seed5678.pt",
+   "verdict": "不同权重",
+   "max_abs_d": 0.4474160671234131,
+   "at": "linear2.weight",
+   "n_tensors_diff": 27,
+   "n_tensors": 27
+  }
+ ],
+ "conclusions": [
+  {
+   "id": "①",
+   "name": "卡内结构不可替代（E6 @6000，B/C/D/E 各 2 seed vs A）",
+   "n_files": 10,
+   "n_unique_weights": 10,
+   "weight_ids": [
+    "W63",
+    "W64",
+    "W73",
+    "W74",
+    "W75",
+    "W76",
+    "W77",
+    "W78",
+    "W79",
+    "W80"
+   ],
+   "representatives": [
+    "36_ckpt_A_s6000_seed1234.pt",
+    "36_ckpt_A_s6000_seed5678.pt",
+    "36_ckpt_B_s6000_seed1234.pt",
+    "36_ckpt_B_s6000_seed5678.pt",
+    "36_ckpt_C_s6000_seed1234.pt",
+    "36_ckpt_C_s6000_seed5678.pt",
+    "36_ckpt_D_s6000_seed1234.pt",
+    "36_ckpt_D_s6000_seed5678.pt",
+    "36_ckpt_E_s6000_seed1234.pt",
+    "36_ckpt_E_s6000_seed5678.pt"
+   ],
+   "missing": []
+  },
+  {
+   "id": "②",
+   "name": "残差在饱和点失效（E6 nores vs res @6000）",
+   "n_files": 4,
+   "n_unique_weights": 4,
+   "weight_ids": [
+    "W63",
+    "W64",
+    "W81",
+    "W82"
+   ],
+   "representatives": [
+    "36_ckpt_nores_s6000_seed1234.pt",
+    "36_ckpt_nores_s6000_seed5678.pt",
+    "36_ckpt_res_s6000_seed1234.pt",
+    "36_ckpt_res_s6000_seed5678.pt"
+   ],
+   "missing": []
+  },
+  {
+   "id": "③",
+   "name": "卡边界零增量（E1 构造性证明 + 统计对照）",
+   "n_files": 8,
+   "n_unique_weights": 8,
+   "weight_ids": [
+    "W65",
+    "W66",
+    "W67",
+    "W68",
+    "W69",
+    "W70",
+    "W71",
+    "W72"
+   ],
+   "representatives": [
+    "35_ckpt_cards_s3000_seed1234.pt",
+    "35_ckpt_cards_s3000_seed5678.pt",
+    "35_ckpt_cards_s6000_seed1234.pt",
+    "35_ckpt_cards_s6000_seed5678.pt",
+    "35_ckpt_mono_s3000_seed1234.pt",
+    "35_ckpt_mono_s3000_seed5678.pt",
+    "35_ckpt_mono_s6000_seed1234.pt",
+    "35_ckpt_mono_s6000_seed5678.pt"
+   ],
+   "missing": []
+  },
+  {
+   "id": "④",
+   "name": "单卡更好被推翻（E5 frozen@6000 vs e2e@6000）",
+   "n_files": 4,
+   "n_unique_weights": 4,
+   "weight_ids": [
+    "W57",
+    "W58",
+    "W63",
+    "W64"
+   ],
+   "representatives": [
+    "28_ckpt_e2e6000_seed1234.pt",
+    "28_ckpt_e2e6000_seed5678.pt",
+    "34_ckpt_frozen6000_seed1234.pt",
+    "34_ckpt_frozen6000_seed5678.pt"
+   ],
+   "missing": []
+  },
+  {
+   "id": "⑤",
+   "name": "loss 加权（S37 w1/w3/w10 @6000）",
+   "n_files": 6,
+   "n_unique_weights": 6,
+   "weight_ids": [
+    "W63",
+    "W64",
+    "W83",
+    "W84",
+    "W85",
+    "W86"
+   ],
+   "representatives": [
+    "37_ckpt_w10_s6000_seed1234.pt",
+    "37_ckpt_w10_s6000_seed5678.pt",
+    "37_ckpt_w1_s6000_seed1234.pt",
+    "37_ckpt_w1_s6000_seed5678.pt",
+    "37_ckpt_w3_s6000_seed1234.pt",
+    "37_ckpt_w3_s6000_seed5678.pt"
+   ],
+   "missing": []
+  }
+ ],
+ "pricing": {
+  "①": {
+   "n": 10,
+   "deltas": {
+    "B": [
+     -0.845,
+     -0.735
+    ],
+    "C": [
+     -0.8474999999999999,
+     -0.73375
+    ],
+    "D": [
+     -0.8424999999999999,
+     -0.73375
+    ],
+    "E": [
+     -0.84375,
+     -0.73
+    ]
+   },
+   "same_sign": true,
+   "price": "强",
+   "note": "B/C/D/E 对 A 的 Δ 在 2 seed 上全部同号（大幅更低）"
+  },
+  "②": {
+   "n": 4,
+   "deltas": [
+    -0.04125000000000001,
+    0.028750000000000053
+   ],
+   "same_sign": false,
+   "price": "不可判",
+   "note": "Δ(res−nores) 随 seed 翻号 ⇒ 未过 2 seed 同号"
+  },
+  "③": {
+   "n_stat": 8,
+   "deltas_6000": [
+    0.008749999999999925,
+    0.27874999999999994
+   ],
+   "same_sign": true,
+   "constructive_n": 1,
+   "price": "中",
+   "note": "零增量只由构造性逐位恒等（n=1 证明）支撑；统计对照 cards≥mono 并非零"
+  },
+  "④": {
+   "n": 4,
+   "deltas": [
+    -0.0525,
+    -0.1325
+   ],
+   "same_sign": true,
+   "price": "中",
+   "note": "frozen−e2e 均 ≤−2SE，2 seed 同号 ⇒ 单卡更好被推翻"
+  },
+  "⑤": {
+   "n": 6,
+   "deltas": {
+    "w3": [
+     0.04375000000000007,
+     -0.03375000000000006
+    ],
+    "w10": [
+     -0.036250000000000004,
+     0.07624999999999993
+    ]
+   },
+   "same_sign": false,
+   "price": "不可判",
+   "note": "S37 自判 6/6 臂 @4500→6000 仍在升 ⇒ 未饱和，R35 结论不可下；且方向随 seed 翻转"
+  }
+ },
+ "honest": {
+  "unloadable": [],
+  "overwritten_names": {
+   "15_ckpt_add3d_k1_seed1234.pt": [
+    "52861f8d597dc143",
+    "81958d90434a5205"
+   ]
+  },
+  "structural_pairs": [
+   {
+    "group": "S37 w3/w10 vs E1 mono_s6000",
+    "a": "37_ckpt_w3_s6000_seed1234.pt",
+    "b": "35_ckpt_mono_s6000_seed1234.pt",
+    "verdict": "结构不可比（键集/形状不同）⇒不同权重",
+    "only_a": [
+     "in_enc.linear1.bias",
+     "in_enc.linear1.weight",
+     "in_enc.linear2.bias",
+     "in_enc.linear2.weight",
+     "in_enc.norm1.bias",
+     "in_enc.norm1.weight"
+    ],
+    "only_b": [
+     "enc.0.linear1.bias",
+     "enc.0.linear1.weight",
+     "enc.0.linear2.bias",
+     "enc.0.linear2.weight",
+     "enc.0.norm1.bias",
+     "enc.0.norm1.weight"
+    ],
+    "n_param_a": 2501888,
+    "n_param_b": 2501888
+   },
+   {
+    "group": "S37 w3/w10 vs E1 mono_s6000",
+    "a": "37_ckpt_w10_s6000_seed1234.pt",
+    "b": "35_ckpt_mono_s6000_seed1234.pt",
+    "verdict": "结构不可比（键集/形状不同）⇒不同权重",
+    "only_a": [
+     "in_enc.linear1.bias",
+     "in_enc.linear1.weight",
+     "in_enc.linear2.bias",
+     "in_enc.linear2.weight",
+     "in_enc.norm1.bias",
+     "in_enc.norm1.weight"
+    ],
+    "only_b": [
+     "enc.0.linear1.bias",
+     "enc.0.linear1.weight",
+     "enc.0.linear2.bias",
+     "enc.0.linear2.weight",
+     "enc.0.norm1.bias",
+     "enc.0.norm1.weight"
+    ],
+    "n_param_a": 2501888,
+    "n_param_b": 2501888
+   },
+   {
+    "group": "S37 w3/w10 vs E1 mono_s6000",
+    "a": "37_ckpt_w10_s6000_seed5678.pt",
+    "b": "35_ckpt_mono_s6000_seed5678.pt",
+    "verdict": "结构不可比（键集/形状不同）⇒不同权重",
+    "only_a": [
+     "in_enc.linear1.bias",
+     "in_enc.linear1.weight",
+     "in_enc.linear2.bias",
+     "in_enc.linear2.weight",
+     "in_enc.norm1.bias",
+     "in_enc.norm1.weight"
+    ],
+    "only_b": [
+     "enc.0.linear1.bias",
+     "enc.0.linear1.weight",
+     "enc.0.linear2.bias",
+     "enc.0.linear2.weight",
+     "enc.0.norm1.bias",
+     "enc.0.norm1.weight"
+    ],
+    "n_param_a": 2501888,
+    "n_param_b": 2501888
+   },
+   {
+    "group": "E1 cards vs mono（同参数量、不同容器）",
+    "a": "35_ckpt_cards_s6000_seed1234.pt",
+    "b": "35_ckpt_mono_s6000_seed1234.pt",
+    "verdict": "结构不可比（键集/形状不同）⇒不同权重",
+    "only_a": [
+     "in_enc.linear1.bias",
+     "in_enc.linear1.weight",
+     "in_enc.linear2.bias",
+     "in_enc.linear2.weight",
+     "in_enc.norm1.bias",
+     "in_enc.norm1.weight"
+    ],
+    "only_b": [
+     "enc.0.linear1.bias",
+     "enc.0.linear1.weight",
+     "enc.0.linear2.bias",
+     "enc.0.linear2.weight",
+     "enc.0.norm1.bias",
+     "enc.0.norm1.weight"
+    ],
+    "n_param_a": 2501888,
+    "n_param_b": 2501888
+   },
+   {
+    "group": "E1 cards vs mono（同参数量、不同容器）",
+    "a": "35_ckpt_cards_s6000_seed5678.pt",
+    "b": "35_ckpt_mono_s6000_seed5678.pt",
+    "verdict": "结构不可比（键集/形状不同）⇒不同权重",
+    "only_a": [
+     "in_enc.linear1.bias",
+     "in_enc.linear1.weight",
+     "in_enc.linear2.bias",
+     "in_enc.linear2.weight",
+     "in_enc.norm1.bias",
+     "in_enc.norm1.weight"
+    ],
+    "only_b": [
+     "enc.0.linear1.bias",
+     "enc.0.linear1.weight",
+     "enc.0.linear2.bias",
+     "enc.0.linear2.weight",
+     "enc.0.norm1.bias",
+     "enc.0.norm1.weight"
+    ],
+    "n_param_a": 2501888,
+    "n_param_b": 2501888
+   }
+  ],
+  "missing_in_conclusions": {},
+  "ckpt_in_logs_not_on_disk": [],
+  "baseline_e4": {
+   "n_files": 83,
+   "n_unique": 64
+  }
+ },
+ "files": [
+  {
+   "file": "09c_ckpt_seed1234.pt",
+   "stage": "09c",
+   "variant": "",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W01",
+   "clash": []
+  },
+  {
+   "file": "09c_ckpt_seed5678.pt",
+   "stage": "09c",
+   "variant": "",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W02",
+   "clash": []
+  },
+  {
+   "file": "11_ckpt_seed1234.pt",
+   "stage": "11",
+   "variant": "",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W03",
+   "clash": []
+  },
+  {
+   "file": "11_ckpt_seed5678.pt",
+   "stage": "11",
+   "variant": "",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W04",
+   "clash": []
+  },
+  {
+   "file": "12_ckpt_seed1234.pt",
+   "stage": "12",
+   "variant": "",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W05",
+   "clash": []
+  },
+  {
+   "file": "12_ckpt_seed5678.pt",
+   "stage": "12",
+   "variant": "",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W06",
+   "clash": []
+  },
+  {
+   "file": "13_ckpt_d128_s10000_seed1234.pt",
+   "stage": "13",
+   "variant": "d128",
+   "seed": 1234,
+   "steps": 10000,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W07",
+   "clash": []
+  },
+  {
+   "file": "13_ckpt_d128_s10000_seed5678.pt",
+   "stage": "13",
+   "variant": "d128",
+   "seed": 5678,
+   "steps": 10000,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W08",
+   "clash": []
+  },
+  {
+   "file": "13_ckpt_d256_s3000_seed1234.pt",
+   "stage": "13",
+   "variant": "d256",
+   "seed": 1234,
+   "steps": 3000,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 5782016,
+   "weight_id": "W09",
+   "clash": []
+  },
+  {
+   "file": "13_ckpt_d256_s3000_seed5678.pt",
+   "stage": "13",
+   "variant": "d256",
+   "seed": 5678,
+   "steps": 3000,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 5782016,
+   "weight_id": "W10",
+   "clash": []
+  },
+  {
+   "file": "14_ckpt_add_1d_seed1234.pt",
+   "stage": "14",
+   "variant": "add_1d",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W11",
+   "clash": []
+  },
+  {
+   "file": "14_ckpt_add_1d_seed5678.pt",
+   "stage": "14",
+   "variant": "add_1d",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W12",
+   "clash": []
+  },
+  {
+   "file": "14_ckpt_add_2d_seed1234.pt",
+   "stage": "14",
+   "variant": "add_2d",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W13",
+   "clash": []
+  },
+  {
+   "file": "14_ckpt_add_3d_seed1234.pt",
+   "stage": "14",
+   "variant": "add_3d",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W14",
+   "clash": []
+  },
+  {
+   "file": "14_ckpt_add_3d_seed5678.pt",
+   "stage": "14",
+   "variant": "add_3d",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W15",
+   "clash": []
+  },
+  {
+   "file": "14_ckpt_mul_2d_seed1234.pt",
+   "stage": "14",
+   "variant": "mul_2d",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W16",
+   "clash": []
+  },
+  {
+   "file": "14_ckpt_sub_2d_seed1234.pt",
+   "stage": "14",
+   "variant": "sub_2d",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W17",
+   "clash": []
+  },
+  {
+   "file": "15_ckpt_add2d_k1_seed1234.pt",
+   "stage": "15",
+   "variant": "add2d_k1",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W13",
+   "clash": []
+  },
+  {
+   "file": "15_ckpt_add2d_k1_seed5678.pt",
+   "stage": "15",
+   "variant": "add2d_k1",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W18",
+   "clash": []
+  },
+  {
+   "file": "15_ckpt_add2d_k4_seed1234.pt",
+   "stage": "15",
+   "variant": "add2d_k4",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W19",
+   "clash": []
+  },
+  {
+   "file": "15_ckpt_add2d_k4_seed5678.pt",
+   "stage": "15",
+   "variant": "add2d_k4",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W20",
+   "clash": []
+  },
+  {
+   "file": "15_ckpt_add3d_always_k1_seed1234.pt",
+   "stage": "15",
+   "variant": "add3d_always_k1",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W21",
+   "clash": []
+  },
+  {
+   "file": "15_ckpt_add3d_always_k1_seed5678.pt",
+   "stage": "15",
+   "variant": "add3d_always_k1",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W22",
+   "clash": []
+  },
+  {
+   "file": "15_ckpt_add3d_always_k2_seed1234.pt",
+   "stage": "15",
+   "variant": "add3d_always_k2",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W23",
+   "clash": []
+  },
+  {
+   "file": "15_ckpt_add3d_always_k2_seed5678.pt",
+   "stage": "15",
+   "variant": "add3d_always_k2",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W24",
+   "clash": []
+  },
+  {
+   "file": "15_ckpt_add3d_always_k4_seed1234.pt",
+   "stage": "15",
+   "variant": "add3d_always_k4",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W25",
+   "clash": []
+  },
+  {
+   "file": "15_ckpt_add3d_always_k4_seed5678.pt",
+   "stage": "15",
+   "variant": "add3d_always_k4",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W26",
+   "clash": []
+  },
+  {
+   "file": "15_ckpt_add3d_always_k8_seed1234.pt",
+   "stage": "15",
+   "variant": "add3d_always_k8",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W27",
+   "clash": []
+  },
+  {
+   "file": "15_ckpt_add3d_always_k8_seed5678.pt",
+   "stage": "15",
+   "variant": "add3d_always_k8",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W28",
+   "clash": []
+  },
+  {
+   "file": "15_ckpt_add3d_k1_seed1234.pt",
+   "stage": "15",
+   "variant": "add3d_k1",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W14",
+   "clash": []
+  },
+  {
+   "file": "15_ckpt_add3d_k1_seed5678.pt",
+   "stage": "15",
+   "variant": "add3d_k1",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W15",
+   "clash": []
+  },
+  {
+   "file": "15_ckpt_add3d_k2_seed1234.pt",
+   "stage": "15",
+   "variant": "add3d_k2",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W29",
+   "clash": []
+  },
+  {
+   "file": "15_ckpt_add3d_k2_seed5678.pt",
+   "stage": "15",
+   "variant": "add3d_k2",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W30",
+   "clash": []
+  },
+  {
+   "file": "15_ckpt_add3d_k4_seed1234.pt",
+   "stage": "15",
+   "variant": "add3d_k4",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W31",
+   "clash": []
+  },
+  {
+   "file": "15_ckpt_add3d_k4_seed5678.pt",
+   "stage": "15",
+   "variant": "add3d_k4",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W32",
+   "clash": []
+  },
+  {
+   "file": "15_ckpt_add3d_k8_seed1234.pt",
+   "stage": "15",
+   "variant": "add3d_k8",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W33",
+   "clash": []
+  },
+  {
+   "file": "15_ckpt_add3d_k8_seed5678.pt",
+   "stage": "15",
+   "variant": "add3d_k8",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W34",
+   "clash": []
+  },
+  {
+   "file": "19_ckpt_add_1d_nores_seed1234.pt",
+   "stage": "19",
+   "variant": "add_1d_nores",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W11",
+   "clash": []
+  },
+  {
+   "file": "19_ckpt_add_1d_nores_seed5678.pt",
+   "stage": "19",
+   "variant": "add_1d_nores",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W12",
+   "clash": []
+  },
+  {
+   "file": "19_ckpt_add_1d_res_seed1234.pt",
+   "stage": "19",
+   "variant": "add_1d_res",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W35",
+   "clash": []
+  },
+  {
+   "file": "19_ckpt_add_1d_res_seed5678.pt",
+   "stage": "19",
+   "variant": "add_1d_res",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W36",
+   "clash": []
+  },
+  {
+   "file": "19_ckpt_add_2d_nores_seed1234.pt",
+   "stage": "19",
+   "variant": "add_2d_nores",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W13",
+   "clash": []
+  },
+  {
+   "file": "19_ckpt_add_2d_nores_seed5678.pt",
+   "stage": "19",
+   "variant": "add_2d_nores",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W18",
+   "clash": []
+  },
+  {
+   "file": "19_ckpt_add_2d_res_seed1234.pt",
+   "stage": "19",
+   "variant": "add_2d_res",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W37",
+   "clash": []
+  },
+  {
+   "file": "19_ckpt_add_2d_res_seed5678.pt",
+   "stage": "19",
+   "variant": "add_2d_res",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W38",
+   "clash": []
+  },
+  {
+   "file": "19_ckpt_add_3d_nores_seed1234.pt",
+   "stage": "19",
+   "variant": "add_3d_nores",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W14",
+   "clash": []
+  },
+  {
+   "file": "19_ckpt_add_3d_nores_seed5678.pt",
+   "stage": "19",
+   "variant": "add_3d_nores",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W15",
+   "clash": []
+  },
+  {
+   "file": "19_ckpt_add_3d_res_seed1234.pt",
+   "stage": "19",
+   "variant": "add_3d_res",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W21",
+   "clash": []
+  },
+  {
+   "file": "19_ckpt_add_3d_res_seed5678.pt",
+   "stage": "19",
+   "variant": "add_3d_res",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W22",
+   "clash": []
+  },
+  {
+   "file": "19_ckpt_mul_2d_nores_seed1234.pt",
+   "stage": "19",
+   "variant": "mul_2d_nores",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W16",
+   "clash": []
+  },
+  {
+   "file": "19_ckpt_mul_2d_nores_seed5678.pt",
+   "stage": "19",
+   "variant": "mul_2d_nores",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W39",
+   "clash": []
+  },
+  {
+   "file": "19_ckpt_mul_2d_res_seed1234.pt",
+   "stage": "19",
+   "variant": "mul_2d_res",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W40",
+   "clash": []
+  },
+  {
+   "file": "19_ckpt_mul_2d_res_seed5678.pt",
+   "stage": "19",
+   "variant": "mul_2d_res",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W41",
+   "clash": []
+  },
+  {
+   "file": "19_ckpt_sub_2d_nores_seed1234.pt",
+   "stage": "19",
+   "variant": "sub_2d_nores",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W17",
+   "clash": []
+  },
+  {
+   "file": "19_ckpt_sub_2d_nores_seed5678.pt",
+   "stage": "19",
+   "variant": "sub_2d_nores",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W42",
+   "clash": []
+  },
+  {
+   "file": "19_ckpt_sub_2d_res_seed1234.pt",
+   "stage": "19",
+   "variant": "sub_2d_res",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W43",
+   "clash": []
+  },
+  {
+   "file": "19_ckpt_sub_2d_res_seed5678.pt",
+   "stage": "19",
+   "variant": "sub_2d_res",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W44",
+   "clash": []
+  },
+  {
+   "file": "20_ckpt_add3d_nopos_seed1234.pt",
+   "stage": "20",
+   "variant": "add3d_nopos",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W21",
+   "clash": []
+  },
+  {
+   "file": "20_ckpt_add3d_nopos_seed5678.pt",
+   "stage": "20",
+   "variant": "add3d_nopos",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W22",
+   "clash": []
+  },
+  {
+   "file": "20_ckpt_add3d_pos_seed1234.pt",
+   "stage": "20",
+   "variant": "add3d_pos",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W45",
+   "clash": []
+  },
+  {
+   "file": "20_ckpt_add3d_pos_seed5678.pt",
+   "stage": "20",
+   "variant": "add3d_pos",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W46",
+   "clash": []
+  },
+  {
+   "file": "22_ckpt_add_3d_A_seed1234.pt",
+   "stage": "22",
+   "variant": "add_3d_A",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "card",
+    "emb",
+    "head",
+    "in_enc"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W21",
+   "clash": []
+  },
+  {
+   "file": "22_ckpt_add_3d_A_seed5678.pt",
+   "stage": "22",
+   "variant": "add_3d_A",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "card",
+    "emb",
+    "head",
+    "in_enc"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W22",
+   "clash": []
+  },
+  {
+   "file": "22_ckpt_add_3d_B_seed1234.pt",
+   "stage": "22",
+   "variant": "add_3d_B",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "card",
+    "emb",
+    "head",
+    "in_enc"
+   ],
+   "n_param": 2435584,
+   "weight_id": "W47",
+   "clash": []
+  },
+  {
+   "file": "22_ckpt_add_3d_B_seed5678.pt",
+   "stage": "22",
+   "variant": "add_3d_B",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "card",
+    "emb",
+    "head",
+    "in_enc"
+   ],
+   "n_param": 2435584,
+   "weight_id": "W48",
+   "clash": []
+  },
+  {
+   "file": "22_ckpt_add_3d_C_seed1234.pt",
+   "stage": "22",
+   "variant": "add_3d_C",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "card",
+    "emb",
+    "head",
+    "in_enc"
+   ],
+   "n_param": 2320896,
+   "weight_id": "W49",
+   "clash": []
+  },
+  {
+   "file": "22_ckpt_add_3d_C_seed5678.pt",
+   "stage": "22",
+   "variant": "add_3d_C",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "card",
+    "emb",
+    "head",
+    "in_enc"
+   ],
+   "n_param": 2320896,
+   "weight_id": "W50",
+   "clash": []
+  },
+  {
+   "file": "22_ckpt_add_3d_D_seed1234.pt",
+   "stage": "22",
+   "variant": "add_3d_D",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "card",
+    "emb",
+    "head",
+    "in_enc"
+   ],
+   "n_param": 2452096,
+   "weight_id": "W51",
+   "clash": []
+  },
+  {
+   "file": "22_ckpt_add_3d_D_seed5678.pt",
+   "stage": "22",
+   "variant": "add_3d_D",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "card",
+    "emb",
+    "head",
+    "in_enc"
+   ],
+   "n_param": 2452096,
+   "weight_id": "W52",
+   "clash": []
+  },
+  {
+   "file": "22_ckpt_add_3d_E_seed1234.pt",
+   "stage": "22",
+   "variant": "add_3d_E",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "card",
+    "emb",
+    "head",
+    "in_enc"
+   ],
+   "n_param": 2369920,
+   "weight_id": "W53",
+   "clash": []
+  },
+  {
+   "file": "22_ckpt_add_3d_E_seed5678.pt",
+   "stage": "22",
+   "variant": "add_3d_E",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "card",
+    "emb",
+    "head",
+    "in_enc"
+   ],
+   "n_param": 2369920,
+   "weight_id": "W54",
+   "clash": []
+  },
+  {
+   "file": "25_ckpt_alt_seed1234.pt",
+   "stage": "25",
+   "variant": "alt",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W55",
+   "clash": []
+  },
+  {
+   "file": "25_ckpt_alt_seed5678.pt",
+   "stage": "25",
+   "variant": "alt",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W56",
+   "clash": []
+  },
+  {
+   "file": "25_ckpt_anchor_seed1234.pt",
+   "stage": "25",
+   "variant": "anchor",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W57",
+   "clash": []
+  },
+  {
+   "file": "25_ckpt_anchor_seed5678.pt",
+   "stage": "25",
+   "variant": "anchor",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W58",
+   "clash": []
+  },
+  {
+   "file": "25_ckpt_e2e_seed1234.pt",
+   "stage": "25",
+   "variant": "e2e",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W21",
+   "clash": []
+  },
+  {
+   "file": "25_ckpt_e2e_seed5678.pt",
+   "stage": "25",
+   "variant": "e2e",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W22",
+   "clash": []
+  },
+  {
+   "file": "25_ckpt_randall_seed1234.pt",
+   "stage": "25",
+   "variant": "randall",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W59",
+   "clash": []
+  },
+  {
+   "file": "25_ckpt_randall_seed5678.pt",
+   "stage": "25",
+   "variant": "randall",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W60",
+   "clash": []
+  },
+  {
+   "file": "25_ckpt_randtgt_seed1234.pt",
+   "stage": "25",
+   "variant": "randtgt",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W61",
+   "clash": []
+  },
+  {
+   "file": "25_ckpt_randtgt_seed5678.pt",
+   "stage": "25",
+   "variant": "randtgt",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W62",
+   "clash": []
+  },
+  {
+   "file": "28_ckpt_e2e6000_seed1234.pt",
+   "stage": "28",
+   "variant": "e2e6000",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W63",
+   "clash": []
+  },
+  {
+   "file": "28_ckpt_e2e6000_seed5678.pt",
+   "stage": "28",
+   "variant": "e2e6000",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W64",
+   "clash": []
+  },
+  {
+   "file": "34_ckpt_e2e3000_seed1234.pt",
+   "stage": "34",
+   "variant": "e2e3000",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W21",
+   "clash": []
+  },
+  {
+   "file": "34_ckpt_e2e3000_seed5678.pt",
+   "stage": "34",
+   "variant": "e2e3000",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W22",
+   "clash": []
+  },
+  {
+   "file": "34_ckpt_frozen6000_seed1234.pt",
+   "stage": "34",
+   "variant": "frozen6000",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W57",
+   "clash": []
+  },
+  {
+   "file": "34_ckpt_frozen6000_seed5678.pt",
+   "stage": "34",
+   "variant": "frozen6000",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W58",
+   "clash": []
+  },
+  {
+   "file": "35_ckpt_cards_s3000_seed1234.pt",
+   "stage": "35",
+   "variant": "cards",
+   "seed": 1234,
+   "steps": 3000,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W65",
+   "clash": []
+  },
+  {
+   "file": "35_ckpt_cards_s3000_seed5678.pt",
+   "stage": "35",
+   "variant": "cards",
+   "seed": 5678,
+   "steps": 3000,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W66",
+   "clash": []
+  },
+  {
+   "file": "35_ckpt_cards_s6000_seed1234.pt",
+   "stage": "35",
+   "variant": "cards",
+   "seed": 1234,
+   "steps": 6000,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W67",
+   "clash": []
+  },
+  {
+   "file": "35_ckpt_cards_s6000_seed5678.pt",
+   "stage": "35",
+   "variant": "cards",
+   "seed": 5678,
+   "steps": 6000,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W68",
+   "clash": []
+  },
+  {
+   "file": "35_ckpt_mono_s3000_seed1234.pt",
+   "stage": "35",
+   "variant": "mono",
+   "seed": 1234,
+   "steps": 3000,
+   "prefixes": [
+    "emb",
+    "enc",
+    "head"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W69",
+   "clash": []
+  },
+  {
+   "file": "35_ckpt_mono_s3000_seed5678.pt",
+   "stage": "35",
+   "variant": "mono",
+   "seed": 5678,
+   "steps": 3000,
+   "prefixes": [
+    "emb",
+    "enc",
+    "head"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W70",
+   "clash": []
+  },
+  {
+   "file": "35_ckpt_mono_s6000_seed1234.pt",
+   "stage": "35",
+   "variant": "mono",
+   "seed": 1234,
+   "steps": 6000,
+   "prefixes": [
+    "emb",
+    "enc",
+    "head"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W71",
+   "clash": []
+  },
+  {
+   "file": "35_ckpt_mono_s6000_seed5678.pt",
+   "stage": "35",
+   "variant": "mono",
+   "seed": 5678,
+   "steps": 6000,
+   "prefixes": [
+    "emb",
+    "enc",
+    "head"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W72",
+   "clash": []
+  },
+  {
+   "file": "36_ckpt_A_s6000_seed1234.pt",
+   "stage": "36",
+   "variant": "A",
+   "seed": 1234,
+   "steps": 6000,
+   "prefixes": [
+    "card",
+    "emb",
+    "head",
+    "in_enc"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W63",
+   "clash": []
+  },
+  {
+   "file": "36_ckpt_A_s6000_seed5678.pt",
+   "stage": "36",
+   "variant": "A",
+   "seed": 5678,
+   "steps": 6000,
+   "prefixes": [
+    "card",
+    "emb",
+    "head",
+    "in_enc"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W64",
+   "clash": []
+  },
+  {
+   "file": "36_ckpt_B_s6000_seed1234.pt",
+   "stage": "36",
+   "variant": "B",
+   "seed": 1234,
+   "steps": 6000,
+   "prefixes": [
+    "card",
+    "emb",
+    "head",
+    "in_enc"
+   ],
+   "n_param": 2435584,
+   "weight_id": "W73",
+   "clash": []
+  },
+  {
+   "file": "36_ckpt_B_s6000_seed5678.pt",
+   "stage": "36",
+   "variant": "B",
+   "seed": 5678,
+   "steps": 6000,
+   "prefixes": [
+    "card",
+    "emb",
+    "head",
+    "in_enc"
+   ],
+   "n_param": 2435584,
+   "weight_id": "W74",
+   "clash": []
+  },
+  {
+   "file": "36_ckpt_C_s6000_seed1234.pt",
+   "stage": "36",
+   "variant": "C",
+   "seed": 1234,
+   "steps": 6000,
+   "prefixes": [
+    "card",
+    "emb",
+    "head",
+    "in_enc"
+   ],
+   "n_param": 2320896,
+   "weight_id": "W75",
+   "clash": []
+  },
+  {
+   "file": "36_ckpt_C_s6000_seed5678.pt",
+   "stage": "36",
+   "variant": "C",
+   "seed": 5678,
+   "steps": 6000,
+   "prefixes": [
+    "card",
+    "emb",
+    "head",
+    "in_enc"
+   ],
+   "n_param": 2320896,
+   "weight_id": "W76",
+   "clash": []
+  },
+  {
+   "file": "36_ckpt_D_s6000_seed1234.pt",
+   "stage": "36",
+   "variant": "D",
+   "seed": 1234,
+   "steps": 6000,
+   "prefixes": [
+    "card",
+    "emb",
+    "head",
+    "in_enc"
+   ],
+   "n_param": 2452096,
+   "weight_id": "W77",
+   "clash": []
+  },
+  {
+   "file": "36_ckpt_D_s6000_seed5678.pt",
+   "stage": "36",
+   "variant": "D",
+   "seed": 5678,
+   "steps": 6000,
+   "prefixes": [
+    "card",
+    "emb",
+    "head",
+    "in_enc"
+   ],
+   "n_param": 2452096,
+   "weight_id": "W78",
+   "clash": []
+  },
+  {
+   "file": "36_ckpt_E_s6000_seed1234.pt",
+   "stage": "36",
+   "variant": "E",
+   "seed": 1234,
+   "steps": 6000,
+   "prefixes": [
+    "card",
+    "emb",
+    "head",
+    "in_enc"
+   ],
+   "n_param": 2369920,
+   "weight_id": "W79",
+   "clash": []
+  },
+  {
+   "file": "36_ckpt_E_s6000_seed5678.pt",
+   "stage": "36",
+   "variant": "E",
+   "seed": 5678,
+   "steps": 6000,
+   "prefixes": [
+    "card",
+    "emb",
+    "head",
+    "in_enc"
+   ],
+   "n_param": 2369920,
+   "weight_id": "W80",
+   "clash": []
+  },
+  {
+   "file": "36_ckpt_nores_s6000_seed1234.pt",
+   "stage": "36",
+   "variant": "nores",
+   "seed": 1234,
+   "steps": 6000,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W81",
+   "clash": []
+  },
+  {
+   "file": "36_ckpt_nores_s6000_seed5678.pt",
+   "stage": "36",
+   "variant": "nores",
+   "seed": 5678,
+   "steps": 6000,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W82",
+   "clash": []
+  },
+  {
+   "file": "36_ckpt_res_s6000_seed1234.pt",
+   "stage": "36",
+   "variant": "res",
+   "seed": 1234,
+   "steps": 6000,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W63",
+   "clash": []
+  },
+  {
+   "file": "36_ckpt_res_s6000_seed5678.pt",
+   "stage": "36",
+   "variant": "res",
+   "seed": 5678,
+   "steps": 6000,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W64",
+   "clash": []
+  },
+  {
+   "file": "37_ckpt_w10_s6000_seed1234.pt",
+   "stage": "37",
+   "variant": "w10",
+   "seed": 1234,
+   "steps": 6000,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W83",
+   "clash": []
+  },
+  {
+   "file": "37_ckpt_w10_s6000_seed5678.pt",
+   "stage": "37",
+   "variant": "w10",
+   "seed": 5678,
+   "steps": 6000,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W84",
+   "clash": []
+  },
+  {
+   "file": "37_ckpt_w1_s6000_seed1234.pt",
+   "stage": "37",
+   "variant": "w1",
+   "seed": 1234,
+   "steps": 6000,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W63",
+   "clash": []
+  },
+  {
+   "file": "37_ckpt_w1_s6000_seed5678.pt",
+   "stage": "37",
+   "variant": "w1",
+   "seed": 5678,
+   "steps": 6000,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W64",
+   "clash": []
+  },
+  {
+   "file": "37_ckpt_w3_s6000_seed1234.pt",
+   "stage": "37",
+   "variant": "w3",
+   "seed": 1234,
+   "steps": 6000,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W85",
+   "clash": []
+  },
+  {
+   "file": "37_ckpt_w3_s6000_seed5678.pt",
+   "stage": "37",
+   "variant": "w3",
+   "seed": 5678,
+   "steps": 6000,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W86",
+   "clash": []
+  }
+ ],
+ "close_pairs": []
+}

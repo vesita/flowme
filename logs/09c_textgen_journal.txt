@@ -1,0 +1,170 @@
+Started [systemd-run] /usr/bin/uv run --no-sync python stages/09_textgen_gsm8k.py.
+warning: Found both a `uv.toml` file and a `[tool.uv]` section in an adjacent `pyproject.toml`. The following fields from `[tool.uv]` will be ignored in favor of the `uv.toml` file:
+- index
+/opt/amdgpu/share/libdrm/amdgpu.ids: No such file or directory
+device: cuda AMD Radeon Graphics
+[DATA] blocks=7396 parsed=7394 bad=2 records=7394 | split 9:1 train=6655 test=739 (seed42) | 任一截断=7269/7394 (98.3%) | dropped=0
+[TRUNC] ★保尾截断(MIN_P=48 prompt保尾=24) 截prompt=7269/7394 (98.3%) | 截target=5221/7394 (70.6%) | 两者都截=5221/7394 (70.6%) | 丢弃=0
+[SPAN] span_mismatch=0 nonadditive=0 | test有gold(EM分母)=739
+[TOK] WordLevel V=8192 PAD=131 EOS=128 | import /home/vesita/coding/my/nanoSeek/training/dialogue_stream.py
+[BUCKET] test=739 | 桶A(目标未截) n=229 | 桶B(目标被截) n=510 | 桶A中prompt仍被截 n=213 | 两者都未截 n=16 ⇒ 区分度判据 桶A n>=30 → 满足
+[GATE A] step20 grad is not None 计数 {'输入卡': 13, '思维卡': 12, '输出卡': 2} / 参数总数 {'输入卡': 13, '思维卡': 12, '输出卡': 2} => PASS 全>0
+  [train] seed=1234 identity=False step=500/3000 loss=1.7990 elapsed=108s
+  [train] seed=1234 identity=False step=1000/3000 loss=1.4708 elapsed=216s
+  [train] seed=1234 identity=False step=1500/3000 loss=1.1454 elapsed=324s
+  [train] seed=1234 identity=False step=2000/3000 loss=1.0518 elapsed=431s
+  [train] seed=1234 identity=False step=2500/3000 loss=0.9701 elapsed=539s
+  [train] seed=1234 identity=False step=3000/3000 loss=0.9766 elapsed=647s
+[GATE C] ①复制prompt尾部: 配对CE=15.7842±0.0084 nats  EM=0.00%±0.00 (n=739)
+[GATE C] ②最常见####答案: 配对CE=9.2608±0.0024 nats  EM=1.89%±0.50 (n=739)
+[GATE C] ③最常出现token: 配对CE=13.4932±0.0179 nats  EM=0.00%±0.00 (n=739)
+[MAIN] 完整闭环 seed=1234: 配对CE=0.8688±0.0083  EM=0.00%±0.00 (n=739)
+[EM] seed=1234 完整闭环 桶A(目标未截): n=229 严格EM=0.00%  归一化EM=0.00%
+[EM] seed=1234 完整闭环 桶B(目标被截): n=510 严格EM=0.00%  归一化EM=0.00%
+[EM] seed=1234 完整闭环 全量: n=739 严格EM=0.00%  归一化EM=0.00%
+[EM] seed=1234 完整闭环 附·两者都未截(参考,预期n<30): n=16 严格EM=0.00%  归一化EM=0.00%
+[GEN] seed=1234 自由生成 20 条（贪心，优先桶A）
+[GEN] [0]  friends in April, and then she sold ther in April and May?⏎ → 【tt  p      ttttsspsssspppppppppppppp详hottrtt    hho   o  p ssssseeeeeeeee细 o     ttt eessssfssr+oooppsd | gold=72<eos> | 抽取=None | 错
+[GEN] [1] 用户：请解答这道数学应用题并给出详细的思考步骤：Mr0 students in Grade 5?⏎ → 【r                 r            rrr        mmdmmmmtttttt rrttrrsrrtttrrrt   rrrrttrrrrsrrrrrrrrrtrrrrrr详 | gold=36<eos> | 抽取=None | 错
+[GEN] [2] orized six times as many digits of pigits did Sam memorize?⏎ → 【详细解题思路与推理】：⏎Mina memorized six morized six morized six morized six morized six morized six moried⏎###  | gold=10<eos> | 抽取=None | 错
+[GEN] [3] ce that many the year before. How manin the last two years?⏎ → 【ttttsss     mmtttssttm详hooo   ttt  aahhs   se细 nolsyshwotmmmt  8s*oc解+dwd       pehhtb6t2 o题1 oi======= | gold=258<eos> | 抽取=None | 错
+[GEN] [4]  will it take him to write 3 books that are 400 pages each?⏎ → 【mmmmmm【【【mmmmmm   mmmmmmimmmmm详 mmmmm详详详mmmmmmt**   mmmnemmmm细m  mmm细细细mmmmmmh..$$1mmmmmmmmm解m==mmm解解解m | gold=60<eos> | 抽取=None | 错
+[GEN] [5] ：Ellie has found an old bicycle in a total to fix the bike?⏎ → 【mm   t   mttmmmmmmtttmmmtttttmmmmmmmmmmmmmlttttmttttttttttmmmmmtttrr详emb* htf  hheem   hhommmhhooommmmm | gold=25<eos> | 抽取=None | 错
+[GEN] [6] 细的思考步骤：Paul went to a shop to buy somey did Paul have left?⏎ → 【mmmmmmmtttttttttttmmmmttttttmmsttttttttttttttffmmttttttttsstttmsmmmtttsttr详emmmmmmhhoooooooooebbmthoooo | gold=6<eos> | 抽取=None | 错
+[GEN] [7] n twice as many as Bob. If Bob has 10mmates does John have?⏎ → 【mm   mmm       sssss     smmsssssss详aah*    **     hooostt   haa/    ss n  p22    1122 aumm  a===assh2* | gold=25<eos> | 抽取=None | 错
+[GEN] [8] Kris. If Kris is 24 years old now, ho Herbert be next year?⏎ → 【rrr      t【【【tttsss  ttrrrrtttssrr详teibb    h详详详hho   ==hhaaii r   ei  rolett+ o细细细aooss   ⏎⏎nnrniett<x | gold=15<eos> | 抽取=None | 错
+[GEN] [9] 出详细的思考步骤：There are 12 crates that eacnd the boxes in total?⏎ → 【 mmms  m       sssmmmmssssttsssttrssstrttttttrr  mrrttsstrrsrrrrrrrrrrrtssrr详timm t*am*     hooe        | gold=2280<eos> | 抽取=None | 错
+[GEN] [10] 8 new books. Each book costs $5. If Tes he need to save up?⏎ → 【ttttttstttsttttttmmtttttstt详hooooo ooo ooooooeehhooo oo细 ookkksfkksfkkkkk    oossfo解+oosss os  ossssso* | gold=27<eos> | 抽取=None | 错
+[GEN] [11]  buys 60 packs of baseball cards. Eacs does he need to buy?⏎ → 【            ttt          tt    t详t           hoott        hot   h ot          eul a++      ou bb*obf b= | gold=42<eos> | 抽取=None | 错
+[GEN] [12] had fifty pencils, and he wanted to s pencils did Ken keep?⏎ → 【tttttttttm【【【ttssssstsssssssstttttsttttttttttsssttttsssttttsstt详hooooooooe详详详th    ss   sssssssooo sooo | gold=20<eos> | 抽取=None | 错
+[GEN] [13] ound and he buys 20 pounds.  How muchhe pay for the steaks?⏎ → 【详细解题思路与推理】：⏎He pays 20*2=$<<20*2=20>>20⏎So he pay $20+$20=$<<20+20=10>>10 pounds of the buys.⏎#### 10 | gold=150<eos> | 抽取=10 | 错
+[GEN] [14]  eggs.  Eggs cost $.50 each.  How much did he pay for eggs?⏎ → 【       sssssmmmmm   m    ggs    sss   gmmmmmggmss g详=      hoosseammm**  *   gs ts  oomss g          sg | gold=18<eos> | 抽取=None | 错
+[GEN] [15] uxury bag costs $3000. A reseller wanould she sell the bag?⏎ → 【   mmmmmmmmm【mmmmmmmfffsfffmmmmm  mmmmffsmsssssss   msmm  mssss 详s  o.mmmmmmm详mmmmmmm re ffrii mmmmmmmm | gold=3450<eos> | 抽取=None | 错
+[GEN] [16] se is buying more dog food. She buys id Elise already have?⏎ → 【mmmmmmmmmmmmmmmmmmmmtttsmmmmmmmmmmmmmmmmssssmsssssmmssmmmmmssssr详o mmmmmmmmmmmmmmmmmmmho emmmmmmmmmmmmm | gold=15<eos> | 抽取=None | 错
+[GEN] [17] 出详细的思考步骤：Randy had $3,000. Smith gave dollars, of the rest?⏎ → 【mmm    t      tttdtmmmmttdtsssttttssssmmttt ttf  mmttttttttstttrmmmmmmmtttrr详emm**  ht     hhoeoee  hhe | gold=2000<eos> | 抽取=None | 错
+[GEN] [18] 用户：请解答这道数学应用题并给出详细的思考步骤：James pany cars can be parked?⏎ → 【   tts   ttt             rr        tttttttttttttttttttttttttttttttttsstttttttttsstrrrsttttttsrrr详p  hh  | gold=16000<eos> | 抽取=None | 错
+[GEN] [19] nt council sells scented erasers in t money will they make?⏎ → 【tttttt   tt  tttttttttttttt    mtttttttttstttttttttttttttr详hoooootmmhottho   ooooooooottttehhooooooo oo | gold=864<eos> | 抽取=None | 错
+[CKPT] saved /home/vesita/coding/my/flowme/logs/09c_ckpt_seed1234.pt
+  [train] seed=1234 identity=True step=500/3000 loss=2.1103 elapsed=102s
+  [train] seed=1234 identity=True step=1000/3000 loss=1.7967 elapsed=204s
+  [train] seed=1234 identity=True step=1500/3000 loss=1.6003 elapsed=305s
+  [train] seed=1234 identity=True step=2000/3000 loss=1.5109 elapsed=407s
+  [train] seed=1234 identity=True step=2500/3000 loss=1.4340 elapsed=509s
+  [train] seed=1234 identity=True step=3000/3000 loss=1.4198 elapsed=611s
+[GATE B] 恒等中介 CE=1.3176±0.0087 EM=0.00%±0.00 | 完整闭环 CE=0.8688 EM=0.00% | 配对ΔCE(恒等-完整)=+0.4488±0.0060 ⇒ PASS 完整显著更优
+[GATE B] 配对ΔEM(恒等-完整)=+0.00±0.00pp (n=739)
+[EM] seed=1234 恒等中介 桶A(目标未截): n=229 严格EM=0.00%  归一化EM=0.00%
+[EM] seed=1234 恒等中介 桶B(目标被截): n=510 严格EM=0.00%  归一化EM=0.00%
+[EM] seed=1234 恒等中介 全量: n=739 严格EM=0.00%  归一化EM=0.00%
+[EM] seed=1234 恒等中介 附·两者都未截(参考,预期n<30): n=16 严格EM=0.00%  归一化EM=0.00%
+  [train] seed=5678 identity=False step=500/3000 loss=1.9406 elapsed=109s
+  [train] seed=5678 identity=False step=1000/3000 loss=1.4647 elapsed=218s
+  [train] seed=5678 identity=False step=1500/3000 loss=1.1872 elapsed=327s
+  [train] seed=5678 identity=False step=2000/3000 loss=1.0744 elapsed=436s
+  [train] seed=5678 identity=False step=2500/3000 loss=0.9861 elapsed=545s
+  [train] seed=5678 identity=False step=3000/3000 loss=0.9911 elapsed=654s
+[CKPT] saved /home/vesita/coding/my/flowme/logs/09c_ckpt_seed5678.pt
+[MAIN] 完整闭环 seed=5678: 配对CE=0.8791±0.0084  EM=0.00%±0.00 (n=739)
+[EM] seed=5678 完整闭环 桶A(目标未截): n=229 严格EM=0.00%  归一化EM=0.00%
+[EM] seed=5678 完整闭环 桶B(目标被截): n=510 严格EM=0.00%  归一化EM=0.00%
+[EM] seed=5678 完整闭环 全量: n=739 严格EM=0.00%  归一化EM=0.00%
+[EM] seed=5678 完整闭环 附·两者都未截(参考,预期n<30): n=16 严格EM=0.00%  归一化EM=0.00%
+[GEN] seed=5678 自由生成 20 条（贪心，优先桶A）
+[GEN] [0]  friends in April, and then she sold ther in April and May?⏎ → 【        mm      mm   mmmm     mmmmmc详4====== oommmm    mmm     mmmm              <fk    tmmm   mmmmm    | gold=72<eos> | 抽取=None | 错
+[GEN] [1] 用户：请解答这道数学应用题并给出详细的思考步骤：Mr0 students in Grade 5?⏎ → 【  ⏎⏎⏎   h      ⏎⏎                     h            h   hhhh       ttm   ttmmm   mcmtttcm⏎⏎mtummmt | gold=36<eos> | 抽取=None | 错
+[GEN] [2] orized six times as many digits of pigits did Sam memorize?⏎ → 【详细解题思路与推理】：⏎The six memorized six memorized six memorized six memorized six memorized six memorized.⏎## | gold=10<eos> | 抽取=None | 错
+[GEN] [3] ce that many the year before. How manin the last two years?⏎ → 【       hor         ccc详888====au a88888   oooa 88<<<<rs1 8⏎⏎⏎⏎/ggflllt8888888 8/888TT8eeeeee 88//////82 | gold=258<eos> | 抽取=None | 错
+[GEN] [4]  will it take him to write 3 books that are 400 pages each?⏎ → 【 ssss   ssss    ⏎⏎     sssssss详2    222ooo 2222SShhs  phhs   细0*p  0  rkkw2     ee ssaaa sss解.2h== ==ei | gold=60<eos> | 抽取=None | 错
+[GEN] [5] ：Ellie has found an old bicycle in a total to fix the bike?⏎ → 【                                                                    详=======                            | gold=25<eos> | 抽取=None | 错
+[GEN] [6] 细的思考步骤：Paul went to a shop to buy somey did Paul have left?⏎ → 【  r                   ss ss ss  s        fffr ffffffffffmffff⏎⏎hffffffffff详==ehss===   =         hoooos | gold=6<eos> | 抽取=None | 错
+[GEN] [7] n twice as many as Bob. If Bob has 10mmates does John have?⏎ → 【                   o           mmmm详1111               ntt         ooaao    mmm            ehhw         | gold=25<eos> | 抽取=None | 错
+[GEN] [8] Kris. If Kris is 24 years old now, ho Herbert be next year?⏎ → 【       h     hhh  h rrr        hhh详111    ohh==1oo hhaheiitrrrrrrrrrr细   yym l    1hlhi s rrsseee   eii | gold=15<eos> | 抽取=None | 错
+[GEN] [9] 出详细的思考步骤：There are 12 crates that eacnd the boxes in total?⏎ → 【aaas aaaaa           a    aa     a                      ttt c s⏎      ttcccc详llte1sssssttttd       tt   | gold=2280<eos> | 抽取=None | 错
+[GEN] [10] 8 new books. Each book costs $5. If Tes he need to save up?⏎ → 【         s                 详bbb      a5555             细oooobb   n ..5//m          解okkk obb$eb555  o= | gold=27<eos> | 抽取=None | 错
+[GEN] [11]  buys 60 packs of baseball cards. Eacs does he need to buy?⏎ → 【                cc    ccc   cccc详1b1====         aaccccaoocccaoooa  a<<  <<cccccc   rroorrolloroclttt < | gold=42<eos> | 抽取=None | 错
+[GEN] [12] had fifty pencils, and he wanted to s pencils did Ken keep?⏎ → 【                              mmm  mmm   mmmmmm  s⏎      mmmmmm详==== ==                       ommmm   m | gold=20<eos> | 抽取=None | 错
+[GEN] [13] ound and he buys 20 pounds.  How muchhe pay for the steaks?⏎ → 【详细解题思路与推理】：⏎The price one free pounds to find the price is $15+$15+$15+$15+$15+$15+$15+$15+$15⏎#### 15 | gold=150<eos> | 抽取=15 | 错
+[GEN] [14]  eggs.  Eggs cost $.50 each.  How much did he pay for eggs?⏎ → 【                                               mmm 详==                                             u  m | gold=18<eos> | 抽取=None | 错
+[GEN] [15] uxury bag costs $3000. A reseller wanould she sell the bag?⏎ → 【                                  rrr    rr     rrrrr       mmrr详ccc===                            eeer | gold=3450<eos> | 抽取=None | 错
+[GEN] [16] se is buying more dog food. She buys id Elise already have?⏎ → 【                                                   mm      mmmm 详fff====                                | gold=15<eos> | 抽取=None | 错
+[GEN] [17] 出详细的思考步骤：Randy had $3,000. Smith gave dollars, of the rest?⏎ → 【  arr                                        aa mmm    mmaaaammmaa mm mmmmmm详d=vee3e3333333             | gold=2000<eos> | 抽取=None | 错
+[GEN] [18] 用户：请解答这道数学应用题并给出详细的思考步骤：James pany cars can be parked?⏎ → 【   h                                                 h               mm         c      mmm tmmmm详===ahh | gold=16000<eos> | 抽取=None | 错
+[GEN] [19] nt council sells scented erasers in t money will they make?⏎ → 【         ss   ss            r                 l         m 详=======  ccsssccssss        arrt             | gold=864<eos> | 抽取=None | 错
+[EXTRACT] 抽取方式计数 {'取不到': 2159, '####': 58}
+[CRIT] 对比地板：CE地板=②最常见####答案 (9.2608)  EM地板=②最常见####答案 (1.89%)
+[CRIT] seed=1234: ΔCE(闭环-地板)=-8.3920±0.0095 显著低 | ΔEM=-1.89±0.50pp 不显著 (同号要求两 seed 均满足)
+[CRIT] seed=5678: ΔCE(闭环-地板)=-8.3817±0.0096 显著低 | ΔEM=-1.89±0.50pp 不显著 (同号要求两 seed 均满足)
+[VERDICT] FAIL 主判据不过 ⇒ 如实报（最可能原因：数据少/步数不够/d=128 太小）
+[META] steps=3000 batch=32 lr=0.001 d=128 ff=512 | seed1墙钟=647s seed2墙钟=654s | 总墙钟=34.6min 任一截断=98.3%
+[DONE] exit=0
+s09c-textgen.service: Consumed 1h 14min 45.684s CPU time over 34min 40.415s wall clock time, 1.4G memory peak.
+
+=== S09c eval-only（EM 口径修复后：剥 <eos> 哨兵 + 归一化 + 分桶） ===
+device: cuda AMD Radeon Graphics
+[DATA] blocks=7396 parsed=7394 bad=2 records=7394 | split 9:1 train=6655 test=739 (seed42) | 任一截断=7269/7394 (98.3%) | dropped=0
+[TRUNC] ★保尾截断(MIN_P=48 prompt保尾=24) 截prompt=7269/7394 (98.3%) | 截target=5221/7394 (70.6%) | 两者都截=5221/7394 (70.6%) | 丢弃=0
+[SPAN] span_mismatch=0 nonadditive=0 | test有gold(EM分母)=739
+[TOK] WordLevel V=8192 PAD=131 EOS=128 | import /home/vesita/coding/my/nanoSeek/training/dialogue_stream.py
+[BUCKET] test=739 | 桶A(目标未截) n=229 | 桶B(目标被截) n=510 | 桶A中prompt仍被截 n=213 | 两者都未截 n=16 ⇒ 区分度判据 桶A n>=30 → 满足
+[EVAL-ONLY] 只做评估：载入 logs/09c_ckpt_seed*.pt，不训练任何东西
+[GATE C] ①复制prompt尾部: 配对CE=15.7842±0.0084 nats  EM=0.00%±0.00 (n=739)
+[GATE C] ②最常见####答案: 配对CE=9.2608±0.0024 nats  EM=1.89%±0.50 (n=739)
+[GATE C] ③最常出现token: 配对CE=13.4932±0.0179 nats  EM=0.00%±0.00 (n=739)
+[EVAL-ONLY] loaded /home/vesita/coding/my/flowme/logs/09c_ckpt_seed1234.pt
+[MAIN] 完整闭环 seed=1234: 配对CE=0.8688±0.0083  EM=0.14%±0.14 (n=739)
+[EM] seed=1234 完整闭环 桶A(目标未截): n=229 严格EM=0.44%  归一化EM=0.44%
+[EM] seed=1234 完整闭环 桶B(目标被截): n=510 严格EM=0.00%  归一化EM=0.00%
+[EM] seed=1234 完整闭环 全量: n=739 严格EM=0.14%  归一化EM=0.14%
+[EM] seed=1234 完整闭环 附·两者都未截(参考,预期n<30): n=16 严格EM=0.00%  归一化EM=0.00%
+[GEN] seed=1234 自由生成 20 条（贪心，优先桶A）
+[GEN] [0]  friends in April, and then she sold ther in April and May?⏎ → 【tt  p      ttttsspsssspppppppppppppp详hottrtt    hho   o  p ssssseeeeeeeee细 o     ttt eessssfssr+oooppsd | gold=72 | 抽取=None | 错
+[GEN] [1] 用户：请解答这道数学应用题并给出详细的思考步骤：Mr0 students in Grade 5?⏎ → 【r                 r            rrr        mmdmmmmtttttt rrttrrsrrtttrrrt   rrrrttrrrrsrrrrrrrrrtrrrrrr详 | gold=36 | 抽取=None | 错
+[GEN] [2] orized six times as many digits of pigits did Sam memorize?⏎ → 【详细解题思路与推理】：⏎Mina memorized six morized six morized six morized six morized six morized six moried⏎###  | gold=10 | 抽取=None | 错
+[GEN] [3] ce that many the year before. How manin the last two years?⏎ → 【ttttsss     mmtttssttm详hooo   ttt  aahhs   se细 nolsyshwotmmmt  8s*oc解+dwd       pehhtb6t2 o题1 oi======= | gold=258 | 抽取=None | 错
+[GEN] [4]  will it take him to write 3 books that are 400 pages each?⏎ → 【mmmmmm【【【mmmmmm   mmmmmmimmmmm详 mmmmm详详详mmmmmmt**   mmmnemmmm细m  mmm细细细mmmmmmh..$$1mmmmmmmmm解m==mmm解解解m | gold=60 | 抽取=None | 错
+[GEN] [5] ：Ellie has found an old bicycle in a total to fix the bike?⏎ → 【mm   t   mttmmmmmmtttmmmtttttmmmmmmmmmmmmmlttttmttttttttttmmmmmtttrr详emb* htf  hheem   hhommmhhooommmmm | gold=25 | 抽取=None | 错
+[GEN] [6] 细的思考步骤：Paul went to a shop to buy somey did Paul have left?⏎ → 【mmmmmmmtttttttttttmmmmttttttmmsttttttttttttttffmmttttttttsstttmsmmmtttsttr详emmmmmmhhoooooooooebbmthoooo | gold=6 | 抽取=None | 错
+[GEN] [7] n twice as many as Bob. If Bob has 10mmates does John have?⏎ → 【mm   mmm       sssss     smmsssssss详aah*    **     hooostt   haa/    ss n  p22    1122 aumm  a===assh2* | gold=25 | 抽取=None | 错
+[GEN] [8] Kris. If Kris is 24 years old now, ho Herbert be next year?⏎ → 【rrr      t【【【tttsss  ttrrrrtttssrr详teibb    h详详详hho   ==hhaaii r   ei  rolett+ o细细细aooss   ⏎⏎nnrniett<x | gold=15 | 抽取=None | 错
+[GEN] [9] 出详细的思考步骤：There are 12 crates that eacnd the boxes in total?⏎ → 【 mmms  m       sssmmmmssssttsssttrssstrttttttrr  mrrttsstrrsrrrrrrrrrrrtssrr详timm t*am*     hooe        | gold=2280 | 抽取=None | 错
+[GEN] [10] 8 new books. Each book costs $5. If Tes he need to save up?⏎ → 【ttttttstttsttttttmmtttttstt详hooooo ooo ooooooeehhooo oo细 ookkksfkksfkkkkk    oossfo解+oosss os  ossssso* | gold=27 | 抽取=None | 错
+[GEN] [11]  buys 60 packs of baseball cards. Eacs does he need to buy?⏎ → 【            ttt          tt    t详t           hoott        hot   h ot          eul a++      ou bb*obf b= | gold=42 | 抽取=None | 错
+[GEN] [12] had fifty pencils, and he wanted to s pencils did Ken keep?⏎ → 【tttttttttm【【【ttssssstsssssssstttttsttttttttttsssttttsssttttsstt详hooooooooe详详详th    ss   sssssssooo sooo | gold=20 | 抽取=None | 错
+[GEN] [13] ound and he buys 20 pounds.  How muchhe pay for the steaks?⏎ → 【详细解题思路与推理】：⏎He pays 20*2=$<<20*2=20>>20⏎So he pay $20+$20=$<<20+20=10>>10 pounds of the buys.⏎#### 10 | gold=150 | 抽取=10 | 错
+[GEN] [14]  eggs.  Eggs cost $.50 each.  How much did he pay for eggs?⏎ → 【       sssssmmmmm   m    ggs    sss   gmmmmmggmss g详=      hoosseammm**  *   gs ts  oomss g          sg | gold=18 | 抽取=None | 错
+[GEN] [15] uxury bag costs $3000. A reseller wanould she sell the bag?⏎ → 【   mmmmmmmmm【mmmmmmmfffsfffmmmmm  mmmmffsmsssssss   msmm  mssss 详s  o.mmmmmmm详mmmmmmm re ffrii mmmmmmmm | gold=3450 | 抽取=None | 错
+[GEN] [16] se is buying more dog food. She buys id Elise already have?⏎ → 【mmmmmmmmmmmmmmmmmmmmtttsmmmmmmmmmmmmmmmmssssmsssssmmssmmmmmssssr详o mmmmmmmmmmmmmmmmmmmho emmmmmmmmmmmmm | gold=15 | 抽取=None | 错
+[GEN] [17] 出详细的思考步骤：Randy had $3,000. Smith gave dollars, of the rest?⏎ → 【mmm    t      tttdtmmmmttdtsssttttssssmmttt ttf  mmttttttttstttrmmmmmmmtttrr详emm**  ht     hhoeoee  hhe | gold=2000 | 抽取=None | 错
+[GEN] [18] 用户：请解答这道数学应用题并给出详细的思考步骤：James pany cars can be parked?⏎ → 【   tts   ttt             rr        tttttttttttttttttttttttttttttttttsstttttttttsstrrrsttttttsrrr详p  hh  | gold=16000 | 抽取=None | 错
+[GEN] [19] nt council sells scented erasers in t money will they make?⏎ → 【tttttt   tt  tttttttttttttt    mtttttttttstttttttttttttttr详hoooootmmhottho   ooooooooottttehhooooooo oo | gold=864 | 抽取=None | 错
+[EVAL-ONLY] loaded /home/vesita/coding/my/flowme/logs/09c_ckpt_seed5678.pt
+[MAIN] 完整闭环 seed=5678: 配对CE=0.8791±0.0084  EM=0.00%±0.00 (n=739)
+[EM] seed=5678 完整闭环 桶A(目标未截): n=229 严格EM=0.00%  归一化EM=0.00%
+[EM] seed=5678 完整闭环 桶B(目标被截): n=510 严格EM=0.00%  归一化EM=0.00%
+[EM] seed=5678 完整闭环 全量: n=739 严格EM=0.00%  归一化EM=0.00%
+[EM] seed=5678 完整闭环 附·两者都未截(参考,预期n<30): n=16 严格EM=0.00%  归一化EM=0.00%
+[GEN] seed=5678 自由生成 20 条（贪心，优先桶A）
+[GEN] [0]  friends in April, and then she sold ther in April and May?⏎ → 【        mm      mm   mmmm     mmmmmc详4====== oommmm    mmm     mmmm              <fk    tmmm   mmmmm    | gold=72 | 抽取=None | 错
+[GEN] [1] 用户：请解答这道数学应用题并给出详细的思考步骤：Mr0 students in Grade 5?⏎ → 【  ⏎⏎⏎   h      ⏎⏎                     h            h   hhhh       ttm   ttmmm   mcmtttcm⏎⏎mtummmt | gold=36 | 抽取=None | 错
+[GEN] [2] orized six times as many digits of pigits did Sam memorize?⏎ → 【详细解题思路与推理】：⏎The six memorized six memorized six memorized six memorized six memorized six memorized.⏎## | gold=10 | 抽取=None | 错
+[GEN] [3] ce that many the year before. How manin the last two years?⏎ → 【       hor         ccc详888====au a88888   oooa 88<<<<rs1 8⏎⏎⏎⏎/ggflllt8888888 8/888TT8eeeeee 88//////82 | gold=258 | 抽取=None | 错
+[GEN] [4]  will it take him to write 3 books that are 400 pages each?⏎ → 【 ssss   ssss    ⏎⏎     sssssss详2    222ooo 2222SShhs  phhs   细0*p  0  rkkw2     ee ssaaa sss解.2h== ==ei | gold=60 | 抽取=None | 错
+[GEN] [5] ：Ellie has found an old bicycle in a total to fix the bike?⏎ → 【                                                                    详=======                            | gold=25 | 抽取=None | 错
+[GEN] [6] 细的思考步骤：Paul went to a shop to buy somey did Paul have left?⏎ → 【  r                   ss ss ss  s        fffr ffffffffffmffff⏎⏎hffffffffff详==ehss===   =         hoooos | gold=6 | 抽取=None | 错
+[GEN] [7] n twice as many as Bob. If Bob has 10mmates does John have?⏎ → 【                   o           mmmm详1111               ntt         ooaao    mmm            ehhw         | gold=25 | 抽取=None | 错
+[GEN] [8] Kris. If Kris is 24 years old now, ho Herbert be next year?⏎ → 【       h     hhh  h rrr        hhh详111    ohh==1oo hhaheiitrrrrrrrrrr细   yym l    1hlhi s rrsseee   eii | gold=15 | 抽取=None | 错
+[GEN] [9] 出详细的思考步骤：There are 12 crates that eacnd the boxes in total?⏎ → 【aaas aaaaa           a    aa     a                      ttt c s⏎      ttcccc详llte1sssssttttd       tt   | gold=2280 | 抽取=None | 错
+[GEN] [10] 8 new books. Each book costs $5. If Tes he need to save up?⏎ → 【         s                 详bbb      a5555             细oooobb   n ..5//m          解okkk obb$eb555  o= | gold=27 | 抽取=None | 错
+[GEN] [11]  buys 60 packs of baseball cards. Eacs does he need to buy?⏎ → 【                cc    ccc   cccc详1b1====         aaccccaoocccaoooa  a<<  <<cccccc   rroorrolloroclttt < | gold=42 | 抽取=None | 错
+[GEN] [12] had fifty pencils, and he wanted to s pencils did Ken keep?⏎ → 【                              mmm  mmm   mmmmmm  s⏎      mmmmmm详==== ==                       ommmm   m | gold=20 | 抽取=None | 错
+[GEN] [13] ound and he buys 20 pounds.  How muchhe pay for the steaks?⏎ → 【详细解题思路与推理】：⏎The price one free pounds to find the price is $15+$15+$15+$15+$15+$15+$15+$15+$15⏎#### 15 | gold=150 | 抽取=15 | 错
+[GEN] [14]  eggs.  Eggs cost $.50 each.  How much did he pay for eggs?⏎ → 【                                               mmm 详==                                             u  m | gold=18 | 抽取=None | 错
+[GEN] [15] uxury bag costs $3000. A reseller wanould she sell the bag?⏎ → 【                                  rrr    rr     rrrrr       mmrr详ccc===                            eeer | gold=3450 | 抽取=None | 错
+[GEN] [16] se is buying more dog food. She buys id Elise already have?⏎ → 【                                                   mm      mmmm 详fff====                                | gold=15 | 抽取=None | 错
+[GEN] [17] 出详细的思考步骤：Randy had $3,000. Smith gave dollars, of the rest?⏎ → 【  arr                                        aa mmm    mmaaaammmaa mm mmmmmm详d=vee3e3333333             | gold=2000 | 抽取=None | 错
+[GEN] [18] 用户：请解答这道数学应用题并给出详细的思考步骤：James pany cars can be parked?⏎ → 【   h                                                 h               mm         c      mmm tmmmm详===ahh | gold=16000 | 抽取=None | 错
+[GEN] [19] nt council sells scented erasers in t money will they make?⏎ → 【         ss   ss            r                 l         m 详=======  ccsssccssss        arrt             | gold=864 | 抽取=None | 错
+[EXTRACT] 抽取方式计数 {'取不到': 1440, '####': 38}
+[META] EVAL_ONLY steps=3000 batch=32 lr=0.001 d=128 ff=512 | 耗时=1.9min
+[DONE] exit=0
+s09c-eval.service: Consumed 8min 27.370s CPU time over 2min 2.155s wall clock time, 1.4G memory peak.

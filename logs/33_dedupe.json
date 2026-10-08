@@ -1,0 +1,1867 @@
+{
+ "device": "cpu",
+ "n_files": 83,
+ "n_loadable": 83,
+ "n_unique_weights": 64,
+ "bad": [],
+ "overwritten_names": {
+  "15_ckpt_add3d_k1_seed1234.pt": [
+   "52861f8d597dc143",
+   "81958d90434a5205"
+  ]
+ },
+ "same_weight_groups": [
+  [
+   {
+    "file": "14_ckpt_add_1d_seed1234.pt",
+    "prefix": [
+     "emb",
+     "head",
+     "in_enc",
+     "thought"
+    ]
+   },
+   {
+    "file": "19_ckpt_add_1d_nores_seed1234.pt",
+    "prefix": [
+     "emb",
+     "head",
+     "in_enc",
+     "thought"
+    ]
+   }
+  ],
+  [
+   {
+    "file": "14_ckpt_add_1d_seed5678.pt",
+    "prefix": [
+     "emb",
+     "head",
+     "in_enc",
+     "thought"
+    ]
+   },
+   {
+    "file": "19_ckpt_add_1d_nores_seed5678.pt",
+    "prefix": [
+     "emb",
+     "head",
+     "in_enc",
+     "thought"
+    ]
+   }
+  ],
+  [
+   {
+    "file": "14_ckpt_add_2d_seed1234.pt",
+    "prefix": [
+     "emb",
+     "head",
+     "in_enc",
+     "thought"
+    ]
+   },
+   {
+    "file": "15_ckpt_add2d_k1_seed1234.pt",
+    "prefix": [
+     "emb",
+     "head",
+     "in_enc",
+     "thought"
+    ]
+   },
+   {
+    "file": "19_ckpt_add_2d_nores_seed1234.pt",
+    "prefix": [
+     "emb",
+     "head",
+     "in_enc",
+     "thought"
+    ]
+   }
+  ],
+  [
+   {
+    "file": "14_ckpt_add_3d_seed1234.pt",
+    "prefix": [
+     "emb",
+     "head",
+     "in_enc",
+     "thought"
+    ]
+   },
+   {
+    "file": "15_ckpt_add3d_k1_seed1234.pt",
+    "prefix": [
+     "emb",
+     "head",
+     "in_enc",
+     "thought"
+    ]
+   },
+   {
+    "file": "19_ckpt_add_3d_nores_seed1234.pt",
+    "prefix": [
+     "emb",
+     "head",
+     "in_enc",
+     "thought"
+    ]
+   }
+  ],
+  [
+   {
+    "file": "14_ckpt_add_3d_seed5678.pt",
+    "prefix": [
+     "emb",
+     "head",
+     "in_enc",
+     "thought"
+    ]
+   },
+   {
+    "file": "15_ckpt_add3d_k1_seed5678.pt",
+    "prefix": [
+     "emb",
+     "head",
+     "in_enc",
+     "thought"
+    ]
+   },
+   {
+    "file": "19_ckpt_add_3d_nores_seed5678.pt",
+    "prefix": [
+     "emb",
+     "head",
+     "in_enc",
+     "thought"
+    ]
+   }
+  ],
+  [
+   {
+    "file": "14_ckpt_mul_2d_seed1234.pt",
+    "prefix": [
+     "emb",
+     "head",
+     "in_enc",
+     "thought"
+    ]
+   },
+   {
+    "file": "19_ckpt_mul_2d_nores_seed1234.pt",
+    "prefix": [
+     "emb",
+     "head",
+     "in_enc",
+     "thought"
+    ]
+   }
+  ],
+  [
+   {
+    "file": "14_ckpt_sub_2d_seed1234.pt",
+    "prefix": [
+     "emb",
+     "head",
+     "in_enc",
+     "thought"
+    ]
+   },
+   {
+    "file": "19_ckpt_sub_2d_nores_seed1234.pt",
+    "prefix": [
+     "emb",
+     "head",
+     "in_enc",
+     "thought"
+    ]
+   }
+  ],
+  [
+   {
+    "file": "15_ckpt_add2d_k1_seed5678.pt",
+    "prefix": [
+     "emb",
+     "head",
+     "in_enc",
+     "thought"
+    ]
+   },
+   {
+    "file": "19_ckpt_add_2d_nores_seed5678.pt",
+    "prefix": [
+     "emb",
+     "head",
+     "in_enc",
+     "thought"
+    ]
+   }
+  ],
+  [
+   {
+    "file": "15_ckpt_add3d_always_k1_seed1234.pt",
+    "prefix": [
+     "emb",
+     "head",
+     "in_enc",
+     "thought"
+    ]
+   },
+   {
+    "file": "19_ckpt_add_3d_res_seed1234.pt",
+    "prefix": [
+     "emb",
+     "head",
+     "in_enc",
+     "thought"
+    ]
+   },
+   {
+    "file": "20_ckpt_add3d_nopos_seed1234.pt",
+    "prefix": [
+     "emb",
+     "head",
+     "in_enc",
+     "thought"
+    ]
+   },
+   {
+    "file": "22_ckpt_add_3d_A_seed1234.pt",
+    "prefix": [
+     "card",
+     "emb",
+     "head",
+     "in_enc"
+    ]
+   },
+   {
+    "file": "25_ckpt_e2e_seed1234.pt",
+    "prefix": [
+     "emb",
+     "head",
+     "in_enc",
+     "thought"
+    ]
+   }
+  ],
+  [
+   {
+    "file": "15_ckpt_add3d_always_k1_seed5678.pt",
+    "prefix": [
+     "emb",
+     "head",
+     "in_enc",
+     "thought"
+    ]
+   },
+   {
+    "file": "19_ckpt_add_3d_res_seed5678.pt",
+    "prefix": [
+     "emb",
+     "head",
+     "in_enc",
+     "thought"
+    ]
+   },
+   {
+    "file": "20_ckpt_add3d_nopos_seed5678.pt",
+    "prefix": [
+     "emb",
+     "head",
+     "in_enc",
+     "thought"
+    ]
+   },
+   {
+    "file": "22_ckpt_add_3d_A_seed5678.pt",
+    "prefix": [
+     "card",
+     "emb",
+     "head",
+     "in_enc"
+    ]
+   },
+   {
+    "file": "25_ckpt_e2e_seed5678.pt",
+    "prefix": [
+     "emb",
+     "head",
+     "in_enc",
+     "thought"
+    ]
+   }
+  ]
+ ],
+ "files": [
+  {
+   "file": "09c_ckpt_seed1234.pt",
+   "stage": "09c",
+   "variant": "",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W01",
+   "key_clash": []
+  },
+  {
+   "file": "09c_ckpt_seed5678.pt",
+   "stage": "09c",
+   "variant": "",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W02",
+   "key_clash": []
+  },
+  {
+   "file": "11_ckpt_seed1234.pt",
+   "stage": "11",
+   "variant": "",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W03",
+   "key_clash": []
+  },
+  {
+   "file": "11_ckpt_seed5678.pt",
+   "stage": "11",
+   "variant": "",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W04",
+   "key_clash": []
+  },
+  {
+   "file": "12_ckpt_seed1234.pt",
+   "stage": "12",
+   "variant": "",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W05",
+   "key_clash": []
+  },
+  {
+   "file": "12_ckpt_seed5678.pt",
+   "stage": "12",
+   "variant": "",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W06",
+   "key_clash": []
+  },
+  {
+   "file": "13_ckpt_d128_s10000_seed1234.pt",
+   "stage": "13",
+   "variant": "d128",
+   "seed": 1234,
+   "steps": 10000,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W07",
+   "key_clash": []
+  },
+  {
+   "file": "13_ckpt_d128_s10000_seed5678.pt",
+   "stage": "13",
+   "variant": "d128",
+   "seed": 5678,
+   "steps": 10000,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W08",
+   "key_clash": []
+  },
+  {
+   "file": "13_ckpt_d256_s3000_seed1234.pt",
+   "stage": "13",
+   "variant": "d256",
+   "seed": 1234,
+   "steps": 3000,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 5782016,
+   "weight_id": "W09",
+   "key_clash": []
+  },
+  {
+   "file": "13_ckpt_d256_s3000_seed5678.pt",
+   "stage": "13",
+   "variant": "d256",
+   "seed": 5678,
+   "steps": 3000,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 5782016,
+   "weight_id": "W10",
+   "key_clash": []
+  },
+  {
+   "file": "14_ckpt_add_1d_seed1234.pt",
+   "stage": "14",
+   "variant": "add_1d",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W11",
+   "key_clash": []
+  },
+  {
+   "file": "14_ckpt_add_1d_seed5678.pt",
+   "stage": "14",
+   "variant": "add_1d",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W12",
+   "key_clash": []
+  },
+  {
+   "file": "14_ckpt_add_2d_seed1234.pt",
+   "stage": "14",
+   "variant": "add_2d",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W13",
+   "key_clash": []
+  },
+  {
+   "file": "14_ckpt_add_3d_seed1234.pt",
+   "stage": "14",
+   "variant": "add_3d",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W14",
+   "key_clash": []
+  },
+  {
+   "file": "14_ckpt_add_3d_seed5678.pt",
+   "stage": "14",
+   "variant": "add_3d",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W15",
+   "key_clash": []
+  },
+  {
+   "file": "14_ckpt_mul_2d_seed1234.pt",
+   "stage": "14",
+   "variant": "mul_2d",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W16",
+   "key_clash": []
+  },
+  {
+   "file": "14_ckpt_sub_2d_seed1234.pt",
+   "stage": "14",
+   "variant": "sub_2d",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W17",
+   "key_clash": []
+  },
+  {
+   "file": "15_ckpt_add2d_k1_seed1234.pt",
+   "stage": "15",
+   "variant": "add2d_k1",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W13",
+   "key_clash": []
+  },
+  {
+   "file": "15_ckpt_add2d_k1_seed5678.pt",
+   "stage": "15",
+   "variant": "add2d_k1",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W18",
+   "key_clash": []
+  },
+  {
+   "file": "15_ckpt_add2d_k4_seed1234.pt",
+   "stage": "15",
+   "variant": "add2d_k4",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W19",
+   "key_clash": []
+  },
+  {
+   "file": "15_ckpt_add2d_k4_seed5678.pt",
+   "stage": "15",
+   "variant": "add2d_k4",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W20",
+   "key_clash": []
+  },
+  {
+   "file": "15_ckpt_add3d_always_k1_seed1234.pt",
+   "stage": "15",
+   "variant": "add3d_always_k1",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W21",
+   "key_clash": []
+  },
+  {
+   "file": "15_ckpt_add3d_always_k1_seed5678.pt",
+   "stage": "15",
+   "variant": "add3d_always_k1",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W22",
+   "key_clash": []
+  },
+  {
+   "file": "15_ckpt_add3d_always_k2_seed1234.pt",
+   "stage": "15",
+   "variant": "add3d_always_k2",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W23",
+   "key_clash": []
+  },
+  {
+   "file": "15_ckpt_add3d_always_k2_seed5678.pt",
+   "stage": "15",
+   "variant": "add3d_always_k2",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W24",
+   "key_clash": []
+  },
+  {
+   "file": "15_ckpt_add3d_always_k4_seed1234.pt",
+   "stage": "15",
+   "variant": "add3d_always_k4",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W25",
+   "key_clash": []
+  },
+  {
+   "file": "15_ckpt_add3d_always_k4_seed5678.pt",
+   "stage": "15",
+   "variant": "add3d_always_k4",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W26",
+   "key_clash": []
+  },
+  {
+   "file": "15_ckpt_add3d_always_k8_seed1234.pt",
+   "stage": "15",
+   "variant": "add3d_always_k8",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W27",
+   "key_clash": []
+  },
+  {
+   "file": "15_ckpt_add3d_always_k8_seed5678.pt",
+   "stage": "15",
+   "variant": "add3d_always_k8",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W28",
+   "key_clash": []
+  },
+  {
+   "file": "15_ckpt_add3d_k1_seed1234.pt",
+   "stage": "15",
+   "variant": "add3d_k1",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W14",
+   "key_clash": []
+  },
+  {
+   "file": "15_ckpt_add3d_k1_seed5678.pt",
+   "stage": "15",
+   "variant": "add3d_k1",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W15",
+   "key_clash": []
+  },
+  {
+   "file": "15_ckpt_add3d_k2_seed1234.pt",
+   "stage": "15",
+   "variant": "add3d_k2",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W29",
+   "key_clash": []
+  },
+  {
+   "file": "15_ckpt_add3d_k2_seed5678.pt",
+   "stage": "15",
+   "variant": "add3d_k2",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W30",
+   "key_clash": []
+  },
+  {
+   "file": "15_ckpt_add3d_k4_seed1234.pt",
+   "stage": "15",
+   "variant": "add3d_k4",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W31",
+   "key_clash": []
+  },
+  {
+   "file": "15_ckpt_add3d_k4_seed5678.pt",
+   "stage": "15",
+   "variant": "add3d_k4",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W32",
+   "key_clash": []
+  },
+  {
+   "file": "15_ckpt_add3d_k8_seed1234.pt",
+   "stage": "15",
+   "variant": "add3d_k8",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W33",
+   "key_clash": []
+  },
+  {
+   "file": "15_ckpt_add3d_k8_seed5678.pt",
+   "stage": "15",
+   "variant": "add3d_k8",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W34",
+   "key_clash": []
+  },
+  {
+   "file": "19_ckpt_add_1d_nores_seed1234.pt",
+   "stage": "19",
+   "variant": "add_1d_nores",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W11",
+   "key_clash": []
+  },
+  {
+   "file": "19_ckpt_add_1d_nores_seed5678.pt",
+   "stage": "19",
+   "variant": "add_1d_nores",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W12",
+   "key_clash": []
+  },
+  {
+   "file": "19_ckpt_add_1d_res_seed1234.pt",
+   "stage": "19",
+   "variant": "add_1d_res",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W35",
+   "key_clash": []
+  },
+  {
+   "file": "19_ckpt_add_1d_res_seed5678.pt",
+   "stage": "19",
+   "variant": "add_1d_res",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W36",
+   "key_clash": []
+  },
+  {
+   "file": "19_ckpt_add_2d_nores_seed1234.pt",
+   "stage": "19",
+   "variant": "add_2d_nores",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W13",
+   "key_clash": []
+  },
+  {
+   "file": "19_ckpt_add_2d_nores_seed5678.pt",
+   "stage": "19",
+   "variant": "add_2d_nores",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W18",
+   "key_clash": []
+  },
+  {
+   "file": "19_ckpt_add_2d_res_seed1234.pt",
+   "stage": "19",
+   "variant": "add_2d_res",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W37",
+   "key_clash": []
+  },
+  {
+   "file": "19_ckpt_add_2d_res_seed5678.pt",
+   "stage": "19",
+   "variant": "add_2d_res",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W38",
+   "key_clash": []
+  },
+  {
+   "file": "19_ckpt_add_3d_nores_seed1234.pt",
+   "stage": "19",
+   "variant": "add_3d_nores",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W14",
+   "key_clash": []
+  },
+  {
+   "file": "19_ckpt_add_3d_nores_seed5678.pt",
+   "stage": "19",
+   "variant": "add_3d_nores",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W15",
+   "key_clash": []
+  },
+  {
+   "file": "19_ckpt_add_3d_res_seed1234.pt",
+   "stage": "19",
+   "variant": "add_3d_res",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W21",
+   "key_clash": []
+  },
+  {
+   "file": "19_ckpt_add_3d_res_seed5678.pt",
+   "stage": "19",
+   "variant": "add_3d_res",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W22",
+   "key_clash": []
+  },
+  {
+   "file": "19_ckpt_mul_2d_nores_seed1234.pt",
+   "stage": "19",
+   "variant": "mul_2d_nores",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W16",
+   "key_clash": []
+  },
+  {
+   "file": "19_ckpt_mul_2d_nores_seed5678.pt",
+   "stage": "19",
+   "variant": "mul_2d_nores",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W39",
+   "key_clash": []
+  },
+  {
+   "file": "19_ckpt_mul_2d_res_seed1234.pt",
+   "stage": "19",
+   "variant": "mul_2d_res",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W40",
+   "key_clash": []
+  },
+  {
+   "file": "19_ckpt_mul_2d_res_seed5678.pt",
+   "stage": "19",
+   "variant": "mul_2d_res",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W41",
+   "key_clash": []
+  },
+  {
+   "file": "19_ckpt_sub_2d_nores_seed1234.pt",
+   "stage": "19",
+   "variant": "sub_2d_nores",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W17",
+   "key_clash": []
+  },
+  {
+   "file": "19_ckpt_sub_2d_nores_seed5678.pt",
+   "stage": "19",
+   "variant": "sub_2d_nores",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W42",
+   "key_clash": []
+  },
+  {
+   "file": "19_ckpt_sub_2d_res_seed1234.pt",
+   "stage": "19",
+   "variant": "sub_2d_res",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W43",
+   "key_clash": []
+  },
+  {
+   "file": "19_ckpt_sub_2d_res_seed5678.pt",
+   "stage": "19",
+   "variant": "sub_2d_res",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W44",
+   "key_clash": []
+  },
+  {
+   "file": "20_ckpt_add3d_nopos_seed1234.pt",
+   "stage": "20",
+   "variant": "add3d_nopos",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W21",
+   "key_clash": []
+  },
+  {
+   "file": "20_ckpt_add3d_nopos_seed5678.pt",
+   "stage": "20",
+   "variant": "add3d_nopos",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W22",
+   "key_clash": []
+  },
+  {
+   "file": "20_ckpt_add3d_pos_seed1234.pt",
+   "stage": "20",
+   "variant": "add3d_pos",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W45",
+   "key_clash": []
+  },
+  {
+   "file": "20_ckpt_add3d_pos_seed5678.pt",
+   "stage": "20",
+   "variant": "add3d_pos",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W46",
+   "key_clash": []
+  },
+  {
+   "file": "22_ckpt_add_3d_A_seed1234.pt",
+   "stage": "22",
+   "variant": "add_3d_A",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "card",
+    "emb",
+    "head",
+    "in_enc"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W21",
+   "key_clash": []
+  },
+  {
+   "file": "22_ckpt_add_3d_A_seed5678.pt",
+   "stage": "22",
+   "variant": "add_3d_A",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "card",
+    "emb",
+    "head",
+    "in_enc"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W22",
+   "key_clash": []
+  },
+  {
+   "file": "22_ckpt_add_3d_B_seed1234.pt",
+   "stage": "22",
+   "variant": "add_3d_B",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "card",
+    "emb",
+    "head",
+    "in_enc"
+   ],
+   "n_param": 2435584,
+   "weight_id": "W47",
+   "key_clash": []
+  },
+  {
+   "file": "22_ckpt_add_3d_B_seed5678.pt",
+   "stage": "22",
+   "variant": "add_3d_B",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "card",
+    "emb",
+    "head",
+    "in_enc"
+   ],
+   "n_param": 2435584,
+   "weight_id": "W48",
+   "key_clash": []
+  },
+  {
+   "file": "22_ckpt_add_3d_C_seed1234.pt",
+   "stage": "22",
+   "variant": "add_3d_C",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "card",
+    "emb",
+    "head",
+    "in_enc"
+   ],
+   "n_param": 2320896,
+   "weight_id": "W49",
+   "key_clash": []
+  },
+  {
+   "file": "22_ckpt_add_3d_C_seed5678.pt",
+   "stage": "22",
+   "variant": "add_3d_C",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "card",
+    "emb",
+    "head",
+    "in_enc"
+   ],
+   "n_param": 2320896,
+   "weight_id": "W50",
+   "key_clash": []
+  },
+  {
+   "file": "22_ckpt_add_3d_D_seed1234.pt",
+   "stage": "22",
+   "variant": "add_3d_D",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "card",
+    "emb",
+    "head",
+    "in_enc"
+   ],
+   "n_param": 2452096,
+   "weight_id": "W51",
+   "key_clash": []
+  },
+  {
+   "file": "22_ckpt_add_3d_D_seed5678.pt",
+   "stage": "22",
+   "variant": "add_3d_D",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "card",
+    "emb",
+    "head",
+    "in_enc"
+   ],
+   "n_param": 2452096,
+   "weight_id": "W52",
+   "key_clash": []
+  },
+  {
+   "file": "22_ckpt_add_3d_E_seed1234.pt",
+   "stage": "22",
+   "variant": "add_3d_E",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "card",
+    "emb",
+    "head",
+    "in_enc"
+   ],
+   "n_param": 2369920,
+   "weight_id": "W53",
+   "key_clash": []
+  },
+  {
+   "file": "22_ckpt_add_3d_E_seed5678.pt",
+   "stage": "22",
+   "variant": "add_3d_E",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "card",
+    "emb",
+    "head",
+    "in_enc"
+   ],
+   "n_param": 2369920,
+   "weight_id": "W54",
+   "key_clash": []
+  },
+  {
+   "file": "25_ckpt_alt_seed1234.pt",
+   "stage": "25",
+   "variant": "alt",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W55",
+   "key_clash": []
+  },
+  {
+   "file": "25_ckpt_alt_seed5678.pt",
+   "stage": "25",
+   "variant": "alt",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W56",
+   "key_clash": []
+  },
+  {
+   "file": "25_ckpt_anchor_seed1234.pt",
+   "stage": "25",
+   "variant": "anchor",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W57",
+   "key_clash": []
+  },
+  {
+   "file": "25_ckpt_anchor_seed5678.pt",
+   "stage": "25",
+   "variant": "anchor",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W58",
+   "key_clash": []
+  },
+  {
+   "file": "25_ckpt_e2e_seed1234.pt",
+   "stage": "25",
+   "variant": "e2e",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W21",
+   "key_clash": []
+  },
+  {
+   "file": "25_ckpt_e2e_seed5678.pt",
+   "stage": "25",
+   "variant": "e2e",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W22",
+   "key_clash": []
+  },
+  {
+   "file": "25_ckpt_randall_seed1234.pt",
+   "stage": "25",
+   "variant": "randall",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W59",
+   "key_clash": []
+  },
+  {
+   "file": "25_ckpt_randall_seed5678.pt",
+   "stage": "25",
+   "variant": "randall",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W60",
+   "key_clash": []
+  },
+  {
+   "file": "25_ckpt_randtgt_seed1234.pt",
+   "stage": "25",
+   "variant": "randtgt",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W61",
+   "key_clash": []
+  },
+  {
+   "file": "25_ckpt_randtgt_seed5678.pt",
+   "stage": "25",
+   "variant": "randtgt",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W62",
+   "key_clash": []
+  },
+  {
+   "file": "28_ckpt_e2e6000_seed1234.pt",
+   "stage": "28",
+   "variant": "e2e6000",
+   "seed": 1234,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W63",
+   "key_clash": []
+  },
+  {
+   "file": "28_ckpt_e2e6000_seed5678.pt",
+   "stage": "28",
+   "variant": "e2e6000",
+   "seed": 5678,
+   "steps": null,
+   "prefixes": [
+    "emb",
+    "head",
+    "in_enc",
+    "thought"
+   ],
+   "n_param": 2501888,
+   "weight_id": "W64",
+   "key_clash": []
+  }
+ ],
+ "close_pairs": [
+  {
+   "a": "14_ckpt_add_1d_seed1234.pt",
+   "b": "19_ckpt_add_1d_nores_seed1234.pt",
+   "max_abs_d": 0.0,
+   "at": null,
+   "lower_bound": false
+  },
+  {
+   "a": "14_ckpt_add_1d_seed5678.pt",
+   "b": "19_ckpt_add_1d_nores_seed5678.pt",
+   "max_abs_d": 0.0,
+   "at": null,
+   "lower_bound": false
+  },
+  {
+   "a": "14_ckpt_add_2d_seed1234.pt",
+   "b": "15_ckpt_add2d_k1_seed1234.pt",
+   "max_abs_d": 0.0,
+   "at": null,
+   "lower_bound": false
+  },
+  {
+   "a": "14_ckpt_add_2d_seed1234.pt",
+   "b": "19_ckpt_add_2d_nores_seed1234.pt",
+   "max_abs_d": 0.0,
+   "at": null,
+   "lower_bound": false
+  },
+  {
+   "a": "14_ckpt_add_3d_seed1234.pt",
+   "b": "15_ckpt_add3d_k1_seed1234.pt",
+   "max_abs_d": 0.0,
+   "at": null,
+   "lower_bound": false
+  },
+  {
+   "a": "14_ckpt_add_3d_seed1234.pt",
+   "b": "19_ckpt_add_3d_nores_seed1234.pt",
+   "max_abs_d": 0.0,
+   "at": null,
+   "lower_bound": false
+  },
+  {
+   "a": "14_ckpt_add_3d_seed5678.pt",
+   "b": "15_ckpt_add3d_k1_seed5678.pt",
+   "max_abs_d": 0.0,
+   "at": null,
+   "lower_bound": false
+  },
+  {
+   "a": "14_ckpt_add_3d_seed5678.pt",
+   "b": "19_ckpt_add_3d_nores_seed5678.pt",
+   "max_abs_d": 0.0,
+   "at": null,
+   "lower_bound": false
+  },
+  {
+   "a": "14_ckpt_mul_2d_seed1234.pt",
+   "b": "19_ckpt_mul_2d_nores_seed1234.pt",
+   "max_abs_d": 0.0,
+   "at": null,
+   "lower_bound": false
+  },
+  {
+   "a": "14_ckpt_sub_2d_seed1234.pt",
+   "b": "19_ckpt_sub_2d_nores_seed1234.pt",
+   "max_abs_d": 0.0,
+   "at": null,
+   "lower_bound": false
+  },
+  {
+   "a": "15_ckpt_add2d_k1_seed1234.pt",
+   "b": "19_ckpt_add_2d_nores_seed1234.pt",
+   "max_abs_d": 0.0,
+   "at": null,
+   "lower_bound": false
+  },
+  {
+   "a": "15_ckpt_add2d_k1_seed5678.pt",
+   "b": "19_ckpt_add_2d_nores_seed5678.pt",
+   "max_abs_d": 0.0,
+   "at": null,
+   "lower_bound": false
+  },
+  {
+   "a": "15_ckpt_add3d_always_k1_seed1234.pt",
+   "b": "19_ckpt_add_3d_res_seed1234.pt",
+   "max_abs_d": 0.0,
+   "at": null,
+   "lower_bound": false
+  },
+  {
+   "a": "15_ckpt_add3d_always_k1_seed1234.pt",
+   "b": "20_ckpt_add3d_nopos_seed1234.pt",
+   "max_abs_d": 0.0,
+   "at": null,
+   "lower_bound": false
+  },
+  {
+   "a": "15_ckpt_add3d_always_k1_seed1234.pt",
+   "b": "22_ckpt_add_3d_A_seed1234.pt",
+   "max_abs_d": 0.0,
+   "at": null,
+   "lower_bound": false
+  },
+  {
+   "a": "15_ckpt_add3d_always_k1_seed1234.pt",
+   "b": "25_ckpt_e2e_seed1234.pt",
+   "max_abs_d": 0.0,
+   "at": null,
+   "lower_bound": false
+  },
+  {
+   "a": "15_ckpt_add3d_always_k1_seed5678.pt",
+   "b": "19_ckpt_add_3d_res_seed5678.pt",
+   "max_abs_d": 0.0,
+   "at": null,
+   "lower_bound": false
+  },
+  {
+   "a": "15_ckpt_add3d_always_k1_seed5678.pt",
+   "b": "20_ckpt_add3d_nopos_seed5678.pt",
+   "max_abs_d": 0.0,
+   "at": null,
+   "lower_bound": false
+  },
+  {
+   "a": "15_ckpt_add3d_always_k1_seed5678.pt",
+   "b": "22_ckpt_add_3d_A_seed5678.pt",
+   "max_abs_d": 0.0,
+   "at": null,
+   "lower_bound": false
+  },
+  {
+   "a": "15_ckpt_add3d_always_k1_seed5678.pt",
+   "b": "25_ckpt_e2e_seed5678.pt",
+   "max_abs_d": 0.0,
+   "at": null,
+   "lower_bound": false
+  },
+  {
+   "a": "15_ckpt_add3d_k1_seed1234.pt",
+   "b": "19_ckpt_add_3d_nores_seed1234.pt",
+   "max_abs_d": 0.0,
+   "at": null,
+   "lower_bound": false
+  },
+  {
+   "a": "15_ckpt_add3d_k1_seed5678.pt",
+   "b": "19_ckpt_add_3d_nores_seed5678.pt",
+   "max_abs_d": 0.0,
+   "at": null,
+   "lower_bound": false
+  },
+  {
+   "a": "19_ckpt_add_3d_res_seed1234.pt",
+   "b": "20_ckpt_add3d_nopos_seed1234.pt",
+   "max_abs_d": 0.0,
+   "at": null,
+   "lower_bound": false
+  },
+  {
+   "a": "19_ckpt_add_3d_res_seed1234.pt",
+   "b": "22_ckpt_add_3d_A_seed1234.pt",
+   "max_abs_d": 0.0,
+   "at": null,
+   "lower_bound": false
+  },
+  {
+   "a": "19_ckpt_add_3d_res_seed1234.pt",
+   "b": "25_ckpt_e2e_seed1234.pt",
+   "max_abs_d": 0.0,
+   "at": null,
+   "lower_bound": false
+  },
+  {
+   "a": "19_ckpt_add_3d_res_seed5678.pt",
+   "b": "20_ckpt_add3d_nopos_seed5678.pt",
+   "max_abs_d": 0.0,
+   "at": null,
+   "lower_bound": false
+  },
+  {
+   "a": "19_ckpt_add_3d_res_seed5678.pt",
+   "b": "22_ckpt_add_3d_A_seed5678.pt",
+   "max_abs_d": 0.0,
+   "at": null,
+   "lower_bound": false
+  },
+  {
+   "a": "19_ckpt_add_3d_res_seed5678.pt",
+   "b": "25_ckpt_e2e_seed5678.pt",
+   "max_abs_d": 0.0,
+   "at": null,
+   "lower_bound": false
+  },
+  {
+   "a": "20_ckpt_add3d_nopos_seed1234.pt",
+   "b": "22_ckpt_add_3d_A_seed1234.pt",
+   "max_abs_d": 0.0,
+   "at": null,
+   "lower_bound": false
+  },
+  {
+   "a": "20_ckpt_add3d_nopos_seed1234.pt",
+   "b": "25_ckpt_e2e_seed1234.pt",
+   "max_abs_d": 0.0,
+   "at": null,
+   "lower_bound": false
+  },
+  {
+   "a": "20_ckpt_add3d_nopos_seed5678.pt",
+   "b": "22_ckpt_add_3d_A_seed5678.pt",
+   "max_abs_d": 0.0,
+   "at": null,
+   "lower_bound": false
+  },
+  {
+   "a": "20_ckpt_add3d_nopos_seed5678.pt",
+   "b": "25_ckpt_e2e_seed5678.pt",
+   "max_abs_d": 0.0,
+   "at": null,
+   "lower_bound": false
+  },
+  {
+   "a": "22_ckpt_add_3d_A_seed1234.pt",
+   "b": "25_ckpt_e2e_seed1234.pt",
+   "max_abs_d": 0.0,
+   "at": null,
+   "lower_bound": false
+  },
+  {
+   "a": "22_ckpt_add_3d_A_seed5678.pt",
+   "b": "25_ckpt_e2e_seed5678.pt",
+   "max_abs_d": 0.0,
+   "at": null,
+   "lower_bound": false
+  }
+ ],
+ "n_pairs_compared": 2633
+}

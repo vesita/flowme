@@ -1,0 +1,42 @@
+10月 07 22:35:22 pico systemd[1115]: Started [systemd-run] /usr/bin/uv run --no-sync python stages/09_textgen_gsm8k.py.
+10月 07 22:35:22 pico uv[938919]: warning: Found both a `uv.toml` file and a `[tool.uv]` section in an adjacent `pyproject.toml`. The following fields from `[tool.uv]` will be ignored in favor of the `uv.toml` file:
+10月 07 22:35:22 pico uv[938919]: - index
+10月 07 22:35:23 pico uv[938923]: /opt/amdgpu/share/libdrm/amdgpu.ids: No such file or directory
+10月 07 22:35:28 pico uv[938923]: device: cuda AMD Radeon Graphics
+10月 07 22:35:30 pico uv[938923]: [DATA] blocks=7396 parsed=7394 bad=2 records=7394 | split 9:1 train=6655 test=739 (seed42) | 任一截断=7269/7394 (98.3%) | dropped=0
+10月 07 22:35:30 pico uv[938923]: [TRUNC] ★保尾截断(MIN_P=48 prompt保尾=24) 截prompt=7269/7394 (98.3%) | 截target=5221/7394 (70.6%) | 两者都截=5221/7394 (70.6%) | 丢弃=0
+10月 07 22:35:30 pico uv[938923]: [SPAN] span_mismatch=0 nonadditive=0 | test有gold(EM分母)=739
+10月 07 22:35:30 pico uv[938923]: [TOK] WordLevel V=8192 PAD=131 EOS=128 | import /home/vesita/coding/my/nanoSeek/training/dialogue_stream.py
+10月 07 22:35:35 pico uv[938923]: [GATE A] step20 grad is not None 计数 {'输入卡': 13, '思维卡': 12, '输出卡': 2} / 参数总数 {'输入卡': 13, '思维卡': 12, '输出卡': 2} => PASS 全>0
+10月 07 22:37:20 pico uv[938923]:   [train] seed=1234 identity=False step=500/3000 loss=1.7990 elapsed=109s
+10月 07 22:39:09 pico uv[938923]:   [train] seed=1234 identity=False step=1000/3000 loss=1.4708 elapsed=218s
+10月 07 22:40:58 pico uv[938923]:   [train] seed=1234 identity=False step=1500/3000 loss=1.1454 elapsed=327s
+10月 07 22:42:47 pico uv[938923]:   [train] seed=1234 identity=False step=2000/3000 loss=1.0518 elapsed=436s
+10月 07 22:44:35 pico uv[938923]:   [train] seed=1234 identity=False step=2500/3000 loss=0.9701 elapsed=544s
+10月 07 22:46:24 pico uv[938923]:   [train] seed=1234 identity=False step=3000/3000 loss=0.9766 elapsed=653s
+10月 07 22:46:24 pico uv[938923]: [GATE C] ①复制prompt尾部: 配对CE=15.7842±0.0084 nats  EM=0.00%±0.00 (n=739)
+10月 07 22:46:24 pico uv[938923]: [GATE C] ②最常见####答案: 配对CE=9.2608±0.0024 nats  EM=1.89%±0.50 (n=739)
+10月 07 22:46:24 pico uv[938923]: [GATE C] ③最常出现token: 配对CE=13.4932±0.0179 nats  EM=0.00%±0.00 (n=739)
+10月 07 22:47:24 pico uv[938923]: [MAIN] 完整闭环 seed=1234: 配对CE=0.8688±0.0083  EM=0.00%±0.00 (n=739)
+10月 07 22:49:07 pico uv[938923]:   [train] seed=1234 identity=True step=500/3000 loss=2.1103 elapsed=103s
+10月 07 22:50:50 pico uv[938923]:   [train] seed=1234 identity=True step=1000/3000 loss=1.7967 elapsed=206s
+10月 07 22:52:33 pico uv[938923]:   [train] seed=1234 identity=True step=1500/3000 loss=1.6003 elapsed=309s
+10月 07 22:54:16 pico uv[938923]:   [train] seed=1234 identity=True step=2000/3000 loss=1.5109 elapsed=413s
+10月 07 22:55:59 pico uv[938923]:   [train] seed=1234 identity=True step=2500/3000 loss=1.4340 elapsed=515s
+10月 07 22:57:42 pico uv[938923]:   [train] seed=1234 identity=True step=3000/3000 loss=1.4198 elapsed=618s
+10月 07 22:58:28 pico uv[938923]: [GATE B] 恒等中介 CE=1.3176±0.0087 EM=0.00%±0.00 | 完整闭环 CE=0.8688 EM=0.00% | 配对ΔCE(恒等-完整)=+0.4488±0.0060 ⇒ PASS 完整显著更优
+10月 07 22:58:28 pico uv[938923]: [GATE B] 配对ΔEM(恒等-完整)=+0.00±0.00pp (n=739)
+10月 07 23:00:19 pico uv[938923]:   [train] seed=5678 identity=False step=500/3000 loss=1.9406 elapsed=110s
+10月 07 23:02:09 pico uv[938923]:   [train] seed=5678 identity=False step=1000/3000 loss=1.4647 elapsed=220s
+10月 07 23:03:59 pico uv[938923]:   [train] seed=5678 identity=False step=1500/3000 loss=1.1872 elapsed=331s
+10月 07 23:05:49 pico uv[938923]:   [train] seed=5678 identity=False step=2000/3000 loss=1.0744 elapsed=441s
+10月 07 23:07:39 pico uv[938923]:   [train] seed=5678 identity=False step=2500/3000 loss=0.9861 elapsed=551s
+10月 07 23:09:29 pico uv[938923]:   [train] seed=5678 identity=False step=3000/3000 loss=0.9911 elapsed=660s
+10月 07 23:10:26 pico uv[938923]: [MAIN] 完整闭环 seed=5678: 配对CE=0.8791±0.0084  EM=0.00%±0.00 (n=739)
+10月 07 23:10:26 pico uv[938923]: [CRIT] 对比地板：CE地板=②最常见####答案 (9.2608)  EM地板=②最常见####答案 (1.89%)
+10月 07 23:10:26 pico uv[938923]: [CRIT] seed=1234: ΔCE(闭环-地板)=-8.3920±0.0095 显著低 | ΔEM=-1.89±0.50pp 不显著 (同号要求两 seed 均满足)
+10月 07 23:10:26 pico uv[938923]: [CRIT] seed=5678: ΔCE(闭环-地板)=-8.3817±0.0096 显著低 | ΔEM=-1.89±0.50pp 不显著 (同号要求两 seed 均满足)
+10月 07 23:10:26 pico uv[938923]: [VERDICT] FAIL 主判据不过 ⇒ 如实报（最可能原因：数据少/步数不够/d=128 太小）
+10月 07 23:10:26 pico uv[938923]: [META] steps=3000 batch=32 lr=0.001 d=128 ff=512 | seed1墙钟=653s seed2墙钟=660s | 总墙钟=35.0min 任一截断=98.3%
+10月 07 23:10:26 pico uv[938923]: [DONE] exit=0
+10月 07 23:10:27 pico systemd[1115]: s09b-textgen.service: Consumed 1h 15min 29.110s CPU time over 35min 4.884s wall clock time, 1.4G memory peak.
