@@ -6,15 +6,23 @@
     norm_first=True) + 【外层残差 h = h + Think(h)】（S19/S22 已验证）；
   · 接通方式 = 输入卡 → 模因[n,d] → 目标卡 → 模因[n,d] → 输出卡（框架契约）；
   · 数据 / 训练超参 = `stages/19_residual_scan.py` 的 add_3d **res 臂**逐字相同
-    （d=128, ff=512, NHEAD=4, lr=1e-3, batch=32, 3000 步, MAXLEN=512, 9:1 切分, seed=1234）；
-  · 判据 = add_3d test EM（batch=1, n=800）与 S19-res 的 **37.25%** 差 ≤ 2pp。
+    （d=128, ff=512, NHEAD=4, lr=1e-3, batch=32, MAXLEN=512, MAXLEN 切分同源, seed=1234）；
+  · 判据 = ★**饱和点（6000 步，E6/S36 口径）**：EM(batch=1, n=800) 与 E6 res 臂
+    85.62%（seed1234）/ 74.38%（seed5678）差 ≤ 3pp；并**同时打印 @3000 / @6000 两栏**
+    （数字每步正确率也两栏），日志里标「是否饱和」。
+
+★步数：`CARDS_STEPS` 默认 **6000**（= E6 饱和点口径，与 R35 同口径）；3000 仍可用。
+★种子：`CARDS_SEED` 默认 1234，可设 5678 对照 E6 的第二个 seed。
 
 ★已知坑（复刻 S14 数据必须连两个特性一起复刻，本文件都保留）：
   ① BUCKETS 顺序决定 RNG 种子（add_1d, add_2d, add_3d, sub_2d, mul_2d 逐字）；
   ② build_templates 的裸式 10 句有 bug（`{{expr}}` 不是 f-string ⇒ `{expr}` 不替换）。
+★已知坑（R34）：`CARDS_RNG` 必须保留「dropout 独立流 + 重洗全局流」**两条流结构**
+  （照抄 GPU 那段 CPU 代码 ⇒ −18.5pp，见 logits_train）；`coupled` 只用于复现那个坑。
 
-本文件**不 import stages/**（独立）；默认跑 **CPU**（GPU 上 E5 在跑，不抢）。
-运行：`.venv/bin/python cards/example_add3d.py`   （env：CARDS_STEPS / CARDS_THREADS）
+本文件**不 import stages/**（独立）；默认跑 **CPU**（GPU 上有别的实验在跑，不抢）。
+运行：`.venv/bin/python cards/example_add3d.py`
+      （env：CARDS_STEPS / CARDS_SEED / CARDS_THREADS / CARDS_RNG / CARDS_SNAP_AT）
 另：`CARDS_XCHECK=1` 会把 logs/ 里的 S19 GPU ckpt 灌进本管线复核（证明数据与评测口径逐位一致）。
 """
 from __future__ import annotations
@@ -46,7 +54,8 @@ NHEAD = 4
 MAXLEN = 512
 MIN_T = 48
 TAIL_KEEP = 24
-STEPS = int(os.environ.get("CARDS_STEPS", "3000"))
+STEPS = int(os.environ.get("CARDS_STEPS", "6000"))      # ★默认 6000 = E6 饱和点口径
+SNAP_AT = int(os.environ.get("CARDS_SNAP_AT", "3000"))  # @3000 快照（两栏对照；≥STEPS 则不取）
 LR = 1e-3
 BATCH = 32
 GEN_BATCH = 32
@@ -54,11 +63,16 @@ EM_BATCH = 1            # ★主口径：batch=1（R28）
 N_TRAIN = 4000
 N_TEST = 800
 MAX_GEN = 48
-SEED = 1234
+SEED = int(os.environ.get("CARDS_SEED", "1234"))
 BUCKET = "add_3d"
-S19_RES_EM = 0.3725     # S19 add_3d res seed=1234（logs/19_results.jsonl）
+S19_RES_EM = 0.3725     # S19 add_3d res seed=1234 @3000（logs/19_results.jsonl）
 S19_NORES_EM = 0.0250
-TOL_PP = 2.0
+# ★E6（stages/36_saturation_retest.py）res 臂饱和点锚：@6000 主锚 + @3000 同轨迹快照
+E6_RES_EM = {1234: 0.85625, 5678: 0.74375}
+E6_RES_DIG = {1234: 0.8427, 5678: 0.7633}
+E6_RES_EM3000 = {1234: 0.3725, 5678: 0.3113}
+E6_RES_DIG3000 = {1234: 0.5259, 5678: 0.4963}
+TOL_PP = 3.0            # ★判据：与 E6 res 饱和点锚差 ≤3pp
 
 # ★坑①：BUCKETS 的顺序决定每桶 RNG 种子（bi 进种子），必须逐字保持
 BUCKETS = ("add_1d", "add_2d", "add_3d", "sub_2d", "mul_2d")
@@ -67,7 +81,7 @@ BI = BUCKETS.index(BUCKET)
 TOK_PATH = "/home/vesita/coding/my/nanoSeek/data/chinese/char_tokenizer.json"
 S19_CKPT = ROOT / "logs" / "19_ckpt_add_3d_res_seed1234.pt"
 
-DEVICE = os.environ.get("CARDS_DEVICE", "cpu")          # ★默认 CPU：不抢 E5 的 GPU
+DEVICE = os.environ.get("CARDS_DEVICE", "cpu")          # ★默认 CPU：不抢 GPU 上的实验
 # ★RNG 结构：s19-two-stream = 镜像 S19/GPU 的「dropout 独立流 + 重洗全局流」；
 #            coupled = 照抄那段 CPU 代码（两条流耦合）⇒ 用来复现样本重洗分岔的坑。
 RNG_MODE = os.environ.get("CARDS_RNG", "s19-two-stream")
@@ -255,7 +269,7 @@ def logits_train(pipe: CardPipeline, ids: torch.Tensor) -> torch.Tensor:
     S19（GPU）：dropout 抽 CUDA 流（`torch.cuda.manual_seed_all(seed)`，独立），
                 每个 epoch 的 `torch.randperm` 重洗抽 CPU 全局流（此时没被 dropout 动过）。
     CPU 上若照抄那段代码，dropout 与重洗会共用**同一条** CPU 全局流 ⇒ 从 step 125（第一个
-    epoch 结束）起样本重洗顺序就跑偏、与 S19 分岔（实测 EM 37.25% → 18.75%）。
+    epoch 结束）起样本重洗顺序就跑偏、与 S19 分岔（实测 EM 37.25% → 18.75%，R34）。
     所以这里把 dropout 的 RNG 流独立出来（`CARDS_RNG=coupled` 可关掉，用来复现那个坑）。
     """
     if RNG_MODE == "coupled":
@@ -283,7 +297,12 @@ def masked_ce(pipe: CardPipeline, recs) -> torch.Tensor:
     return nll / ntok
 
 
-def train_run(train, steps: int, seed: int = SEED):
+def train_run(train, steps: int, seed: int = SEED, snap_at: int | None = None):
+    """训 steps 步；snap_at 落在 (0, steps) 内时额外取一份该步的 state_dict 快照（@3000 用）。
+
+    ★R34：两条随机流的结构不许动 —— torch.manual_seed(seed)（重洗/初始化流）
+    与 DROP_GEN.manual_seed(seed)（dropout 流）各自独立。
+    """
     torch.manual_seed(seed)
     DROP_GEN.manual_seed(seed)                          # ★镜像 torch.cuda.manual_seed_all(seed)
     pipe = CardPipeline(d=D, vocab_size=V, ff=FF, nhead=NHEAD, maxlen=MAXLEN,
@@ -291,6 +310,7 @@ def train_run(train, steps: int, seed: int = SEED):
     opt = AdamW(pipe.parameters(), lr=LR)
     order = torch.randperm(len(train), generator=torch.Generator().manual_seed(seed))
     step, pos, t0, last = 0, 0, time.time(), 0.0
+    snap = None
     while step < steps:
         idx = []
         for _ in range(BATCH):
@@ -304,12 +324,14 @@ def train_run(train, steps: int, seed: int = SEED):
         loss.backward()
         opt.step()
         step += 1
+        if snap_at is not None and step == snap_at:
+            snap = {k: v.detach().to("cpu").clone() for k, v in pipe.state_dict().items()}
         if step % 500 == 0 or step == steps:
             el = time.time() - t0
             print(f"  [train] step={step}/{steps} loss={loss.item():.4f} "
                   f"elapsed={el:.0f}s s/step={(el - last) / (step % 500 or 500):.3f}", flush=True)
             last = el
-    return pipe, time.time() - t0
+    return pipe, time.time() - t0, snap
 
 
 @torch.no_grad()
@@ -371,17 +393,63 @@ def em_score(pipe: CardPipeline, test) -> dict:
     return dict(em=em, se=se, n=n, hits=hits, sample=sample)
 
 
+# ---- 数字每步正确率（口径逐字复用 stages/19_residual_scan.py:492-573 的 ①数字与算子）----
+SPECIAL_TOKENS = {"<eos>", "<unk>", "<pad>", "<bos>", "<cont>", "<sep>", "<resp>",
+                  "<call>", "<result>", "<answer>", "<tool>", "<search>", "<topic>"}
+NUM_CHARS = set("0123456789+-*/=%$")
+TMPL_CHARS = set("【】详细解题思路推理与") | {"<", ">", "#"}
+
+
+def classify(tid: int) -> int:
+    """token 分类：0=数字与算子（=数字每步正确率的分母）1=模板/格式 2=中文 3=其它。"""
+    s = tok.id_to_token(int(tid)) or ""
+    if s in SPECIAL_TOKENS or (s.startswith("<") and s.endswith(">")):
+        return 1
+    if s and all(c in NUM_CHARS for c in s):
+        return 0
+    if any(c in TMPL_CHARS for c in s):
+        return 1
+    if any("一" <= c <= "鿿" for c in s):
+        return 2
+    return 3
+
+
+def digit_report(pipe: CardPipeline, recs, batch: int = GEN_BATCH) -> dict:
+    """数字每步正确率 = exp(−数字 CE 的样本级均值)；不落梯度、不改 eval/train 之外的任何状态。"""
+    was_training = pipe.training
+    pipe.eval()
+    per: list = []
+    with torch.no_grad():
+        for i in range(0, len(recs), batch):
+            chunk = recs[i: i + batch]
+            ids, s = build_batch(chunk)
+            logp = torch.log_softmax(pipe.logits(ids), dim=-1)
+            for j, r in enumerate(chunk):
+                e = s[j] + len(r["t"])
+                lp = logp[j, s[j] - 1: e - 1]
+                tgt = ids[j, s[j]: e]
+                ces = (-lp.gather(1, tgt.unsqueeze(1))).squeeze(1).tolist()
+                ds = [v for p, v in enumerate(ces) if classify(int(tgt[p])) == 0]
+                if ds:
+                    per.append(sum(ds) / len(ds))
+    if was_training:
+        pipe.train()
+    n = len(per)
+    m = sum(per) / n
+    var = sum((x - m) ** 2 for x in per) / (n - 1) if n > 1 else 0.0
+    se = math.sqrt(var / n)
+    acc = math.exp(-m)
+    return dict(acc=acc, acc_se=acc * se, ce=m, ce_se=se, n=n)
+
+
 # ============================================================================
 # ③ 交叉核对：把 logs/ 里的 S19 GPU ckpt 灌进本管线（证明数据/评测口径逐位一致）
 # ============================================================================
-def xcheck_s19(test) -> None:
-    if not S19_CKPT.exists():
-        print(f"[XCHECK] 跳过：{S19_CKPT} 不存在", flush=True)
-        return
-    blob = torch.load(S19_CKPT, map_location="cpu", weights_only=False)
-    sd = blob if isinstance(blob, dict) and "emb.weight" in blob else blob.get("state", blob)
-    mapped, pref = {}, {"emb.": "input.emb.", "in_enc.": "input.enc.",
-                        "thought.": "target.think.", "head.": "output.head."}
+def load_into_pipeline(sd: dict, ckpt_prefixes=None) -> CardPipeline:
+    """把 S19/S36 容器（emb./in_enc./thought./head.）的 state_dict 映射进 CardPipeline。"""
+    pref = ckpt_prefixes or {"emb.": "input.emb.", "in_enc.": "input.enc.",
+                             "thought.": "target.think.", "head.": "output.head."}
+    mapped = {}
     for k, v in sd.items():
         for src, dst in pref.items():
             if k.startswith(src):
@@ -389,9 +457,19 @@ def xcheck_s19(test) -> None:
                 break
     pipe = CardPipeline(d=D, vocab_size=V, ff=FF, nhead=NHEAD, maxlen=MAXLEN,
                         pad_id=PAD_ID, dropout=0.1, residual=True)
-    missing, unexpected = pipe.load_state_dict(mapped, strict=False)
-    print(f"[XCHECK] S19 ckpt 灌入本管线：映射 {len(mapped)} 张量 | "
-          f"missing={len(missing)} unexpected={len(unexpected)}", flush=True)
+    _missing, unexpected = pipe.load_state_dict(mapped, strict=False)
+    assert not unexpected, f"ckpt 有本管线不认的键：{unexpected[:3]}"
+    return pipe
+
+
+def xcheck_s19(test) -> None:
+    if not S19_CKPT.exists():
+        print(f"[XCHECK] 跳过：{S19_CKPT} 不存在", flush=True)
+        return
+    blob = torch.load(S19_CKPT, map_location="cpu", weights_only=False)
+    sd = blob if isinstance(blob, dict) and "emb.weight" in blob else blob.get("state", blob)
+    pipe = load_into_pipeline(sd)
+    print(f"[XCHECK] S19 ckpt 灌入本管线：映射 {len(pipe.state_dict())} 张量", flush=True)
     r = em_score(pipe, test)
     print(f"[XCHECK] ★同一份数据 + 同一个贪心评测，跑 S19 的 GPU 权重："
           f"EM={r['em']*100:.2f}%±{r['se']*100:.2f}(n={r['n']}) vs S19 记录 37.25% | "
@@ -404,14 +482,15 @@ def xcheck_s19(test) -> None:
 def main() -> int:
     t0 = time.time()
     print(f"[CFG] device={DEVICE}（torch.cuda.is_available={torch.cuda.is_available()}，"
-          f"★不用 GPU：E5 在跑）threads={torch.get_num_threads()} | d={D} ff={FF} "
+          f"★不用 GPU）threads={torch.get_num_threads()} | d={D} ff={FF} "
           f"NHEAD={NHEAD} lr={LR} batch={BATCH} steps={STEPS} MAXLEN={MAXLEN} "
           f"train={N_TRAIN}/test={N_TEST} seed={SEED} 桶={BUCKET}(BI={BI}) "
-          f"RNG={RNG_MODE}", flush=True)
+          f"RNG={RNG_MODE} snap@{SNAP_AT}", flush=True)
     naked = sum(1 for t, _ in TEMPLATES if "{expr}" in t.format(expr="X"))
     print(f"[CFG] V={V} PAD={PAD_ID} EOS={EOS_ID} | 模板={len(TEMPLATES)} 句（★裸式 "
           f"{naked} 句 `{{expr}}` 不替换 = S19 的已知 bug，原样保留）| "
-          f"S19 参照：res={S19_RES_EM*100:.2f}% nores={S19_NORES_EM*100:.2f}%", flush=True)
+          f"E6 饱和点锚(res@{STEPS}/seed)：EM={E6_RES_EM.get(SEED, float('nan'))*100:.2f}% "
+          f"数字每步={E6_RES_DIG.get(SEED, float('nan'))*100:.2f}%", flush=True)
 
     train, test = build_data()
     print(f"[DATA] {BUCKET}: BI={BI} ⇒ tr_rng=seed{14000 + BI * 7} te_rng=seed{14900 + BI * 7}"
@@ -420,21 +499,64 @@ def main() -> int:
           f"gold 前5答案={[r['gold'] for r in test[:5]]} | "
           f"prompt[-1]示例={dec(test[0]['p'])[:60]!r}", flush=True)
 
-    pipe, wall = train_run(train, STEPS)
+    snap_at = SNAP_AT if 0 < SNAP_AT < STEPS else None
+    pipe, wall, snap3 = train_run(train, STEPS, snap_at=snap_at)
     print(f"[TRAIN] 完成 {STEPS} 步，墙钟={wall/60:.2f}min "
-          f"（{wall/STEPS*1000:.0f}ms/step）| 参数量={pipe.n_params()/1e6:.3f}M", flush=True)
+          f"（{wall/STEPS*1000:.0f}ms/step）| 参数量={pipe.n_params()/1e6:.3f}M "
+          f"| @{SNAP_AT} 快照={'已取' if snap3 else '未取'}", flush=True)
 
-    r = em_score(pipe, test)
-    print(f"[EM] ★{BUCKET} test 严格EM(batch=1, n={r['n']})="
-          f"{r['em']*100:.2f}%±{r['se']*100:.2f}", flush=True)
-    dev = (r["em"] - S19_RES_EM) * 100
-    verdict = ("一致" if abs(dev) <= TOL_PP else "★偏离 >2pp")
-    print(f"[JUDGE] vs S19-res 37.25%: Δ={dev:+.2f}pp ⇒ {verdict}（判据 |Δ| ≤ {TOL_PP}pp）",
+    # ---- @6000（主口径）：EM + 数字每步 ----
+    r6 = em_score(pipe, test)
+    d6 = digit_report(pipe, test)
+    final = {k: v.detach().to("cpu").clone() for k, v in pipe.state_dict().items()}
+
+    # ---- @3000（同一条轨迹的快照，★不是 dev 选步）：EM + 数字每步 ----
+    r3 = d3 = None
+    if snap3 is not None:
+        pipe.load_state_dict({k: v.to(DEVICE) for k, v in snap3.items()})
+        r3 = em_score(pipe, test)
+        d3 = digit_report(pipe, test)
+        pipe.load_state_dict({k: v.to(DEVICE) for k, v in final.items()})   # 还原末点权重
+
+    em6, dig6 = E6_RES_EM.get(SEED), E6_RES_DIG.get(SEED)
+    print(f"[EM] ★{BUCKET} test 严格EM(batch=1, n={r6['n']}) @{STEPS}="
+          f"{r6['em']*100:.2f}%±{r6['se']*100:.2f} | 数字每步正确率="
+          f"{d6['acc']*100:.2f}%±{d6['acc_se']*100:.2f}（n={d6['n']}，CE={d6['ce']:.4f}）", flush=True)
+    if r3 is not None:
+        print(f"[EM] @{SNAP_AT}（同轨迹快照）EM={r3['em']*100:.2f}%±{r3['se']*100:.2f} | "
+              f"数字每步={d3['acc']*100:.2f}%±{d3['acc_se']*100:.2f}（CE={d3['ce']:.4f}）", flush=True)
+    else:
+        print(f"[EM] @{SNAP_AT} 两栏对照跳过（CARDS_STEPS={STEPS} ≤ 快照点 {SNAP_AT}）", flush=True)
+
+    # ---- ★两栏表 + 饱和判定（R35 口径）----
+    if r3 is not None:
+        de = (r6["em"] - r3["em"]) * 100
+        sat = "已平（=饱和）" if de <= 1.0 else ("仍在升" if de <= 10.0 else "仍在大幅上升（未饱和）")
+        print(f"[TABLE] {BUCKET} seed={SEED} | 栏@{SNAP_AT}: EM={r3['em']*100:.2f}% "
+              f"数字每步={d3['acc']*100:.2f}% | 栏@{STEPS}: EM={r6['em']*100:.2f}% "
+              f"数字每步={d6['acc']*100:.2f}% | ΔEM={de:+.2f}pp Δ数字="
+              f"{(d6['acc']-d3['acc'])*100:+.2f}pp ⇒ 是否饱和：{sat}（batch=1, n={r6['n']}）", flush=True)
+
+    # ---- ★V1 判据：与 E6 res 臂饱和点锚比（≤3pp）----
+    if em6 is not None:
+        dev = (r6["em"] - em6) * 100
+        print(f"[JUDGE] vs E6/S36 res 臂 @6000 seed={SEED}：EM {em6*100:.2f}% → 本机 "
+              f"{r6['em']*100:.2f}% ⇒ Δ={dev:+.2f}pp | 数字每步 {dig6*100:.2f}% → "
+              f"{d6['acc']*100:.2f}% ⇒ Δ={(d6['acc']-dig6)*100:+.2f}pp | 判据 |ΔEM| ≤ {TOL_PP}pp "
+              f"⇒ {'一致 ✓' if abs(dev) <= TOL_PP else '★偏离 >%gpp（要定位：CPU/GPU 浮点 / RNG 流结构 / 数据 RNG 顺序）' % TOL_PP}",
+              flush=True)
+    else:
+        print(f"[JUDGE] seed={SEED} 不在 E6 锚表 {sorted(E6_RES_EM)} 里 ⇒ 只报观测值", flush=True)
+    e30 = E6_RES_EM3000.get(SEED)
+    if r3 is not None and e30 is not None:
+        print(f"[JUDGE] @{SNAP_AT} 对照 S19/S36 res 臂同轨迹快照 {e30*100:.2f}%：本机 "
+              f"{r3['em']*100:.2f}% ⇒ Δ={(r3['em']-e30)*100:+.2f}pp（数字每步 "
+              f"{E6_RES_DIG3000[SEED]*100:.2f}% → {d3['acc']*100:.2f}%）", flush=True)
+    print(f"[JUDGE] 对照：nores 臂 S19 @3000 是 {S19_NORES_EM*100:.2f}%（残差是唯一变量，"
+          f"本例子用 residual=True）；★E1 结论：卡边界不产生能力，本例子只证明「能跑通 + 口径一致」",
           flush=True)
-    print(f"[JUDGE] 对照：nores 臂是 {S19_NORES_EM*100:.2f}%（残差是唯一变量，"
-          f"本例子用的是 residual=True）", flush=True)
     print("[SAMPLES] " + " | ".join(f"pred={parse_ans(t)!r} gold={g!r}"
-                                    for t, g in r["sample"]), flush=True)
+                                    for t, g in r6["sample"]), flush=True)
 
     # ---- 框架能力现场演示（不影响上面的 EM）----
     print(f"[黑板] 谁读了谁 = {pipe.who_reads_whom()}", flush=True)
