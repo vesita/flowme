@@ -40,6 +40,22 @@
   logs/68b_dialog_{train,test}.jsonl（**绝不覆盖 r1 的 logs/68_dialog_* 与 69 的 ckpt**），
   并打印 [D68B]（规模 + 不变量计数 + 本臂自己的指纹 + 地板）。不带该开关时行为与 r1 逐字一致。
 
+★ `--det-reply`（L2-r2 的**唯一变量**，隐含 `--shared-vocab`）：**回复句面不再随机抽**，
+  改由**输入里可见的线索**唯一确定 ——
+      规则 DET：句面 index := 该族「轮3 用户话（省略式）类型」的 index xt；
+                族内 t3_user_forms 与 t3_sys_forms 长度恒等（=4，import 时断言）⇒ 一一对应，
+                取模只是防御性写法。
+      ⇒ (family, 省略式类型) → 句面 是一个函数；同一 (family, 省略式) **永远**同一句面；
+      ⇒ 该线索逐字写在输入里（轮3 文本可见）⇒ 句面可学，§8.5 的"句面不可学"缺陷被修掉。
+  其余构造**逐字不变**：仍然消耗那次 goldi 抽样（只是丢弃其值）⇒ **RNG 消耗序与 68b 完全一致**
+  ⇒ 68d 的 ctx 与 68b **逐条相同**，唯一差别是 target（[D68D-CMP] 会实测这一点）。
+  落盘 logs/68d_dialog_{train,test}.jsonl（**绝不覆盖 68/68b**），打印 [D68D]（规模 + 全部
+  不变量计数 + DET 检查 + 指纹 + 地板）与新增的 [CEIL]（本档"完美实体+完美 v3"下的 EM 上限，
+  **实算**，不写断言）。
+  ★ 唯一没修、也不在本轮范围内的量：回复模板里的 {v3} 槽在轮3 文本里**只有第 1 种省略式可见**
+    （每族 4 种里 1 种）⇒ 其余记录的 v3 在输入里不可见。这正是 [CEIL] 口径写"完美 v3"的原因，
+    并由 [CEIL] 第二行显式报出"完美实体+完美句面、v3 只能均匀蒙"的期望可达上限。
+
 指纹口径与 stages/65_textgen_cards.py::data_fp 逐字一致：逐条 len|ids 拼接后 sha256[:16]。
 只写 logs/ 与本文件；不 import torch（纯 CPU、秒级、确定性）。
 """
@@ -423,6 +439,34 @@ N_T3_FORMS = sum(len(f["t3_user_forms"]) for f in FAMILIES)
 N_REPLY_TEMPLATES = sum(len(f["t3_sys_forms"]) for f in FAMILIES)
 N_V3 = sum(len(f["v3"]) for f in FAMILIES)
 
+# ---------------- L2-r2：确定性回复句面（--det-reply）的规则（写死） ----------------
+# DET：句面 index := 该族「轮3 用户话（省略式）类型」的 index xt（族内两列长度恒等 ⇒ 一一对应）。
+#      (family, 省略式类型) → 句面 是函数，与 RNG 无关、与实体/顺序/v3 全部无关。
+assert all(len(f["t3_user_forms"]) == len(f["t3_sys_forms"]) for f in FAMILIES), \
+    "DET 规则要求每族 t3_user_forms 与 t3_sys_forms 等长"
+
+
+def det_reply_index(fam, xt: int) -> int:
+    """规则 DET：句面 index = 轮3 省略式类型 index（同一 (family, 省略式) 恒同一句面）。"""
+    n = len(fam["t3_sys_forms"])
+    assert len(fam["t3_user_forms"]) == n, f"族 {fam['key']} 两列长度不等 ⇒ DET 未定义"
+    return xt % n
+
+
+def _t3_form_index(fam, t3: str):
+    """只用轮3 文本复原它在族内的句面 index（= 输入可见线索）；识别不出返回 None。"""
+    for i, form in enumerate(fam["t3_user_forms"]):
+        head, sep, tail = form.partition("{v3}")
+        if not sep:
+            if t3 == form:
+                return i
+            continue
+        if t3.startswith(head) and (t3.endswith(tail) if tail else True):
+            mid = t3[len(head): len(t3) - len(tail)] if tail else t3[len(head):]
+            if mid in fam["v3"]:
+                return i
+    return None
+
 
 # ---------------- 渲染：与 nanoSeek DialogueStream(用户：/ <resp> / <eos>) 同款 ----------------
 def render_ctx(r1u: str, r1s: str, r2u: str, r2s: str, r3u: str) -> str:
@@ -449,7 +493,7 @@ def _name_pairs(pool):
 
 # ---------------- 生成 ----------------
 def gen_records(seed: int = SEED, n_train: int = N_TRAIN, n_test: int = N_TEST,
-                shared_vocab: bool = False) -> list:
+                shared_vocab: bool = False, det_reply: bool = False) -> list:
     """确定性生成 n_train+n_test 条**互不相同**的 ctx。
 
     每条样本 = 三轮：其中一轮引入「我自己的」实体 = 正确实体 a，
@@ -495,7 +539,10 @@ def gen_records(seed: int = SEED, n_train: int = N_TRAIN, n_test: int = N_TEST,
         topic = T2_TOPICS[ti]
         v3 = fam["v3"][v3i]
         tail = R1S_TAILS[rng.randrange(len(R1S_TAILS))]
-        goldi = rng.randrange(len(fam["t3_sys_forms"]))
+        # ★--det-reply：这次抽样**照抽但丢弃**（保住与 68b 完全相同的 RNG 消耗序 ⇒ ctx 逐条相同），
+        #   句面改由输入可见线索（family + 轮3 省略式类型）唯一确定。
+        goldi_rng = rng.randrange(len(fam["t3_sys_forms"]))
+        goldi = det_reply_index(fam, xt) if det_reply else goldi_rng
         # ★ 哪一句是"我朋友的"完全跟着顺序走；系统话只许复述**对方（朋友）**那个实体，
         #   不许复述正确实体（否则轮2 写成"您朋友的{正确实体}"= 语义错误，也漏答案）
         if self_first:
@@ -522,6 +569,7 @@ def gen_records(seed: int = SEED, n_train: int = N_TRAIN, n_test: int = N_TEST,
             turn3_has_ent=((a in r3u) or (b in r3u)),
             t3=r3u, t1_user=r1u, t1_sys=r1s, t2_user=r2u, t2_sys=r2s,
             family=fam["key"], v3=v3, n_turns=3,
+            t3_form_idx=xt, det_reply_surface_idx=goldi, det_reply=bool(det_reply),
             ent_count=ecount,
             ent_pos=pa, ent_other_pos=pb,
             ent_pos_rank=(0 if pa < pb else 1),
@@ -622,8 +670,12 @@ def _role_entity(ctx: str, vocab=NAMES):
     return _one([n for n in vocab if n in ctx and n != o])
 
 
-def check_invariants(recs, tag="all", vocab=NAMES):
-    """返回 (ok, vio, total_vio)；逐条断言 A/B/C/D，另做词表级静态检查。"""
+def check_invariants(recs, tag="all", vocab=NAMES, det_reply=False):
+    """返回 (ok, vio, total_vio)；逐条断言 A/B/C/D，另做词表级静态检查。
+
+    det_reply=True 时额外做 **DET 检查**（句面确定性）：句面必须能从**输入文本**复原并按 DET 规则
+    复现 target；同一 (family, 省略式类型) 的句面必须唯一。
+    """
     ok = Counter()
     vio = Counter()
     for r in recs:
@@ -683,8 +735,37 @@ def check_invariants(recs, tag="all", vocab=NAMES):
     print(f"[INV:{tag}] D 判定不只靠位置：正确实体位置桶={dict(rank_cnt)} "
           f"| 位置规则「取第一个出现的实体」EM={d_pos_only:.2f}% | 角色规则「我朋友的」取补 EM={d_role:.2f}% "
           f"（位置规则≈50% ⇒ 位置拿不到高分）", flush=True)
+    if det_reply:
+        # ★DET 检查（L2-r2）：句面由**输入可见线索**唯一确定，且能从输入文本复原
+        n_rule_ok, n_bad_rule, n_bad_recover = 0, 0, 0
+        seen = {}
+        for r in recs:
+            fam = FAM_BY_KEY[r["family"]]
+            xt = _t3_form_index(fam, r["t3"])
+            if xt is None or xt != r["t3_form_idx"]:
+                n_bad_recover += 1
+                continue
+            idx = det_reply_index(fam, xt)
+            seen.setdefault((r["family"], xt), set()).add(idx)
+            exp = fam["t3_sys_forms"][idx].format(a=r["ent"], v3=r["v3"])
+            if exp == r["target"]:
+                n_rule_ok += 1
+            else:
+                n_bad_rule += 1
+        n_non_singleton = sum(1 for v in seen.values() if len(v) != 1)
+        vio["DET_bad_rule"] += n_bad_rule
+        vio["DET_bad_recover"] += n_bad_recover
+        vio["DET_non_singleton"] += n_non_singleton
+        print(f"[INV:{tag}] DET 句面确定性（--det-reply）：句面可从**输入文本**复原且按 DET 复现 target"
+              f"={n_rule_ok}/{len(recs)}（违例={n_bad_rule}）| 输入复原失败={n_bad_recover} "
+              f"| (family,省略式)→句面 非单值={n_non_singleton} | 出现过的 (family,省略式) 组合={len(seen)}"
+              f"（应={N_TEMPLATE_FAMILIES}×"
+              f"{len(FAMILIES[0]['t3_user_forms'])}={N_TEMPLATE_FAMILIES * len(FAMILIES[0]['t3_user_forms'])}）",
+              flush=True)
     total_vio = (vio["A"] + vio["B"] + vio["A_ent_in_t3"] + vio["A_static"]
                  + vio["C_dup"] + vio["C_conflict"])
+    if det_reply:
+        total_vio += vio["DET_bad_rule"] + vio["DET_bad_recover"] + vio["DET_non_singleton"]
     print(f"[INV:{tag}] 违例合计={total_vio}（不含 D 的命中计数，D 是读数不是违例）⇒ "
           f"{'全部不变量成立' if total_vio == 0 else '★数据无效'}", flush=True)
     return ok, vio, total_vio
@@ -845,6 +926,64 @@ def compute_floors(train, test, tag="test", show_train=True):
     return out, mx_name, mx, thr
 
 
+# ---------------- [CEIL]（L2-r2）：本档"完美实体+完美 v3"下的 EM 上限（实算） ----------------
+def compute_ceiling(recs, tag="test"):
+    """★实算本档 EM 上限，不写断言。
+
+    口径（写死）：**完美实体 + 完美 v3 + 由输入可见线索唯一确定的句面**。
+    句面由 DET 规则从**输入文本**复原（_t3_form_index → det_reply_index），
+    两个槽位喂 oracle（r["ent"] / r["v3"]）⇒ 若 DET 与数据构造一致，上限应 = 100.00%。
+
+    第二行是**诚实分解**：{v3} 槽只在每族第 1 种轮3 省略式里可见 ⇒ 其余记录的 v3 输入不可见，
+    一个"完美实体 + 完美句面"的模型只能按各族 |v3| 池均匀蒙 ⇒ 报出该期望可达上限。
+    """
+    n = len(recs)
+    hit = miss_recover = vis = 0
+    exp_num = 0.0
+    for r in recs:
+        fam = FAM_BY_KEY[r["family"]]
+        xt = _t3_form_index(fam, r["t3"])
+        if xt is None:
+            miss_recover += 1
+            continue
+        pred = fam["t3_sys_forms"][det_reply_index(fam, xt)].format(a=r["ent"], v3=r["v3"])
+        hit += _em(r["target"], pred)
+        if r["v3_in_t3"]:
+            vis += 1
+            exp_num += 1.0
+        else:
+            exp_num += 1.0 / len(fam["v3"])
+    ceil = 100.0 * hit / n
+    visp = 100.0 * vis / n
+    exp = 100.0 * exp_num / n
+    print(f"[CEIL] {tag} n={n} 口径=完美实体+完美v3+由输入可见线索确定的句面"
+          f"（DET(family, 轮3省略式)）⇒ **EM 上限={ceil:.2f}%**（实算命中={hit}/{n}；"
+          f"句面从输入文本复原失败={miss_recover}）", flush=True)
+    print(f"[CEIL] {tag} 分解：{{v3}} 在输入里可见={visp:.2f}%（n={vis}，可完全学）| 不可见={100.0 - visp:.2f}%"
+          f"（n={n - vis}）⇒ 完美实体+完美句面、v3 只能按各族 |v3| 池均匀蒙时"
+          f"**期望可达上限={exp:.2f}%**（各族 |v3| 池="
+          + ",".join(f"{f['key']}:{len(f['v3'])}" for f in FAMILIES) + "）", flush=True)
+    return ceil, visp, exp
+
+
+def _cmp_68b(train, test):
+    """单变量取证：68d 应只有 target 变了，ctx 与 68b 逐条相同（RNG 消耗序一致）。"""
+    parts = []
+    for split, rs in (("train", train), ("test", test)):
+        fp = os.path.join(LOG_DIR, f"68b_dialog_{split}.jsonl")
+        if not os.path.exists(fp):
+            parts.append(f"{split}=68b缺⇒跳过")
+            continue
+        with open(fp, encoding="utf-8") as f:
+            old = [json.loads(ln) for ln in f if ln.strip()]
+        n = min(len(old), len(rs))
+        same_ctx = sum(1 for i in range(n) if old[i]["ctx"] == rs[i]["ctx"])
+        same_tgt = sum(1 for i in range(n) if old[i]["target"] == rs[i]["target"])
+        parts.append(f"{split}: ctx 相同={same_ctx}/{n} target 相同={same_tgt}/{n}"
+                     f"（⇒ target 变了 {n - same_tgt}/{n}）")
+    print(f"[D68D-CMP] 与 68b 单变量取证：{' | '.join(parts)}", flush=True)
+
+
 # ---------------- 入口 ----------------
 def main(argv=None):
     ap = argparse.ArgumentParser(description="S68 L2-r1 跨轮消解式对话数据生成器")
@@ -854,18 +993,23 @@ def main(argv=None):
     ap.add_argument("--shared-vocab", action="store_true",
                     help="L2-r1b 唯一变量：test 人名取自与 train 同一份词表；"
                          "落盘改到 logs/68b_dialog_*.jsonl 并打印 [D68B]")
+    ap.add_argument("--det-reply", action="store_true",
+                    help="L2-r2 唯一变量：回复句面由输入可见线索（family + 轮3 省略式类型）唯一确定"
+                         "（规则 DET）；隐含 --shared-vocab；落盘 logs/68d_dialog_*.jsonl，"
+                         "打印 [D68D]/[CEIL]")
     a = ap.parse_args(argv)
 
+    shared = bool(a.shared_vocab or a.det_reply)
     recs = gen_records(seed=a.seed, n_train=a.n_train, n_test=a.n_test,
-                       shared_vocab=a.shared_vocab)
+                       shared_vocab=shared, det_reply=a.det_reply)
     train, test = recs[:a.n_train], recs[a.n_train:]
     combos_n = (N_TEMPLATE_FAMILIES * N_FAMILY_FORMS * N_T3_FORMS * N_V3 * len(T2_TOPICS)
                 * len(NAMES_TRAIN) * (len(NAMES_TRAIN) - 1))
     print(f"[SPLIT] 固定切分：先 shuffle 组合再切前 {a.n_train}+{a.n_test} 条；"
           f"组合空间={combos_n}；实体词表 train={len(NAMES_TRAIN)} test={len(NAMES_TEST)} "
-          f"（{'共享同一份 ⇒ NAMES_TRAIN' if a.shared_vocab else '互不相交'}）", flush=True)
+          f"（{'共享同一份 ⇒ NAMES_TRAIN' if shared else '互不相交'}）", flush=True)
 
-    ok, vio, total_vio = check_invariants(recs, tag="all")
+    ok, vio, total_vio = check_invariants(recs, tag="all", det_reply=a.det_reply)
 
     # ---- tokenizer：逐条编码 + 指纹 + 可加性 + 格式核对 ----
     from tokenizers import Tokenizer
@@ -904,7 +1048,7 @@ def main(argv=None):
           f"最大={max(len(r['t']) for r in recs)}", flush=True)
 
     # ---- 落盘（p/t 只在内存里用于指纹与长度统计，不写进 jsonl：69 会用同一 tokenizer 重算） ----
-    out_prefix = "68b" if a.shared_vocab else "68"
+    out_prefix = "68d" if a.det_reply else ("68b" if a.shared_vocab else "68")
     for split, rs in (("train", train), ("test", test)):
         fp = os.path.join(LOG_DIR, f"{out_prefix}_dialog_{split}.jsonl")
         with open(fp, "w", encoding="utf-8") as f:
@@ -915,10 +1059,10 @@ def main(argv=None):
 
     print(f"[D68] n_train={len(train)} n_test={len(test)} 族={N_TEMPLATE_FAMILIES} "
           f"族句面(轮1)={N_FAMILY_FORMS} 回复模板={N_REPLY_TEMPLATES} 新信息槽={N_V3} "
-          f"实体词表={len(NAMES_TRAIN) if a.shared_vocab else len(NAMES)}"
+          f"实体词表={len(NAMES_TRAIN) if shared else len(NAMES)}"
           f"(train {len(NAMES_TRAIN)}/"
-          f"test {len(NAMES_TRAIN) if a.shared_vocab else len(NAMES_TEST)}"
-          f"{' 共享' if a.shared_vocab else ''}) "
+          f"test {len(NAMES_TRAIN) if shared else len(NAMES_TEST)}"
+          f"{' 共享' if shared else ''}) "
           f"| train_fp={tr_fp} test_fp={te_fp}", flush=True)
     print(f"[TPL] 族=" + " ".join(
         f"{f['key']}(我自己×{len(f['t1_self_forms'])}/我朋友×{len(f['t1_friend_forms'])}/"
@@ -946,6 +1090,23 @@ def main(argv=None):
               f" | 不变量违例合计={total_vio}(A={vio['A']} B={vio['B']} "
               f"A_ent_in_t3={vio['A_ent_in_t3']} A_static={vio['A_static']} "
               f"C_dup={vio['C_dup']} C_conflict={vio['C_conflict']})"
+              f" | 地板 max_naive={mx:.2f}%({mx_name}) 2SE={thr - mx:.2f}pp 门槛={thr:.2f}%",
+              flush=True)
+    if a.det_reply:
+        # ★L2-r2：[CEIL] 实算上限 + 臂标识行 + 与 68b 的单变量取证
+        compute_ceiling(test, tag="test")
+        compute_ceiling(train, tag="train")
+        _cmp_68b(train, test)
+        print(f"[D68D] 确定性回复臂（--det-reply，隐含共享词表）：n_train={len(train)} n_test={len(test)} "
+              f"族={N_TEMPLATE_FAMILIES} 回复模板={N_REPLY_TEMPLATES} 新信息槽={N_V3} "
+              f"轮2填充语={len(T2_TOPICS)} | 实体词表={len(NAMES_TRAIN)}（train/test 共享同一份）"
+              f" | 句面规则 DET(family,轮3省略式 index)=该 index（族内两列等长 ⇒ 一一对应）"
+              f" | train_fp={tr_fp} test_fp={te_fp}"
+              f" | 不变量违例合计={total_vio}(A={vio['A']} B={vio['B']} "
+              f"A_ent_in_t3={vio['A_ent_in_t3']} A_static={vio['A_static']} "
+              f"C_dup={vio['C_dup']} C_conflict={vio['C_conflict']} "
+              f"DET_bad_rule={vio['DET_bad_rule']} DET_bad_recover={vio['DET_bad_recover']} "
+              f"DET_non_singleton={vio['DET_non_singleton']})"
               f" | 地板 max_naive={mx:.2f}%({mx_name}) 2SE={thr - mx:.2f}pp 门槛={thr:.2f}%",
               flush=True)
     if total_vio:

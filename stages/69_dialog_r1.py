@@ -18,12 +18,16 @@
   python stages/69_dialog_r1.py --smoke                  # 50 步、只评 60 条（探路）
   python stages/69_dialog_r1.py --seed 1234              # 全量 3000 步
   python stages/69_dialog_r1.py --seed 1234 --swap       # Q2：换实体、保留原 target，同一 ckpt 重评
-  # L2-r1b / r1c 两个单变量臂（本文件只加参数，其余逻辑逐字不变）：
+  # L2-r1b / r1c / r1d / r2 单变量臂（本文件只加参数，其余逻辑逐字不变）：
   python stages/69_dialog_r1.py --data-prefix 68b --seed 1234            # r1b：共享词表数据（68b_dialog_*）
   python stages/69_dialog_r1.py --data-prefix 68 --seed 1234 --steps 12000   # r1c：互斥词表、12000 步
-  --data-prefix {68,68b} 决定读哪份 jsonl（logs/<prefix>_dialog_*.jsonl）与 ckpt 命名
-  （68 ⇒ 69_ckpt_seed*.pt 不变；68b ⇒ 69_ckpt_68b_seed*.pt，互不覆盖）；缺 68b 数据时自动带
-  --shared-vocab 跑生成器。--steps 默认 3000（--smoke 时仍固定 50 步）。
+  python stages/69_dialog_r1.py --data-prefix 68d --seed 1234            # r2：共享词表 + 确定性句面（68d_dialog_*）
+  python stages/69_dialog_r1.py --data-prefix 68d --seed 1234 --steps 12000
+  --data-prefix {68,68b,68d} 决定读哪份 jsonl（logs/<prefix>_dialog_*.jsonl）与 ckpt 命名
+  （68 ⇒ 69_ckpt_seed*.pt 不变；68b ⇒ 69_ckpt_68b_seed*.pt；68d ⇒ 69_ckpt_68d_seed*.pt，互不覆盖）；
+  缺 68b/68d 数据时自动带 --shared-vocab / --det-reply 跑生成器。--steps 默认 3000（--smoke 时固定 50 步）。
+  ★§8.4 必跑诊断（训练后、无开关）：在 train 与 test 上分别报「目标首 token（=实体首字）的
+  top1/top5」与「贪心生成的实体来源（正确实体 / 干扰实体 / 训练词表名 / 其它）」，打印为 [DIAG] 行。
 GPU 长跑必须：systemd-run --user --unit=<名> --collect
   --setenv=HSA_OVERRIDE_GFX_VERSION=10.3.0 --setenv=PYTHONUNBUFFERED=1 ...
 只允许写本文件与 logs/。
@@ -38,6 +42,7 @@ import os
 import subprocess
 import sys
 import time
+from collections import Counter
 
 NS_ROOT = "/home/vesita/coding/my/nanoSeek"
 if NS_ROOT not in sys.path:
@@ -109,11 +114,12 @@ def dec(ids) -> str:
 
 # ---------------- 数据 ----------------
 def ensure_data(prefix: str = "68"):
-    """缺数据时自动跑生成器；prefix=68b 时带 --shared-vocab（与 --data-prefix 对齐）。"""
+    """缺数据时自动跑生成器；prefix=68b 带 --shared-vocab、prefix=68d 带 --det-reply。"""
     if os.path.exists(DATA_TMPL.format(split="train")) and os.path.exists(DATA_TMPL.format(split="test")):
         return
     print(f"[DATA] 缺 {DATA_TMPL.format(split='train')} ⇒ 先跑生成器", flush=True)
-    cmd = [sys.executable, D68_PATH] + (["--shared-vocab"] if prefix == "68b" else [])
+    extra = {"68b": ["--shared-vocab"], "68d": ["--det-reply"]}.get(prefix, [])
+    cmd = [sys.executable, D68_PATH] + extra
     r = subprocess.run(cmd, cwd=ROOT)
     if r.returncode != 0:
         raise SystemExit(f"[DATA] 生成器退出码 {r.returncode} ⇒ 停")
@@ -320,6 +326,80 @@ def evaluate(model, ev, tag: str):
                 em_other=100.0 * sum(other_hit) / len(other_hit))
 
 
+# ---------------- §8.4 必跑诊断（无开关）：目标可生成性 + 生成实体来源 ----------------
+DIAG_TRAIN_N = 800            # train 侧贪心诊断的子集规模（与 test 同规模、同 batch=1 口径）
+
+
+@torch.no_grad()
+def diag_first_token(model, recs, tag: str) -> dict:
+    """目标首 token（= 正确实体首字）的 top1 / top5 —— §8.2 里一次戳穿数据缺陷的那条读数。
+
+    口径：在**最后一个 prompt 位**（正确列索引 s-1，与贪心解码同一位）取 logits，
+    看 r["t"][0] 的排名。字符级词表下这条直接回答"目标用字有没有质量"。
+    """
+    model.eval()
+    n = len(recs)
+    hit1 = hit5 = 0
+    for i in range(0, n, GEN_BATCH):
+        chunk = recs[i: i + GEN_BATCH]
+        ids, s = build_batch(chunk)
+        logits = model.logits(ids)
+        for j, r in enumerate(chunk):
+            lp = logits[j, int(s[j]) - 1]
+            gold = int(r["t"][0])
+            hit1 += int(int(lp.argmax().item()) == gold)
+            hit5 += int(gold in torch.topk(lp, 5).indices.tolist())
+    model.train()
+    return dict(tag=tag, n=n, top1=100.0 * hit1 / n, top5=100.0 * hit5 / n)
+
+
+def diag_entity_source(preds, recs, tag: str) -> dict:
+    """贪心生成里的实体来源四分类：正确实体 / 干扰实体 / 训练词表名 / 其它（互斥、按序判定）。"""
+    c = Counter()
+    for r, txt in zip(recs, preds):
+        if r["ent"] in txt:
+            c["正确实体"] += 1
+        elif r["ent_other"] in txt:
+            c["干扰实体"] += 1
+        elif any(nm in txt for nm in d68.NAMES_TRAIN):
+            c["训练词表名"] += 1
+        else:
+            c["其它"] += 1
+    n = len(recs)
+    return dict(tag=tag, n=n, **{k: 100.0 * c[k] / n
+                                 for k in ("正确实体", "干扰实体", "训练词表名", "其它")})
+
+
+def print_diag(a, ev, txt, res, train, model, arm_tag: str):
+    """§8.4 必跑诊断的两行：train/test 各自「首 token top1/top5」+「生成实体来源」。"""
+    d_tr = diag_first_token(model, train, f"train(n={len(train)})")
+    d_te = diag_first_token(model, ev, f"{arm_tag}(n={len(ev)})")
+    print(f"[DIAG] §8.4 目标首token(=实体首字) top1/top5：{d_tr['tag']} top1={d_tr['top1']:.2f}% "
+          f"top5={d_tr['top5']:.2f}% | {d_te['tag']} top1={d_te['top1']:.2f}% top5={d_te['top5']:.2f}%",
+          flush=True)
+    n_tr = min(DIAG_TRAIN_N, len(ev)) if a.smoke else min(DIAG_TRAIN_N, len(train))
+    tr_sub = train[:n_tr]
+    preds_tr = greedy_gen(model, tr_sub, batch=EM_BATCH)
+    s_tr = diag_entity_source(preds_tr, tr_sub, f"train子集(n={len(tr_sub)},前{len(tr_sub)}条)")
+    s_te = diag_entity_source(txt, ev, f"{arm_tag}(n={len(ev)})")
+    def _s(d):
+        return (f"{d['tag']}: 正确实体={d['正确实体']:.2f}% 干扰实体={d['干扰实体']:.2f}% "
+                f"训练词表名={d['训练词表名']:.2f}% 其它={d['其它']:.2f}%")
+    print(f"[DIAG] §8.4 贪心生成实体来源（四分类互斥）：{_s(s_te)} | {_s(s_tr)} | "
+          f"（test 生成含正确实体={res['em_ent']:.2f}%、含干扰实体={res['em_other']:.2f}%）", flush=True)
+
+    # ★EM 按「v3 是否在输入里可见」分解 —— 直接回答"离上限的差距是不是 v3 不可见造成的"
+    def _em_split(preds, rs, lbl):
+        vis = [i for i, r in enumerate(rs) if r["v3_in_t3"]]
+        inv = [i for i, r in enumerate(rs) if not r["v3_in_t3"]]
+        f = lambda idx: (100.0 * sum(int(rs[i]["target"].strip() == preds[i].strip()) for i in idx)
+                         / len(idx)) if idx else float("nan")  # noqa: E731
+        print(f"[DIAG] EM 分解（v3 是否在输入里可见）：{lbl} 可见 n={len(vis)} EM={f(vis):.2f}% | "
+              f"不可见 n={len(inv)} EM={f(inv):.2f}%", flush=True)
+    _em_split(txt, ev, f"{arm_tag}(全量 n={len(ev)})")
+    _em_split(preds_tr, tr_sub, f"train子集(n={len(tr_sub)})")
+
+
 # ---------------- 主流程 ----------------
 def main(argv=None):
     global DATA_TMPL
@@ -330,9 +410,10 @@ def main(argv=None):
                     help="Q2：test 的轮1/轮2 实体互换、保留原 target，同一 ckpt 重评（不重训）")
     ap.add_argument("--steps", type=int, default=STEPS,
                     help=f"训练步数（默认 {STEPS}；--smoke 时固定 {SMOKE_STEPS}）")
-    ap.add_argument("--data-prefix", choices=("68", "68b"), default="68",
+    ap.add_argument("--data-prefix", choices=("68", "68b", "68d"), default="68",
                     help="数据/ckpt 前缀：68=logs/68_dialog_*.jsonl（默认，与 r1 逐字同径）；"
-                         "68b=logs/68b_dialog_*.jsonl（L2-r1b 共享词表臂），ckpt 名加 68b_ 前缀")
+                         "68b=logs/68b_dialog_*.jsonl（L2-r1b 共享词表臂）；"
+                         "68d=logs/68d_dialog_*.jsonl（L2-r2 共享词表+确定性句面臂），ckpt 名加前缀")
     a = ap.parse_args(argv)
     DATA_TMPL = os.path.join(LOG_DIR, f"{a.data_prefix}_dialog_{{split}}.jsonl")
     steps = SMOKE_STEPS if a.smoke else a.steps
@@ -422,6 +503,9 @@ def main(argv=None):
           f"±SE={se:.2f}pp | 诊断：生成含**正确实体**比例={res['em_ent']:.2f}% | "
           f"生成含**干扰实体**比例={res['em_other']:.2f}% | "
           f"地板 max_naive={mx:.2f}%({mxname}) 门槛={thr:.2f}%", flush=True)
+
+    # ---- §8.4 必跑诊断（train/test 各自；放在 [EM] 之后、[GEN] 之前） ----
+    print_diag(a, ev, txt, res, train, model, res["tag"])
 
     shown = 0
     for i, r in enumerate(ev):
