@@ -85,4 +85,4 @@
 | ③ | 数据轴：修 S14 生成器 `{expr}` 模板 bug（= P5） | **降为第三**：E9 判解析错 0 ⇒ 修 `{expr}` 主要影响训练噪声而非评估口径；**train 侧仍有 1.75–3.75% 噪声**。裸式模板 10/358 句未替换（**模板占比 2.79%，非样本占比**）；根因 `stages/14_synth_arith.py:126,254`；影响面见提交 `4f51ef6` |
 | P2 | 跨任务功能迁移（M3） | **已完成**（结论见 §2 ⑨）；全项目首测，`stages/45_cross_task_transfer.py` + 提交 `6fb97ce` |
 | P3 | 绑定 vs 相加（VSA 最小版） | **进行中（GPU）**；用 S27 的 C1：`nanoSeek/model/attention.py:573` `_kv_memory_forward` KV 外积绑定 |
-| P4 | 把 `cards/` 接上真实实验 | **门 0 / 门 1 已完成**（门 0 = 数据路径逐位同；门 1 = 20/20 ckpt 逐位一致，`cards/exp_struct_ablation.py` + 提交 `27c7b39`）⇒ **门 2 **已通过**（权重逐位 max|Δθ|==0.0）⇒ **P4 全线通过**** |
+| P4 | 把 `cards/` 接上真实实验 | **全线通过**：门 0（数据路径逐位同）· 门 1（前向/评估 20/20 逐位一致）· **门 2（训练路径逐位：权重 `max|Δθ| == 0.0`）** —— 见提交 `193de67`/`27c7b39`/`f4a8f1a` 与 `cards/exp_struct_ablation.py`、`stages/51_p4_gate2.py` |
