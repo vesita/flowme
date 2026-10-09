@@ -4,6 +4,15 @@
 > 方法与纪律见 `methodology/RULES.md`；现状与结论见 `PROJECT_STATE.md`；绝对数字口径见 `METRICS.md`。
 > 引用证据时只引**已入库**的文件或提交号（R32：未入库的 `logs/*.log` 不可核实）。
 
+## 2026-10-10 早晨 · L3-r0/r1 的 dsh 重启事故与抢救
+
+**事故**：dsh 重启把两个在飞子代理（L3-r0 已交付、L3-r1 在写驱动）一起中断，`logs/` 下 r1 的三个 run **从未落日志**；工作区留下**三份未提交产物**：`stages/70_arith_dialog_gen.py`、`stages/70b_tools_floor.py`、`stages/71_arith_dialog_cards.py`。
+
+**抢救（Lead）**：`git status` 认出 untracked 产物 → 三个文件 `ast.parse` 全过、`71` 的 `--data-prefix/--seed/--steps/--smoke` 齐全、smoke 日志（4720 B）完整 ⇒ **按路径显式入库**（提交 `1883069`）。
+**恢复**：用户唤醒子代理后，r1 自行 claim 并起重跑 `flowme_l3r1`（三臂串行：70s×2 seed + 70×1 seed）。**我全程没有起 GPU 任务** —— 若我抢先跑就会与它重复占卡（本会话早先并发抢卡出过 `Memory access fault`，见 `NL_CARDS_REF.md` §5.4）。
+
+**可复用的读法**：dsh 重启**杀子代理但保留工作区文件** ⇒ 恢复时先 `git status` 找 untracked 产物、核 AST/关键开关、再显式提交；**不要**在不确定子代理是否被唤醒前就自己起长跑。
+
 ## 2026-10-10 早晨 · L2-r5（copy/pointer 头）：机制有效，但**不是充分条件**
 
 四臂（3000 步；加 copy 头后 n_params 2,535,041）：
