@@ -123,7 +123,7 @@ def build_templates() -> list[tuple[str, bool]]:
             for t in tails_cn:
                 ts.append((f"{lead}{verb} {{expr}} {t}", True))
     for t in tails_cn:                       # 裸式（最常见的口算句）
-        ts.append(("{{expr}} " + t, True))
+        ts.append(("{expr} " + t, True))
     for q in ("What is {expr}?", "{expr} equals what?", "How much is {expr}?",
               "What is {expr} equal to?", "{expr} is what?", "What does {expr} make?",
               "What is the result of {expr}?", "{expr} equals how much?",
