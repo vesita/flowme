@@ -118,7 +118,7 @@ def ensure_data(prefix: str = "68"):
     if os.path.exists(DATA_TMPL.format(split="train")) and os.path.exists(DATA_TMPL.format(split="test")):
         return
     print(f"[DATA] 缺 {DATA_TMPL.format(split='train')} ⇒ 先跑生成器", flush=True)
-    extra = {"68b": ["--shared-vocab"], "68d": ["--det-reply"]}.get(prefix, [])
+    extra = {"68b": ["--shared-vocab"], "68d": ["--det-reply"], "68e": ["--keep-v3"]}.get(prefix, [])
     cmd = [sys.executable, D68_PATH] + extra
     r = subprocess.run(cmd, cwd=ROOT)
     if r.returncode != 0:
@@ -410,10 +410,11 @@ def main(argv=None):
                     help="Q2：test 的轮1/轮2 实体互换、保留原 target，同一 ckpt 重评（不重训）")
     ap.add_argument("--steps", type=int, default=STEPS,
                     help=f"训练步数（默认 {STEPS}；--smoke 时固定 {SMOKE_STEPS}）")
-    ap.add_argument("--data-prefix", choices=("68", "68b", "68d"), default="68",
+    ap.add_argument("--data-prefix", choices=("68", "68b", "68d", "68e"), default="68",
                     help="数据/ckpt 前缀：68=logs/68_dialog_*.jsonl（默认，与 r1 逐字同径）；"
                          "68b=logs/68b_dialog_*.jsonl（L2-r1b 共享词表臂）；"
-                         "68d=logs/68d_dialog_*.jsonl（L2-r2 共享词表+确定性句面臂），ckpt 名加前缀")
+                         "68d=logs/68d_dialog_*.jsonl（L2-r2 共享词表+确定性句面臂）；"
+                         "68e=logs/68e_dialog_*.jsonl（L2-r3 轮3 保留 v3 臂），ckpt 名加前缀")
     a = ap.parse_args(argv)
     DATA_TMPL = os.path.join(LOG_DIR, f"{a.data_prefix}_dialog_{{split}}.jsonl")
     steps = SMOKE_STEPS if a.smoke else a.steps
@@ -554,6 +555,24 @@ def main(argv=None):
           f"'能承载'的证据」| EM={em:.2f}% (EM<99% = {em < 99.0}) | "
           f"最后一步 loss={last_loss:.6f} (>{1e-4} = {last_loss > 1e-4}) | "
           f"loss迹={loss_trace} ⇒ {q4}", flush=True)
+
+    if a.data_prefix == "68e":
+        # ★L2-r3 预注册判据（L2_PLAN.md §10.3）逐条打印：Q6（主）/ Q7 / Q8 / Q9。
+        #   只在 68e 档打印 ⇒ 其余档（68/68b/68d）的输出逐字不变。
+        ceil_v, v3vis, _exp_c = d68.ceiling_value(test, keep_v3=True)
+        q6 = (em > thr) and (em / ceil_v >= 0.80)
+        q7 = res["em_ent"] >= 99.0
+        q8 = (v3vis == 100.0)
+        print(f"[CRIT] Q6（主）L2_PLAN §10.3：「EM > 门槛(max_naive+2SE) 且 EM/[CEIL] ≥ 0.80」| "
+              f"EM={em:.2f}% vs 门槛={thr:.2f}% ⇒ {'PASS' if em > thr else 'FAIL'} | "
+              f"EM/[CEIL]={em / ceil_v:.3f} vs 0.80 ⇒ {'PASS' if em / ceil_v >= 0.80 else 'FAIL'} | "
+              f"[CEIL]={ceil_v:.2f}% ⇒ Q6 {'PASS' if q6 else 'FAIL'}", flush=True)
+        print(f"[CRIT] Q7 L2_PLAN §10.3：「生成含正确实体 ≥ 99%」| 含正确实体={res['em_ent']:.2f}% ⇒ "
+              f"{'PASS' if q7 else 'FAIL'}", flush=True)
+        print(f"[CRIT] Q8 L2_PLAN §10.3：「报 [CEIL] 与 v3 可见率（必须 100%）」| [CEIL]={ceil_v:.2f}% | "
+              f"v3 在输入中可见={v3vis:.2f}%（n={len(test)}）⇒ {'PASS' if q8 else 'FAIL'}", flush=True)
+        print(f"[CRIT] Q9 L2_PLAN §10.3：「2 seed 同号（都过 Q6 才算）」| 本 run 只有 seed={a.seed}"
+              f"（本 run Q6={'PASS' if q6 else 'FAIL'}）⇒ 待另一 seed 复跑后合并判定", flush=True)
 
     ck_out = os.path.join(LOG_DIR, f"69_ckpt_{ck_pre}seed{a.seed}_{tag}.pt")
     torch.save(model.state_dict(), ck_out)
