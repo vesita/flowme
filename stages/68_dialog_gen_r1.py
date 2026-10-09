@@ -35,6 +35,11 @@
 这条捷径在 test 上恰好归零，max_naive 由"模板填空"决定（贴地），任何涨分都只能来自
 "从历史里挑对实体"。
 
+★ `--shared-vocab`（L2-r1b 的**唯一变量**）：测试人名改从**与训练同一份** 20 人名里取
+  （其余构造逐字不变：同一 RNG 消耗序、同一模板/填充/顺序位），落盘改写到
+  logs/68b_dialog_{train,test}.jsonl（**绝不覆盖 r1 的 logs/68_dialog_* 与 69 的 ckpt**），
+  并打印 [D68B]（规模 + 不变量计数 + 本臂自己的指纹 + 地板）。不带该开关时行为与 r1 逐字一致。
+
 指纹口径与 stages/65_textgen_cards.py::data_fp 逐字一致：逐条 len|ids 拼接后 sha256[:16]。
 只写 logs/ 与本文件；不 import torch（纯 CPU、秒级、确定性）。
 """
@@ -443,7 +448,8 @@ def _name_pairs(pool):
 
 
 # ---------------- 生成 ----------------
-def gen_records(seed: int = SEED, n_train: int = N_TRAIN, n_test: int = N_TEST) -> list:
+def gen_records(seed: int = SEED, n_train: int = N_TRAIN, n_test: int = N_TEST,
+                shared_vocab: bool = False) -> list:
     """确定性生成 n_train+n_test 条**互不相同**的 ctx。
 
     每条样本 = 三轮：其中一轮引入「我自己的」实体 = 正确实体 a，
@@ -458,7 +464,9 @@ def gen_records(seed: int = SEED, n_train: int = N_TRAIN, n_test: int = N_TEST) 
     """
     rng = random.Random(seed)
     pairs_tr = _name_pairs(NAMES_TRAIN)
-    pairs_te = _name_pairs(NAMES_TEST)
+    # ★--shared-vocab：test 也取 NAMES_TRAIN（同一个 380 名对池，rng 消耗条数完全相同
+    #   ⇒ 与 r1 唯一不同的就是名字落在哪份词表里）
+    pairs_te = pairs_tr if shared_vocab else _name_pairs(NAMES_TEST)
     combos = [(fi, fi1, fi2, xt, ti, v3i)
               for fi, fam in enumerate(FAMILIES)
               for fi1 in range(len(fam["t1_self_forms"]))
@@ -478,7 +486,10 @@ def gen_records(seed: int = SEED, n_train: int = N_TRAIN, n_test: int = N_TEST) 
         pairs_all = pairs_te if is_test else pairs_tr
         a, b = pairs_all[rng.randrange(len(pairs_all))]
         assert a != b and a not in b and b not in a
-        assert (a in TEST_SET) == is_test and (b in TEST_SET) == is_test   # 词表不跨界
+        if shared_vocab:
+            assert (a in TRAIN_SET) and (b in TRAIN_SET)                    # 共享词表：两侧同池
+        else:
+            assert (a in TEST_SET) == is_test and (b in TEST_SET) == is_test   # 词表不跨界
         # ★ 顺序位：严格 50/50，与角色/内容/名对一律无关
         self_first = (k % 2 == 0)
         topic = T2_TOPICS[ti]
@@ -840,15 +851,19 @@ def main(argv=None):
     ap.add_argument("--seed", type=int, default=SEED)
     ap.add_argument("--n-train", type=int, default=N_TRAIN)
     ap.add_argument("--n-test", type=int, default=N_TEST)
+    ap.add_argument("--shared-vocab", action="store_true",
+                    help="L2-r1b 唯一变量：test 人名取自与 train 同一份词表；"
+                         "落盘改到 logs/68b_dialog_*.jsonl 并打印 [D68B]")
     a = ap.parse_args(argv)
 
-    recs = gen_records(seed=a.seed, n_train=a.n_train, n_test=a.n_test)
+    recs = gen_records(seed=a.seed, n_train=a.n_train, n_test=a.n_test,
+                       shared_vocab=a.shared_vocab)
     train, test = recs[:a.n_train], recs[a.n_train:]
     combos_n = (N_TEMPLATE_FAMILIES * N_FAMILY_FORMS * N_T3_FORMS * N_V3 * len(T2_TOPICS)
                 * len(NAMES_TRAIN) * (len(NAMES_TRAIN) - 1))
     print(f"[SPLIT] 固定切分：先 shuffle 组合再切前 {a.n_train}+{a.n_test} 条；"
           f"组合空间={combos_n}；实体词表 train={len(NAMES_TRAIN)} test={len(NAMES_TEST)} "
-          f"（互不相交）", flush=True)
+          f"（{'共享同一份 ⇒ NAMES_TRAIN' if a.shared_vocab else '互不相交'}）", flush=True)
 
     ok, vio, total_vio = check_invariants(recs, tag="all")
 
@@ -889,8 +904,9 @@ def main(argv=None):
           f"最大={max(len(r['t']) for r in recs)}", flush=True)
 
     # ---- 落盘（p/t 只在内存里用于指纹与长度统计，不写进 jsonl：69 会用同一 tokenizer 重算） ----
+    out_prefix = "68b" if a.shared_vocab else "68"
     for split, rs in (("train", train), ("test", test)):
-        fp = os.path.join(LOG_DIR, f"68_dialog_{split}.jsonl")
+        fp = os.path.join(LOG_DIR, f"{out_prefix}_dialog_{split}.jsonl")
         with open(fp, "w", encoding="utf-8") as f:
             for r in rs:
                 f.write(json.dumps({k: v for k, v in r.items() if k not in ("p", "t")},
@@ -899,7 +915,10 @@ def main(argv=None):
 
     print(f"[D68] n_train={len(train)} n_test={len(test)} 族={N_TEMPLATE_FAMILIES} "
           f"族句面(轮1)={N_FAMILY_FORMS} 回复模板={N_REPLY_TEMPLATES} 新信息槽={N_V3} "
-          f"实体词表={len(NAMES)}(train {len(NAMES_TRAIN)}/test {len(NAMES_TEST)}) "
+          f"实体词表={len(NAMES_TRAIN) if a.shared_vocab else len(NAMES)}"
+          f"(train {len(NAMES_TRAIN)}/"
+          f"test {len(NAMES_TRAIN) if a.shared_vocab else len(NAMES_TEST)}"
+          f"{' 共享' if a.shared_vocab else ''}) "
           f"| train_fp={tr_fp} test_fp={te_fp}", flush=True)
     print(f"[TPL] 族=" + " ".join(
         f"{f['key']}(我自己×{len(f['t1_self_forms'])}/我朋友×{len(f['t1_friend_forms'])}/"
@@ -917,7 +936,18 @@ def main(argv=None):
           flush=True)
 
     # ---- 地板 ----
-    compute_floors(train, test, tag="test", show_train=True)
+    _floors, mx_name, mx, thr = compute_floors(train, test, tag="test", show_train=True)
+    if a.shared_vocab:
+        # ★L2-r1b 的臂标识行：规模 + 不变量计数 + 本臂自己的指纹 + 地板（一行读完）
+        print(f"[D68B] 共享词表臂（--shared-vocab）：n_train={len(train)} n_test={len(test)} "
+              f"族={N_TEMPLATE_FAMILIES} 回复模板={N_REPLY_TEMPLATES} 新信息槽={N_V3} "
+              f"轮2填充语={len(T2_TOPICS)} | 实体词表={len(NAMES_TRAIN)}（train/test 共享同一份）"
+              f" | train_fp={tr_fp} test_fp={te_fp}"
+              f" | 不变量违例合计={total_vio}(A={vio['A']} B={vio['B']} "
+              f"A_ent_in_t3={vio['A_ent_in_t3']} A_static={vio['A_static']} "
+              f"C_dup={vio['C_dup']} C_conflict={vio['C_conflict']})"
+              f" | 地板 max_naive={mx:.2f}%({mx_name}) 2SE={thr - mx:.2f}pp 门槛={thr:.2f}%",
+              flush=True)
     if total_vio:
         print(f"[D68-VERDICT] ★不变量违例={total_vio} ⇒ 数据无效，停。", flush=True)
         return 4

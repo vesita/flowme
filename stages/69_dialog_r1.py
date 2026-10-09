@@ -18,6 +18,12 @@
   python stages/69_dialog_r1.py --smoke                  # 50 步、只评 60 条（探路）
   python stages/69_dialog_r1.py --seed 1234              # 全量 3000 步
   python stages/69_dialog_r1.py --seed 1234 --swap       # Q2：换实体、保留原 target，同一 ckpt 重评
+  # L2-r1b / r1c 两个单变量臂（本文件只加参数，其余逻辑逐字不变）：
+  python stages/69_dialog_r1.py --data-prefix 68b --seed 1234            # r1b：共享词表数据（68b_dialog_*）
+  python stages/69_dialog_r1.py --data-prefix 68 --seed 1234 --steps 12000   # r1c：互斥词表、12000 步
+  --data-prefix {68,68b} 决定读哪份 jsonl（logs/<prefix>_dialog_*.jsonl）与 ckpt 命名
+  （68 ⇒ 69_ckpt_seed*.pt 不变；68b ⇒ 69_ckpt_68b_seed*.pt，互不覆盖）；缺 68b 数据时自动带
+  --shared-vocab 跑生成器。--steps 默认 3000（--smoke 时仍固定 50 步）。
 GPU 长跑必须：systemd-run --user --unit=<名> --collect
   --setenv=HSA_OVERRIDE_GFX_VERSION=10.3.0 --setenv=PYTHONUNBUFFERED=1 ...
 只允许写本文件与 logs/。
@@ -59,7 +65,7 @@ EM_BATCH = 1                 # ★主口径：batch=1（R28 自洽写法）
 SMOKE_STEPS = 50
 SMOKE_EVAL = 60
 LOG_DIR = os.path.join(ROOT, "logs")
-DATA_TMPL = os.path.join(LOG_DIR, "68_dialog_{split}.jsonl")
+DATA_TMPL = os.path.join(LOG_DIR, "68_dialog_{split}.jsonl")   # main 里按 --data-prefix 覆盖
 TOK_PATH = NS_ROOT + "/data/chinese/char_tokenizer.json"
 D68_PATH = os.path.join(ROOT, "stages", "68_dialog_gen_r1.py")
 
@@ -102,11 +108,13 @@ def dec(ids) -> str:
 
 
 # ---------------- 数据 ----------------
-def ensure_data():
+def ensure_data(prefix: str = "68"):
+    """缺数据时自动跑生成器；prefix=68b 时带 --shared-vocab（与 --data-prefix 对齐）。"""
     if os.path.exists(DATA_TMPL.format(split="train")) and os.path.exists(DATA_TMPL.format(split="test")):
         return
     print(f"[DATA] 缺 {DATA_TMPL.format(split='train')} ⇒ 先跑生成器", flush=True)
-    r = subprocess.run([sys.executable, D68_PATH], cwd=ROOT)
+    cmd = [sys.executable, D68_PATH] + (["--shared-vocab"] if prefix == "68b" else [])
+    r = subprocess.run(cmd, cwd=ROOT)
     if r.returncode != 0:
         raise SystemExit(f"[DATA] 生成器退出码 {r.returncode} ⇒ 停")
 
@@ -314,18 +322,28 @@ def evaluate(model, ev, tag: str):
 
 # ---------------- 主流程 ----------------
 def main(argv=None):
+    global DATA_TMPL
     ap = argparse.ArgumentParser(description="S69 L2-r1 跨轮消解卡片驱动")
     ap.add_argument("--smoke", action="store_true", help="50 步、只评 60 条")
     ap.add_argument("--seed", type=int, default=1234)
     ap.add_argument("--swap", action="store_true",
                     help="Q2：test 的轮1/轮2 实体互换、保留原 target，同一 ckpt 重评（不重训）")
+    ap.add_argument("--steps", type=int, default=STEPS,
+                    help=f"训练步数（默认 {STEPS}；--smoke 时固定 {SMOKE_STEPS}）")
+    ap.add_argument("--data-prefix", choices=("68", "68b"), default="68",
+                    help="数据/ckpt 前缀：68=logs/68_dialog_*.jsonl（默认，与 r1 逐字同径）；"
+                         "68b=logs/68b_dialog_*.jsonl（L2-r1b 共享词表臂），ckpt 名加 68b_ 前缀")
     a = ap.parse_args(argv)
-    steps = SMOKE_STEPS if a.smoke else STEPS
+    DATA_TMPL = os.path.join(LOG_DIR, f"{a.data_prefix}_dialog_{{split}}.jsonl")
+    steps = SMOKE_STEPS if a.smoke else a.steps
     tag = "swap" if a.swap else "hist"
     if a.smoke:
         tag += "-smoke"
-    ensure_data()
+    ensure_data(a.data_prefix)
     train, test = load_jsonl("train"), load_jsonl("test")
+    print(f"[DATA-SRC] data_prefix={a.data_prefix} 文件="
+          f"{DATA_TMPL.format(split='train')} / {DATA_TMPL.format(split='test')} | "
+          f"steps={steps}{'(smoke固定)' if a.smoke else ''}", flush=True)
 
     # 数据契约（生成器 68 已断言过；这里用落盘的数据复核一次）
     n_vio_a = sum(int(r["turn3_has_ent"]) or int(r["ent"] in r["t3"]) or int(r["ent_other"] in r["t3"])
@@ -340,8 +358,9 @@ def main(argv=None):
           f"位置桶(0=先出现) train={dict((k, sum(1 for r in train if r['ent_pos_rank']==k)) for k in (0,1))} "
           f"test={dict((k, sum(1 for r in test if r['ent_pos_rank']==k)) for k in (0,1))}", flush=True)
 
-    # ★swap 臂不重训：直接载同 seed 的 ckpt
-    ck = os.path.join(LOG_DIR, f"69_ckpt_seed{a.seed}_hist{'-smoke' if a.smoke else ''}.pt")
+    # ★swap 臂不重训：直接载同 seed 的 ckpt（ckpt 名带 data-prefix，68b 与 68 互不覆盖）
+    ck_pre = "" if a.data_prefix == "68" else f"{a.data_prefix}_"
+    ck = os.path.join(LOG_DIR, f"69_ckpt_{ck_pre}seed{a.seed}_hist{'-smoke' if a.smoke else ''}.pt")
     model = new_pipe()
     n_par = sum(p.numel() for p in model.parameters())
     gate_res, wall, last_loss, loss_trace = None, 0.0, float("nan"), []
@@ -452,10 +471,10 @@ def main(argv=None):
           f"最后一步 loss={last_loss:.6f} (>{1e-4} = {last_loss > 1e-4}) | "
           f"loss迹={loss_trace} ⇒ {q4}", flush=True)
 
-    ck_out = os.path.join(LOG_DIR, f"69_ckpt_seed{a.seed}_{tag}.pt")
+    ck_out = os.path.join(LOG_DIR, f"69_ckpt_{ck_pre}seed{a.seed}_{tag}.pt")
     torch.save(model.state_dict(), ck_out)
     print(f"[META] tag={tag} seed={a.seed} swap={a.swap} steps={steps if not a.swap else 0} "
-          f"batch={BATCH} lr={LR} d={D} ff={FF} nhead={NHEAD} maxlen={MAXLEN} "
+          f"data_prefix={a.data_prefix} batch={BATCH} lr={LR} d={D} ff={FF} nhead={NHEAD} maxlen={MAXLEN} "
           f"n_params={n_par} 墙钟={wall:.0f}s ckpt={ck_out}", flush=True)
     print("[DONE] exit=0", flush=True)
     return 0
