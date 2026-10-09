@@ -248,8 +248,13 @@ def build_batch(recs):
     return ids.to(device), s
 
 
-def masked_ce(model, recs) -> torch.Tensor:
-    """teacher forcing：只在目标 span [s, s+len(t)) 上算 CE（照抄 S65::masked_ce）。"""
+def masked_ce(model, recs, copy: bool = False) -> torch.Tensor:
+    """teacher forcing：只在目标 span [s, s+len(t)) 上算 CE（照抄 S65::masked_ce）。
+
+    copy=True（--copy）时把分布换成混合分布（见 masked_ce_copy）；不加开关时下面逐字不变。
+    """
+    if copy:
+        return masked_ce_copy(model, recs)
     ids, s = build_batch(recs)
     logits = model.logits(ids)
     logp = torch.log_softmax(logits, dim=-1)
@@ -264,11 +269,181 @@ def masked_ce(model, recs) -> torch.Tensor:
     return nll / ntok
 
 
+# ---------------- L2-r5：复制 / 指针通路（--copy；不加开关时整段不执行） ----------------
+COPY_EPS = 1e-30
+
+
+class CopyHead(nn.Module):
+    """输出卡的复制/指针通路：p = (1-g)·softmax(vocab logits) + g·copy_dist（L2_PLAN §12.3）。
+
+    指针分布 a 只定义在**输入 prompt 位**上：
+      · query = W_q·h，h = 目标段的解码位隐藏态（行 = 解码位 s-1..e-2，teacher forcing 的因果前缀）；
+      · key   = W_k·meme_in，meme_in = input 卡对 ids[:, :L] 的输出（列 = 输入位 0..L-1）；
+      · 越界列（>= src_len，即全部 target 位与 padding）被 -inf 掩掉 ⇒ 质量精确 0，绝不看 target；
+      · copy_dist = a 按「该输入位上的 token id」（ids[:, :L]）scatter-add 到 V 维词表；
+    门控 g = sigmoid(W_g·h + b_g)（每步一个标量，参数化并参与训练）。
+    """
+
+    def __init__(self, d: int = D):
+        super().__init__()
+        self.d = int(d)
+        self.q = nn.Linear(d, d)          # 解码位隐藏态 → query
+        self.k = nn.Linear(d, d)          # prompt 位（input 卡输出）→ key
+        self.gate = nn.Linear(d, 1)       # 每步门控 g 的 logit
+
+    def pointer(self, h, src, src_lens):
+        """返回 (a, keep)：a[b,T,L] 行=解码位、列=**prompt 位**（越界列质量精确 0）。"""
+        b, T, _ = h.shape
+        L = src.size(1)
+        score = (self.q(h) @ self.k(src).transpose(1, 2)) * (self.d ** -0.5)     # [b,T,L]
+        keep = torch.arange(L, device=h.device).unsqueeze(0) < src_lens.unsqueeze(1)   # [b,L]
+        score = score.masked_fill(~keep.unsqueeze(1), float("-inf"))
+        return torch.softmax(score, dim=-1), keep
+
+    def forward(self, logits, h, src, src_ids, src_lens):
+        """返回 (logp[b,T,V], aux)：aux 全部 detached，只给 [COPY] 诊断用。"""
+        b, T, V_ = logits.shape
+        L = src.size(1)
+        a, keep = self.pointer(h, src, src_lens)
+        copy = torch.zeros(b, T, V_, device=logits.device, dtype=logits.dtype)
+        copy.scatter_add_(2, src_ids.unsqueeze(1).expand(b, T, L), a)
+        gs = self.gate(h)                                   # [b,T,1]，logit 域
+        log_pv = torch.log_softmax(logits, dim=-1)
+        log_pc = torch.log(copy.clamp_min(COPY_EPS))
+        logp = torch.logaddexp(F.logsigmoid(-gs) + log_pv, F.logsigmoid(gs) + log_pc)
+        return logp, dict(a=a.detach(), copy=copy.detach(), gs=gs.detach(), keep=keep)
+
+
+def _copy_logp_rows(model, recs):
+    """--copy：目标 span 逐位的混合分布 log 概率（行 = 解码位 s-1..e-2）。"""
+    ids, s = build_batch(recs)
+    out = model.route(ids)
+    logits, meme_in, meme = out["logits"], out["meme_in"], out["meme"]
+    b, L = len(recs), meme_in.size(1)
+    src_lens = torch.tensor([len(r["p"]) for r in recs], device=device)
+    T = max(len(r["t"]) for r in recs)
+    h = torch.zeros(b, T, meme.size(-1), device=device, dtype=meme.dtype)
+    lg = torch.zeros(b, T, logits.size(-1), device=device, dtype=logits.dtype)
+    tgt = torch.zeros(b, T, dtype=torch.long, device=device)
+    m = torch.zeros(b, T, dtype=torch.bool, device=device)
+    for i, r in enumerate(recs):
+        a0, n = int(s[i]) - 1, len(r["t"])
+        h[i, :n] = meme[i, a0: a0 + n]
+        lg[i, :n] = logits[i, a0: a0 + n]
+        tgt[i, :n] = ids[i, int(s[i]): int(s[i]) + n]
+        m[i, :n] = True
+    logp, _aux = model.copy_head(lg, h, meme_in, ids[:, :L], src_lens)
+    return logp, tgt, m
+
+
+def masked_ce_copy(model, recs) -> torch.Tensor:
+    """--copy 的训练 loss：混合分布上的 CE，仍只在目标 span 上算。"""
+    logp, tgt, m = _copy_logp_rows(model, recs)
+    lp = logp.gather(2, tgt.unsqueeze(2)).squeeze(2)
+    return -(lp * m).sum() / m.sum()
+
+
+def new_copy_stats() -> dict:
+    return dict(n=0.0, g_sum=0.0, g_min=float("inf"), g_max=float("-inf"),
+                ent_sum=0.0, copy_hits=0.0)
+
+
+def _copy_step_stats(stats, aux, lg, chosen, act):
+    """累加一步的 [COPY] 诊断：门控 g、指针分布熵（nats）、命中来自 copy 的比例。"""
+    with torch.no_grad():
+        g = torch.sigmoid(aux["gs"])[..., 0]                                  # [b,1]
+        ent = -(aux["a"].clamp_min(COPY_EPS).log() * aux["a"]).sum(-1)        # [b,1]
+        pv = torch.softmax(lg.unsqueeze(1), dim=-1)
+        ch = torch.tensor(chosen, dtype=torch.long, device=g.device).view(-1, 1, 1)
+        pc_t = aux["copy"].gather(2, ch)[..., 0]                              # [b,1]
+        pv_t = pv.gather(2, ch)[..., 0]
+        hit = ((g * pc_t) > ((1.0 - g) * pv_t)).float()
+        mk = torch.tensor([bool(x) for x in act], device=g.device).view(-1, 1)
+        n = float(mk.sum().item())
+        if n <= 0:
+            return
+        stats["n"] += n
+        stats["g_sum"] += float(g[mk].sum().item())
+        stats["g_min"] = min(stats["g_min"], float(g[mk].min().item()))
+        stats["g_max"] = max(stats["g_max"], float(g[mk].max().item()))
+        stats["ent_sum"] += float(ent[mk].sum().item())
+        stats["copy_hits"] += float(hit[mk].sum().item())
+
+
+def copy_selftest(model, recs, n: int = 4) -> dict:
+    """训练前自检 [COPY-SELFTEST]：指针打分的行/列来源 + 三条硬断言 + target 扰动实验。
+
+    行 = 解码位（s-1..e-2），列 = **只用 prompt 位**（meme_in 的 0..src_len-1）。
+    断言：① 越界列（>= src_len，含全部 target 位/padding）指针质量精确 0；
+          ② 每个解码位的指针分布和为 1；③ copy_dist 的质量只落在 prompt 位出现过的 token id 上。
+    扰动：把 target span 的 token 乱序重排后重前向 ⇒ 第 0 行（首个生成位 s-1）的指针分布必须
+          **逐位不变**（该位的因果前缀里没有 target token）；第 j>0 行会变，如实报出。
+    """
+    model.eval()
+    rs = recs[:n]
+    ids, s = build_batch(rs)
+    b, T = len(rs), max(len(r["t"]) for r in rs)
+    src_lens = torch.tensor([len(r["p"]) for r in rs], device=device)
+    L = ids.size(1)
+
+    def _a_of(ids_in):
+        out = model.route(ids_in)
+        logits, meme_in, meme = out["logits"], out["meme_in"], out["meme"]
+        h = torch.zeros(b, T, meme.size(-1), device=device, dtype=meme.dtype)
+        for i, r in enumerate(rs):
+            a0, nn_ = int(s[i]) - 1, len(r["t"])
+            h[i, :nn_] = meme[i, a0: a0 + nn_]
+        a, keep = model.copy_head.pointer(h, meme_in, src_lens)
+        cp = torch.zeros(b, T, logits.size(-1), device=device, dtype=a.dtype)
+        cp.scatter_add_(2, ids_in[:, :L].unsqueeze(1).expand(b, T, L), a)
+        return a, keep, cp
+
+    a, keep, copy = _a_of(ids)
+    mass_out = float(a.masked_select(~keep.unsqueeze(1).expand_as(a)).abs().max().item())
+    row_dev = float((a.sum(-1) - 1.0).abs().max().item())
+    pmask = torch.zeros(b, V, device=device)
+    for i in range(b):
+        pmask[i, ids[i, : int(src_lens[i])]] = 1.0
+    leak = float((copy * (1.0 - pmask).unsqueeze(1)).max().item())
+    ok = (mass_out == 0.0) and (row_dev < 1e-5) and (leak == 0.0)
+    gen = torch.Generator().manual_seed(0)
+    ids2 = ids.clone()
+    for i, r in enumerate(rs):
+        e0, nn_ = int(s[i]), len(r["t"])
+        ids2[i, e0: e0 + nn_] = ids[i, e0: e0 + nn_][torch.randperm(nn_, generator=gen)]
+    a2, _k2, _c2 = _a_of(ids2)
+    r0_same = bool(torch.equal(a2[:, 0, :], a[:, 0, :]))
+    n_row_diff = int((a - a2).abs().sum(-1).gt(0).sum().item())
+    model.train()
+    print(f"[COPY-SELFTEST] 指针打分矩阵 a[b={b},T={T},L={L}]：行=解码位(s-1..e-2) 列=**prompt 位**"
+          f"（meme_in 的 0..src_len-1；input 卡是因果的 ⇒ key 侧看不到任何 target token）；"
+          f"target 位/padding 列被 -inf 掩掉 | 断言①越界列指针质量 max={mass_out:.1e}（必须精确 0）"
+          f"②每行 a 和-1 的 max|dev|={row_dev:.1e}（<1e-5）③copy 质量落到「非 prompt token id」上的 "
+          f"max={leak:.1e}（必须 0）⇒ {'PASS' if ok else 'FAIL'} | 扰动实验（target span 乱序重排后重"
+          f"前向）：第0行（首个生成位 s-1）逐位不变={r0_same}；{T} 行里变了 {n_row_diff} 行"
+          f"（第 j>0 行的 query 来自 teacher-forcing 的 target 前缀 t[0..j-1]，属标准写法）", flush=True)
+    return dict(ok=ok, mass_out=mass_out, row_dev=row_dev, leak=leak,
+                r0_same=r0_same, n_row_diff=n_row_diff)
+
+
+def print_copy_stats(st_te, st_tr, tag) -> None:
+    """--copy 的 [COPY] 行：门控 g 的均值/范围、指针分布熵、命中来自 copy 而非 vocab 的比例。"""
+    def _s(st):
+        if not st or st["n"] <= 0:
+            return "n=0（无可用步）"
+        n = st["n"]
+        return (f"步数={int(n)} 门控g 均值={st['g_sum'] / n:.4f} 范围=[{st['g_min']:.4f}, "
+                f"{st['g_max']:.4f}] | 指针分布熵均值={st['ent_sum'] / n:.4f} nats | "
+                f"命中来自copy而非vocab={100.0 * st['copy_hits'] / n:.2f}%")
+    print(f"[COPY] copy 通路诊断（贪心解码每一步、混合分布 argmax 位、口径与 [EM] 同）| "
+          f"test({tag}): {_s(st_te)} | train子集: {_s(st_tr)}", flush=True)
+
+
 def card_param_groups(model) -> dict:
     return {n: list(model.card(n).parameters()) for n in model.CARD_NAMES}
 
 
-def train_run(model, train, seed: int, steps: int):
+def train_run(model, train, seed: int, steps: int, copy: bool = False):
     torch.manual_seed(seed)
     torch.cuda.manual_seed_all(seed)
     opt = AdamW(model.parameters(), lr=LR)
@@ -284,7 +459,7 @@ def train_run(model, train, seed: int, steps: int):
                 pos = 0
             idx.append(int(order[pos]))
             pos += 1
-        loss = masked_ce(model, [train[i] for i in idx])
+        loss = masked_ce(model, [train[i] for i in idx], copy=copy)
         opt.zero_grad(set_to_none=True)
         loss.backward()
         step += 1
@@ -305,11 +480,17 @@ def train_run(model, train, seed: int, steps: int):
 
 
 @torch.no_grad()
-def eval_ce(model, recs) -> list:
+def eval_ce(model, recs, copy: bool = False) -> list:
     model.eval()
     per = []
     for i in range(0, len(recs), GEN_BATCH):
         chunk = recs[i: i + GEN_BATCH]
+        if copy:
+            logp, tgt, m = _copy_logp_rows(model, chunk)
+            for j, r in enumerate(chunk):
+                lp = logp[j].gather(1, tgt[j].unsqueeze(1)).squeeze(1)
+                per.append(float((-(lp * m[j]).sum() / m[j].sum()).item()))
+            continue
         ids, s = build_batch(chunk)
         logp = torch.log_softmax(model.logits(ids), dim=-1)
         for j, r in enumerate(chunk):
@@ -322,8 +503,12 @@ def eval_ce(model, recs) -> list:
 
 
 @torch.no_grad()
-def greedy_gen(model, recs, batch: int = 1) -> list:
-    """贪心解码，batch=1、正确列索引（照抄 S65::greedy_gen mode='correct'）。"""
+def greedy_gen(model, recs, batch: int = 1, copy: bool = False, stats: dict = None) -> list:
+    """贪心解码，batch=1、正确列索引（照抄 S65::greedy_gen mode='correct'）。
+
+    copy=True（--copy）时每一步用**混合分布**取 argmax（其余逐字不变），并把门控/指针熵/命中
+    来源累加进 stats（[COPY] 行用）。
+    """
     model.eval()
     texts = [""] * len(recs)
     for i in range(0, len(recs), batch):
@@ -338,21 +523,36 @@ def greedy_gen(model, recs, batch: int = 1) -> list:
         cap = [MAXLEN - L for L in lens]
         done = [False] * len(chunk)
         last_col = [L - 1 for L in lens]
+        src_lens = torch.tensor(lens, device=device)
         for _ in range(max(cap)):
             if all(done):
                 break
-            logits = model.logits(ids)
+            act = [not d for d in done]
+            if copy:
+                out = model.route(ids)                 # 与 model.logits(ids) 同一条前向
+                logits_all, meme_in, meme = out["logits"], out["meme_in"], out["meme"]
+                ar = torch.arange(len(chunk), device=device)
+                rows = torch.tensor(last_col, dtype=torch.long, device=device)
+                lg = logits_all[ar, rows]              # [b,V]
+                h = meme[ar, rows]                     # [b,d]
+                logp, aux = model.copy_head(lg.unsqueeze(1), h.unsqueeze(1), meme_in,
+                                            ids[:, : meme_in.size(1)], src_lens)
+                nxt_scores = logp[:, 0]                # [b,V] 混合分布的 log 概率
+            else:
+                logits = model.logits(ids)
             nxt = []
             for j in range(len(chunk)):
                 if done[j]:
                     nxt.append(PAD_ID)
                     continue
-                t = int(logits[j, last_col[j]].argmax().item())
+                t = int((nxt_scores[j] if copy else logits[j, last_col[j]]).argmax().item())
                 nxt.append(t)
                 gen_len[j] += 1
                 if t == EOS_ID or gen_len[j] >= cap[j]:
                     done[j] = True
                 last_col[j] = n0 + gen_len[j] - 1
+            if copy and stats is not None:
+                _copy_step_stats(stats, aux, lg, [int(x) for x in nxt], act)
             ids = torch.cat([ids, torch.tensor(nxt, dtype=torch.long, device=device).unsqueeze(1)], 1)
         for j in range(len(chunk)):
             g = ids[j, n0: n0 + gen_len[j]].tolist()
@@ -373,11 +573,11 @@ def em_strict(gold: str, pred: str) -> int:
     return int((gold or "").strip() == (pred or "").strip())
 
 
-def evaluate(model, ev, tag: str):
+def evaluate(model, ev, tag: str, copy: bool = False, stats: dict = None):
     """配对 CE + 贪心 EM（含实体诊断）；返回一个 dict。"""
-    ce = eval_ce(model, ev)
+    ce = eval_ce(model, ev, copy=copy)
     cm, cse = mean_se(ce)
-    txt = greedy_gen(model, ev, batch=EM_BATCH)
+    txt = greedy_gen(model, ev, batch=EM_BATCH, copy=copy, stats=stats)
     hits = [em_strict(r["target"], txt[i]) for i, r in enumerate(ev)]
     ent_hit = [int(r["ent"] in txt[i]) for i, r in enumerate(ev)]
     other_hit = [int(r["ent_other"] in txt[i]) for i, r in enumerate(ev)]
@@ -393,7 +593,7 @@ DIAG_TRAIN_N = 800            # train 侧贪心诊断的子集规模（与 test 
 
 
 @torch.no_grad()
-def diag_first_token(model, recs, tag: str) -> dict:
+def diag_first_token(model, recs, tag: str, copy: bool = False) -> dict:
     """目标首 token（= 正确实体首字）的 top1 / top5 —— §8.2 里一次戳穿数据缺陷的那条读数。
 
     口径：在**最后一个 prompt 位**（正确列索引 s-1，与贪心解码同一位）取 logits，
@@ -404,10 +604,13 @@ def diag_first_token(model, recs, tag: str) -> dict:
     hit1 = hit5 = 0
     for i in range(0, n, GEN_BATCH):
         chunk = recs[i: i + GEN_BATCH]
-        ids, s = build_batch(chunk)
-        logits = model.logits(ids)
+        if copy:
+            lps = _copy_logp_rows(model, chunk)[0][:, 0, :]     # 解码位 s-1 的混合分布
+        else:
+            ids, s = build_batch(chunk)
+            logits = model.logits(ids)
         for j, r in enumerate(chunk):
-            lp = logits[j, int(s[j]) - 1]
+            lp = lps[j] if copy else logits[j, int(s[j]) - 1]
             gold = int(r["t"][0])
             hit1 += int(int(lp.argmax().item()) == gold)
             hit5 += int(gold in torch.topk(lp, 5).indices.tolist())
@@ -432,16 +635,17 @@ def diag_entity_source(preds, recs, tag: str) -> dict:
                                  for k in ("正确实体", "干扰实体", "训练词表名", "其它")})
 
 
-def print_diag(a, ev, txt, res, train, model, arm_tag: str):
+def print_diag(a, ev, txt, res, train, model, arm_tag: str, copy: bool = False):
     """§8.4 必跑诊断的两行：train/test 各自「首 token top1/top5」+「生成实体来源」。"""
-    d_tr = diag_first_token(model, train, f"train(n={len(train)})")
-    d_te = diag_first_token(model, ev, f"{arm_tag}(n={len(ev)})")
+    d_tr = diag_first_token(model, train, f"train(n={len(train)})", copy=copy)
+    d_te = diag_first_token(model, ev, f"{arm_tag}(n={len(ev)})", copy=copy)
     print(f"[DIAG] §8.4 目标首token(=实体首字) top1/top5：{d_tr['tag']} top1={d_tr['top1']:.2f}% "
           f"top5={d_tr['top5']:.2f}% | {d_te['tag']} top1={d_te['top1']:.2f}% top5={d_te['top5']:.2f}%",
           flush=True)
     n_tr = min(DIAG_TRAIN_N, len(ev)) if a.smoke else min(DIAG_TRAIN_N, len(train))
     tr_sub = train[:n_tr]
-    preds_tr = greedy_gen(model, tr_sub, batch=EM_BATCH)
+    c_tr = new_copy_stats()
+    preds_tr = greedy_gen(model, tr_sub, batch=EM_BATCH, copy=copy, stats=c_tr if copy else None)
     s_tr = diag_entity_source(preds_tr, tr_sub, f"train子集(n={len(tr_sub)},前{len(tr_sub)}条)")
     s_te = diag_entity_source(txt, ev, f"{arm_tag}(n={len(ev)})")
     def _s(d):
@@ -461,7 +665,7 @@ def print_diag(a, ev, txt, res, train, model, arm_tag: str):
     _em_split(txt, ev, f"{arm_tag}(全量 n={len(ev)})")
     _em_split(preds_tr, tr_sub, f"train子集(n={len(tr_sub)})")
     # 返回给 main 的 L2-r4 判据行（Q12）用；打印内容与返回前逐字不变
-    return dict(d_tr=d_tr, d_te=d_te, s_tr=s_tr, s_te=s_te)
+    return dict(d_tr=d_tr, d_te=d_te, s_tr=s_tr, s_te=s_te, c_tr=c_tr)
 
 
 # ---------------- 主流程 ----------------
@@ -490,6 +694,10 @@ def main(argv=None):
                     help="Q2：test 的轮1/轮2 实体互换、保留原 target，同一 ckpt 重评（不重训）")
     ap.add_argument("--steps", type=int, default=STEPS,
                     help=f"训练步数（默认 {STEPS}；--smoke 时固定 {SMOKE_STEPS}）")
+    ap.add_argument("--copy", action="store_true",
+                    help="L2-r5：给输出卡接「复制/指针」通路 p=(1-g)·vocab + g·copy_dist"
+                         "（指针只看得见 prompt 位，门控 g 由隐藏态算出并参与训练）；不加时逐字走原路径")
+
     ap.add_argument("--data-prefix", choices=("68", "68b", "68d", "68e", "68f", "68g"), default="68",
                     help="数据/ckpt 前缀：68=logs/68_dialog_*.jsonl（默认，与 r1 逐字同径）；"
                          "68b=logs/68b_dialog_*.jsonl（L2-r1b 共享词表臂）；"
@@ -529,12 +737,18 @@ def main(argv=None):
 
     # ★swap 臂不重训：直接载同 seed 的 ckpt（ckpt 名带 data-prefix，68b 与 68 互不覆盖）
     ck_pre = "" if a.data_prefix == "68" else f"{a.data_prefix}_"
-    ck = os.path.join(LOG_DIR, f"69_ckpt_{ck_pre}seed{a.seed}_hist{'-smoke' if a.smoke else ''}.pt")
+    ck = os.path.join(LOG_DIR, f"69_ckpt_{ck_pre}seed{a.seed}_hist{'-smoke' if a.smoke else ''}"
+                                f"{'-copy' if a.copy else ''}.pt")
     # ★§13.2 修复（L2-r6）：seed 必须在**构造模型之前**设置 ⇒ 参数初始化受 --seed 控制、同 seed 可复现。
     #   先跑自检：同一 seed 连造两次模型，逐张量最大差必须 0；不同 seed 必须不同。
     ic_ok = init_check(a.seed, a.seed + 1)
     seed_all(a.seed)
     model = new_pipe()
+    if a.copy:
+        # ★L2-r5：复制/指针头挂在 model 上 ⇒ 进 state_dict、进 model.parameters()，
+        #   优化器与训练循环因此逐字不变（AdamW(model.parameters()) 自动带上它的参数）。
+        #   位置在 new_pipe() 之后 ⇒ 卡片组自己的初始化随机流与不加 --copy 时逐位一致。
+        model.copy_head = CopyHead(D).to(device)
     n_par = sum(p.numel() for p in model.parameters())
     gate_res, wall, last_loss, loss_trace = None, 0.0, float("nan"), []
     if a.swap:
@@ -582,12 +796,17 @@ def main(argv=None):
         ev = test
         mx, mxname, thr = mx_full, mxname_full, thr_full
 
+    # ---- L2-r5 [COPY-SELFTEST]（训练前自检：指针打分的行/列来源 + 「不看 target」的硬断言） ----
+    if a.copy:
+        copy_selftest(model, train)
+
     # ---- 训练（swap 臂跳过） ----
     if not a.swap:
-        gate_res, wall, last_loss, loss_trace = train_run(model, train, a.seed, steps)
+        gate_res, wall, last_loss, loss_trace = train_run(model, train, a.seed, steps, copy=a.copy)
 
     # ---- 评估：配对 CE + 贪心 EM ----
-    res = evaluate(model, ev, tag)
+    c_te = new_copy_stats() if a.copy else None
+    res = evaluate(model, ev, tag, copy=a.copy, stats=c_te)
     cm, cse, em, se, txt, hits = res["cm"], res["cse"], res["em"], res["se"], res["txt"], res["hits"]
     print(f"[MAIN] seed={a.seed} arm={'swap' if a.swap else 'hist'} steps={steps if not a.swap else 0}"
           f"(swap 复用 ckpt) batch={BATCH} lr={LR} | 模型=CardPipeline(residual=False) d={D} ff={FF} "
@@ -599,7 +818,9 @@ def main(argv=None):
           f"地板 max_naive={mx:.2f}%({mxname}) 门槛={thr:.2f}%", flush=True)
 
     # ---- §8.4 必跑诊断（train/test 各自；放在 [EM] 之后、[GEN] 之前） ----
-    diag = print_diag(a, ev, txt, res, train, model, res["tag"])
+    diag = print_diag(a, ev, txt, res, train, model, res["tag"], copy=a.copy)
+    if a.copy:
+        print_copy_stats(c_te, diag["c_tr"], res["tag"])
 
     shown = 0
     for i, r in enumerate(ev):
@@ -738,10 +959,41 @@ def main(argv=None):
               f"（越界用字实例={g3_bad}，必须 0）| train 子集实体来源：正确实体="
               f"{diag['s_tr']['正确实体']:.2f}% 训练词表名={diag['s_tr']['训练词表名']:.2f}%", flush=True)
 
-    ck_out = os.path.join(LOG_DIR, f"69_ckpt_{ck_pre}seed{a.seed}_{tag}.pt")
+    if a.copy:
+        # ★L2-r5 预注册判据（L2_PLAN.md §12.3）逐条打印：Q14（主）/ Q15 / Q16 / Q17。
+        ceil_v, v3vis, _exp_c = d68.ceiling_value(test, keep_v3=True)
+        s_te = diag["s_te"]
+        if a.data_prefix == "68f":
+            q14 = (em / ceil_v >= 0.80)
+            q16 = (s_te["正确实体"] >= 99.0) and (s_te["训练词表名"] <= 1.0)
+            print(f"[CRIT] Q14（主）L2_PLAN §12.3：「68f+copy 上 EM / [CEIL] ≥ 0.80」| EM={em:.2f}% "
+                  f"[CEIL]={ceil_v:.2f}%（v3 在输入中可见={v3vis:.2f}%）⇒ EM/[CEIL]={em / ceil_v:.3f} "
+                  f"vs 0.80 ⇒ {'PASS' if q14 else 'FAIL'}", flush=True)
+            print(f"[CRIT] Q16 L2_PLAN §12.3：「68f+copy 实体来源四分类：正确实体 ≥ 99% 且 "
+                  f"训练词表名 ≤ 1%」| 正确实体={s_te['正确实体']:.2f}%（≥99 = "
+                  f"{s_te['正确实体'] >= 99.0}）干扰实体={s_te['干扰实体']:.2f}% 训练词表名="
+                  f"{s_te['训练词表名']:.2f}%（≤1 = {s_te['训练词表名'] <= 1.0}）其它={s_te['其它']:.2f}%"
+                  f" ⇒ {'PASS' if q16 else 'FAIL'}", flush=True)
+            print(f"[CRIT] Q15 L2_PLAN §12.3：「68e+copy 上 EM ≥ 97.00%」| 本 run data_prefix=68f ⇒ "
+                  f"不适用（同配置的 68e+copy 配对 run 见另一日志）", flush=True)
+        elif a.data_prefix == "68e":
+            q15 = (em >= 97.0)
+            print(f"[CRIT] Q15 L2_PLAN §12.3：「68e+copy 上 EM ≥ 97.00%（对照 r3 的 98.25%/99.62%，"
+                  f"不许回退）」| EM={em:.2f}%±{se:.2f}pp ⇒ EM ≥ 97.00% = {q15} ⇒ "
+                  f"{'PASS' if q15 else 'FAIL'}", flush=True)
+            print(f"[CRIT] Q14/Q16 L2_PLAN §12.3：「68f+copy 的 EM/[CEIL] 与实体来源四分类」| "
+                  f"本 run data_prefix=68e ⇒ 不适用（配对 run 见另一日志）", flush=True)
+        else:
+            print(f"[CRIT] Q14/Q15/Q16 L2_PLAN §12.3：判据只在 68e/68f 两档预注册；本 run "
+                  f"data_prefix={a.data_prefix} ⇒ 不适用", flush=True)
+        print(f"[CRIT] Q17 L2_PLAN §12.3：「2 seed 同号」| 本 run 只有 seed={a.seed}"
+              f"（本 run 的 Q14/Q15/Q16 结果见上）⇒ 待另一 seed 复跑后合并判定", flush=True)
+
+    ck_out = os.path.join(LOG_DIR, f"69_ckpt_{ck_pre}seed{a.seed}_{tag}{'-copy' if a.copy else ''}.pt")
     torch.save(model.state_dict(), ck_out)
+    cp_meta = f" copy={a.copy}" if a.copy else ""
     print(f"[META] tag={tag} seed={a.seed} swap={a.swap} steps={steps if not a.swap else 0} "
-          f"init_check={'PASS' if ic_ok else 'FAIL'} "
+          f"init_check={'PASS' if ic_ok else 'FAIL'}{cp_meta} "
           f"data_prefix={a.data_prefix} batch={BATCH} lr={LR} d={D} ff={FF} nhead={NHEAD} maxlen={MAXLEN} "
           f"n_params={n_par} 墙钟={wall:.0f}s ckpt={ck_out}", flush=True)
     print("[DONE] exit=0", flush=True)
