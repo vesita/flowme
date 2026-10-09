@@ -78,7 +78,7 @@ systemd-run --user --unit=flowme-s65 --collect \
 
 | 行 | 意思 |
 |---|---|
-| `[G0] train_fp=… test_fp=…` | 数据指纹。**数据被悄悄改动时这两个值会变**（当前 `train_fp=3c2caed4037013bc`、`test_fp=eb1245b165c6ae71`） |
+| `[G0] train_fp=… test_fp=…` | 数据指纹。**数据被悄悄改动时这两个值会变**；注意**指纹按变体算**：s12 = `3c2caed4037013bc` / `eb1245b165c6ae71`，s11 = `bbf20174aec56fed` / `712fd86be3a74d2d`（两者不同是因为目标序列不同，**不是**数据被改 —— 本轮 Lead 就误报过一次） |
 | `[G1] <tag> max\|Δlogits\|=…` | 既有 ckpt 灌进管线后的前向逐位对照（**同进程同批**口径） |
 | `[G2-RNG1/2/3]` | 随机流对账：构造期全局流、dropout 流消耗、数据序（R34 那套） |
 | `[G2-1step]` / `[G2-200step]` | `A/A` = 同代码同 seed 跑两次；`框架` = Cards vs CardPipeline |
@@ -127,7 +127,10 @@ systemd-run --user --unit=flowme-s65 --collect \
 - **2026-10-09 22:00–22:08 的事故**：两个会话同时拥有 `stages/65_textgen_cards.py` 的写入意图，且各起了一个 GPU 进程（一个 systemd 单元 + 一个普通后台），互相覆盖文件、抢同一块卡。现场特征是 `ps -eo pid,ppid,etime,cmd | grep 65_textgen` 出现两个进程、`collab_lock op=overview` 里能看到对方的 claim 与 note。
 - **为什么"拿锁"是唯一有效防线**：文件版本守卫（FS_STALE_VERSION）只保护 read/edit/write 工具路径；**用 bash 组装/重定向写文件会绕过它**，所以两个写者可以静默互踩。
 - 目录级独占的副作用（旧会话现场 `m_107`）：claim `stages/` 会挡住只想在 `stages/` 里新建**另一个**文件的同伴。粒度贴近"我实际要写的文件"更省事。
-- GPU 是单卡的：排队用 `while systemctl --user is-active --quiet <unit>; do sleep 15; done`，**不杀别人的进程**（`methodology/platform.md:31-41`）。
+- **2026-10-09 22:56 的事故**：Lead 在"检查 GPU 占用"的那条命令里**看到了 `flowme-s65-repro11b-aa` 正在跑，却仍然继续起了门 3** ⇒ 两个 GPU 进程并跑，门 3 当场以 `Memory access fault by GPU node-1` 崩掉并产生 `gpucore.42962`（149 MB，`.gitignore:46` 的 `gpucore.*` 覆盖），而另一轮 repro 随后**挂死**（CPU 187%、状态 R、日志 13 分钟不动）。回收方式：`systemctl --user stop <挂死的单元>`；产物清理：删掉 `gpucore.*`（它是崩溃转储，不是证据）。
+  **现场特征**：崩溃行是 `Memory access fault by GPU node-1`；挂死行是"CPU 满载但日志不动"（`methodology/platform.md:37-41` 记过同型现象）。
+  **可复用的读法**：占用检查的输出要当作**门**（看到就中止），而不是当作一行日志；单卡上并跑会同时污染读数并可能直接 fault。
+- GPU 是单卡的：排队用 `while systemctl --user is-active --quiet <unit>; do sleep 15; done`；`methodology/platform.md:31-41` 的规矩是**不杀别人的进程**，但**对方进程已挂死且其持有者不再活动**时，回收它是恢复机器的必要动作（本轮 23:09 就这么做了一次，并在 board 留痕）。
 
 ## 6. 前驱会话与本次交接
 
@@ -141,8 +144,8 @@ systemd-run --user --unit=flowme-s65 --collect \
 
 | # | 事项 | 状态 |
 |---|---|---|
-| 1 | 门 3：cards 路径 3000 步重训，判据 `\|ΔEM\| ≤ 0.13pp` + 权重差并列 A/A 噪声 | 未完成 |
-| 2 | `11_ckpt_seed5678` 桶A1 的 4 条差异 | 未定位 |
+| 1 | 门 3：cards 路径 3000 步重训，判据 `\|ΔEM\| ≤ 0.13pp` + 权重差并列 A/A 噪声 | **未跑**（本轮末尾因 dsh 更新暂停；驱动与判据已就绪，命令见 §4.2） |
+| 2 | `11_ckpt_seed5678` 桶A1 的 4 条差异 | 未定位（记录集计数与 S11 一致、CE 逐位同 ⇒ 差异只在贪心 EM） |
 | 3 | "A/A 噪声 vs 序列长度"的单变量扫描 | 未做（现为推断） |
 | 4 | L2：让语言卡片出非平凡能力（M1 的 EM 2.17% ≈ 地板 1.89%） | 方向未定 |
 

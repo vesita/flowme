@@ -311,9 +311,10 @@ print(f"[TRUNC] ★A臂 target=`####<答案>` prompt优先(MAXLEN={MAXLEN} MIN_T
       f"两者都未截={n_free_all}/{n_parsed} ({100.0*n_free_all/n_parsed:.1f}%) | "
       f"丢弃={dropped}", flush=True)
 _tl = sorted(tgt_len_hist.items())
-print(f"[TGT] ★target形态=`#### <答案>`+EOS 目标长度: 中位={_tl[len(_tl)//2][0]}tok "
-      f"min={_tl[0][0]} max={_tl[-1][0]} 分布(长度:条数,前8)={dict(_tl[:8])} "
-      f"| S11(B臂) 目标长度中位≈156tok", flush=True)
+_tgt_label = ("target=`#### <答案>`+EOS（S12 口径）" if VARIANT == "s12"
+              else "target=完整 CoT 回复+EOS（S11 口径）")
+print(f"[TGT] ★{_tgt_label} 目标长度（未截断）: 中位={_tl[len(_tl)//2][0]}tok "
+      f"min={_tl[0][0]} max={_tl[-1][0]} 分布(长度:条数,前8)={dict(_tl[:8])}", flush=True)
 print(f"[SPAN] span_mismatch={span_mismatch} nonadditive={encode_nonadditive} "
       f"| test有gold(EM分母)={n_em}", flush=True)
 print(f"[TOK] WordLevel V={V} PAD={PAD_ID} EOS={EOS_ID} | import {ds_mod.__file__}", flush=True)
