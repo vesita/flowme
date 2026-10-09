@@ -1,0 +1,158 @@
+# NL_CARDS_REF —— 自然语言卡片落地参考
+
+> **参考式文档**：记现状、读数、口径与现场，供接手的人（或会话）当查询手册。
+> 规则式的硬约束在 [`AGENTS.md`](AGENTS.md) §2 与 [`methodology/RULES.md`](methodology/RULES.md)；本文件不复述规则，只回答"有什么、在哪、会看到什么、为什么是这样"。
+> `logs/` 不入库（R32）⇒ **关键数字在本文件复述**；引用行号只对已入库文件有效。
+
+## 1. 什么时候翻这份文档
+
+- 要碰 flowme 的**自然语言 / 文本生成**线（GSM8K-CoT）；
+- 要在 `stages/` 的脚本与 `cards/` 的管线之间**互灌 ckpt**；
+- 要判断"某次训练差异是框架问题，还是仪器噪声"；
+- 要接手 `stages/65_textgen_cards.py`（S65）。
+
+## 2. 术语对照：同一样东西，两边叫法不同
+
+| `stages/09–12` 的 `Cards` 类 | `cards/CardPipeline` | 是什么 |
+|---|---|---|
+| `emb` | `input.emb` | 词嵌入 |
+| `in_enc` | `input.enc` | 输入卡的 1 层 TransformerEncoderLayer |
+| `thought` | `target.think` | 思维卡（**裸层，没有外层残差**） |
+| `head` | `output.head` | 输出卡 = `nn.Linear(d, V)`，即 lm_head |
+
+互灌 ckpt 就是按上表逐条改名；实现点只有一处：`stages/65_textgen_cards.py` 的 `keys_to_cards()`。
+
+**一个只差一个开关的地方**：`cards/target.py:28-30` 的 `TargetCard` 默认算 `x + think(x)`（带外层残差），而 `stages/09:337-339` 的 `thought` 是裸层。实测（2026-10-09，CPU）：
+
+| ckpt | `residual=False` | `residual=True` |
+|---|---|---|
+| `09c_ckpt_seed1234` | `max\|Δlogits\| = 0.000e+00` | 14.08 |
+| `11_ckpt_seed1234` | `0.000e+00` | 11.91 |
+| `12_ckpt_seed1234` | `0.000e+00` | 9.63 |
+
+## 3. 语言线的存货：ckpt 与它们各自的口径
+
+| ckpt（在 `logs/`） | 记录集口径 | 训练目标 | 日志读数 | 备注 |
+|---|---|---|---|---|
+| `09c_ckpt_seed{1234,5678}` | MAXLEN=256、prompt 优先 | 完整 CoT 回复 + EOS | 配对 CE **0.8688 / 0.8791** | 桶A1 只有 n=16（样本不足，不下结论） |
+| `11_ckpt_seed{1234,5678}` | MAXLEN=512、prompt 优先 | 完整 CoT 回复 + EOS | 整体 CE **0.7705 / 0.7388**；全量严格 EM **0.00%** | 该 0.00% 是**修抽取 bug 之前**的读数，见 §5.3 |
+| `12_ckpt_seed{1234,5678}` | MAXLEN=512、prompt 优先 | `#### <答案>` + EOS（去 CoT） | 整体 CE **0.6924 / 0.6844**；全量严格 EM **2.17%** | 地板 = 1.89% |
+
+抽取修好之后的那次读数在 `logs/11_genfix.log`：11_ckpt 桶A1 = **1.11%（seed1234）/ 0.28%（seed5678）**，n=360。
+
+## 4. S65 驱动：`stages/65_textgen_cards.py`
+
+### 4.1 它是什么
+
+把 S09–S12 的闭环原样搬到 `cards.CardPipeline`：数据、切分、保尾截断、span loss、贪心解码、EM/CE 全部**逐字搬运**自 `stages/12_answer_only.py`，**唯一改动**是模型换成管线。因此它是"框架能不能承载语言生成"的**唯一测量点**。
+
+两个构造选择值得记住：
+
+- `CardPipeline(..., residual=False)` —— 理由与实测见 §2；
+- 记录集有**两个变体**（`--variant s11 | s12`）：
+  - `s11`：目标 = 完整 CoT 回复 + EOS（用于复现 `11_ckpt`），`[TRUNC] 截prompt=264/7394 (3.6%) | 截target=3862/7394 (52.2%)`；
+  - `s12`：目标 = `#### <答案>` + EOS（用于复现 `12_ckpt`，默认），`截prompt=150/7394 (2.0%) | 截target=2/7394 (0.0%)`。
+
+### 4.2 四个模式
+
+| 参数 | 做什么 | 墙钟 |
+|---|---|---|
+| `--gate2` | 随机流对账 → A/A 对照 → 框架对照（各 200 步） | ~6 min |
+| `--gates` | 门 0/1/2 + 零训练复现门 | ~15 min |
+| `--repro [--variant sX]` | 只跑门 0 + 零训练复现门（不训练） | ~3–6 min |
+| `--gate3` | 门 0/1/2 之后做全量重训 3000 步并比对 | ~21 min |
+
+启动模板（长跑一律走 systemd，`HSA_OVERRIDE_GFX_VERSION=10.3.0` 必带）：
+
+```
+systemd-run --user --unit=flowme-s65 --collect \
+  --working-directory=/home/vesita/coding/my/flowme \
+  --setenv=HSA_OVERRIDE_GFX_VERSION=10.3.0 --setenv=PYTHONUNBUFFERED=1 \
+  --property=StandardOutput=append:/home/vesita/coding/my/flowme/logs/65_x.log \
+  --property=StandardError=append:/home/vesita/coding/my/flowme/logs/65_x.log \
+  /home/vesita/coding/my/flowme/.venv/bin/python stages/65_textgen_cards.py --gates
+```
+跑前顺手看一眼单卡占用：`systemctl --user list-units --type=service --state=running | grep -iE "flowme|dtseek"`。
+
+### 4.3 输出行读法
+
+| 行 | 意思 |
+|---|---|
+| `[G0] train_fp=… test_fp=…` | 数据指纹。**数据被悄悄改动时这两个值会变**（当前 `train_fp=3c2caed4037013bc`、`test_fp=eb1245b165c6ae71`） |
+| `[G1] <tag> max\|Δlogits\|=…` | 既有 ckpt 灌进管线后的前向逐位对照（**同进程同批**口径） |
+| `[G2-RNG1/2/3]` | 随机流对账：构造期全局流、dropout 流消耗、数据序（R34 那套） |
+| `[G2-1step]` / `[G2-200step]` | `A/A` = 同代码同 seed 跑两次；`框架` = Cards vs CardPipeline |
+| `[G2-VERDICT]` / `[S65-G2JUDGE]` | 判词：框架差是否落在 A/A 噪声内 |
+| `[REPRO] …` + `[EM] REPRO …` | 零训练复现门，含分桶 EM |
+| `[G3-*]` | 门 3 的重训结果：`[G3-CMP]` 权重差、`[G3-EM]` EM 对照 |
+
+## 5. 实测记录（2026-10-09）
+
+### 5.1 门 0 / 门 1
+
+- **门 0**：`[DATA] blocks=7396 parsed=7394 bad=2 records=7394 | split 9:1 train=6655 test=739`，`span_mismatch=0`，与 `logs/12_answer.log` 逐字同。
+- **门 1**：`09c / 11 / 12` 三个 ckpt 灌进 `CardPipeline(residual=False)`，**同进程同批** `max|Δlogits| = 0.000e+00`，键映射 missing=unexpected=0（n=479）；CPU 侧独立复算同为 0。
+  口径提醒：`methodology/measurement.md:32-38` 记着 ROCm 前向有 ~1e-6 级**跨进程**非确定性 ⇒ 这个 0 只在同进程同批成立。
+
+### 5.2 训练可重复性的边界（本次最重要的现场）
+
+| 设置 | 序列长度 | 结果 |
+|---|---|---|
+| 算术（S51，`stages/51_p4_gate2.py`，GPU） | ~30 token | @3000/6000/9000/12000 步 `max\|Δθ\| = 0.000e+00`（含 30 步 A/A 控制） |
+| GSM8K（S65，GPU） | ≈480–500 token | 第 1 步 A/A = 0；**第 200 步 A/A = 1.850e-03（一次） / 2.902e-03（另一次）**，框架 = 1.225e-03 / 2.024e-03 |
+
+**会看到的现象**：同代码、同 seed、同数据序跑两次，200 步后权重自己就跟自己不一致，而且两次测得的 A/A 幅度还不一样（1.85e-3 vs 2.90e-3）。
+**由此得到的判据形态**：训练路径的对照不再是"逐位"，而是"**框架差 ≤ 当次 A/A 噪声**"；否则会把仪器噪声读成框架差异（S65 第一版判据就踩了这个，见 `P6_PLAN.md` §4.1 的留痕）。
+**【推断，未做单变量扫描】**：差别与序列长度 / 归约规模有关（算术 30 token 逐位 0，语言 500 token 不为 0）。要证实得做"同模型、只改序列长度"的扫描。
+
+### 5.3 复现门的口径陷阱（11_ckpt 的现场）
+
+拿 **CoT 模型**去评 **answer-only 记录集**会得到不可比的数：`11_ckpt` 在 s12 记录集上全量 EM = 0.95%，而在它自己的 s11 记录集上是 1.08%。
+
+即便记录集匹配（`--variant s11`），读数也分三层：
+
+| 对照项 | 本次（cards 路径） | 历史日志 | 结论 |
+|---|---|---|---|
+| CE（seed1234 / 5678） | 0.7705 / 0.7388 | `12_answer.log` `[B-REF]` 0.7705 / 0.7388 | **逐位同** |
+| 桶A1 EM（seed1234） | 1.11% | `11_genfix.log` 1.11% | **同** |
+| 桶A1 EM（seed5678） | 1.39% | `11_genfix.log` 0.28% | 差 +1.11pp（≈4 条）⇒ **未定位** |
+| 12_ckpt EM（两 seed） | 2.17% / 2.17% | `12_answer.log` 2.17% | **同** |
+| 12_ckpt CE | 0.6924 / 0.6844 | 0.6924 / 0.6844 | **逐位同** |
+
+读法：CE 全对 ⇒ 数据 / 模型 / 前向 / 损失这条链一致；差异只剩 seed5678 的**贪心 EM 4 条样本**。
+`11_textgen.log` 里的全量 `0.00%` 出现在 `11_genfix.log` 之前，属**修抽取仪器 bug 前**的读数（gold 带 `<eos>`、生成滤掉 EOS ⇒ 严格 EM 结构性恒 0），与本次不可比。
+
+### 5.4 多会话协作现场
+
+- **2026-10-09 22:00–22:08 的事故**：两个会话同时拥有 `stages/65_textgen_cards.py` 的写入意图，且各起了一个 GPU 进程（一个 systemd 单元 + 一个普通后台），互相覆盖文件、抢同一块卡。现场特征是 `ps -eo pid,ppid,etime,cmd | grep 65_textgen` 出现两个进程、`collab_lock op=overview` 里能看到对方的 claim 与 note。
+- **为什么"拿锁"是唯一有效防线**：文件版本守卫（FS_STALE_VERSION）只保护 read/edit/write 工具路径；**用 bash 组装/重定向写文件会绕过它**，所以两个写者可以静默互踩。
+- 目录级独占的副作用（旧会话现场 `m_107`）：claim `stages/` 会挡住只想在 `stages/` 里新建**另一个**文件的同伴。粒度贴近"我实际要写的文件"更省事。
+- GPU 是单卡的：排队用 `while systemctl --user is-active --quiet <unit>; do sleep 15; done`，**不杀别人的进程**（`methodology/platform.md:31-41`）。
+
+## 6. 前驱会话与本次交接
+
+- 前驱 = 标题 **「卡片式模型训练框架」** 的会话（`session-4942839c`，2026-09-28 → 2026-10-09 19:51，约 1.2 万事件、234 个子代理）。它建了 `cards/` 包、`stages/09–S64`、`methodology/RULES.md` R1–R43 与全部现状文档。
+- 它留下的最高优先缺口就是本文件 §4 的 S65（原文见 `NEXT_MAINLINE.md` §0）。
+- 它的收尾判定对理解本线很关键：**卡片框架在算术任务上立住了三件事**（可归因 / 可版本化 / 与实验脚本逐位等价），**但卡边界不是能力来源**（E1 构造性证明：三卡权重装进单体容器、保留跨卡残差 ⇒ logits 逐位相同）；能力上限 ≈97.9% 由**训练调度**推上去（warmup+cosine +4.12pp，已饱和）。
+- 它明确写下的一条边界：**"以上证据全部来自算术任务，未在语言生成上验证。"**
+- 它未结清的账：S64（位置绑定 n=4 @24000，为腾 GPU 提前停）、"三者叠加"未跑、旧结论未在 cosine 基线重测、236 个本地提交未 push。
+
+## 7. 未决与待办（截至 2026-10-09 23:00）
+
+| # | 事项 | 状态 |
+|---|---|---|
+| 1 | 门 3：cards 路径 3000 步重训，判据 `\|ΔEM\| ≤ 0.13pp` + 权重差并列 A/A 噪声 | 未完成 |
+| 2 | `11_ckpt_seed5678` 桶A1 的 4 条差异 | 未定位 |
+| 3 | "A/A 噪声 vs 序列长度"的单变量扫描 | 未做（现为推断） |
+| 4 | L2：让语言卡片出非平凡能力（M1 的 EM 2.17% ≈ 地板 1.89%） | 方向未定 |
+
+## 8. 相关文件
+
+| 文件 | 内容 |
+|---|---|
+| [`P6_PLAN.md`](P6_PLAN.md) | 本轮判据（先写死再跑）与结果、判据订正留痕 |
+| [`NEXT_MAINLINE.md`](NEXT_MAINLINE.md) §0 | 语言生成接进 `cards/` 的原始判据 |
+| [`MEME_FRAMEWORK.md`](MEME_FRAMEWORK.md) | 三类卡设计（唯一真相源） |
+| `stages/65_textgen_cards.py` | S65 驱动本体 |
+| `cards/` | 三类卡 + 黑板 + 版本化 |
+| [`methodology/RULES.md`](methodology/RULES.md) | 纪律总表（R1–R43） |

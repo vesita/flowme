@@ -32,16 +32,14 @@
 - **`logs/` 里的行号在仓库内不可核实**（R32）⇒ 引用只写已入库文件或提交号。
 - 本机 GPU = 单卡 RX 6600 / 8G / ROCm 6.4，**每个 GPU 进程必带 `HSA_OVERRIDE_GFX_VERSION=10.3.0`**。
 
-## 4. 新人最容易抓瞎的点（2026-10-09 实测补入）
+## 4. 最容易抓瞎的地方 → 见参考手册
 
-- **语言生成那条线不在 `cards/`**：在 `stages/09_textgen_gsm8k.py`–`12_answer_only.py`（GSM8K-CoT，M1 判**不通过**：S12 的 EM 2.17% ≈ 地板 1.89%）。`cards/` 原先只落地算术 `add_3d`；语言路径由 `stages/65_textgen_cards.py`（S65）接上。
-- **逐位对照必须先关 `residual`**：`cards/target.py:28-30` 的 `TargetCard` 默认算 `x + think(x)`（带外层残差），而 `stages/09:337-339` 的 `thought` 是裸层 ⇒ 不传 `residual=False` 就不是同一个函数（实测 logits 差 9.6~14.1）。
-- **`Cards` ↔ `CardPipeline` 键映射**（ckpt 互灌用）：`emb.* → input.emb.*` · `in_enc.* → input.enc.*` · `thought.* → target.think.*` · `head.* → output.head.*`。
-- **GPU 训练不是无条件可逐位重复**：算术（序列 ~30 token）@12000 步逐位 0；GSM8K（≈500 token）**200 步 A/A 就差 2.9e-3**。⇒ 比训练路径前先跑 A/A 噪声地板（`stages/65_textgen_cards.py --gate2` 内置），拿地板当判据，别拿"逐位"当默认口径。
-- **既有语言 ckpt 清单**（在 `logs/`，不入库）：`09c_ckpt_seed*`（MAXLEN 256 · CoT · EM 0.14%/0.00%）· `11_ckpt_seed*`（512 · CoT · EM 0.00%）· `12_ckpt_seed*`（512 · answer-only · EM 2.17%）；地板 1.89%。
-- **S65 跑法**：`systemd-run --user --unit=flowme-s65 … .venv/bin/python stages/65_textgen_cards.py --gate2 | --gates | --gate3`；`--gate2` = 流对账+A/A+框架，`--gates` = 门 0/1/2 + 零训练复现门，`--gate3` = 全量重训（~21min）。
-- **数据指纹**（防数据被悄悄改）：GSM8K `train_fp=3c2caed4037013bc` · `test_fp=eb1245b165c6ae71`（`gate0()` 每次打印）。
-- **bash 写文件绕过文件版本守卫**：多会话下务必先拿锁再写。本仓库发生过一次"两个会话同时写 `stages/65_*` 并抢同一块 GPU"的事故。
+语言卡片这条线上最容易卡住的几处，已整理成**参考式**文档 [`NL_CARDS_REF.md`](NL_CARDS_REF.md)：术语对照（`stages` 的 `emb/in_enc/thought/head` ↔ `cards` 的 `input.emb/input.enc/target.think/output.head`）、既有 ckpt 与各自口径、S65 的四个模式与输出行读法、训练可重复性的实测边界、复现门的口径陷阱、多会话现场。
+
+两条最常踩的在这里各留一句：
+
+- `cards/target.py:28-30` 的 `TargetCard` 默认带外层残差，而 `stages/09:337-339` 的 `thought` 是裸层 ⇒ 互灌 ckpt 要 `residual=False`（实测 logits 差 9.6~14.1）。
+- 训练路径**不是无条件可逐位重复**：算术（序列 ~30 token）@12000 步逐位 0；GSM8K（≈500 token）200 步 A/A 就差 2~3e-3 ⇒ 比训练路径前先跑 A/A 噪声地板（`stages/65_textgen_cards.py --gate2` 内置）。
 
 ## 5. 目录地图（哪个是家）
 

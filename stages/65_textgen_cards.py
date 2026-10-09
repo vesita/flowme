@@ -67,6 +67,17 @@ GEN_BATCH = 32
 EM_BATCH = 1          # ★主口径：batch=1（R28 自检通过的唯一自洽口径）
 CHK_BATCH = 16        # 自检/并列参考口径
 
+
+def _arg_value(flag: str, default: str) -> str:
+    a = sys.argv[1:]
+    return a[a.index(flag) + 1] if flag in a and a.index(flag) + 1 < len(a) else default
+
+
+# ★记录集变体：s12 = target `#### <答案>`（去 CoT，默认）· s11 = target 完整 CoT 回复
+#   —— 复现门必须用**与被评 ckpt 同口径**的记录集，否则不可比（见 P6_PLAN.md §4.3）
+VARIANT = _arg_value("--variant", "s12")
+assert VARIANT in ("s11", "s12"), f"未知 variant {VARIANT!r}"
+
 DATA = NS_ROOT + "/data/chinese/clean_v3/gsm8k_cot_dialogue.txt"
 TOK = NS_ROOT + "/data/chinese/char_tokenizer.json"
 CKPT_TMPL = "/home/vesita/coding/my/flowme/logs/12_ckpt_seed{seed}.pt"
@@ -78,6 +89,9 @@ print(f"[S12] ★A臂 只改一个变量=输出形态：target = `#### <答案>`
       f"prompt=题干 与 S11 逐字相同；MAXLEN={MAXLEN} 截断优先级=prompt优先(MIN_T={MIN_T})。"
       f" 其余不动：steps={STEPS} batch={BATCH} lr={LR} d={D} ff={FF} seeds={SEEDS} 切分=seed42(9:1)。"
       f" B臂=引用 S11 不重跑；生成主口径=batch={EM_BATCH}", flush=True)
+print(f"[S65] ★variant={VARIANT}：" + (
+    "target=`#### <答案>`+EOS（S12 口径，复现 12_ckpt）" if VARIANT == "s12"
+    else "target=完整 CoT 回复+EOS（S11 口径，复现 11_ckpt）"), flush=True)
 
 # ---------------- tokenizer（只读） ----------------
 from tokenizers import Tokenizer  # noqa: E402
@@ -226,7 +240,10 @@ for q, r in raw_pairs:
     prompt = stream.prompt()
     p_full = enc(prompt)
     # ★S12 唯一改动：目标 = `#### <答案>` + <eos>（CoT 去掉）；prompt 不动。
-    if "####" in r:
+    # ★s11 变体：目标 = 完整 CoT 回复 + <eos>（= stages/11 的口径，供复现 11_ckpt 用）。
+    if VARIANT == "s11":
+        target_text = r + EOS
+    elif "####" in r:
         ans_raw = r.rsplit("####", 1)[1].split("\n")[0].strip()
         target_text = "#### " + ans_raw + EOS
     else:
@@ -827,13 +844,21 @@ def gate2(n_steps: int = 200) -> float:
     print(f"[G2-VERDICT] A/A={aa_n:.3e} 框架={ab_n:.3e} ⇒ {verdict}", flush=True)
     del ref_a, ref_b, pipe
     torch.cuda.empty_cache()
-    return ab_n
+    return aa_n, ab_n
 
 
 # ---------------- 复现门：零训练，既有 ckpt 走 cards 路径 ----------------
 def repro():
-    # 先跑 s12（答案短、生成快）；s11 是 CoT 模型、生成慢 ⇒ 只跑 seed1234
-    for tag, ref_em, seeds in (("12", REF_S12_EM, SEEDS), ("11", REF_S11_EM, (SEEDS[0],))):
+    """★只评「记录集口径匹配」的 ckpt：s12 记录集 ⇒ 12_ckpt（answer-only）；
+    s11 记录集 ⇒ 11_ckpt（CoT）。拿 CoT 模型评 answer-only 记录集不可比（P6_PLAN.md §4.3）。
+    """
+    plan = (("12", REF_S12_EM, SEEDS), ("11", REF_S11_EM, SEEDS))
+    for tag, ref_em, seeds in plan:
+        want = "s12" if tag == "12" else "s11"
+        if VARIANT != want:
+            print(f"[REPRO] {tag}_ckpt 需要 variant={want} 的记录集（当前 {VARIANT}）"
+                  f"⇒ 跳过，避免口径不可比", flush=True)
+            continue
         for seed in seeds:
             path = os.path.join(S65_LOG, f"{tag}_ckpt_seed{seed}.pt")
             if not os.path.exists(path):
@@ -852,6 +877,7 @@ def repro():
                   f"(n={len(hits)}) vs 日志 {ref_em:.2f}% Δ={em - ref_em:+.2f}pp "
                   f"missing={miss} unexpected={unexp} ⇒ {'PASS' if ok else 'FAIL'}",
                   flush=True)
+            em_buckets(f"REPRO {tag}_ckpt_seed{seed}", hits)
             del pipe
             torch.cuda.empty_cache()
 
@@ -892,19 +918,31 @@ if __name__ == "__main__":
         MODE = "gate3"
     elif "--gate2" in ARGS:
         MODE = "gate2"
+    elif "--repro" in ARGS:
+        MODE = "repro"
+    if MODE == "repro":
+        gate0()
+        repro()
+        print("[S65-VERDICT] 复现门完成", flush=True)
+        print("[DONE] exit=0", flush=True)
+        sys.exit(0)
     gate0()
     gate1()
-    w2 = gate2(200)
+    aa2, ab2 = gate2(200)
+    # ★新判据（旧判据"逐位"已作废，见 P6_PLAN.md §4.1）：框架差 ≤ A/A 噪声 ⇒ 该口径下未测出框架差异
+    g2_ok = ab2 <= aa2
+    print(f"[S65-G2JUDGE] 框架差={ab2:.3e} vs A/A 噪声={aa2:.3e} ⇒ "
+          f"{'PASS（该口径下未测出框架差异）' if g2_ok else 'FAIL（框架差超过仪器噪声）'}", flush=True)
     if MODE == "gate2":
-        print(f"[S65-VERDICT] 门2 三跑对照完成（对齐→A/A→框架）| 框架 max|Δθ|={w2:.3e}",
-              flush=True)
+        print(f"[S65-VERDICT] 门2 三跑对照完成（对齐→A/A→框架）| 框架 max|Δθ|={ab2:.3e} "
+              f"（A/A={aa2:.3e}）", flush=True)
     elif MODE == "gates":
         repro()
-        print(f"[S65-VERDICT] 门0/1/2 + REPRO 完成 | 门2 max|Δθ|={w2:.3e} ⇒ "
-              f"{'PASS' if w2 == 0.0 else 'FAIL'}", flush=True)
+        print(f"[S65-VERDICT] 门0/1/2 + REPRO 完成 | 门2 框架={ab2:.3e} vs A/A={aa2:.3e} ⇒ "
+              f"{'PASS' if g2_ok else 'FAIL'}", flush=True)
     else:
-        if w2 != 0.0:
-            print("[S65-VERDICT] 门2 FAIL ⇒ 不跑门3（判死线）", flush=True)
+        if not g2_ok:
+            print("[S65-VERDICT] 门2 FAIL（框架差超过 A/A 噪声）⇒ 不跑门3（判死线）", flush=True)
             sys.exit(5)
         gate3()
     print("[DONE] exit=0", flush=True)
