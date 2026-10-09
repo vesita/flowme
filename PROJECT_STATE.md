@@ -1,13 +1,15 @@
 # PROJECT_STATE —— flowme 现状
 
-> 只写现状。数字全部来自 `logs/` 已入库产物；未入库来源逐条注明。
+> 只写现状。
+> 数字来源：METRICS.md（权威口径）· 已入库的实验脚本（stages/*.py）· 提交信息 · cards/。
+> 过程日志（logs/）不入库（见 .gitignore）；引用未入库文件的行号不可核实，故一律不引。
 
 ## 1. 现在是第几阶段 / 核心目标
 
 - **阶段**：证据审计期（E1–E7 账本）。已完成 S38（饱和扫描）与 S39（15000 步 loss 加权判决，仍未过判据）；P2（跨任务功能迁移）在 GPU 上运行。
 - **核心目的**：构建卡片式模型 —— 输入卡 → 模因 `[n,d]` → 思维卡 → 输出卡 + 黑板（`README.md`）。
 - **★ 定位**：卡片化不作为能力来源，而是「可归因」+「可版本化」的组织方式。
-  三卡权重装进单体容器 + 保留跨卡残差 ⇒ logits 逐位相同（`logs/e1_mono.log`：`卡边界逐位等价=max|Δlogits|=0.0e+00`，A/B 参数量 2501888 差=0）。
+  三卡权重装进单体容器 + 保留跨卡残差 ⇒ logits 逐位相同（`stages/35_mono_vs_cards.py` + 提交 `98098da`：`卡边界逐位等价=max|Δlogits|=0.0e+00`，A/B 参数量 2501888 差=0）。
 - **★ 当前瓶颈**：训练预算是唯一瓶颈。准入预算 **≈9750–12000 步**、平台 EM 上限 **≈91–95%**（clean 口径；`methodology/RULES.md` R36）；
    add_3d 实测 @12000 = **95.45/90.52%**、@15000 = **94.81/90.65%**（clean，`METRICS.md:20`）⇒ 严格饱和仍未达（R35/R36）。
 
@@ -16,10 +18,10 @@
 | # | 结论 | 证据强度 / 独立 n | 来源 |
 |---|---|---|---|
 | ① | 卡内结构 = 自注意力 + 逐位置 FFN 不可替代（B/C/D/E 对 A 全部 ≤−2SE，无一臂追平） | **强**；**@3000/@6000/@12000 三点，clean 口径**；独立 n=10，2 seed 同号 | 提交 `a977147`（@12000 全部数字）；`stages/44_struct_at_12k.py`；`METRICS.md:18-20` |
-| ② | 卡边界零增量（构造性证明：三卡装进单体容器 logits 逐位相同） | **中**；构造 n=1 + 统计 8（统计对照 cards≥mono 并非零） | `logs/e1_mono.log` [META]；`logs/39_report.txt:12,17` |
-| ③ | 「单卡更好」被推翻（frozen@6000 比 e2e 差 −5.25 / −13.25pp） | **中**；独立 n=4，2 seed 同号、均 ≤−2SE | `logs/e5_frozen.log` [S34-Δ]；`logs/39_report.txt:13,18` |
-| ④ | PR 是容量指标：ρ(PR,EM)=**+0.5748**, n=18, p=**0.0126**；集中度不是：ρ(**−0.0464**, p=**0.8548**) | **中**，由桶身份驱动 | `logs/33_report.txt:24`；`logs/33_rho.json` n18_dedup |
-| ⑤ | 模因承载内容：S26 跨形式 **9/9** ≥2SE + 正控（同形式异数字 cos 明显更低） | **中**；9 组 rho 对，2 seed | `logs/26_full.log:29-31,42-44,55-57` |
+| ② | 卡边界零增量（构造性证明：三卡装进单体容器 logits 逐位相同） | **中**；构造 n=1 + 统计 8（统计对照 cards≥mono 并非零） | `stages/35_mono_vs_cards.py` + 提交 `98098da` [META]；`stages/39_ledger_update.py` + 提交 `3a780b1` |
+| ③ | 「单卡更好」被推翻（frozen@6000 比 e2e 差 −5.25 / −13.25pp） | **中**；独立 n=4，2 seed 同号、均 ≤−2SE | `stages/34_frozen_vs_e2e_6000.py` + 提交 `c3c0d82` [S34-Δ]；`stages/39_ledger_update.py` + 提交 `3a780b1` |
+| ④ | PR 是容量指标：ρ(PR,EM)=**+0.5748**, n=18, p=**0.0126**；集中度不是：ρ(**−0.0464**, p=**0.8548**) | **中**，由桶身份驱动 | `stages/33_evidence_dedupe.py` + 提交 `f49a069`（n18 去重口径） |
+| ⑤ | 模因承载内容：S26 跨形式 **9/9** ≥2SE + 正控（同形式异数字 cos 明显更低） | **中**；9 组 rho 对，2 seed | `stages/26_meme_anchoring.py` + 提交 `2834304` |
 | ⑥ | 可归因性可实测：恒等中介重训 ΔEM = **−84.00pp**（85.50%→1.50%）；前 10/20/50% 因果占比 **38.0% / 60.1% / 93.6%**；R29 非零比 **100%** | **中**；n=23 单元，1 ckpt（seed1234） | `cards/example_attribution.py`；提交 `38a13c7` |
 | ⑦ | 硬版本化可实测：同一 MV 训两张目标卡 EM **39.00 / 40.00%**，权重 sha 不同；假同版本抛 AssertionError | **中**；2 seed | `cards/example_versioning.py`、`tests/test_cards.py`；提交 `38a13c7` |
 | ⑧ | （**已知负面结果**）数字/算子 token loss 加权**未过写死判据**：真饱和点 @15000 的 Δ 方向随 seed 翻转 | **强**（负面）；4 run，2 seed | 提交 `1e85bb0`；`stages/40_loss_weight_at_saturation.py` |
@@ -34,11 +36,11 @@
 
 | 旧结论 | 被谁、怎么推翻 | 来源 |
 |---|---|---|
-| 单卡训练比端到端好 **43pp** | S28 等算力 + E5 ⇒ e2e 更好（Δ=**−5.25 / −13.25pp**，2 seed 同号为负且 ≤−2SE） | `logs/e5_frozen.log` [S34-Δ][判定] |
-| 思维卡必须带残差 | E6 饱和区重测 ⇒ @6000 nores 均值 **80.62% ≥ res 80.00%**，Δ 随 seed 翻号 ⇒ 该结论**不可判**（3000 步的 +34.75/+21.51pp 是欠训区） | `logs/e6_sat.log` 两栏对照表；`logs/39_report.txt:11,16` |
-| 「两次独立复现 / 三条独立实验互相印证」 | E4/E7 逐参数 max&#124;Δ&#124;=0 ⇒ 同一权重（83→64、115→86） | `logs/33_report.txt:1-2`；`logs/39_report.txt:1-2,6-7` |
+| 单卡训练比端到端好 **43pp** | S28 等算力 + E5 ⇒ e2e 更好（Δ=**−5.25 / −13.25pp**，2 seed 同号为负且 ≤−2SE） | `stages/34_frozen_vs_e2e_6000.py` + 提交 `c3c0d82` [S34-Δ][判定] |
+| 思维卡必须带残差 | E6 饱和区重测 ⇒ @6000 nores 均值 **80.62% ≥ res 80.00%**，Δ 随 seed 翻号 ⇒ 该结论**不可判**（3000 步的 +34.75/+21.51pp 是欠训区） | `stages/36_saturation_retest.py` + 提交 `097c6b0`（两栏对照表）；`stages/39_ledger_update.py` + 提交 `3a780b1` |
+| 「两次独立复现 / 三条独立实验互相印证」 | E4/E7 逐参数 max&#124;Δ&#124;=0 ⇒ 同一权重（83→64、115→86） | `stages/33_evidence_dedupe.py` + 提交 `f49a069`；`stages/39_ledger_update.py` + 提交 `3a780b1` |
 | 「共享锚点有价值」（A6） | 两臂共用同一锚点接口，真单变量是「目标卡初值」 | `speculation/SYNTHESIS.md:48`（引 `stages/25_single_card_train.py:17,445`） |
-| 「S13 容量/训练量不是瓶颈」（B⑦） | S38 ⇒ 该结论在 52.2% target 被截的坏管线上测的，不可外推；add_3d 上训练量就是真瓶颈 | `speculation/DEBATE.md:38`（引 `logs/13_cap.log:249-250`、`logs/11_textgen.log`）；`logs/s38_sat.log` |
+| 「S13 容量/训练量不是瓶颈」（B⑦） | S38 ⇒ 该结论在 52.2% target 被截的坏管线上测的，不可外推；add_3d 上训练量就是真瓶颈 | `speculation/DEBATE.md:38`；原始依据 `stages/13_capacity_steps.py` + 提交 `9978970`、`stages/11_window512.py` + 提交 `1ce6883`；`stages/38_find_saturation.py` + 提交 `88bcef0` |
 
 ## 4. 纪律（现状）
 

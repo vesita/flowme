@@ -3,7 +3,7 @@
 ## 口径定义
 - 数据：S14 生成器、五桶；**test 去掉含字面量 {expr} 的不可作答样本**（bad = add_1d 14 / add_2d 19 / add_3d 30 / sub_2d 20 / mul_2d 14；clean n = 786/781/770/780/786）。
 - EM：严格匹配、batch=1（R28）；数字每步 = exp(−数字/算子 token 的 CE)（样本级，S19/S38 口径）。
-- 依据：`logs/42_data_hygiene.json`（影响面）、`logs/43_clean_em.json`（56 行大表，EM 为 2 seed 均值）。
+- 依据：`stages/42_data_hygiene.py`（影响面）、`stages/43_clean_em.py`（56 行大表，EM 为 2 seed 均值）。
 
 ## 1. 五桶（clean）
 | bucket | n_clean | res EM | nores EM | res 数字每步 | nores 数字每步 |

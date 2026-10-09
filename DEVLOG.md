@@ -12,15 +12,15 @@
 
 | 单元 | 问题 | 产物 |
 |---|---|---|
-| **E4** | 我们引用的"独立证据"真的是独立的吗？ | `logs/33_report.txt`、`logs/33_rho.json` |
-| **S31** | 泄漏（SEEN/UNSEEN）对 EM 的影响有多大？ | `logs/31_results.jsonl` |
-| **E1** | "三类卡闭环"比同参数量单体 Transformer 强吗？ | `logs/35_results.jsonl` |
+| **E4** | 我们引用的"独立证据"真的是独立的吗？ | `stages/33_evidence_dedupe.py` + 提交 `f49a069` |
+| **S31** | 泄漏（SEEN/UNSEEN）对 EM 的影响有多大？ | `stages/31_seen_unseen.py` + 提交 `6042e79` |
+| **E1** | "三类卡闭环"比同参数量单体 Transformer 强吗？ | `stages/35_mono_vs_cards.py` + 提交 `98098da` |
 | **E5** | 等总步数下，冻结接口 vs 端到端谁更好？ | 提交 `c3c0d82` |
-| **E6** | @6000 步（当时以为的饱和点）重测残差与卡内结构 | `logs/36_results.jsonl` |
+| **E6** | @6000 步（当时以为的饱和点）重测残差与卡内结构 | `stages/36_saturation_retest.py` + 提交 `097c6b0` |
 | **S37/S38** | 训练预算到哪才是饱和？loss 加权（@6000）有效吗？ | 提交 `c1d2f85`（S37）、`88bcef0`（S38） |
-| **S42/S43** | 数据卫生（模板 bug / 词表 / 地板）与 clean 口径重算 | `logs/42_data_hygiene.json`、`logs/43_clean_em.json` |
-| **S29b** | S29 的产物丢了，重跑落库 | `logs/41_s29_rerun.json` |
-| **E7** | 账本更新（115 文件 → 86 唯一权重） | `logs/39_report.txt` |
+| **S42/S43** | 数据卫生（模板 bug / 词表 / 地板）与 clean 口径重算 | `stages/42_data_hygiene.py` + 提交 `4f51ef6`、`stages/43_clean_em.py` + 提交 `1359e7c` |
+| **S29b** | S29 的产物丢了，重跑落库 | `stages/41_rerun_s29_to_logs.py` + 提交 `7dba664` |
+| **E7** | 账本更新（115 文件 → 86 唯一权重） | `stages/39_ledger_update.py` + 提交 `3a780b1` |
 | **F1/F5** | `cards/` 框架骨架 + 两个卖点演示 | `cards/`、`tests/test_cards.py` |
 | **对抗裁决** | A 方（我的主张）vs B 方（独立视角）逐条裁决 | `speculation/DEBATE.md`、`speculation/FRESH_VIEW.md` |
 | **F7/F8/F9/F10** | 文档收敛：状态报告 / 权威数字表 / 清理过时数字 / 立 R37 | `PROJECT_STATE.md`、`METRICS.md` |
@@ -32,12 +32,12 @@
 | 原结论 | 被谁推翻 | 依据 |
 |---|---|---|
 | "单卡训练（冻结接口只训目标卡）比端到端好 43pp" | **E5**（等总步数 6000）| 提交 `c3c0d82`：Δ = −5.25±1.41 / −13.25±1.89pp，e2e 更好 |
-| "思维卡必须带残差"（+34.75pp 的证据） | **E6**（@6000 步）+ **S38**（@15000）| `logs/36_results.jsonl`：nores 均值 80.62% ≥ res 80.00% |
-| "S15 与 S19 两次独立复现" | **E4/E7**（逐参数指纹）| `logs/33_report.txt`、`logs/39_report.txt`：同一权重，真实独立 n=4 |
+| "思维卡必须带残差"（+34.75pp 的证据） | **E6**（@6000 步）+ **S38**（@15000）| `stages/36_saturation_retest.py` + 提交 `097c6b0`：nores 均值 80.62% ≥ res 80.00% |
+| "S15 与 S19 两次独立复现" | **E4/E7**（逐参数指纹）| `stages/33_evidence_dedupe.py` + 提交 `f49a069`、`stages/39_ledger_update.py` + 提交 `3a780b1`：同一权重，真实独立 n=4 |
 | "共享锚点有价值（臂2 vs 臂3）" | **对抗裁决** | `speculation/DEBATE.md`：两臂共用同一锚点接口，真单变量是"目标卡初值" |
-| "容量/训练量不是瓶颈"（S13） | **S38** | `logs/38_results.jsonl`：@6000→@15000 仍涨 +5.63/+12.87pp |
+| "容量/训练量不是瓶颈"（S13） | **S38** | `stages/38_find_saturation.py` + 提交 `88bcef0`：@6000→@15000 仍涨 +5.63/+12.87pp |
 | "A5：PR 与集中度可统一为有效自由度" | **S30** | 提交 `e0b68b5`：ρ = −0.135（n=18, p=0.59）⇒ 独立 |
-| "卡框架可能带来能力增量" | **E1**（构造性）| `logs/35_results.jsonl`：三卡权重装进单体容器 ⇒ logits 逐位相同 |
+| "卡框架可能带来能力增量" | **E1**（构造性）| `stages/35_mono_vs_cards.py` + 提交 `98098da`：三卡权重装进单体容器 ⇒ logits 逐位相同 |
 | "loss 加权能提升能力" | **S39**（真饱和点 @15000 重做）| 提交 `1e85bb0`：Δ 方向随 seed 翻转（w3 +1.75/−5.62pp、w10 −0.62/+3.88pp）⇒ **未过写死判据**，且受未饱和约束（R35）。是"未证实/不可下"，**不是"没有效果"** |
 
 ### 为什么（判断链）
