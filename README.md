@@ -6,6 +6,8 @@
 > ⚠️ 已知同名/近名项目：FlowMe（中文 · 分布式链路追踪）、`flowmeo`、`flowmepy`（见 `dev-notes/21 §29` 的命名记录）。
 > 框架术语仍叫**模因**（meme），项目名是 `flowme`。
 
+> **AI 会话入口**：动手前先读 [`AGENTS.md`](AGENTS.md)（必读顺序 + 硬约束），它会被 harness 自动注入。
+
 ---
 
 ## 1. 它是什么

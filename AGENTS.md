@@ -1,0 +1,55 @@
+# AGENTS —— flowme 的 AI 入口（先读这里，再动代码）
+
+> 给**任何接手本仓库的 AI 会话**：本文件写「先读什么 + 动手前必守什么」。
+> 现状与结论在 `PROJECT_STATE.md`，纪律表体在 `methodology/RULES.md`，本文件不复述它们。
+
+## 1. 必读顺序（读完再动手，别跳）
+
+| # | 文件 | 读它回答什么 |
+|---|---|---|
+| 1 | `README.md` | 这是什么 · 目录地图 · 怎么跑 |
+| 2 | `PROJECT_STATE.md` | **现状**：阶段 · 站得住的结论 · 已判死 · 待办 |
+| 3 | `MEME_FRAMEWORK.md` | **设计唯一真相源**：三类卡 · 三层规范 · 黑板调度 · 度量 L0–L5 |
+| 4 | `NEXT_MAINLINE.md` | **当前缺口与优先级**（判据写死在这里） |
+| 5 | `methodology/RULES.md` | 纪律总表 R1–R43（**唯一表体**） |
+| 6 | `methodology/*.md` | 准绳：`measurement` · `experiment-design` · `platform` · `collaboration` · `findings` |
+| 7 | `DEVLOG.md` | 最近一轮做了什么 · 推翻了什么 · 踩了什么坑 |
+| 8 | `METRICS.md` | 绝对数字口径（引用绝对 EM **必须注明数据版 + 调度**） |
+
+按需：`MILESTONES.md`（里程碑判决）· `ROADMAP.md`（队列）· `speculation/`（**推测**，引用须标"推测"）· `dev-notes/`（旧框架经验，效力低于 `methodology/`）。
+
+## 2. 动手前必守（每条都有实测出处，不是形式）
+
+- **判据先写死再跑**：预注册落盘早于首训；要改判据必须留痕 + **旧新两个数字都报**（`methodology/experiment-design.md:46-50`）。
+- **「没测出差异」≠「没有效果」**：只许写"该口径下未测出差异"（`methodology/README.md:12-14`）。
+- **逐位口径**：logits 逐位只在**同进程同批**下可承诺；跨进程只承诺 pred/exact —— ROCm 前向有 ~1e-6 级非确定性（`methodology/measurement.md:32-38`）。
+- **比训练路径前先对齐随机流**：构造期 RNG 状态 / dropout 流消耗 / 数据序全部逐位对齐后，才谈"等价"（R34；范例 `stages/51_p4_gate2.py`）。
+- **长跑**用 `systemd-run --user --unit=<名> --collect`，不用 `setsid nohup`；单卡忙则排队，**绝不杀别人的进程**（`methodology/platform.md:22-27,31-41`）。
+- **`logs/` 不入库**；结论性数字必须复述进 REPORT / 提交信息（`README.md:116-117`）。
+- **提交按路径显式列出**，禁止 `git add -A`（R18）。
+- **动手前先 `collab_lock op=claim`**，只写自己声明的路径；不绕过别人持有的锁（`methodology/collaboration.md:8-20`）。
+- **先 grep 既有脚本与文档再写新脚本**：重复造轮子会掩盖已有结论。
+- **`logs/` 里的行号在仓库内不可核实**（R32）⇒ 引用只写已入库文件或提交号。
+- 本机 GPU = 单卡 RX 6600 / 8G / ROCm 6.4，**每个 GPU 进程必带 `HSA_OVERRIDE_GFX_VERSION=10.3.0`**。
+
+## 4. 新人最容易抓瞎的点（2026-10-09 实测补入）
+
+- **语言生成那条线不在 `cards/`**：在 `stages/09_textgen_gsm8k.py`–`12_answer_only.py`（GSM8K-CoT，M1 判**不通过**：S12 的 EM 2.17% ≈ 地板 1.89%）。`cards/` 原先只落地算术 `add_3d`；语言路径由 `stages/65_textgen_cards.py`（S65）接上。
+- **逐位对照必须先关 `residual`**：`cards/target.py:28-30` 的 `TargetCard` 默认算 `x + think(x)`（带外层残差），而 `stages/09:337-339` 的 `thought` 是裸层 ⇒ 不传 `residual=False` 就不是同一个函数（实测 logits 差 9.6~14.1）。
+- **`Cards` ↔ `CardPipeline` 键映射**（ckpt 互灌用）：`emb.* → input.emb.*` · `in_enc.* → input.enc.*` · `thought.* → target.think.*` · `head.* → output.head.*`。
+- **GPU 训练不是无条件可逐位重复**：算术（序列 ~30 token）@12000 步逐位 0；GSM8K（≈500 token）**200 步 A/A 就差 2.9e-3**。⇒ 比训练路径前先跑 A/A 噪声地板（`stages/65_textgen_cards.py --gate2` 内置），拿地板当判据，别拿"逐位"当默认口径。
+- **既有语言 ckpt 清单**（在 `logs/`，不入库）：`09c_ckpt_seed*`（MAXLEN 256 · CoT · EM 0.14%/0.00%）· `11_ckpt_seed*`（512 · CoT · EM 0.00%）· `12_ckpt_seed*`（512 · answer-only · EM 2.17%）；地板 1.89%。
+- **S65 跑法**：`systemd-run --user --unit=flowme-s65 … .venv/bin/python stages/65_textgen_cards.py --gate2 | --gates | --gate3`；`--gate2` = 流对账+A/A+框架，`--gates` = 门 0/1/2 + 零训练复现门，`--gate3` = 全量重训（~21min）。
+- **数据指纹**（防数据被悄悄改）：GSM8K `train_fp=3c2caed4037013bc` · `test_fp=eb1245b165c6ae71`（`gate0()` 每次打印）。
+- **bash 写文件绕过文件版本守卫**：多会话下务必先拿锁再写。本仓库发生过一次"两个会话同时写 `stages/65_*` 并抢同一块 GPU"的事故。
+
+## 5. 目录地图（哪个是家）
+
+| 路径 | 是什么 |
+|---|---|
+| `stages/` | **主线实验**（`NN_<问题>.py`） |
+| `cards/` | **新框架骨架**：三类卡 + 黑板 + 版本化（只依赖 torch） |
+| `methodology/` | 结论 / 纪律 / 准绳的家（R1–R43 在这里） |
+| `speculation/` | 待验证推测（**不许与 `methodology/` 混写**） |
+| `logs/` | 过程日志（不入库） |
+| `dev-notes/` `experiments/` `src/` `tests/` `checkpoints/` | **旧框架 DTSeek**，只作证据与经验来源（`README.md:95-105`） |
