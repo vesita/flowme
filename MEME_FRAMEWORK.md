@@ -40,6 +40,7 @@
 - **`cards/` 已落地验证的任务：合成算术 `add_3d` 一条线**（`cards/example_add3d.py`、`example_attribution.py`、`example_versioning.py`、`exp_struct_ablation.py`；`BUCKET="add_3d"`）—— 已验证：EM、可归因（门B −84pp）、硬版本化（MV / 假同版本防护）、与实验脚本逐位等价（P4 门0/1/2）。
 - **语言生成：尚无框架**。仓库里的文本生成实验（`stages/09_textgen_gsm8k.py` 等）**都在 stages 侧、未接入 `cards/`**；`cards/` 里没有文本生成代码（无 `generate`/`lm_head`）。
 - **要接上它缺什么**：把「**文本 → 模因输入卡**」与「**文本级生成目标 / 评测口径**」接进 `cards/`；可参考 `stages/09`–`12` 那套闭环（**该闭环 M1 判决为不通过**，见 `MILESTONES.md`）。
+- **目标形态与借力**：输入卡（文本→模因）/ 思维卡（模因→模因）/ 输出卡（模因→文本）；**借力 `nanoSeek`**（数据集 / 评估标准 / 经验）：见 `experiments/nanoseek_survey/SURVEY.md`。
 
 ---
 
