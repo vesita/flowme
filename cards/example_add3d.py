@@ -25,6 +25,8 @@
       （env：CARDS_STEPS / CARDS_SEED / CARDS_THREADS / CARDS_RNG / CARDS_SNAP_AT）
 另：`CARDS_XCHECK=1` 会把 logs/ 里的 S19 GPU ckpt 灌进本管线复核（证明数据与评测口径逐位一致）。
 """
+# 注意（R39）：greedy_gen 用 was_training 恢复模式，而不是无条件 train()。
+# 原因：无条件 train() 会让【之后】的任何前向静默带 dropout（曾致自检假报 EM=35.25%）。
 from __future__ import annotations
 
 import json
@@ -337,6 +339,7 @@ def train_run(train, steps: int, seed: int = SEED, snap_at: int | None = None):
 @torch.no_grad()
 def greedy_gen(pipe: CardPipeline, recs, batch: int = 1) -> list:
     """S19 的 R28 贪心生成（主口径 batch=1）逐字相同。"""
+    was_training = pipe.training
     pipe.eval()
     texts = [""] * len(recs)
     for i in range(0, len(recs), batch):
@@ -371,7 +374,8 @@ def greedy_gen(pipe: CardPipeline, recs, batch: int = 1) -> list:
         for j in range(len(chunk)):
             g = [x for x in ids[j, n0: n0 + gen_len[j]].tolist() if x != EOS_ID]
             texts[i + j] = dec(g)
-    pipe.train()
+    if was_training:
+        pipe.train()
     return texts
 
 
