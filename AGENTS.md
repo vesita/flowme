@@ -16,7 +16,7 @@
 | 7 | `DEVLOG.md` | 最近一轮做了什么 · 推翻了什么 · 踩了什么坑 |
 | 8 | `METRICS.md` | 绝对数字口径（引用绝对 EM **必须注明数据版 + 调度**） |
 
-按需：`MILESTONES.md`（里程碑判决）· `ROADMAP.md`（队列）· `speculation/`（**推测**，引用须标"推测"）· `dev-notes/`（旧框架经验，效力低于 `methodology/`）。
+按需：**`L2_PLAN.md`（当前主线：可对话卡片组 · 猜测→实现→分析→迭代 · 判据写死）** · `P6_PLAN.md`（语言生成接进 `cards/` 的落地判据与结果） · `NL_CARDS_REF.md`（语言卡片参考手册） · `MILESTONES.md`（里程碑判决） · `ROADMAP.md`（队列） · `speculation/`（**推测**，引用须标"推测"） · `dev-notes/`（旧框架经验，效力低于 `methodology/`）。
 
 ## 2. 动手前必守（每条都有实测出处，不是形式）
 
