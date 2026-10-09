@@ -23,9 +23,15 @@
   python stages/69_dialog_r1.py --data-prefix 68 --seed 1234 --steps 12000   # r1c：互斥词表、12000 步
   python stages/69_dialog_r1.py --data-prefix 68d --seed 1234            # r2：共享词表 + 确定性句面（68d_dialog_*）
   python stages/69_dialog_r1.py --data-prefix 68d --seed 1234 --steps 12000
-  --data-prefix {68,68b,68d} 决定读哪份 jsonl（logs/<prefix>_dialog_*.jsonl）与 ckpt 命名
-  （68 ⇒ 69_ckpt_seed*.pt 不变；68b ⇒ 69_ckpt_68b_seed*.pt；68d ⇒ 69_ckpt_68d_seed*.pt，互不覆盖）；
-  缺 68b/68d 数据时自动带 --shared-vocab / --det-reply 跑生成器。--steps 默认 3000（--smoke 时固定 50 步）。
+  python stages/69_dialog_r1.py --data-prefix 68e --seed 1234            # r3：轮3 保留 v3（68e_dialog_*）
+  python stages/69_dialog_r1.py --data-prefix 68f --seed 1234            # r4：test 实体=训练用字的新组合（68f_dialog_*）
+  python stages/69_dialog_r1.py --data-prefix 68g --seed 1234            # r6：train 名池=320 组合 / test=20 留出新组合（68g_dialog_*）
+  --data-prefix {68,68b,68d,68e,68f,68g} 决定读哪份 jsonl（logs/<prefix>_dialog_*.jsonl）与 ckpt 命名
+  （68 ⇒ 69_ckpt_seed*.pt 不变；68b ⇒ 69_ckpt_68b_seed*.pt；68d/68e/68f 同理，互不覆盖）；
+  缺 68b/68d/68e/68f 数据时自动带对应开关（--shared-vocab / --det-reply / --keep-v3 /
+  --keep-v3 --novel-combos）跑生成器；68g 用 --keep-v3 --novel-train。
+  ★§13.2 修复（L2-r6）：seed 在**构造模型之前**设置 + [INIT-CHECK]（同 seed 连造两次逐张量差=0）。
+  --steps 默认 3000（--smoke 时固定 50 步）。
   ★§8.4 必跑诊断（训练后、无开关）：在 train 与 test 上分别报「目标首 token（=实体首字）的
   top1/top5」与「贪心生成的实体来源（正确实体 / 干扰实体 / 训练词表名 / 其它）」，打印为 [DIAG] 行。
 GPU 长跑必须：systemd-run --user --unit=<名> --collect
@@ -35,10 +41,12 @@ GPU 长跑必须：systemd-run --user --unit=<名> --collect
 from __future__ import annotations
 
 import argparse
+import hashlib
 import importlib.util
 import json
 import math
 import os
+import re
 import subprocess
 import sys
 import time
@@ -53,6 +61,8 @@ if ROOT not in sys.path:
     sys.path.insert(0, ROOT)
 
 import torch  # noqa: E402
+import torch.nn as nn  # noqa: E402
+import torch.nn.functional as F  # noqa: E402
 from torch.optim import AdamW  # noqa: E402
 
 from cards import CardPipeline  # noqa: E402
@@ -118,7 +128,9 @@ def ensure_data(prefix: str = "68"):
     if os.path.exists(DATA_TMPL.format(split="train")) and os.path.exists(DATA_TMPL.format(split="test")):
         return
     print(f"[DATA] 缺 {DATA_TMPL.format(split='train')} ⇒ 先跑生成器", flush=True)
-    extra = {"68b": ["--shared-vocab"], "68d": ["--det-reply"], "68e": ["--keep-v3"]}.get(prefix, [])
+    extra = {"68b": ["--shared-vocab"], "68d": ["--det-reply"], "68e": ["--keep-v3"],
+             "68f": ["--keep-v3", "--novel-combos"],
+             "68g": ["--keep-v3", "--novel-train"]}.get(prefix, [])
     cmd = [sys.executable, D68_PATH] + extra
     r = subprocess.run(cmd, cwd=ROOT)
     if r.returncode != 0:
@@ -172,6 +184,56 @@ def new_pipe() -> CardPipeline:
     """★residual=False：cards/target.py:28-30 默认带外层残差，S65 已实测必须关掉。"""
     return CardPipeline(d=D, vocab_size=V, ff=FF, nhead=NHEAD, maxlen=MAXLEN,
                         pad_id=PAD_ID, dropout=0.1, residual=False).to(device)
+
+
+def seed_all(seed: int):
+    """★§13.2 修复：seed 必须在**构造模型之前**设置（torch 默认流管参数初始化与重洗）。
+
+    照 cards/example_add3d.py:305-311 的写法：manual_seed 先行，再构造 CardPipeline。
+    """
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
+
+
+def param_digest(model) -> str:
+    """全部参数的 hash（名字 + 形状 + float32 字节），用于 [INIT-CHECK] 的同 seed 复现自检。"""
+    h = hashlib.sha256()
+    for n, p in model.named_parameters():
+        h.update(n.encode())
+        h.update(str(tuple(p.shape)).encode())
+        h.update(p.detach().cpu().to(torch.float32).contiguous().numpy().tobytes())
+    return h.hexdigest()[:16]
+
+
+def param_maxdiff(m1, m2) -> float:
+    """两个同结构模型**逐张量的最大绝对差**（同 seed 应为 0）。"""
+    md = 0.0
+    with torch.no_grad():
+        for (n1, p1), (n2, p2) in zip(m1.named_parameters(), m2.named_parameters()):
+            assert n1 == n2, (n1, n2)
+            md = max(md, float((p1 - p2).abs().max().item()))
+    return md
+
+
+def init_check(seed: int, other_seed: int) -> bool:
+    """★L2-r6 自检（§13.2）：同一 seed 连造两次 ⇒ 全参数逐张量必须相同；不同 seed ⇒ 必须不同。"""
+    def make(s):
+        seed_all(s)
+        return new_pipe()
+    m1, m2 = make(seed), make(seed)
+    d1, d2 = param_digest(m1), param_digest(m2)
+    md_same = param_maxdiff(m1, m2)
+    m3 = make(other_seed)
+    d3 = param_digest(m3)
+    md_diff = param_maxdiff(m1, m3)
+    ok = (d1 == d2) and (md_same == 0.0) and (d1 != d3) and (md_diff > 0.0)
+    print(f"[INIT-CHECK] seed={seed} 连续构造两次：全参数 hash={d1} vs {d2} ⇒ "
+          f"{'相同' if d1 == d2 else '不同'} | 逐张量最大差={md_same:.3e}（必须 0）| "
+          f"不同 seed({other_seed})：hash={d3} {'不同' if d1 != d3 else '相同(异常)'} "
+          f"逐张量最大差={md_diff:.3e}（必须 >0）| 参数张量数={sum(1 for _ in m1.parameters())} "
+          f"n_params={sum(p.numel() for p in m1.parameters())} ⇒ {'PASS' if ok else 'FAIL'}", flush=True)
+    del m1, m2, m3
+    return ok
 
 
 def build_batch(recs):
@@ -398,9 +460,27 @@ def print_diag(a, ev, txt, res, train, model, arm_tag: str):
               f"不可见 n={len(inv)} EM={f(inv):.2f}%", flush=True)
     _em_split(txt, ev, f"{arm_tag}(全量 n={len(ev)})")
     _em_split(preds_tr, tr_sub, f"train子集(n={len(tr_sub)})")
+    # 返回给 main 的 L2-r4 判据行（Q12）用；打印内容与返回前逐字不变
+    return dict(d_tr=d_tr, d_te=d_te, s_tr=s_tr, s_te=s_te)
 
 
 # ---------------- 主流程 ----------------
+def _find_ref_68e(seed: int) -> str:
+    """从 logs/69_68e_hist_s<seed>.log 抓 r3 的 test 侧实体来源四分类（Q12 的同 seed 对照）。"""
+    fp = os.path.join(LOG_DIR, f"69_68e_hist_s{seed}.log")
+    if not os.path.exists(fp):
+        return f"缺 {os.path.basename(fp)}"
+    pat = re.compile(r": 正确实体=([\d.]+)% 干扰实体=([\d.]+)% 训练词表名=([\d.]+)% 其它=([\d.]+)%")
+    with open(fp, encoding="utf-8") as f:
+        for ln in f:
+            if "[DIAG]" in ln and "实体来源" in ln:
+                m = pat.search(ln)
+                if m:
+                    return (f"正确实体={m.group(1)}% 干扰实体={m.group(2)}% "
+                            f"训练词表名={m.group(3)}% 其它={m.group(4)}%")
+    return f"{os.path.basename(fp)} 里没找到 [DIAG] 实体来源行"
+
+
 def main(argv=None):
     global DATA_TMPL
     ap = argparse.ArgumentParser(description="S69 L2-r1 跨轮消解卡片驱动")
@@ -410,13 +490,20 @@ def main(argv=None):
                     help="Q2：test 的轮1/轮2 实体互换、保留原 target，同一 ckpt 重评（不重训）")
     ap.add_argument("--steps", type=int, default=STEPS,
                     help=f"训练步数（默认 {STEPS}；--smoke 时固定 {SMOKE_STEPS}）")
-    ap.add_argument("--data-prefix", choices=("68", "68b", "68d", "68e"), default="68",
+    ap.add_argument("--data-prefix", choices=("68", "68b", "68d", "68e", "68f", "68g"), default="68",
                     help="数据/ckpt 前缀：68=logs/68_dialog_*.jsonl（默认，与 r1 逐字同径）；"
                          "68b=logs/68b_dialog_*.jsonl（L2-r1b 共享词表臂）；"
                          "68d=logs/68d_dialog_*.jsonl（L2-r2 共享词表+确定性句面臂）；"
-                         "68e=logs/68e_dialog_*.jsonl（L2-r3 轮3 保留 v3 臂），ckpt 名加前缀")
+                         "68e=logs/68e_dialog_*.jsonl（L2-r3 轮3 保留 v3 臂）；"
+                         "68f=logs/68f_dialog_*.jsonl（L2-r4 test 实体=训练用字的新组合臂）；"
+                         "68g=logs/68g_dialog_*.jsonl（L2-r6 train 名池=320 组合 / test=20 留出新组合臂），"
+                         "ckpt 名加前缀")
     a = ap.parse_args(argv)
     DATA_TMPL = os.path.join(LOG_DIR, f"{a.data_prefix}_dialog_{{split}}.jsonl")
+    # ★实体识别词表（只影响地板/规则类读数）：68f 用含新组合名的 VOCAB_68F、68g 用 VOCAB_68G（340 个
+    #   组合），其余档 = NAMES。忘了传 68g 的词表 ⇒ ⑦ 规则认不出实体 ⇒ max_naive 虚低（r4 在 68f 上踩过）。
+    VOCAB = (d68.VOCAB_68G if a.data_prefix == "68g"
+             else (d68.VOCAB_68F if a.data_prefix == "68f" else d68.NAMES))
     steps = SMOKE_STEPS if a.smoke else a.steps
     tag = "swap" if a.swap else "hist"
     if a.smoke:
@@ -443,6 +530,10 @@ def main(argv=None):
     # ★swap 臂不重训：直接载同 seed 的 ckpt（ckpt 名带 data-prefix，68b 与 68 互不覆盖）
     ck_pre = "" if a.data_prefix == "68" else f"{a.data_prefix}_"
     ck = os.path.join(LOG_DIR, f"69_ckpt_{ck_pre}seed{a.seed}_hist{'-smoke' if a.smoke else ''}.pt")
+    # ★§13.2 修复（L2-r6）：seed 必须在**构造模型之前**设置 ⇒ 参数初始化受 --seed 控制、同 seed 可复现。
+    #   先跑自检：同一 seed 连造两次模型，逐张量最大差必须 0；不同 seed 必须不同。
+    ic_ok = init_check(a.seed, a.seed + 1)
+    seed_all(a.seed)
     model = new_pipe()
     n_par = sum(p.numel() for p in model.parameters())
     gate_res, wall, last_loss, loss_trace = None, 0.0, float("nan"), []
@@ -471,19 +562,21 @@ def main(argv=None):
         for r in test:
             s2 = swap_entities(r["ctx"], r)
             # 互换后角色规则读出的"我自己的"实体 = 原干扰实体 ⇒ 原 target 已答不上
-            n_flip += int(d68._role_entity(s2) == r["ent_other"])
+            n_flip += int(d68._role_entity(s2, VOCAB) == r["ent_other"])
         print(f"[SWAP] 自检：互换后「原正确实体→我朋友的 / 原干扰实体→我自己的」条数="
               f"{n_flip}/{len(test)}（应为 100%）", flush=True)
     assert n_vio_a == 0 and n_vio_b == 0 and over == 0, "数据契约不过：轮3 含实体 / 目标含错实体 / 超长"
 
     # ---- 地板（Q3；只用输入可见信息 + train 统计） ----
+    # ★实体识别词表：68f 的 test 实体是新组合名，必须把 VOCAB_68F 传进去，否则 ⑥/⑦ 规则
+    #   在 test 上认不出任何实体 ⇒ 地板虚低到 0%（其余档 VOCAB=NAMES，输出逐字不变）
     print("[FLOOR] ★Q3：max_naive 含计数类特征（轮3 长度 / 实体个数 / 轮数 / 位置桶）", flush=True)
     _f_full, mxname_full, mx_full, thr_full = d68.compute_floors(
-        train, test, tag="test", show_train=True)
+        train, test, tag="test", show_train=True, vocab=VOCAB)
     if a.smoke:
         ev = test[:SMOKE_EVAL]
         _f_s, mxname_s, mx_s, thr_s = d68.compute_floors(
-            train, ev, tag=f"smoke子集(n={len(ev)})", show_train=False)
+            train, ev, tag=f"smoke子集(n={len(ev)})", show_train=False, vocab=VOCAB)
         mx, mxname, thr = mx_s, mxname_s, thr_s
     else:
         ev = test
@@ -506,7 +599,7 @@ def main(argv=None):
           f"地板 max_naive={mx:.2f}%({mxname}) 门槛={thr:.2f}%", flush=True)
 
     # ---- §8.4 必跑诊断（train/test 各自；放在 [EM] 之后、[GEN] 之前） ----
-    print_diag(a, ev, txt, res, train, model, res["tag"])
+    diag = print_diag(a, ev, txt, res, train, model, res["tag"])
 
     shown = 0
     for i, r in enumerate(ev):
@@ -574,9 +667,81 @@ def main(argv=None):
         print(f"[CRIT] Q9 L2_PLAN §10.3：「2 seed 同号（都过 Q6 才算）」| 本 run 只有 seed={a.seed}"
               f"（本 run Q6={'PASS' if q6 else 'FAIL'}）⇒ 待另一 seed 复跑后合并判定", flush=True)
 
+    if a.data_prefix == "68f":
+        # ★L2-r4 预注册判据（L2_PLAN.md §11）逐条打印：Q10（主）/ Q11 / Q12 / Q13。
+        #   只在 68f 档打印 ⇒ 其余档（68/68b/68d/68e）的输出逐字不变。
+        ceil_v, v3vis, _exp_c = d68.ceiling_value(test, keep_v3=True)
+        q10 = (em > thr) and (em / ceil_v >= 0.80)
+        # Q13：不变量 F1/F2 —— **从落盘的 train/test 现算**（不复用生成器日志）
+        tr_pool = {r["ent"] for r in train} | {r["ent_other"] for r in train}
+        te_pool = {r["ent"] for r in test} | {r["ent_other"] for r in test}
+        tr_chars = set("".join(tr_pool))
+        te_chars = set("".join(te_pool))
+        f1_bad_names = [nm for nm in te_pool if any(ch not in tr_chars for ch in nm)]
+        f1_bad_rec = sum(int(any(ch not in tr_chars for ch in r["ent"] + r["ent_other"])) for r in test)
+        f1_bad_chars = sum(1 for nm in te_pool for ch in nm if ch not in tr_chars)
+        f2_bad = sorted(te_pool & tr_pool)
+        f2_bad_rec = sum(int((r["ent"] in tr_pool) or (r["ent_other"] in tr_pool)) for r in test)
+        cover = 100.0 * len(te_chars & tr_chars) / len(te_chars)
+        print(f"[NOVEL] 从落盘 68f 数据现算（test n={len(test)}）：test 名字数={len(te_pool)} | "
+              f"与 train 重名数={len(f2_bad)}（必须 0）| 用字覆盖率={cover:.2f}%"
+              f"（test 的 {len(te_chars)} 个用字里 {len(te_chars & tr_chars)} 个 ⊆ train 用字集）| "
+              f"test 用到的 train 字={len(te_chars & tr_chars)}/{len(tr_chars)}", flush=True)
+        s_te = diag["s_te"]
+        print(f"[CRIT] Q10（主）L2_PLAN §11：「EM > 门槛(max_naive+2SE) 且 EM/[CEIL] ≥ 0.80」| "
+              f"EM={em:.2f}% vs 门槛={thr:.2f}% ⇒ {'PASS' if em > thr else 'FAIL'} | "
+              f"EM/[CEIL]={em / ceil_v:.3f} vs 0.80 ⇒ {'PASS' if em / ceil_v >= 0.80 else 'FAIL'} | "
+              f"[CEIL]={ceil_v:.2f}%（v3 在输入中可见={v3vis:.2f}%）⇒ Q10 {'PASS' if q10 else 'FAIL'}", flush=True)
+        print(f"[CRIT] Q11 L2_PLAN §11：「2 seed 同号（都过 Q10 才算）」| 本 run 只有 seed={a.seed}"
+              f"（本 run Q10={'PASS' if q10 else 'FAIL'}）⇒ 待另一 seed 复跑后合并判定", flush=True)
+        print(f"[CRIT] Q12 L2_PLAN §11：「报生成实体来源四分类，重点看『训练词表名』是否显著升高」| "
+              f"本 run test({s_te['tag']}): 正确实体={s_te['正确实体']:.2f}% "
+              f"干扰实体={s_te['干扰实体']:.2f}% 训练词表名={s_te['训练词表名']:.2f}% 其它={s_te['其它']:.2f}% | "
+              f"train子集(n={diag['s_tr']['n']}): 正确实体={diag['s_tr']['正确实体']:.2f}% "
+              f"训练词表名={diag['s_tr']['训练词表名']:.2f}% | r3(68e seed={a.seed}) 对照="
+              f"{_find_ref_68e(a.seed)} ⇒ 不设阈值，上升即如实记『记忆成分上升』", flush=True)
+        print(f"[CRIT] Q13 L2_PLAN §11：「报不变量 F 实测计数（用字覆盖 100%、与 train 重名 0）」| "
+              f"F1 用字越界的名字数={len(f1_bad_names)}（必须 0）逐条违例={f1_bad_rec} "
+              f"越界用字实例={f1_bad_chars} | F2 与 train 重名数={len(f2_bad)}（必须 0）"
+              f"逐条违例={f2_bad_rec} | 用字覆盖率={cover:.2f}% ⇒ "
+              f"{'PASS' if (not f1_bad_names and not f2_bad and not f1_bad_rec and not f2_bad_rec) else 'FAIL'}",
+              flush=True)
+
+    if a.data_prefix == "68g":
+        # ★L2-r6 预注册判据（L2_PLAN.md §14）逐条打印：Q18（主）/ Q19 / Q20。
+        ceil_v, v3vis, _exp_c = d68.ceiling_value(test, keep_v3=True)
+        q18 = (em > thr) and (em / ceil_v >= 0.80)
+        tr_pool = {r["ent"] for r in train} | {r["ent_other"] for r in train}
+        te_pool = {r["ent"] for r in test} | {r["ent_other"] for r in test}
+        tr_chars = set("".join(tr_pool))
+        te_chars = set("".join(te_pool))
+        g1 = len(tr_pool - set(d68.NAMES_TRAIN))
+        g2 = sorted(te_pool & tr_pool)
+        g3_bad = sum(1 for nm in te_pool for ch in nm if ch not in tr_chars)
+        cover = 100.0 * len(te_chars & tr_chars) / len(te_chars)
+        s_te = diag["s_te"]
+        q20 = (s_te["正确实体"] >= 99.0) and (s_te["训练词表名"] <= 1.0)
+        print(f"[CRIT] Q18（主）L2_PLAN §14：「68g 上 EM/[CEIL] ≥ 0.80」| EM={em:.2f}% vs 门槛"
+              f"(max_naive+2SE)={thr:.2f}% ⇒ {'PASS' if em > thr else 'FAIL'} | "
+              f"EM/[CEIL]={em / ceil_v:.3f} vs 0.80 ⇒ {'PASS' if em / ceil_v >= 0.80 else 'FAIL'} | "
+              f"[CEIL]={ceil_v:.2f}%（v3 在输入中可见={v3vis:.2f}%）⇒ Q18 "
+              f"{'PASS' if q18 else 'FAIL'}", flush=True)
+        print(f"[CRIT] Q19 L2_PLAN §14：「2 seed 同号（必须在 §13.2 的 seed 缺陷修好之后）」| "
+              f"本 run seed={a.seed}（[INIT-CHECK]={'PASS' if ic_ok else 'FAIL'}）Q18="
+              f"{'PASS' if q18 else 'FAIL'} ⇒ 待另一 seed 复跑后合并判定", flush=True)
+        print(f"[CRIT] Q20 L2_PLAN §14：「68g 的 test 实体来源『正确实体』≥ 99%（『训练词表名』≤ 1%）」| "
+              f"本 run test({s_te['tag']}): 正确实体={s_te['正确实体']:.2f}% 干扰实体="
+              f"{s_te['干扰实体']:.2f}% 训练词表名={s_te['训练词表名']:.2f}% 其它={s_te['其它']:.2f}% ⇒ "
+              f"{'PASS' if q20 else 'FAIL'}", flush=True)
+        print(f"[NOVEL-G] 从落盘 68g 数据现算：test 名字数={len(te_pool)} | 与 train 重名数={len(g2)}"
+              f"（必须 0）| train 里非基础名单的新组合={g1} | 用字覆盖率={cover:.2f}%"
+              f"（越界用字实例={g3_bad}，必须 0）| train 子集实体来源：正确实体="
+              f"{diag['s_tr']['正确实体']:.2f}% 训练词表名={diag['s_tr']['训练词表名']:.2f}%", flush=True)
+
     ck_out = os.path.join(LOG_DIR, f"69_ckpt_{ck_pre}seed{a.seed}_{tag}.pt")
     torch.save(model.state_dict(), ck_out)
     print(f"[META] tag={tag} seed={a.seed} swap={a.swap} steps={steps if not a.swap else 0} "
+          f"init_check={'PASS' if ic_ok else 'FAIL'} "
           f"data_prefix={a.data_prefix} batch={BATCH} lr={LR} d={D} ff={FF} nhead={NHEAD} maxlen={MAXLEN} "
           f"n_params={n_par} 墙钟={wall:.0f}s ckpt={ck_out}", flush=True)
     print("[DONE] exit=0", flush=True)
