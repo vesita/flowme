@@ -1526,6 +1526,32 @@ def report_r5p(judged: int = 2) -> int:
                            f"params={d.get('params')} peak={d.get('peak_mib', 0):.0f}MiB")
             print(f"[CRIT] R5′-e {tag} 对照 arm={a}（79 只读引用）| " + " | ".join(row), flush=True)
 
+    # ---- B0′b 中间目标解剖（★派生读数，训练后追加；非预注册判据，只为定位失败点） ----
+    def _mid_letter(t):
+        ls = letters_in(t or "")
+        return ls[0] if ls else None
+
+    def _mid_content(t):
+        return LABEL_RE.sub("", t or "")
+
+    for tag, src in ((f"L{judged}", J), ("L1", P)):
+        for s in seeds:
+            d = src["B0pb"][s]
+            if not d or d.get("mids") is None or d.get("gold_mids") is None:
+                continue
+            gms, pms, hh = d["gold_mids"], d["mids"], d["hits"]
+            n = len(gms)
+            cont = [1 if _mid_content(g) == _mid_content(p) else 0 for g, p in zip(gms, pms)]
+            let = [1 if (_mid_letter(g) is not None and _mid_letter(p) == _mid_letter(g)) else 0
+                   for g, p in zip(gms, pms)]
+            ncont, nlet = sum(cont), sum(let)
+            t2c = (100.0 * sum(hh[i] for i in range(n) if let[i]) / nlet) if nlet else float("nan")
+            chance = 100.0 / max(1, int(d.get("k", 8)))
+            print(f"[CRIT] B0′b 中间目标解剖 {tag} seed={s}（**派生读数**，从 hits 的 mids/gold_mids 复算；"
+                  f"★非预注册判据）：mid 逐字 EM={d['mid_em']:.2f}% | ★mid **去字母后**（只比 `实体/条件`）EM="
+                  f"{100.0 * ncont / n:.2f}%（{ncont}/{n}）| mid 字母命中={100.0 * nlet / n:.2f}%（机会 "
+                  f"{chance:.2f}%）| T2（在 mid 字母命中条件下）={t2c:.2f}%（n={nlet}）", flush=True)
+
     # ---- 三种结局的判词（§14.2 写死） ----
     def sig(key, s):
         return bool(res.get(key, {}).get(s, {}).get("ok"))
@@ -1807,7 +1833,8 @@ def main(argv=None):
     print(f"[SEL] " + (f"选择准确率(argmax 候选对==历史 (ent,cond))={sel_acc:.2f}% | "
                        f"选择 argmax 字母正确率={sel_lacc:.2f}%（n={len(sel['hits'])}）"
                        if sel is not None else
-                       "不适用：本臂没有选择卡（B0 = 候选隐态**非选择性均值**注入，固定不学）")
+                       f"不适用：本臂没有选择卡（注入="
+                       f"{'候选隐态**非选择性均值**（固定、无参数、不学）' if getattr(model, 'inject', 'mean') == 'mean' else '重整卡对候选**交叉注意**（逐候选 K/V，保留身份与位置）'}）")
           + f" | 参考:完美选择+DET 句面 EM={fl['ref_f']:.2f}% | 本 run T1 字母准确率门槛={t1thr:.2f}%",
           flush=True)
     for i in range(min(3, len(ev))):
