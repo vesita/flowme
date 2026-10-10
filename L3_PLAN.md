@@ -1040,3 +1040,20 @@ B2 vs A：s1234 Δ=+63.50pp SE_Δ=1.78pp 2SE=3.57 b=9  c=517 p=7.35e-140 ⇒ PAS
 > - 机制可读：**读历史取 (实体,条件) → 在候选集里匹配 → 报出该候选的字母**，且**位置不变**（shuffle 动态金标 Δ=+0.88pp）。
 
 **诚实边界**：两 seed 幅度差 14.6pp（75.88 vs 61.25）⇒ **该任务对 init 敏感**（未饱和任务上的噪声带远大于饱和任务）；合成模板数据、k=8、单条 `CardPipeline` 规模的卡；**不能**外推到真实对话或更大规模。
+
+### 12.4 r4 的仪器核对（Lead 核 smoke，正式跑前）
+
+```
+[INIT-CHECK] §9.7 init 缺陷修复：manual_seed 先于构造（四臂在构造前统一播种）
+[INIT-CHECK] 四臂同 seed=1234 J vs J / J vs P / J vs P+F / J vs J+GC 逐张量 max|Δ|=0.000e+00（40 个张量，结构逐位相同）
+[INIT-CHECK] arm=J 同 seed 两次构造 sha=dff7ba302de0ddff/… 相同 | 异 seed sha=04aef74be7606e6e ⇒ 不同（阴性对照通过）
+[PARAMS] arm=J 全部参数=2700288 | 分项 input=1246848 select=198272 realign=198272 output=1056768 q=128 | 同一优化器内最大可训=1246848（相位 input）| 总步数=50×batch32
+[MEM] 探测批（四臂共用，指纹=4a03099fd8ad4ecf）：3 批×batch32，pad 后长度 min/max/mean=323/326/325，dtype=float32，maxlen=512 ⇒ 四要素恒定
+[MEM] arm=J seg=J#1 卡=input+select+realign+output 探针步=2–4 | 峰值=2074 MiB（--smoke 探路，不作判据）
+```
+
+**三条核对结论**
+1. **四臂共享同一初值**（40 张量 max|Δ|=0）⇒ §12.2 的四臂比较在**同初始化**前提下成立（把 §11.10 的三臂做法扩到四臂）；
+2. **探针同构**：探测批**跨臂逐位相同**（带指纹 `4a03099fd8ad4ecf`）、`batch/dtype/maxlen` 逐条打印、序列长度分布一致 ⇒ §12.1 的要求满足；
+3. **`R4-a` 的分析量已就位**：`同一优化器内最大可训=1246848`（相位 input）—— 逐卡训练（P）的优化器状态应按**最大单卡**计，而不是全部 2700288。
+4. 另有 `[GC-CHECK]`：验证 `torch.utils.checkpoint(use_reentrant=False)` 与**非 GC 对照的逐张量梯度等价** ⇒ 先证伪仪器、再比 R4-d。
