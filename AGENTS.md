@@ -35,7 +35,7 @@
 | 1 | `README.md` | 这是什么 · 目录地图 · 怎么跑 |
 | 2 | `PROJECT_STATE.md` | **现状**：阶段 · 站得住的结论 · 已判死 · 待办 |
 | 3 | `NEXT_MAINLINE.md` | **当前缺口与优先级**（判据写死在这里） |
-| 4 | `methodology/RULES.md` | 纪律总表 R1–R44（**唯一表体**） |
+| 4 | `methodology/RULES.md` | 纪律总表 R1–R45（**唯一表体**） |
 | 5 | `methodology/*.md` | 准绳：`measurement` · `experiment-design` · `platform` · `collaboration` · `findings` |
 | 6 | `DEVLOG.md` | 最近一轮做了什么 · 推翻了什么 · 踩了什么坑 |
 | 7 | `METRICS.md` | 绝对数字口径（引用绝对 EM **必须注明数据版 + 调度**） |
@@ -76,7 +76,7 @@
 |---|---|
 | `stages/` | **主线实验**（`NN_<问题>.py`） |
 | `cards/` | **新框架骨架**：三类卡 + 黑板 + 版本化（只依赖 torch） |
-| `methodology/` | 结论 / 纪律 / 准绳的家（R1–R44 在这里） |
+| `methodology/` | 结论 / 纪律 / 准绳的家（R1–R45 在这里） |
 | `speculation/` | 待验证推测（**不许与 `methodology/` 混写**） |
 | `logs/` | 过程日志（不入库） |
 | `dev-notes/` `experiments/` `src/` `tests/` `checkpoints/` | **旧框架 DTSeek**，只作证据与经验来源（`README.md:95-105`） |
