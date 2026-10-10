@@ -6,12 +6,15 @@
   · teacher forcing **只在目标 span 上算 CE**（`masked_ce`）；
   · 贪心 EM = batch=1、正确列索引（`last_col`）——R28 自洽口径（EM_BATCH=1）。
 
-数据（只读，不造）：`logs/{prefix}_dialog_{train,test}.jsonl`（prefix=70 full / 70s small），
+数据（只读，不造）：`logs/{prefix}_dialog_{train,test}.jsonl`
+  prefix=70 full 7000/800 | 70s small 1000/240 | **70a 纯 4 位加法 3792/459**（L3_PLAN §8.8），
 字段沿用 stages/70_arith_dialog_gen.py:43-46 的 ctx/target/gold/gold_int/op/max_digits/...
 （本文件先读一眼字段再假设，见 [DATA] 行）。
 
 指标（L3_PLAN.md §8.3 写死）：**从生成文本里抽「结论句最后一个整数」与 gold 整数比较**，
 抽不出算错并单独报抽不出比例（仪器质量，R1-c ≤ 1%）。
+R1c-c 的 train 子集读数走 `--eval-train-subset`：**口径与 test 完全相同**（同抽取器、
+同严格 EM、同 EM_BATCH=1），只在 train 前 800 条上跑，用于区分「没泛化」与「没拟合」。
 
 抽取器来源（实测，不是推断）：
   · 主口径 = `stages/70_arith_dialog_gen.py:131-152 extract_conclusion_int`（importlib 载入，
@@ -32,8 +35,15 @@
   R1-c 抽不出比例 <= 1%
   R1-d 目标 span CE 与位数分桶 EM 并列报
 
+判据（L3_PLAN.md §8.8，--data-prefix 70a 时走这条，跑前已落盘）：
+  R1c-a test EM >= 50%（3000 步，seed1234）
+  R1c-b 2 seed 同号（seed5678 也 >= 50%）
+  R1c-c train 子集 EM（记忆上限）并列报（--eval-train-subset）
+  R1c-d 地板（重算，含计数类）与配对 CE 并列报
+
 用法（本机只有 .venv/bin/python 装了 torch/tokenizers）：
   .venv/bin/python stages/71_arith_dialog_cards.py --data-prefix 70s --seed 1234 --smoke
+  .venv/bin/python stages/71_arith_dialog_cards.py --data-prefix 70a --seed 1234 --eval-train-subset
   .venv/bin/python stages/71_arith_dialog_cards.py --data-prefix 70s --seed 1234
 GPU 长跑必须：systemd-run --user --unit=<名> --collect
   --setenv=HSA_OVERRIDE_GFX_VERSION=10.3.0 --setenv=PYTHONUNBUFFERED=1 ...
@@ -81,9 +91,12 @@ D70_PATH = os.path.join(ROOT, "stages", "70_arith_dialog_gen.py")
 ARITH_GEN_PATH = NS_ROOT + "/training/rl/reward/arith_gen.py"
 
 # L3_PLAN.md §8.1 的 r0 实测值（对齐用；引文，不是本脚本算的）
-R0_FLOOR = {"70": 0.00, "70s": 0.00}
+# 70a 的 fp 与地板来自 stages/70a_add4_subset.py 的 [D70A] 实测行（纯 4 位加法，L3_PLAN §8.8）
+R0_FLOOR = {"70": 0.00, "70s": 0.00, "70a": 0.00}
 R0_FP = {"70": ("b5e3e29bd0a8072d", "462a9bf3ad91fa4d"),
-         "70s": ("2ce9114fca7d7232", "f52a31145c526521")}
+         "70s": ("2ce9114fca7d7232", "f52a31145c526521"),
+         "70a": ("9775ea7a32d65527", "8e8a31358b84ec9b")}
+TRAIN_SUBSET_N = 800          # R1c-c 的 train 记忆上限口径：train 前 800 条
 
 
 def _load_path(name: str, path: str):
@@ -283,15 +296,18 @@ def em_with_thr(p: float, n: int):
 # ---------------- 主流程 ----------------
 def main(argv=None):
     ap = argparse.ArgumentParser(description="S71 L3-r1 算术路卡片基线")
-    ap.add_argument("--data-prefix", choices=("70", "70s"), default="70",
-                    help="70=full 7000/800；70s=small 1000/240 两位×两位")
+    ap.add_argument("--data-prefix", choices=("70", "70s", "70a"), default="70",
+                    help="70=full 7000/800；70s=small 1000/240 两位×两位；"
+                         "70a=r1c 纯 4 位加法 3792/459（L3_PLAN §8.8）")
     ap.add_argument("--smoke", action="store_true", help="50 步、只评前 60 条（探路）")
+    ap.add_argument("--eval-train-subset", action="store_true",
+                    help="额外在 train 前 800 条跑同口径贪心 EM（R1c-c 记忆上限；不改主口径）")
     ap.add_argument("--seed", type=int, default=1234)
     ap.add_argument("--steps", type=int, default=STEPS)
     a = ap.parse_args(argv)
     steps = SMOKE_STEPS if a.smoke else a.steps
     prefix = a.data_prefix
-    mask_tag = "small" if prefix == "70s" else "full"
+    mask_tag = {"70s": "small", "70a": "add4"}.get(prefix, "full")
 
     train, test = load_jsonl(prefix, "train"), load_jsonl(prefix, "test")
     keys = sorted(train[0].keys())
@@ -345,6 +361,7 @@ def main(argv=None):
     cm, cse = mean_se(ce)
     txt = greedy_gen(model, ev, batch=EM_BATCH)
     eval_sec = time.time() - t_eval
+    tr_sub_em, tr_sub_sec = None, 0.0
 
     gold_int = [r["gold_int"] for r in ev]
     pred_int, n_miss = [], 0
@@ -379,6 +396,41 @@ def main(argv=None):
           f" ⇒ 它返回的是自己按首个算式算出的中间值（\\d{{1,3}} + max_num=100），"
           f"不可作主口径（与 S70 文件头实测一致）", flush=True)
 
+    # ---- [EM-TRAIN] R1c-c：同 ckpt 在 train 子集（前 800 条）上的记忆上限 ----
+    # 口径与 test **完全相同**：同 extract_conclusion_int、同严格 EM、同 EM_BATCH=1、同 maxlen。
+    # 只用来区分「没泛化」（train 高 / test 低）与「没拟合」（train 也低）。
+    tr_sub_em, tr_sub_sec, tr_sub_n = None, 0.0, 0
+    if a.eval_train_subset:
+        tr_sub_n = SMOKE_EVAL if a.smoke else TRAIN_SUBSET_N
+        tr_ev = train[:tr_sub_n]
+        tr_sub_n = len(tr_ev)
+        t_tr = time.time()
+        txt_tr = greedy_gen(model, tr_ev, batch=EM_BATCH)
+        tr_pred, tr_miss, tr_hits = [], 0, 0
+        for t in txt_tr:
+            pi = d70.extract_conclusion_int(t)
+            tr_pred.append(pi)
+            tr_miss += int(pi is None)
+        for pi, r in zip(tr_pred, tr_ev):
+            tr_hits += int(pi is not None and pi == r["gold_int"])
+        tr_sub_em = 100.0 * tr_hits / len(tr_ev)
+        tr_sub_sec = time.time() - t_tr
+        se_tr, _thr_tr = em_with_thr(tr_sub_em, len(tr_ev))
+        print(f"[EM-TRAIN] R1c-c train 子集（前 {len(tr_ev)} 条，同 ckpt 同口径贪心）"
+              f"严格EM={tr_sub_em:.2f}% ±SE={se_tr:.2f}pp | 抽不出={tr_miss}"
+              f"（{100.0 * tr_miss / len(tr_ev):.2f}%）算错 | 主口径与 test 相同"
+              f"（70_arith_dialog_gen.py:131 extract_conclusion_int）| 评估墙钟={tr_sub_sec:.0f}s",
+              flush=True)
+        for i in range(min(3, len(tr_ev))):
+            r = tr_ev[i]
+            q = r["q"] if "q" in r else r["ctx"].replace("\n<resp>", "")
+            print(f"[GEN-TRAIN] [{i}] 题干={q[:90]} | gold_int={r['gold_int']} | "
+                  f"pred={txt_tr[i][:90]!r} | pred_int={tr_pred[i]} | "
+                  f"{'对' if tr_pred[i] == r['gold_int'] else '错'}", flush=True)
+    else:
+        print("[EM-TRAIN] R1c-c 未跑（需 --eval-train-subset）；本行只说明开关状态，不构成读数",
+              flush=True)
+
     # ---- [DIAG] 位数分桶 EM（题面最大位 / 运算符） ----
     print("[DIAG] 位数分桶 EM（题面最大位数 max_digits；抽不出算错）:", flush=True)
     for keyname, keyfn in (("max_digits", lambda r: r["max_digits"]),
@@ -400,7 +452,7 @@ def main(argv=None):
               f"gold={r['target'][:60]!r} | pred={txt[i][:90]!r} | pred_int={pred_int[i]} | "
               f"{'对' if hits[i] else '错'}", flush=True)
 
-    # ---- 判据（原文引 L3_PLAN.md §8.3） ----
+    # ---- 判据（原文引 L3_PLAN.md §8.3；70a 引 §8.8） ----
     if prefix == "70":
         j_a = em > thr
         print(f"[CRIT] R1-a L3_PLAN §8.3「full：EM > 门槛 + 2SE」| EM={em:.2f}% vs "
@@ -408,13 +460,39 @@ def main(argv=None):
               f"（预期不高：4–5 位算术对 d=128 很难；不过也如实报，不调参）", flush=True)
         print(f"[CRIT] R1-b L3_PLAN §8.3「small：EM >= 50% 且 2 seed 同号」| 本 run 前缀=70(full)，"
               f"不是 small 口径 ⇒ 不判（R1-b 由 --data-prefix 70s 的两次 run 判）", flush=True)
-    else:
+    elif prefix == "70s":
         j_b = em >= 50.0
         print(f"[CRIT] R1-b（主）L3_PLAN §8.3「small：EM >= 50% 且 2 seed 同号」| 本 run "
               f"seed={a.seed} EM={em:.2f}% vs 门槛 50.00% ⇒ {'PASS' if j_b else 'FAIL'}"
               f"（单 seed 判定；「2 seed 同号」需 70s 的第二个 seed 复跑同号后再判）", flush=True)
         print(f"[CRIT] R1-a L3_PLAN §8.3「full：EM > 门槛 + 2SE」| 本 run 前缀=70s(small)，"
               f"不是 full 口径 ⇒ 不判（R1-a 由 --data-prefix 70 的 run 判）", flush=True)
+    elif prefix == "70a":
+        smoke_note = "（--smoke 探路，不作判据）" if a.smoke else ""
+        if a.seed == 1234:
+            j_a = em >= 50.0
+            print(f"[CRIT] R1c-a L3_PLAN §8.8「test EM >= 50%（3000 步，seed1234）」| 本 run "
+                  f"seed={a.seed} EM={em:.2f}% vs 门槛 50.00% ⇒ {'PASS' if j_a else 'FAIL'}"
+                  f"{smoke_note}", flush=True)
+        else:
+            print(f"[CRIT] R1c-a L3_PLAN §8.8「test EM >= 50%（3000 步，seed1234）」| 本 run "
+                  f"seed={a.seed} 不是 1234 ⇒ 本 run 不判 R1c-a（它只作 R1c-b 的第二 seed 数据点）"
+                  f"{smoke_note}", flush=True)
+        j_b = em >= 50.0
+        print(f"[CRIT] R1c-b L3_PLAN §8.8「2 seed 同号（seed5678 也 >= 50%）」| 本 run "
+              f"seed={a.seed} EM={em:.2f}% vs 50.00% ⇒ {'PASS' if j_b else 'FAIL'}；"
+              f"「同号」需 seed1234 与 seed5678 两份日志并列后判（单 run 只给一半）"
+              f"{smoke_note}", flush=True)
+        if tr_sub_em is None:
+            print("[CRIT] R1c-c L3_PLAN §8.8「train 子集 EM（记忆上限）并列报」| 本 run 未加 "
+                  "--eval-train-subset ⇒ 无读数（必报项，本 run 缺）", flush=True)
+        else:
+            print(f"[CRIT] R1c-c L3_PLAN §8.8「train 子集 EM（记忆上限）并列报」| train 前 "
+                  f"{tr_sub_n} 条 严格EM={tr_sub_em:.2f}% vs test EM={em:.2f}% ⇒ "
+                  f"PASS（已并列报；无门槛，只用于区分「没泛化」与「没拟合」）", flush=True)
+        print(f"[CRIT] R1c-d L3_PLAN §8.8「地板（重算，含计数类）与 CE 并列报」| 地板 "
+              f"max_naive={mx:.2f}%({mxname}) 2SE={se_mx:.2f}pp 门槛={thr:.2f}% 与 配对CE="
+              f"{cm:.4f}±{cse:.4f} nats/token 已并列报出 ⇒ PASS(必报项)", flush=True)
     j_c = miss_rate <= 1.0
     print(f"[CRIT] R1-c L3_PLAN §8.3「抽不出比例 <= 1%」| 抽不出={n_miss}/{len(hits)}="
           f"{miss_rate:.2f}% ⇒ {'PASS' if j_c else 'FAIL'}（仪器质量）", flush=True)
@@ -430,8 +508,10 @@ def main(argv=None):
     torch.save(model.state_dict(), ck)
     print(f"[META] prefix={prefix}({mask_tag}) seed={a.seed} steps={steps} batch={BATCH} lr={LR} "
           f"d={D} ff={FF} nhead={NHEAD} maxlen={MAXLEN} n_params={n_par} EM_BATCH={EM_BATCH} "
-          f"smoke={a.smoke} n_eval={len(hits)} 训练墙钟={wall:.0f}s 评估墙钟={eval_sec:.0f}s "
-          f"总墙钟={wall + eval_sec:.0f}s ckpt={ck}", flush=True)
+          f"smoke={a.smoke} n_eval={len(hits)} train_subset_n={tr_sub_n} train_subset_EM="
+          f"{'未跑' if tr_sub_em is None else f'{tr_sub_em:.2f}%'} "
+          f"训练墙钟={wall:.0f}s 评估墙钟={eval_sec:.0f}s train子集墙钟={tr_sub_sec:.0f}s "
+          f"总墙钟={wall + eval_sec + tr_sub_sec:.0f}s ckpt={ck}", flush=True)
     print("[DONE] exit=0", flush=True)
     return 0
 
