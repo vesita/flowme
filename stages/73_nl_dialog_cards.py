@@ -24,7 +24,8 @@
 用法（本机只有 .venv/bin/python 装了 torch/tokenizers）：
   .venv/bin/python stages/73_nl_dialog_cards.py --smoke
   .venv/bin/python stages/73_nl_dialog_cards.py --seed 1234
-  .venv/bin/python stages/73_nl_dialog_cards.py --seed 1234 --no-history
+  .venv/bin/python stages/73_nl_dialog_cards.py --seed 5678 --pair-log logs/73_s1234.log
+  .venv/bin/python stages/73_nl_dialog_cards.py --seed 1234 --no-history --pair-log logs/73_s1234.log
 GPU 长跑必须：systemd-run --user --unit=<名> --collect
   --setenv=HSA_OVERRIDE_GFX_VERSION=10.3.0 --setenv=PYTHONUNBUFFERED=1 ...
 只允许写本文件与 logs/。
@@ -36,6 +37,7 @@ import importlib.util
 import json
 import math
 import os
+import re
 import sys
 import time
 from collections import Counter
@@ -325,6 +327,29 @@ def em_with_thr(p: float, n: int):
     return se, p + 2.0 * se
 
 
+def near_quoted(a: float, b: float, tol: float = 0.005) -> bool:
+    """与 §9.3 的**两位小数引文**比较：|a-b| < 半个最小位（0.005pp）。
+
+    §9.3 的 0.38% / 0.81% 是四舍五入后的引文（原始值是 3/800=0.375% 等），
+    用 1e-9 严格相等去比会把「引文精度」误报成数据差异 ⇒ 只允许在引文精度上判一致性。
+    """
+    return abs(a - b) < tol + 1e-12
+
+
+def parse_em_from_log(path: str):
+    """从另一份 73 日志里读 [EM] 行的 严格EM / SE（R2-d 配对判定用；读不到返回 None）。"""
+    try:
+        with open(path, encoding="utf-8") as f:
+            for ln in f:
+                if ln.startswith("[EM] ") and "严格EM=" in ln:
+                    m = re.search(r"严格EM=([\d.]+)% ±SE=([\d.]+)pp", ln)
+                    if m:
+                        return float(m.group(1)), float(m.group(2))
+    except OSError:
+        return None
+    return None
+
+
 # ---------------- 主流程 ----------------
 def main(argv=None):
     ap = argparse.ArgumentParser(description="S73 L3-r2b 自然语言多轮对话卡片基线 + 历史消融")
@@ -335,6 +360,8 @@ def main(argv=None):
     ap.add_argument("--steps", type=int, default=STEPS)
     ap.add_argument("--no-history", action="store_true",
                     help="R2-d 消融：ctx 只喂轮3（用户：<t3>\\n<resp>），其余逐字不变")
+    ap.add_argument("--pair-log", default=None,
+                    help="R2-d 配对用：同 seed 全历史臂的 73 日志路径（读它的 [EM] 行算掉幅；可选）")
     a = ap.parse_args(argv)
     steps = SMOKE_STEPS if a.smoke else a.steps
     prefix = a.data_prefix
@@ -403,22 +430,29 @@ def main(argv=None):
     ev = test[:SMOKE_EVAL] if a.smoke else test
     rows_test, mx_name, mx, ref_em, _rows_train = d72.compute_floors(train, ev, f"{prefix}-{arm}-smoke(n={len(ev)})" if a.smoke else f"{prefix}-{arm}")
     se_mx, thr = em_with_thr(mx, len(ev))
+    two_se = 2.0 * se_mx
     if a.smoke:
-        print(f"[FLOOR] 复算(本 run 口径 n={len(ev)}) max_naive={mx:.2f}%({mx_name}) | "
-              f"2SE={se_mx:.2f}pp 门槛=max_naive+2SE={thr:.2f}% | 参考上限={ref_em:.2f}%", flush=True)
+        print(f"[FLOOR] 复算(本 run 口径 n={len(ev)}) max_naive={mx:.3f}%({mx_name}) | "
+              f"1SE={se_mx:.3f}pp 2SE={two_se:.2f}pp 门槛=max_naive+2SE={thr:.3f}% | "
+              f"参考上限={ref_em:.2f}%", flush=True)
         print(f"[FLOOR] §9.3 引文：max_naive={R2_MAX_NAIVE:.2f}%(⑤e/⑥) 2SE={R2_FLOOR_2SE:.2f}pp ⇒ "
               f"R2-b 门槛={R2_THRESHOLD:.2f}% 参考上限={R2_REF_UPPER:.2f}% ⇒ "
               f"★本行是 smoke 子集口径（n={len(ev)}），不作与 §9.3 的对齐判定", flush=True)
     else:
-        d_mx = mx - R2_MAX_NAIVE
-        d_thr = thr - R2_THRESHOLD
-        d_ref = ref_em - R2_REF_UPPER
-        print(f"[FLOOR] 复算 max_naive={mx:.2f}%({mx_name}) vs §9.3 {R2_MAX_NAIVE:.2f}% ⇒ "
-              f"{'一致' if abs(d_mx) < 1e-9 else f'★差异 {d_mx:+.2f}pp（如实报）'} | "
-              f"2SE={se_mx:.2f}pp vs §9.3 {R2_FLOOR_2SE:.2f}pp | 门槛={thr:.2f}% vs §9.3 "
-              f"{R2_THRESHOLD:.2f}% ⇒ {'一致' if abs(d_thr) < 1e-9 else f'★差异 {d_thr:+.2f}pp（如实报）'} | "
-              f"参考上限={ref_em:.2f}% vs §9.3 {R2_REF_UPPER:.2f}% ⇒ "
-              f"{'一致' if abs(d_ref) < 1e-9 else f'★差异 {d_ref:+.2f}pp（如实报）'}", flush=True)
+        ok_mx = near_quoted(mx, R2_MAX_NAIVE)
+        ok_se = near_quoted(two_se, R2_FLOOR_2SE)
+        ok_thr = near_quoted(thr, R2_THRESHOLD)
+        ok_ref = near_quoted(ref_em, R2_REF_UPPER)
+        print(f"[FLOOR] 复算 max_naive={mx:.3f}%（打印两位 {mx:.2f}%，来自 {mx_name}，"
+              f"计数={round(mx / 100.0 * len(ev))}/{len(ev)}）vs §9.3 引文 {R2_MAX_NAIVE:.2f}% ⇒ "
+              f"{'一致（差异在引文精度内）' if ok_mx else f'★差异 {mx - R2_MAX_NAIVE:+.3f}pp（如实报）'} | "
+              f"复算 1SE={se_mx:.3f}pp 2SE={two_se:.2f}pp vs §9.3 2SE {R2_FLOOR_2SE:.2f}pp ⇒ "
+              f"{'一致' if ok_se else f'★差异 {two_se - R2_FLOOR_2SE:+.2f}pp（如实报）'} | "
+              f"复算 门槛={thr:.3f}%（打印两位 {thr:.2f}%）vs §9.3 引文 {R2_THRESHOLD:.2f}% ⇒ "
+              f"{'一致（差异在引文精度内）' if ok_thr else f'★差异 {thr - R2_THRESHOLD:+.3f}pp（如实报）'} | "
+              f"复算 参考上限={ref_em:.2f}% vs §9.3 {R2_REF_UPPER:.2f}% ⇒ "
+              f"{'一致' if ok_ref else f'★差异 {ref_em - R2_REF_UPPER:+.2f}pp（如实报）'} | "
+              f"（对齐只在 §9.3 的两位小数精度上判；原始值是 3/800=0.375% 这类）", flush=True)
 
     # ---- 训练 ----
     model = new_pipe()
@@ -496,14 +530,39 @@ def main(argv=None):
               f"{thr_strict:.2f}%）⇒ {'PASS' if j_c_strict else 'FAIL'}；"
               f"「2 seed 同号」需 seed1234 与 seed5678 两份日志并列后判（单 run 只给一半）"
               f"{smoke_note}", flush=True)
+        paired_c = parse_em_from_log(a.pair_log) if a.pair_log else None
+        if paired_c is not None:
+            em_o, se_o = paired_c
+            same = (em > R2_THRESHOLD) and (em_o > R2_THRESHOLD)
+            print(f"[CRIT] R2-c「2 seed 同号」配对（--pair-log={a.pair_log}）：另一臂 EM={em_o:.2f}%"
+                  f"±{se_o:.2f}pp 与本 run EM={em:.2f}%±{se:.2f}pp ⇒ 两臂都 > 门槛 "
+                  f"{R2_THRESHOLD:.2f}%：{'PASS' if same else 'FAIL'}（同号）{smoke_note}", flush=True)
 
     if a.no_history:
         near_floor = em <= max(mx, R2_THRESHOLD) + 2.0 * se
-        print(f"[CRIT] R2-d L3_PLAN §9.4「历史消融（只喂轮3）⇒ EM 必掉（掉幅 >= 2SE 或落到地板附近）」"
-              f"| 本 run seed={a.seed} 消融臂 EM={em:.2f}% ±SE={se:.2f}pp | 地板 max_naive="
-              f"{mx:.2f}%/门槛={thr:.2f}% ⇒ 自身{'已落到地板附近' if near_floor else '未落到地板附近'}；"
-              f"「掉幅 >= 2SE」需与 seed={a.seed} 全历史臂 EM 并列后算（单 run 只给消融侧）"
-              f"{smoke_note}", flush=True)
+        paired = parse_em_from_log(a.pair_log) if a.pair_log else None
+        if paired is None:
+            print(f"[CRIT] R2-d L3_PLAN §9.4「历史消融（只喂轮3）⇒ EM 必掉（掉幅 >= 2SE 或落到地板附近）」"
+                  f"| 本 run seed={a.seed} 消融臂 EM={em:.2f}% ±SE={se:.2f}pp | 地板 max_naive="
+                  f"{mx:.2f}%/门槛={thr:.2f}% ⇒ 自身{'已落到地板附近' if near_floor else '未落到地板附近'}；"
+                  f"「掉幅 >= 2SE」需与 seed={a.seed} 全历史臂 EM 并列后算"
+                  f"（本 run {'未给 --pair-log，只给消融侧' if not a.pair_log else f'给不出 --pair-log={a.pair_log} 的可读 [EM] 行'}）"
+                  f"{smoke_note}", flush=True)
+        else:
+            em_h, se_h = paired
+            drop = em_h - em
+            se_diff = math.hypot(se_h, se)
+            j_drop = drop >= 2.0 * se_diff
+            j_floor = near_floor
+            print(f"[CRIT] R2-d L3_PLAN §9.4「历史消融（只喂轮3）⇒ EM 必掉（掉幅 >= 2SE 或落到地板附近）」"
+                  f"| 配对（--pair-log={a.pair_log}）：全历史臂 EM={em_h:.2f}%±{se_h:.2f}pp vs "
+                  f"消融臂 EM={em:.2f}%±{se:.2f}pp ⇒ 掉幅={drop:.2f}pp | 对照 2SE："
+                  f"差值SE=sqrt({se_h:.2f}^2+{se:.2f}^2)={se_diff:.2f}pp ⇒ 2SE差值={2 * se_diff:.2f}pp、"
+                  f"2SE(全历史臂)={2 * se_h:.2f}pp | 地板 max_naive={mx:.2f}%/门槛={thr:.2f}% ⇒ "
+                  f"消融臂{'已落到地板附近' if j_floor else '未落到地板附近'} | "
+                  f"掉幅>=2SE差值：{'PASS' if j_drop else 'FAIL'}；落到地板附近："
+                  f"{'PASS' if j_floor else 'FAIL'} ⇒ R2-d "
+                  f"{'PASS' if (j_drop or j_floor) else 'FAIL'}{smoke_note}", flush=True)
     else:
         print(f"[CRIT] R2-d L3_PLAN §9.4「历史消融（只喂轮3）⇒ EM 必掉（掉幅 >= 2SE 或落到地板附近）」"
               f"| 本 run seed={a.seed} 是全历史臂 EM={em:.2f}% ⇒ **本 run 不判 R2-d**"
@@ -529,7 +588,7 @@ def main(argv=None):
           f"d={D} ff={FF} nhead={NHEAD} maxlen={MAXLEN} n_params={n_par} EM_BATCH={EM_BATCH} "
           f"no_history={a.no_history} smoke={a.smoke} n_eval={len(hits)} EM={em:.2f}% "
           f"SE={se:.2f}pp 实体命中={em_ent:.2f}% 条件命中={em_cond:.2f}% 配对CE={cm:.4f}±{cse:.4f} "
-          f"地板max_naive={mx:.2f}% 门槛={thr:.2f}% train_fp={tr_fp} test_fp={te_fp} "
+          f"地板max_naive={mx:.3f}% 门槛={thr:.3f}% pair_log={a.pair_log} train_fp={tr_fp} test_fp={te_fp} "
           f"训练墙钟={wall:.0f}s 评估墙钟={eval_sec:.0f}s 总墙钟={wall + eval_sec:.0f}s ckpt={ck}",
           flush=True)
     print("[DONE] exit=0", flush=True)
