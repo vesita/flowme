@@ -752,7 +752,11 @@ def shared_init_check(seed: int) -> dict:
         print(f"[INIT-CHECK] arm={arm} 同 seed 两次构造 sha={h1[:16]}/{h2[:16]} ⇒ "
               f"{'相同' if h1 == h2 else '★不同'} max|Δ|={dmax:.1e} | 异 seed sha={h3[:16]} ⇒ "
               f"{'不同（阴性对照通过）' if h3 != h1 else '★相同（seed 没生效）'}", flush=True)
-    return out
+    # ★ 2026-10-10 修：原先 `return out` 返回的是**逐张量 Δ 的 dict**，而调用处写 `init_worst == 0.0`
+    # ⇒ dict 与 float 比较恒 False ⇒ 每次 run 都打印 `[CRIT] R3′-a ★FAIL ⇒ 配对作废`、hits JSON `init_ok=false`，
+    # 尽管紧邻的 [INIT-CHECK] 实测 `max|Δ|=0.000e+00 ⇒ PASS`。**结论不受影响**（配对前提是实测成立的），
+    # 失效的只是那个布尔判词与 JSON 字段。现返回 worst 浮点，使判词与实测一致。
+    return max(out.values()) if out else float("nan")
 
 
 def param_table() -> int:
