@@ -634,3 +634,19 @@ def shared_init_check(seed):
 ```
 ⇒ **三臂确实从同一组初值出发**（否则 `★FAIL`），这才使 §11.3 的**配对**比较（配对 SE / McNemar）在前提上成立。此外它仍做 §9.7 的同 seed 两次构造 hash 相同、异 seed hash 不同。
 **判读要点**：若日志里出现 `★FAIL 共享子模块初值不同` ⇒ **配对判定作废**，只能改报独立样本口径。
+
+### 11.10 ★ r3b 的 `[INIT-CHECK]` 实测全过 —— 且暴露出一个**极干净的单变量**
+
+```
+[INIT-CHECK] §9.7 init 缺陷修复：manual_seed 先于构造
+[INIT-CHECK] 三臂同 seed=1234 共享子模块逐张量 max|Δ|=0.000e+00（检查 39 个张量）⇒ PASS 逐位同初值
+[INIT-CHECK] arm=A  同 seed 两次构造 sha=db7ffd0d…/db7ffd0d… ⇒ 相同 max|Δ|=0.0e+00 | 异 seed sha=124d39a6… ⇒ 不同
+[INIT-CHECK] arm=B1 同 seed 两次构造 sha=dff7ba30…/dff7ba30… ⇒ 相同 max|Δ|=0.0e+00 | 异 seed sha=04aef74b… ⇒ 不同
+[INIT-CHECK] arm=B2 同 seed 两次构造 sha=dff7ba30…/dff7ba30… ⇒ 相同 max|Δ|=0.0e+00 | 异 seed sha=04aef74b… ⇒ 不同
+[DATA] k=4 prefix=74 arm=A 候选数=4 | 字段数=51 | 候选末位 token 前缀稳定性违例=0 | 指纹与 §11.6 一致
+```
+
+**三条结论**：
+1. **配对前提成立**：三臂共享子模块初值**逐位相同**（39 张量、max|Δ|=0）⇒ §11.3 的配对 SE / McNemar **有效**；
+2. ★ **B1 与 B2 的 sha 完全相同**（`dff7ba30…`）⇒ 两臂**参数与初值逐位相同，只差"有没有中间监督"** ⇒ 这是"**可判中间目标有没有用**"能做到的**最干净单变量**（没有任何架构/初始化差异混杂）；
+3. A 与 B1/B2 的 sha 不同 ⇒ "架构拆分"（A vs B1）与"中间监督"（B1 vs B2）**两个问题被完全分开**，分别对应 §11.3 的两条归因规则。
