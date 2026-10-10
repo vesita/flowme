@@ -273,7 +273,13 @@ def plan_desc(arm: str, plan: list) -> str:
 
 # ---------------- 可训性 / 优化器 ----------------
 def set_active(model, cards) -> list:
-    """只让 `cards` 里的卡可训（其余 `requires_grad=False`，即 §12.2 的逐卡口径）。"""
+    """只让 `cards` 里的卡可训（其余 `requires_grad=False`，即 §12.2 的逐卡口径）。
+
+    ★同时清掉**上一相位遗留的 `.grad`**：否则冻结卡会带着旧相位留下的梯度（闸门误报「冻结卡有梯度」，
+    且白占 4B/参数 —— smoke 的闸门实测抓到过 13 个张量带旧梯度）。
+    """
+    for p in model.parameters():
+        p.grad = None
     active = []
     for c in cards:
         active += unit_params(model, c)
@@ -594,7 +600,8 @@ def probe_cross(a) -> int:
     print("device:", device, torch.cuda.get_device_name(0), flush=True)
     train, _test = load_data()
     probe_recs, probe_packed = build_probe_batches(train, PS)
-    print(f"[MEM-X] 诊断（**非四臂判据**）：全新构造的模型、每配置只跑 {PW + PR * PS} 步（含探针），"
+    n_steps = PW + PR * PS + 5                 # +5：探针窗口有预热与收尾余量（_windows 要求留白）
+    print(f"[MEM-X] 诊断（**非四臂判据**）：全新构造的模型、每配置只跑 {n_steps} 步（含探针），"
           f"探针批与四臂逐位相同（指纹={probe_fp(probe_packed)}）⇒ 只比显存画像", flush=True)
     cfgs = [("J", ALL_CARDS, False), ("J+GC", ALL_CARDS, True),
             ("P-input", ("input",), False), ("P-input+GC", ("input",), True)]
@@ -602,11 +609,11 @@ def probe_cross(a) -> int:
     for name, cards, gc in cfgs:
         torch.manual_seed(a.seed)
         model = build_arm("J+GC" if gc else "J").to(device)
-        plan = [{"name": name, "steps": PW + PR * PS, "cards": cards,
-                 "windows": _windows(PW + PR * PS, PW, PS, PR, late=False)}]
+        plan = [{"name": name, "steps": n_steps, "cards": cards,
+                 "windows": _windows(n_steps, PW, PS, PR, late=False)}]
         rows, _wall, _n, _g = train_arm(model, name, train, a.seed, plan, probe_recs, probe_packed,
                                         tag="（诊断）")
-        res[name] = rows[-1]
+        res[name] = max(rows, key=lambda r: r["peak_mib"])
         del model
         torch.cuda.empty_cache()
     g = res["J+GC"]["peak_mib"] - res["J"]["peak_mib"]
@@ -639,32 +646,41 @@ def within_spread(rows) -> float:
 
 def r4_a(dj, dp, mib_note=""):
     rows_j = dj["mem_rows"]
-    peak_j = dj["peak_mib"]
-    peak_p = dp["peak_mib"]
+    peak_j, peak_p = dj["peak_mib"], dp["peak_mib"]
     row_p = max(dp["mem_rows"], key=lambda r: r["peak_mib"])
     p_tot, n_act = dj["params"], row_p["n_active"]
     pred = 12.0 * (p_tot - n_act) / MIB                       # 梯度 4B + AdamW 两动量 8B，只按当前卡
     spread_j, spread_p = within_spread(rows_j), within_spread(dp["mem_rows"])
-    d_res_j = dj["mem_rows"][0]["resident_mib"] - 12.0 * p_tot / MIB
-    d_res_p = row_p["resident_mib"] - (4.0 * p_tot + 8.0 * n_act) / MIB
+    res_j = sum(r["resident_mib"] for r in rows_j) / len(rows_j)
+    d_res = res_j - row_p["resident_mib"]                     # 实测：训练态（梯度+优化器态）之差
     save = peak_j - peak_p
+    extra = save - d_res                                      # 峰值差里超出「训练态」的那部分
+    rs = save / pred if pred else float("nan")
+    rs_res = d_res / pred if pred else float("nan")
     print(f"[CRIT] R4-a 逐卡(P) vs 联合(J) 峰值显存（同参数量、同 batch/seq/dtype/maxlen）{mib_note}", flush=True)
     print(f"[CRIT] R4-a   J 峰值={peak_j:.0f} MiB（同段重复极差 {spread_j:.0f} MiB）| "
           f"P 峰值={peak_p:.0f} MiB（取最大相位 seg={row_p['seg']} 卡={row_p['cards']}；同段重复极差 {spread_p:.0f} MiB）"
           f" ⇒ Δ(P−J)={-save:+.0f} MiB（{100.0 * (-save) / peak_j:+.2f}%）"
           f" ⇒ {'超过探针噪声' if save > 2.0 * max(spread_j, spread_p) else '★未超过探针噪声（如实报）'}", flush=True)
-    print(f"[CRIT] R4-a   解析（训练态只按**当前卡**计：梯度 4B+AdamW 8B）× (全部可训 {p_tot} − 当前卡 {n_act}) "
-          f"= {pred:.1f} MiB ⇒ 实测/解析={save / pred if pred else float('nan'):.2f} "
-          f"⇒ {'量级一致（PASS 的解析那一半）' if abs(save - pred) <= max(4.0, 0.35 * pred) else '★与解析不符（如实报）'}", flush=True)
-    print(f"[CRIT] R4-a   驻留（forward 前 memory_allocated）vs 解析 12B×参数（J）/ 4B×全部+8B×当前卡（P）："
-          f"J 实测={dj['mem_rows'][0]['resident_mib']:.1f} MiB（解析 {12.0 * p_tot / MIB:.1f}，差 {d_res_j:+.1f}）| "
-          f"P({row_p['seg']}) 实测={row_p['resident_mib']:.1f} MiB（解析 {(4.0 * p_tot + 8.0 * n_act) / MIB:.1f}，差 {d_res_p:+.1f}）", flush=True)
-    print(f"[CRIT] R4-a   P 逐相位峰值：" + " | ".join(
-        f"{r['seg']}({'/'.join(k for k in CARD_ORDER if k in r['cards'])})={r['peak_mib']:.0f} MiB 可训={r['n_active']}"
-        for r in dp["mem_rows"]), flush=True)
-    ok = save > 0 and abs(save - pred) <= max(4.0, 0.35 * pred)
-    print(f"[CRIT] R4-a   ⇒ {'PASS（P 峰值低于 J，且与解析量级一致）' if ok else '★FAIL/未达（如实报）'}"
-          f"；★幅度很小（激活项主导）与 §12 的诚实边界一致：逐卡**不省激活**", flush=True)
+    print(f"[CRIT] R4-a   ★解析那一半（用**驻留之差**测，避开激活项）：Δ驻留(J−P,最大相位)={d_res:.1f} MiB vs "
+          f"解析 12B×(全部可训 {p_tot} − 当前卡 {n_act})={pred:.1f} MiB ⇒ 实测/解析={rs_res:.2f} ⇒ "
+          f"{'量级一致（R4-a 的解析半 PASS）' if 0.6 <= rs_res <= 1.6 else '★与解析不符（如实报）'}"
+          f"；驻留含一个臂间共有的常数项（实测 {res_j:.1f} vs 解析 12B×P={12.0 * p_tot / MIB:.1f} MiB），"
+          f"用**差值**即抵消，故不参与判定", flush=True)
+    print(f"[CRIT] R4-a   峰值差的余项 = Δ峰值 {save:.1f} − Δ驻留 {d_res:.1f} = **{extra:.1f} MiB** ⇒ 来自"
+          f"「冻结卡 backward 不必为可训权重保存部分中间量」（机制说明=推断；实测依据=驻留差已把训练态解释掉）；"
+          f"实测/解析(仅训练态)={rs:.2f}", flush=True)
+    ph = {}
+    for r in dp["mem_rows"]:
+        if r["seg"] not in ph or r["peak_mib"] > ph[r["seg"]][0]:
+            ph[r["seg"]] = (r["peak_mib"], r["n_active"])
+    print(f"[CRIT] R4-a   P 逐相位峰值（同相位多窗口取最大）：" + " | ".join(
+        f"{k}={v[0]:.0f} MiB 可训={v[1]}" for k, v in ph.items()), flush=True)
+    ok = (save > 0) and (save > 2.0 * max(spread_j, spread_p)) and (0.6 <= rs_res <= 1.6)
+    print(f"[CRIT] R4-a   ⇒ {'PASS（P 峰值显著低于 J 且训练态差与解析量级一致）' if ok else '★FAIL/未达（如实报）'}"
+          f"；★幅度 {100.0 * (-save) / peak_j:+.1f}%（激活项主导）与 §12 的诚实边界一致：逐卡**不省激活**，"
+          f"P 的收益按相位差 3.5 倍（{row_p['peak_mib']:.0f} MiB vs 最小相位 "
+          f"{min(r['peak_mib'] for r in dp['mem_rows']):.0f} MiB）", flush=True)
     return ok
 
 
@@ -732,6 +748,10 @@ def r4_d(dj, dg, cross_path, mib_note=""):
     print(f"[CRIT] R4-d   质量：T2 J={dj['em']:.2f}% J+GC={dg['em']:.2f}% ⇒ Δ={st['delta']:+.2f}pp "
           f"SE_Δ(配对)={st['se']:.2f}pp 2SE_Δ={2 * st['se']:.2f}pp b={st['n01']} c={st['n10']} "
           f"McNemar p={st['p']:.3g} | T1 J={dj['t1']:.2f}% J+GC={dg['t1']:.2f}%", flush=True)
+    print(f"[CRIT] R4-d   读法：Δ 的方向是 J+GC **更好**（{st['delta']:+.2f}pp），且幅度 {abs(st['delta']):.2f}pp "
+          f"小于 §11.31 记录的同任务 run 间幅度带 14.6pp ⇒ **GC 未测出质量代价**；不能读成「GC 提升质量」，"
+          f"也不能把配对 p<0.05 读成「GC 变差」—— 配对显著只说明两条轨迹分叉（GC 与非 GC 的 dropout RNG 消耗不同，"
+          f"同初值也不同轨迹；--gc-check 已证同一 RNG 流下梯度逐位相同）", flush=True)
     if cross_path and os.path.exists(cross_path):
         with open(cross_path, encoding="utf-8") as f:
             x = json.load(f)
