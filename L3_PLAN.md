@@ -1127,3 +1127,17 @@ B2 vs A：s1234 Δ=+63.50pp SE_Δ=1.78pp 2SE=3.57 b=9  c=517 p=7.35e-140 ⇒ PAS
 **(c) 一条仪器缺陷（已绕过）**：smoke 的四臂重定向到**同一个** `logs/80_smoke_.log`（`>` 截断）⇒ 只剩末臂、`P` 的峰值丢失。**正式跑改为按臂分文件**（`logs/80_${arm}_s1234.log`）。
 
 **(d) ★ 一条我自己的操作坑（第二次踩，r3b 第一版也栽在同一处）**：`systemd-run` **会在 bash 之前展开 ExecStart 里的 `$VAR`** —— 内联写 `for arm in …; do … > logs/80_${arm}_*.log; done` 会得到 `logs/80__*.log`（实测 `flowme_l3r4.service: Referenced but unset environment variable evaluates to an empty string: arm`）。**正确做法：把循环写进 `scripts/*.sh` 脚本文件再让 systemd 调它**（`scripts/80_runs.sh`）。已写进本文档，凡以后用 systemd-run 跑带变量的循环，**一律走脚本文件**。
+
+### 12.6 协调与一次"混合修订"（Lead 记，正式报告必须处理）
+
+**经过**：r4 的 smoke 在 `SMOKE-DONE`（12:41:12）后**没有接力正式跑**，且 `list_agents` 当时看不到 r4 单元 ⇒ Lead 判定其已停，**自己接手**起了正式四臂（`systemd-run --unit=flowme_l3r4 … bash scripts/80_runs.sh`，J→P→P+F→J+GC，seed1234，3000 步 + `--report-r4`）。
+随后 r4 单元**回话**（它其实还活着，只是没收到接手通知），告知它在 **12:44 改了两处**：① 切相位时清理上一相位遗留的 `.grad`（smoke 闸门抓到"冻结卡带旧梯度"）；② `R4-a` 的解析比对改用"驻留之差"。
+
+**★ 由此产生的混合修订（必须在正式报告里消除）**：
+- `J` 臂起于 **12:42:54**（**改文件之前**）⇒ 旧修订；
+- `P / P+F / J+GC` 起于改文件之后 ⇒ 新修订。
+- 机制上对 `J` 是 **no-op**（单相位、无冻结卡、无相位切换），但**四臂不是同一份代码** ⇒ **要求**：正式报告**逐臂写明 md5/修订时点**，并用**新修订单独重跑 `--arm J --seed 1234`** 作为正式比对（旧 J 读数保留作旁证）。
+
+**另两条协调结论**
+- `send_message` 对子代理**再次失败**（"active teammate not found"）⇒ 转向走 `collab_board`（channel `path:stages/`，留言 `m_380`）；留言板**不投递、不唤醒**，故 Lead 必须**自己兜底**（子代理不接就 Lead 重跑 J）。
+- r4 单元 12:43 的一次 GPU 探针 **OOM**：它在我 J 臂运行期间起了 GPU 进程 ⇒ **单卡串行的硬纪律**（起 GPU 前先 `list-units`）在子代理侧也要强调。
