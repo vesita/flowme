@@ -209,13 +209,41 @@ def full_metrics(ev: dict, pack: dict, seed: int) -> dict:
 
 
 # --------------------------------------------------------------------------- 单臂训练
+def align_extra(mt: torch.Tensor, mi: torch.Tensor, loss_kind: str, lam: float,
+                tau: float, mu: float, gamma: float) -> torch.Tensor:
+    """对齐 / 对比项（口径见 `experiments/meme_anchor/PREREG_SHAPE.md` §1）。
+
+    · `none`         ：无对齐项（等价 λ=0，只留共享出口 + 重构压力）
+    · `align`        ：现有形状 `D = 1 − mean_p cos(m_T[p], m_I[p])`（**只有吸引、没有排斥**）
+    · `infonce`      ：池化后的对称 InfoNCE（同句为正、**批内异句为负** ⇒ 加排斥项）
+    · `infonce_var`  ：`infonce` + 防塌陷方差项 `clamp(γ − std_batch(z), 0)`
+    """
+    if loss_kind == "none":
+        return mt.sum() * 0.0                      # 保持计算图、数值恒 0
+    if loss_kind == "align":
+        return lam * d_slot(mt, mi)
+    zt = nn.functional.normalize(mt.mean(1), dim=1)
+    zi = nn.functional.normalize(mi.mean(1), dim=1)
+    logits = zt @ zi.t() / tau
+    labels = torch.arange(mt.size(0), device=mt.device)
+    nce = 0.5 * (nn.functional.cross_entropy(logits, labels)
+                 + nn.functional.cross_entropy(logits.t(), labels))
+    out = lam * nce
+    if loss_kind == "infonce_var":
+        var = (torch.clamp(gamma - mt.mean(1).std(dim=0), min=0).mean()
+               + torch.clamp(gamma - mi.mean(1).std(dim=0), min=0).mean())
+        out = out + mu * var
+    return out
+
+
 def train_run(lam: float, seed: int, steps: int, vision_arch: str, device: str,
-              bs: int, eval_every: int) -> dict:
+              bs: int, eval_every: int, loss_kind: str = "align",
+              tau: float = 0.07, mu: float = 1.0, gamma: float = 0.2) -> dict:
     pack = get_pack()
     model = MD.build(seed, vision_arch).to(device)
     npar = model.n_params()
     log(f"[M1] run lam={lam} seed={seed} steps={steps} arch={vision_arch} device={device} "
-        f"bs={bs} params={npar} 总={sum(npar.values())}")
+        f"bs={bs} loss={loss_kind} tau={tau} mu={mu} gamma={gamma} params={npar} 总={sum(npar.values())}")
     opt = torch.optim.AdamW(model.parameters(), lr=1e-3, weight_decay=0.01)
     crit = nn.CrossEntropyLoss(ignore_index=PAD)
     g = torch.Generator().manual_seed(seed)
@@ -244,8 +272,7 @@ def train_run(lam: float, seed: int, steps: int, vision_arch: str, device: str,
         lv = model.logits(mi, tgt_in)
         ce_t = crit(lt.reshape(-1, VOCAB), tgt_out.reshape(-1))
         ce_v = crit(lv.reshape(-1, VOCAB), tgt_out.reshape(-1))
-        d_align = d_slot(mt, mi)
-        loss = ce_t + ce_v + lam * d_align
+        loss = ce_t + ce_v + align_extra(mt, mi, loss_kind, lam, tau, mu, gamma)
 
         opt.zero_grad(set_to_none=True)
         loss.backward()
@@ -285,16 +312,19 @@ def train_run(lam: float, seed: int, steps: int, vision_arch: str, device: str,
     ev = eval_model(model, pack["test_ids"], pack["test_img"], device)
     ev["m_I_src"] = torch.as_tensor(np.asarray(pack["test_img"]))
     metrics = full_metrics(ev, pack, seed)
-    ck = LOGS / f"86_ckpt_{vision_arch}_l{lam}_s{seed}.pt"
+    # ★ 文件名带"损失形状"标记（否则 infonce 与 infonce_var 同 lam/同 seed 会互相覆盖）
+    tag = "" if loss_kind == "align" else f"_{loss_kind}"
+    ck = LOGS / f"86_ckpt_{vision_arch}{tag}_l{lam}_s{seed}.pt"
     torch.save({"state": model.state_dict(), "lam": lam, "seed": seed,
                 "vision_arch": vision_arch, "steps": steps}, ck)
     res = dict(lam=lam, seed=seed, steps=steps, vision_arch=vision_arch, bs=bs,
+               loss_kind=loss_kind, tau=tau, mu=mu, gamma=gamma,
                stopped=stopped, step_time_s=step_time, wall_min=(time.time() - t0) / 60,
                params=npar, ckpt=str(ck), ckpt_sha16=sha16(ck), snaps=snaps,
                final=dict(ce_t=ev["ce_t"], ce_v=ev["ce_v"], char_acc_t=ev["char_acc_t"],
                           char_acc_v=ev["char_acc_v"], exact_t=ev["exact_t"], exact_v=ev["exact_v"]),
                metrics=metrics)
-    (LOGS / f"86_result_{vision_arch}_l{lam}_s{seed}.json").write_text(
+    (LOGS / f"86_result_{vision_arch}{tag}_l{lam}_s{seed}.json").write_text(
         json.dumps(js(res), ensure_ascii=False, indent=1), encoding="utf-8")
     log(f"[RUN-FINAL] lam={lam} seed={seed} CE_T={ev['ce_t']:.4f} CE_V={ev['ce_v']:.4f} "
         f"字准T={ev['char_acc_t']*100:.2f}% 字准V={ev['char_acc_v']*100:.2f}% "
@@ -624,6 +654,12 @@ def main() -> None:
     ap.add_argument("--eval-every", type=int, default=EVAL_EVERY_DEFAULT)
     ap.add_argument("--device", default="cuda")
     ap.add_argument("--vision-arch", default="detr", choices=["detr", "yolo"])
+    ap.add_argument("--loss", default="align",
+                    choices=["none", "align", "infonce", "infonce_var"],
+                    help="对齐/对比项形状（见 PREREG_SHAPE.md §1）")
+    ap.add_argument("--tau", type=float, default=0.07, help="InfoNCE 温度")
+    ap.add_argument("--mu", type=float, default=1.0, help="方差项权重")
+    ap.add_argument("--gamma", type=float, default=0.2, help="方差项目标标准差")
     args = ap.parse_args()
 
     torch.set_num_threads(6)
@@ -644,7 +680,8 @@ def main() -> None:
         self_checks(dev, args.vision_arch)
     elif args.run:
         lam, seed = float(args.run[0]), int(args.run[1])
-        train_run(lam, seed, args.steps, args.vision_arch, dev, args.bs, args.eval_every)
+        train_run(lam, seed, args.steps, args.vision_arch, dev, args.bs, args.eval_every,
+                  args.loss, args.tau, args.mu, args.gamma)
     elif args.verdict:
         verdict()
     elif args.tables:
