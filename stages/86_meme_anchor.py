@@ -494,14 +494,15 @@ def verdict() -> dict:
     complete = (sorted(arm.keys()) == expect_lam) and all(a["n_seed"] == 2 for a in arms)
     canvas_ok = list(meta.get("img_shape", [])) == [128, 584]
 
+    # ★ 订正 13（用户 2026-10-11 裁定）：**M2′ 作废** —— 它的定义是「同模态·异内容 < 跨模态·同内容 − 2SE」，
+    #   把**内容差**与**模态偏移**绑在一次比较里（实测 λ=0：同模态异内容 0.482/0.446 > 跨模态同内容 0.236/−0.030，
+    #   而同一张矩阵的**行中心化 AUROC = 0.985/0.779**）⇒ 只保留为**报告读数**（`ctrl` 仍在表里），**不再作门**。
+    #   旧：M2′ 不过 ⇒ 档 0b（实得档 0b）；新：链上不再有 M2′ 分支。
     if not canvas_ok or not complete:
         v = (f"档 0（**读数不完整，不许出判词**）：臂/seed = "
              f"{ {k: v['n_seed'] for k, v in sorted(arm.items())} }（应 3 臂×2 seed）；"
              f"数据画布 = {meta.get('img_shape')}（应 [128,584]，即订正 4 后的规格）")
-    # ★ 顺序（订正 10）：① 仪器有效性（正控/口径）→ ② 训练充分性（饱和）→ ③ 前置门 → ④ 结论
-    elif not all(a["ctrl"] for a in arms):                       # ★ A3：M2′ 的"判决作废"
-        v = ("档 0b（**判决作废 · M2′ 正控未过**）：同模态异内容**没有**显著低于跨模态同内容 "
-             "⇒ 度量无区分度 ⇒ 按 PREREG §8 M2′，判决作废")
+    # ★ 顺序（订正 10）：① 仪器有效性（口径）→ ② 训练充分性（饱和）→ ③ 前置门 → ④ 结论
     elif not all(a["m3"] for a in arms):
         v = ("档 3（**判据口径缺陷**）：M3 逐槽置换掉幅不过（<max(2SE,0.01)）⇒ 度量对槽序不敏感 "
              "⇒ 属判据缺陷、**不进 M6**（`experiment-design.md`：判据错 ≠ 数据错）")
@@ -517,12 +518,12 @@ def verdict() -> dict:
     elif not all(a["surface"] for a in arms):                    # ★ A2：地板升门必须生效
         v = ("档 3b（**与表面统计不可区分**）：Δ_模因未超过计数类地板 + max(2SE,0.01) "
              "⇒ 判词只能写『与表面统计不可区分』，**不得**写『模因锚定』（订正 7）")
-    elif a0.get("g_read") and a0.get("m1") and a0.get("m8") and a0.get("ctrl"):   # ★ A1
+    elif a0.get("g_read") and a0.get("m1") and a0.get("m8"):     # ★ A1；M2′ 已作废（订正 13）
         v = ("档 1：**λ=0 也过 M1′+M8+正控、且自己过了 G-read** ⇒ **模因自然锚定**"
              "（在『共享出口』这一耦合下，且已排除句长混杂）—— 强")
     elif any(arm.get(l, {}).get("g_read") and arm.get(l, {}).get("m1")
-             and arm.get(l, {}).get("m8") and arm.get(l, {}).get("ctrl")
-             for l in arm if l != 0.0):                          # ★ A1
+             and arm.get(l, {}).get("m8")
+             for l in arm if l != 0.0):                          # ★ A1；M2′ 已作废（订正 13）
         v = ("档 2：**仅 λ>0 过 M1′+M8+正控（且过 G-read）** ⇒ 对齐可训练、模因空间可被拉齐 —— 中；"
              "阈值只对『训练过对齐』的卡有效")
     elif all(a["m1"] for a in arms) and not all(a["m8"] for a in arms):
