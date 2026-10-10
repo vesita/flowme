@@ -618,3 +618,19 @@ SE_Δ = std(d_i) / sqrt(n)      ← 配对 SE
 
 `73` 打印的「严读（门槛 + 本 run 2SE）」在 seed5678 得 `100.00% + 0.00pp = 100.00%` ⇒ **严格大于不成立 ⇒ 恒 FAIL**。这不是读数问题，而是该口径在 `EM=100% 且 SE=0` 时**结构性退化**。
 ⇒ **§10 的口径裁定再确认**：判据只认 `EM > max_naive + 2SE(max_naive)`（宽读）；"门槛 + run 自身 2SE"这一严读**在饱和时无意义**，不得作为判词依据。
+
+### 11.9 r3b 的实现已按 §9.7/§11.7 落地（Lead 核，2026-10-10 09:29）
+
+`stages/75_cand_cards.py`（44826 B，**落盘即带修复**）：docstring 明写「★修 §9.7 的 init 缺陷：`manual_seed` **移到构造之前** + `[INIT-CHECK]`」，全文 `[INIT-CHECK]` 出现 7 处；开关 `--arm {A,B1,B2}`（默认 A）⇒ 可按 §11.7 **先只跑臂 A**。
+
+**★ 它把「配对前提」做成了实测断言**（比我的要求更强）：
+```
+def shared_init_check(seed):
+    for arm in ("A","B1","B2"):
+        torch.manual_seed(seed); built[arm] = build_arm(arm)
+    # 逐张量核对共享子模块：A.input↔B.input、A.output↔B.output、
+    #   A.target.layers.0.*↔B.select.enc.*、A.target.layers.1.*↔B.realign.enc.*
+    print("[INIT-CHECK] 三臂同 seed 共享子模块逐张量 max|Δ|=… ⇒ PASS 逐位同初值 / ★FAIL")
+```
+⇒ **三臂确实从同一组初值出发**（否则 `★FAIL`），这才使 §11.3 的**配对**比较（配对 SE / McNemar）在前提上成立。此外它仍做 §9.7 的同 seed 两次构造 hash 相同、异 seed hash 不同。
+**判读要点**：若日志里出现 `★FAIL 共享子模块初值不同` ⇒ **配对判定作废**，只能改报独立样本口径。
