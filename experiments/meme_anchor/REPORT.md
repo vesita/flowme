@@ -212,7 +212,42 @@ L = CE(Out(T_in(x))) + CE(Out(V_in(render x))) + λ · D,  D = 1 − (1/16)Σ_p 
     ⇒ 若不做这次自检，报告会把"探针坏了"写成"**模因未测出线性编码句长**" —— 一个完全错误的结论。
 12. **未做**：yolo 槽头附加臂（脚本已就绪 `scripts/86_runs_yolo.sh`，本次时间不足未跑）；
     饱和轮（6 run 全是 10000 步上限截断）；把 `cards/` 接进来（按协议"先独立实验、成功后再接入"）。
+13. ★ **判词作用域的一个跑后修复（订正 12）**：补救轮（同 arch、同 λ、新 seed）一开始会被判词 glob 当成
+    "λ=0.5 的第 3 个 seed" ⇒ 重跑判词给「档 0（读数不完整）」。已改成**判词只认预注册的 2 个 seed**：
+    现在重跑判词 **逐字复现档 0b**，补救轮被列进「非主档读数」。**结论未变，只是让它可复现。**
 
 ## 8. 文档与提交
 
-`<待填：本轮触碰的文档 + 提交路径>`
+**提交**：`c638ee2`（按路径显式列出，19 个文件；`logs/` 不入库 ⇒ 本报告复述了全部结论性数字，R32）。
+
+| 文件 | 改了什么 |
+|---|---|
+| `experiments/meme_anchor/PREREG.md` | **新建**：规格 + 判据（写死）+ **订正 1–11**（全部发生在第一份读数之前，除订正 11 记录补救轮） |
+| `experiments/meme_anchor/REPORT.md` | **新建**：本文件（数字的家） |
+| `experiments/meme_anchor/{data,model,measure}.py` | **新建**：数据/渲染 · 三张卡（DETR + 可切 yolo）· 度量（三口径 + 配对 Δ + 地板 + 阈值） |
+| `stages/86_meme_anchor.py` | **新建**：驱动（预处理 / smoke 自检 / 单臂训练+评估 / 5 档判词 / 报告表格） |
+| `stages/86b_m1_extra.py` | **新建**：跑后附加（长度匹配、内容探针、分布、阈值） |
+| `stages/86c_instrument_check.py` | **新建**：度量仪器已知答案 12 项自检 |
+| `scripts/86_runs*.sh`、`86_chain.sh` | **新建**：6 run / 补救轮 / 链接单元 / yolo 附加臂（跑批一律走 systemd-run） |
+| `PROJECT_STATE.md` | **§6.4 新增**：判词 + 实质发现 + 边界（指针指向本报告） |
+| `L3_PLAN.md` | **§30 新增**：形态 + 结果 + 下一步（指针） |
+| `DEVLOG.md` | 新条目：做了什么 / 三条教训 / 工具层踩坑 |
+| `methodology/findings.md` | **2 条新结论**：对齐损失买"读得出来"、代价可能"表征被压塌"；中心化对齐可以一直成立而原始余弦判别力已塌 |
+| `methodology/RULES.md` | **R48 新增** + 合并表一行 |
+| `AGENTS.md` | **§2 加 R48 实体**（自动判决函数跑前必须用假结果逐档驱动）+ 范围标签 R1–R47 → **R1–R48**（两处） |
+| `NEXT_MAINLINE.md` | 标「**已过时**」+ 指向当前主线（R46 的"发现不符当场处置"） |
+
+**未入库**（按仓库设计）：`logs/86_result_detr_*.json`（7 份读数）· `logs/86_cache/`（1.4 GB 数据与图缓存）·
+`logs/86_run_*.log`、`logs/86_extra.log`、`logs/86_verdict.log`。
+
+**复现入口**：
+
+```bash
+cd /home/vesita/coding/my/flowme
+.venv/bin/python stages/86_meme_anchor.py --prepare            # 建数据与渲染缓存（~1 min）
+HSA_OVERRIDE_GFX_VERSION=10.3.0 .venv/bin/python stages/86_meme_anchor.py --smoke   # S1–S5 + INIT-CHECK
+bash scripts/86_runs.sh                                        # 6 run（~2.2 h）→ 自动出判词
+bash scripts/86_runs_remedy.sh                                 # 补救轮（~65 min）
+.venv/bin/python stages/86_meme_anchor.py --tables             # 报告表格
+.venv/bin/python stages/86b_m1_extra.py                        # 跑后附加
+```

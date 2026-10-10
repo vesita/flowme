@@ -37,6 +37,8 @@ from model import BOS, EOS   # noqa: E402
 LOGS = ROOT / "logs"
 EVAL_EVERY_DEFAULT = 500
 PRIMARY_ARCH = "detr"          # 主档（PREREG 订正 2 / 订正 8）：只有它参与判词；yolo 只作附加臂
+PRIMARY_SEEDS = (1234, 5678)   # ★ 订正 12：判词**只认预注册的 2 个 seed** —— 补救轮（seed 9012）等后补臂
+                               #   与主档同 arch/同 λ ⇒ 不按 seed 过滤会把它们当主档臂、判词不可复现。
 
 
 def log(msg: str) -> None:
@@ -414,11 +416,12 @@ def verdict() -> dict:
     if not files:
         raise SystemExit("没有 86_result_*.json")
     all_runs = [json.loads(f.read_text(encoding="utf-8")) for f in files]
-    runs = [r for r in all_runs if r.get("vision_arch") == PRIMARY_ARCH]
-    skipped = [r for r in all_runs if r.get("vision_arch") != PRIMARY_ARCH]
+    runs = [r for r in all_runs if r.get("vision_arch") == PRIMARY_ARCH
+            and int(r.get("seed", -1)) in PRIMARY_SEEDS]
+    skipped = [r for r in all_runs if r not in runs]
     if skipped:
-        log(f"[VERDICT] 非主档 arch（不参与判词）："
-            f"{[(r['vision_arch'], r['lam'], r['seed']) for r in skipped]}")
+        log(f"[VERDICT] 非主档读数（不参与判词）："
+            f"{[(r.get('vision_arch'), r['lam'], r['seed'], r['steps']) for r in skipped]}")
     if not runs:
         raise SystemExit(f"没有主档 arch={PRIMARY_ARCH} 的结果")
     by_lam: dict[float, list] = {}
