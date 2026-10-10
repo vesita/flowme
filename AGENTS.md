@@ -17,12 +17,11 @@
 | **0** | **`MEME_FRAMEWORK.md`** | ★★ **门禁**：设计唯一真相源 —— 三类卡 · 模因三层规范 · 双目标训法 · L0–L5 · **存续条件** · 阶段 1 规格（T vs M）· 双模式（强制路由 + 瓶颈） |
 | 1 | `README.md` | 这是什么 · 目录地图 · 怎么跑 |
 | 2 | `PROJECT_STATE.md` | **现状**：阶段 · 站得住的结论 · 已判死 · 待办 |
-| 3 | `MEME_FRAMEWORK.md` | **设计唯一真相源**：三类卡 · 三层规范 · 黑板调度 · 度量 L0–L5 |
-| 4 | `NEXT_MAINLINE.md` | **当前缺口与优先级**（判据写死在这里） |
-| 5 | `methodology/RULES.md` | 纪律总表 R1–R43（**唯一表体**） |
-| 6 | `methodology/*.md` | 准绳：`measurement` · `experiment-design` · `platform` · `collaboration` · `findings` |
-| 7 | `DEVLOG.md` | 最近一轮做了什么 · 推翻了什么 · 踩了什么坑 |
-| 8 | `METRICS.md` | 绝对数字口径（引用绝对 EM **必须注明数据版 + 调度**） |
+| 3 | `NEXT_MAINLINE.md` | **当前缺口与优先级**（判据写死在这里） |
+| 4 | `methodology/RULES.md` | 纪律总表 R1–R44（**唯一表体**） |
+| 5 | `methodology/*.md` | 准绳：`measurement` · `experiment-design` · `platform` · `collaboration` · `findings` |
+| 6 | `DEVLOG.md` | 最近一轮做了什么 · 推翻了什么 · 踩了什么坑 |
+| 7 | `METRICS.md` | 绝对数字口径（引用绝对 EM **必须注明数据版 + 调度**） |
 
 按需：**`L3_PLAN.md`（当前主线：用卡片组出自然语言对话框架 · 选择卡/重整卡 · 判据写死）** · `L2_PLAN.md`（**已完成**：可对话卡片组，单条 `CardPipeline` 达信息上限 0.98~1.00） · `P6_PLAN.md`（语言生成接进 `cards/` 的落地判据与结果） · `NL_CARDS_REF.md`（语言卡片参考手册） · `MILESTONES.md`（里程碑判决） · `ROADMAP.md`（队列） · `speculation/`（**推测**，引用须标"推测"） · `dev-notes/`（旧框架经验，效力低于 `methodology/`）。
 
@@ -59,7 +58,7 @@
 |---|---|
 | `stages/` | **主线实验**（`NN_<问题>.py`） |
 | `cards/` | **新框架骨架**：三类卡 + 黑板 + 版本化（只依赖 torch） |
-| `methodology/` | 结论 / 纪律 / 准绳的家（R1–R43 在这里） |
+| `methodology/` | 结论 / 纪律 / 准绳的家（R1–R44 在这里） |
 | `speculation/` | 待验证推测（**不许与 `methodology/` 混写**） |
 | `logs/` | 过程日志（不入库） |
 | `dev-notes/` `experiments/` `src/` `tests/` `checkpoints/` | **旧框架 DTSeek**，只作证据与经验来源（`README.md:95-105`） |
