@@ -186,4 +186,4 @@ systemd-run --user --unit=flowme-s65 --collect \
 | [`MEME_FRAMEWORK.md`](MEME_FRAMEWORK.md) | 三类卡设计（唯一真相源） |
 | `stages/65_textgen_cards.py` | S65 驱动本体 |
 | `cards/` | 三类卡 + 黑板 + 版本化 |
-| [`methodology/RULES.md`](methodology/RULES.md) | 纪律总表（R1–R43） |
+| [`methodology/RULES.md`](methodology/RULES.md) | 纪律总表（R1–R44；R44 = 门禁：未读 `MEME_FRAMEWORK.md` 不得推进） |
