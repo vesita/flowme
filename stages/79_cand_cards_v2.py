@@ -454,7 +454,19 @@ def train_run(model, train, seed: int, steps: int):
                     parts.append(f"选择卡梯度来源=仅回复损失（无中间监督）max|g|={selg:.2e}"
                                  f" ⇒ {'通路活' if selg > 0 else '★通路死'}")
             gate = " | ".join(parts)
-            ok = all("0/" not in x for x in parts) and ("通路死" not in gate)
+            # ★ 2026-10-10 修：原先 `all("0/" not in x for x in parts)` 是**子串**判据 ——
+            # 某组张量数 ≥10 时（如 "30/30" 含子串 "0/"）会**假报 ★CHECK**。
+            # 改为逐组精确比较「有梯度的张量数 == 张量数」。
+            # （经核：r3b′ 各臂组张量数为 13/13、12/12、2/2 ⇒ 该缺陷在 r3b′ 上**从未误触发**，未污染任何读数。）
+            import re as _re
+
+            def _grp_ok(x: str) -> bool:
+                if "张量有梯度" not in x:
+                    return True          # 非 n/m 形态的组（选择准确率、梯度来源）不走此判
+                m = _re.search(r"(\d+)\s*/\s*(\d+)", x)
+                return bool(m) and int(m.group(1)) == int(m.group(2))
+
+            ok = all(_grp_ok(x) for x in parts) and ("通路死" not in gate)
             print(f"[GATE A] step20 {gate} ⇒ {'PASS' if ok else '★CHECK'}", flush=True)
         opt.step()
         if step % 500 == 0 or step == steps:
