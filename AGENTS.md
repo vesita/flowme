@@ -35,12 +35,12 @@
 | 1 | `README.md` | 这是什么 · 目录地图 · 怎么跑 |
 | 2 | `PROJECT_STATE.md` | **现状**：阶段 · 站得住的结论 · 已判死 · 待办 |
 | 3 | `NEXT_MAINLINE.md` | **当前缺口与优先级**（判据写死在这里） |
-| 4 | `methodology/RULES.md` | 纪律总表 R1–R45（**唯一表体**） |
+| 4 | `methodology/RULES.md` | 纪律总表 R1–R46（**唯一表体**） |
 | 5 | `methodology/*.md` | 准绳：`measurement` · `experiment-design` · `platform` · `collaboration` · `findings` |
 | 6 | `DEVLOG.md` | 最近一轮做了什么 · 推翻了什么 · 踩了什么坑 |
 | 7 | `METRICS.md` | 绝对数字口径（引用绝对 EM **必须注明数据版 + 调度**） |
 
-按需：**`L3_PLAN.md`（当前主线：用卡片组出自然语言对话框架 · 选择卡/重整卡 · 判据写死）** · `L2_PLAN.md`（**已完成**：可对话卡片组，单条 `CardPipeline` 达信息上限 0.98~1.00） · `P6_PLAN.md`（语言生成接进 `cards/` 的落地判据与结果） · `NL_CARDS_REF.md`（语言卡片参考手册） · `MILESTONES.md`（里程碑判决） · `ROADMAP.md`（队列） · `speculation/`（**推测**，引用须标"推测"） · `dev-notes/`（旧框架经验，效力低于 `methodology/`）。
+按需：**`L3_PLAN.md`（当前主线：用卡片组出自然语言对话框架 · 选择卡/重整卡 · 判据写死）** · `L2_PLAN.md`（**已完成**：可对话卡片组，单条 `CardPipeline` 达信息上限 0.98~1.00） · `P6_PLAN.md`（语言生成接进 `cards/` 的落地判据与结果） · `NL_CARDS_REF.md`（语言卡片参考手册） · `MILESTONES.md`（里程碑判决） · `ROADMAP.md`（队列） · `speculation/`（**推测**，引用须标"推测"；★ **11 份，直接相关的有**：`THINKING_CARD_DESIGN_2026-10-10.md`（思维卡两块想法；★ 内含「**S26 已跑过跨形式模因相似度**」）· `SINGLE_CARD_TRAINING.md`（单卡训练 L1/L2/L3 验收规格 + **S25 臂2 实测**）· `CARD_PRIMITIVES.md` · `MEME_FEATURES.md` · `ROUTING.md` · `SYNTHESIS.md` · `DEBATE.md` · `FRESH_VIEW.md` · `THEORY.md` · `FRONTIER_THEORY.md`；提升/降级规则见 `speculation/README.md`） · `dev-notes/`（旧框架经验，效力低于 `methodology/`）。
 
 ## 2. 动手前必守（每条都有实测出处，不是形式）
 
@@ -53,6 +53,7 @@
 - **★ 卡片化是本项目前进的基础**（用户 2026-10-11 定）：推进过程中**不要试图推翻卡片化**（例如不得以"改成单体大模型"作为解法）；**可以质疑这条路**；若认为确实走不通 ⇒ **先停下、把证据摆出来、由用户决定是否放弃**；只要还有希望，**不得违背这个方向**（`L3_PLAN.md` §27）。
 - **★ 未读设计真相源不得推进（R44）**：见 **§0 门禁**（自包含：必读哪份、必引哪三条、派单要粘哪段）。
 - **★ 纪律必须写在「自动注入」的文件里（R45）**：只写在 `methodology/RULES.md` 或其它文件里的纪律，按「**AI 读不到**」处理 —— 新纪律的落地 = **同时**写 `AGENTS.md`（可执行实体）+ `RULES.md`（表体与依据）。
+- **★ 文档要动态维护，不是事后补（R46）**：**推进 = 同步** —— 新**结论**进 `methodology/`（附实测出处）、新**推测**进 `speculation/`（标"推测"），**不许只活在提交信息或对话里**。**发现文档与实际不符 ⇒ 当场处置**（改它 / 标「**已过时**」/ 降级），不许留着误导后来者；★ **发现"这件事已经做过" ⇒ 必须回写**（把既有产物与当前计划关联起来，避免重做）；**索引必须维护**（`AGENTS.md` 的按需清单要能让人**发现**关键文档）；**每轮收尾必须报「本轮触碰的文档 + 更新了什么」**。
 - **长跑**用 `systemd-run --user --unit=<名> --collect`，不用 `setsid nohup`；单卡忙则排队，**绝不杀别人的进程**（`methodology/platform.md:22-27,31-41`）。
 - **`logs/` 不入库**；结论性数字必须复述进 REPORT / 提交信息（`README.md:116-117`）。
 - **提交按路径显式列出**，禁止 `git add -A`（R18）。
@@ -76,7 +77,7 @@
 |---|---|
 | `stages/` | **主线实验**（`NN_<问题>.py`） |
 | `cards/` | **新框架骨架**：三类卡 + 黑板 + 版本化（只依赖 torch） |
-| `methodology/` | 结论 / 纪律 / 准绳的家（R1–R45 在这里） |
+| `methodology/` | 结论 / 纪律 / 准绳的家（R1–R46 在这里） |
 | `speculation/` | 待验证推测（**不许与 `methodology/` 混写**） |
 | `logs/` | 过程日志（不入库） |
 | `dev-notes/` `experiments/` `src/` `tests/` `checkpoints/` | **旧框架 DTSeek**，只作证据与经验来源（`README.md:95-105`） |
