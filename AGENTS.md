@@ -40,7 +40,7 @@
 | 6 | `DEVLOG.md` | 最近一轮做了什么 · 推翻了什么 · 踩了什么坑 |
 | 7 | `METRICS.md` | 绝对数字口径（引用绝对 EM **必须注明数据版 + 调度**） |
 
-按需：**`L3_PLAN.md`（当前主线：用卡片组出自然语言对话框架 · 选择卡/重整卡 · 判据写死）** · `L2_PLAN.md`（**已完成**：可对话卡片组，单条 `CardPipeline` 达信息上限 0.98~1.00） · `P6_PLAN.md`（语言生成接进 `cards/` 的落地判据与结果） · `NL_CARDS_REF.md`（语言卡片参考手册） · `MILESTONES.md`（里程碑判决） · `ROADMAP.md`（队列） · `speculation/`（**推测**，引用须标"推测"；★ **11 份，直接相关的有**：`THINKING_CARD_DESIGN_2026-10-10.md`（思维卡两块想法；★ 内含「**S26 已跑过跨形式模因相似度**」）· `SINGLE_CARD_TRAINING.md`（单卡训练 L1/L2/L3 验收规格 + **S25 臂2 实测**）· `CARD_PRIMITIVES.md` · `MEME_FEATURES.md` · `ROUTING.md` · `SYNTHESIS.md` · `DEBATE.md` · `FRESH_VIEW.md` · `THEORY.md` · `FRONTIER_THEORY.md`；提升/降级规则见 `speculation/README.md`） · `dev-notes/`（旧框架经验，效力低于 `methodology/`）。
+按需：**`L3_PLAN.md`（当前主线：用卡片组出自然语言对话框架 · 选择卡/重整卡 · 判据写死）** · `L2_PLAN.md`（**已完成**：可对话卡片组，单条 `CardPipeline` 达信息上限 0.98~1.00） · `P6_PLAN.md`（语言生成接进 `cards/` 的落地判据与结果） · `NL_CARDS_REF.md`（语言卡片参考手册） · `MILESTONES.md`（里程碑判决） · `ROADMAP.md`（队列） · `speculation/`（**推测**，引用须标"推测"；★ **11 份，直接相关的有**：`THINKING_CARD_DESIGN_2026-10-10.md`（思维卡两块想法；★ 内含「**S26 已跑过跨形式模因相似度**」）· `SINGLE_CARD_TRAINING.md`（单卡训练 L1/L2/L3 验收规格 + **S25 臂2 实测**）· `CARD_PRIMITIVES.md` · `MEME_FEATURES.md` · `ROUTING.md` · `SYNTHESIS.md` · `DEBATE.md` · `FRESH_VIEW.md` · `THEORY.md` · `FRONTIER_THEORY.md`；提升/降级规则见 `speculation/README.md`） · `methodology/PREREG_TEMPLATE.md`（**预注册模板**：开新实验前照抄，七节 + 三条硬经验） · `dev-notes/`（旧框架经验，效力低于 `methodology/`）。
 
 ## 2. 动手前必守（每条都有实测出处，不是形式）
 
