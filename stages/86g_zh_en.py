@@ -226,7 +226,7 @@ def gen_eval(model, pack, device, n: int = 200, bs: int = 50, maxlen: int = 160)
 
 
 def train_run(lam: float, seed: int, steps: int, maps: str, loss_kind: str, device: str,
-              bs: int, eval_every: int, shared_out: bool = False,
+              bs: int, eval_every: int, shared_out: bool = False, early_stop: bool = False,
               tau: float = 0.07, mu: float = 1.0, gamma: float = 0.2) -> dict:
     mapset = tuple(m for m in maps.split(",") if m)
     pack = get_pack()
@@ -265,11 +265,13 @@ def train_run(lam: float, seed: int, steps: int, maps: str, loss_kind: str, devi
                 f"英→英 {snap['char_ee']*100:.1f}% 中→英 {snap['char_ze']*100:.1f}% "
                 f"英→中 {snap['char_ez']*100:.1f}% 分化 {snap['spread_zh']:.3f}/{snap['spread_en']:.3f} "
                 f"用时 {(time.time()-t0)/60:.1f}min")
-            if len(snaps) >= 3:
+            if early_stop and len(snaps) >= 3:
                 # 收敛判据：**四项 CE 之和**（自映射 + 互映射都算，臂之间才可比）
+                # ★ 只有"在降、但降得很慢"才算收敛。早先版本写作 `(b-a)/b < 0.01`，
+                #   对"CE 上升"（负比值）也成立 ⇒ 6 个 run 全被截在 3000 步（实测 CE 和在升、精度在涨）。
                 tot = lambda s: sum(v for k, v in s.items() if k.startswith("ce_"))   # noqa: E731
-                a, b, c = tot(snaps[-1]), tot(snaps[-2]), tot(snaps[-3])
-                if (b - a) / max(b, 1e-9) < 0.01 and (c - b) / max(c, 1e-9) < 0.01:
+                slow = lambda x, y: 0.0 <= (x - y) / max(x, 1e-9) < 0.01            # noqa: E731
+                if slow(tot(snaps[-2]), tot(snaps[-1])) and slow(tot(snaps[-3]), tot(snaps[-2])):
                     stopped = "收敛"; break
     ev = eval_model(model, pack, device)
     metrics = full_metrics(ev, pack, seed)
@@ -296,45 +298,66 @@ def train_run(lam: float, seed: int, steps: int, maps: str, loss_kind: str, devi
 
 
 def verdict() -> None:
-    """Q1–Q4（PREREG §3）：相对 λ=0 基线（`--maps AaBb,--loss none`）。"""
+    """Q1–Q4（PREREG §3）：**按（损失 × 映射集合）分组**，各组相对基线 `none|AaBb`。
+
+    ★ 早先版本把所有 `loss_kind=="none"` 的 run 混成一个"基线组" —— 但"只 AaBb"与"AaBb+AbBa"都是 λ=0，
+      混在一起会把候选算进基线（同型错误见 L3-m1 订正 12/14）。
+    """
     import glob
     runs = [json.loads(Path(f).read_text(encoding="utf-8")) for f in glob.glob(str(LOGS / "86g_result_*.json"))]
-    base = [r for r in runs if r["loss_kind"] == "none" and float(r["lam"]) == 0.0]
-    cand = [r for r in runs if r["loss_kind"] != "none"]
-    if not base or not cand:
-        log(f"[VERDICT] 读数不完整：基线 {len(base)} 个 / 候选 {len(cand)} 个 ⇒ 按 PREREG 不许出判词"); return
+    groups: dict[str, list] = {}
+    for r in runs:
+        groups.setdefault(f"{r['loss_kind']}|{'+'.join(r['maps'])}", []).append(r)
+    base_key = "none|AaBb"
+    if base_key not in groups:
+        log(f"[VERDICT] 缺基线（{base_key}）⇒ 按 PREREG 不许出判词。现有组: {sorted(groups)}"); return
+
+    def _dig(r, path):
+        x = r
+        for k in path:
+            x = x[k]
+        return float(x)
+
     def mu(rs, path):
-        vals = []
-        for r in rs:
-            x = r
-            for k in path:
-                x = x[k]
-            vals.append(float(x))
-        return float(np.mean(vals)), float(np.std(vals, ddof=1) / math.sqrt(len(vals))) if len(vals) > 1 else float("nan"), vals
-    rows = []
-    for nm, path, margin, ratio in (
-            ("Q1a 池化 Δ", ("metrics", "pooled", "delta"), None, None),
-            ("Q1b 长度匹配 Δ", ("metrics", "m8_length_matched", "delta"), None, None),
-            ("Q2a 中→中字准", ("final", "char_zz"), -0.05, None),
-            ("Q2b 英→英字准", ("final", "char_ee"), -0.05, None),
-            ("Q3 分化度(中)", ("final_spread", "zh"), None, 0.8),
-            ("Q4a 生成EM 中→中", ("gen", "gen_em_zz"), -0.05, None),
-            ("Q4b 生成EM 英→英", ("gen", "gen_em_ee"), -0.05, None)):
-        bm, bs, bv = mu(base, path)
-        cm, cs, cv = mu(cand, path)
-        if nm.startswith("Q1"):
-            ok = cm >= bm + 2 * cs and all(v > bm for v in cv)
-        elif ratio is not None:
-            ok = cm >= bm * ratio
-        else:
-            ok = cm >= bm + margin
-        rows.append((nm, bm, cm, ok, cv))
-    amb, amc = mu(base, ("final", "char_ze")), None
-    log(f"[VERDICT] 基线 λ=0（{len(base)} run）vs 候选（{len(cand)} run）")
-    for nm, bm, cm, ok, cv in rows:
-        log(f"[VERDICT-ROW] {nm:<16} 基线 {bm:+.4f} → 候选 {cm:+.4f}  {'✅' if ok else '❌'}  候选逐 seed={[round(v,4) for v in cv]}")
-    allok = all(r[3] for r in rows)
-    log(f"[VERDICT] {'✅ Q1∧Q2∧Q3∧Q4 全过 ⇒ 中英锚定成立，阈值可交付' if allok else '❌ 未全过 ⇒ 按上面卡住的那条报读数'}")
+        vals = [_dig(r, path) for r in rs]
+        n = len(vals)
+        return (float(np.mean(vals)),
+                float(np.std(vals, ddof=1) / math.sqrt(n)) if n > 1 else float("nan"), vals)
+
+    base = groups[base_key]
+    log(f"[VERDICT] 基线 {base_key}（{len(base)} run）；候选组：{[k for k in sorted(groups) if k != base_key]}")
+    for key, cand in sorted(groups.items()):
+        if key == base_key:
+            continue
+        rows = []
+        for nm, path, margin, ratio in (
+                ("Q1a 池化 Δ", ("metrics", "pooled", "delta"), None, None),
+                ("Q1b 长度匹配 Δ", ("metrics", "m8_length_matched", "delta"), None, None),
+                ("Q2a 中→中字准", ("final", "char_zz"), -0.05, None),
+                ("Q2b 英→英字准", ("final", "char_ee"), -0.05, None),
+                ("Q3 分化度(中)", ("final_spread", "zh"), None, 0.8),
+                ("Q4a 生成EM 中→中", ("gen", "gen_em_zz"), -0.05, None),
+                ("Q4b 生成EM 英→英", ("gen", "gen_em_ee"), -0.05, None)):
+            bm, _, _ = mu(base, path)
+            cm, cs, cv = mu(cand, path)
+            if nm.startswith("Q1"):
+                ok = cm >= bm + 2 * cs and all(v > bm for v in cv)
+            elif ratio is not None:
+                ok = cm >= bm * ratio
+            else:
+                ok = cm >= bm + margin
+            rows.append((nm, bm, cm, ok, cv))
+        log(f"[VERDICT-GROUP] ==== 候选 {key}（{len(cand)} run）vs 基线 ====")
+        for nm, bm, cm, ok, cv in rows:
+            log(f"[VERDICT-ROW] {nm:<16} 基线 {bm:+.4f} → 候选 {cm:+.4f}  {'✅' if ok else '❌'}  候选逐 seed={[round(v, 4) for v in cv]}")
+        bm_t, _, _ = mu(base, ("final", "char_ze"))
+        cm_t, _, cv_t = mu(cand, ("final", "char_ze"))
+        bm_e, _, _ = mu(base, ("final", "char_ez"))
+        cm_e, _, _ = mu(cand, ("final", "char_ez"))
+        log(f"[VERDICT-TRANS] 翻译（非门，证明模因承载跨语言内容）：中→英 {bm_t*100:.1f}% → {cm_t*100:.1f}%；"
+            f"英→中 {bm_e*100:.1f}% → {cm_e*100:.1f}%  逐 seed={[round(v*100,1) for v in cv_t]}")
+        allok = all(r[3] for r in rows)
+        log(f"[VERDICT] {key}：{'✅ Q1∧Q2∧Q3∧Q4 全过 ⇒ 跨语言锚定成立' if allok else '❌ 未全过 ⇒ 按上面卡住的那条报读数'}")
 
 
 def tables() -> None:
@@ -366,6 +389,8 @@ def main() -> None:
     ap.add_argument("--bs", type=int, default=BS_DEFAULT)
     ap.add_argument("--device", default="cuda")
     ap.add_argument("--shared-out", action="store_true")
+    ap.add_argument("--early-stop", action="store_true",
+                    help="默认关：跑满 --steps（早停判据曾误触，见 train_run 注释）")
     args = ap.parse_args()
     dev = args.device if (args.device != "cuda" or torch.cuda.is_available()) else "cpu"
     if dev != args.device:
@@ -386,7 +411,7 @@ def main() -> None:
     elif args.run:
         lam, seed = float(args.run[0]), int(args.run[1])
         train_run(lam, seed, args.steps, args.maps, args.loss, dev, args.bs,
-                  args.eval_every, args.shared_out)
+                  args.eval_every, args.shared_out, args.early_stop)
     else:
         ap.print_help()
 
