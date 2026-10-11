@@ -74,11 +74,34 @@ def pad_ids(ids_list: list[list[int]], device) -> torch.Tensor:
     return out.to(device)
 
 
-def _terms(model, crit, z_list, e_list, maps, device) -> tuple[dict, torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor]:
-    """按映射集合算各项 CE。返回 (各项 CE, 输入模因 mz/me, **衔接模因** bz/be)。
+def _rollout_ce(model, crit, lang, meme, t_in, t_out):
+    """rollout CE：用**模型自己的 argmax** 当后续位置的输入（stop-gradient），CE 照算。
+
+    - pass 1 在 `model.eval()` + `no_grad()` 下取 argmax（**不消耗 dropout RNG**）
+    - pass 2 包在 `torch.random.fork_rng()` 里（dropout 照常生效，但**不消耗全局 RNG**）
+    ⇒ 与 `--obj tf` 相比**全局 RNG 消耗逐位相同**（R34；PREREG_GENOBJ §1 / 自检 N6）
+
+    返回 `(ce, r_in, pred, lg1)` —— 后三者只给 `--genobj-selfcheck` 的 N4/N5 断言用。
+    """
+    was_training = model.training
+    model.eval()
+    with torch.no_grad():
+        lg1 = model.logits(lang, meme, t_in)
+        pred = lg1.argmax(-1)
+    if was_training:
+        model.train()
+    r_in = torch.cat([t_in[:, :1], pred[:, :-1]], dim=1)      # [BOS, pred_0, pred_1, ...]
+    with torch.random.fork_rng():
+        lg2 = model.logits(lang, meme, r_in)
+    return crit(lg2.reshape(-1, VOCAB), t_out.reshape(-1)), r_in, pred, lg1
+
+
+def _terms(model, crit, z_list, e_list, maps, device, obj: str = "tf"):
+    """按映射集合算各项 CE。返回 (各项 CE, 输入模因 mz/me, **衔接模因** bz/be, rollout 各项 CE 或 None)。
 
     ★ 所有输出卡读的都是**衔接处**的模因 `bz/be = t(mz/me)`（`bridge="none"` 时 t 是恒等 ⇒ 与 L3-m2 逐位一致）。
        用户 2026-10-11 的写法 Ata/Btb/Atb/Bta 就是"输入卡 → t → 输出卡"，t 两语言共用。
+    ★ `obj=="roll"` 时**额外**算一份 rollout CE（复用同一份 mz/me/bz/be 与同一批数据 ⇒ 不重复前向输入卡）。
     """
     mz = model.meme_zh(pad_ids(z_list, device))
     me = model.meme_en(pad_ids(e_list, device))
@@ -92,7 +115,33 @@ def _terms(model, crit, z_list, e_list, maps, device) -> tuple[dict, torch.Tenso
     if "AbBa" in maps:                                    # 互映射：中→英、英→中（金标=配对句）
         t["ze"] = crit(model.logits("en", bz, te_in).reshape(-1, VOCAB), te_out.reshape(-1))
         t["ez"] = crit(model.logits("zh", be, tz_in).reshape(-1, VOCAB), tz_out.reshape(-1))
-    return t, mz, me, bz, be
+    roll = None
+    if obj == "roll":
+        roll = {}
+        if "AaBb" in maps:
+            roll["zz"] = _rollout_ce(model, crit, "zh", bz, tz_in, tz_out)[0]
+            roll["ee"] = _rollout_ce(model, crit, "en", be, te_in, te_out)[0]
+        if "AbBa" in maps:
+            roll["ze"] = _rollout_ce(model, crit, "en", bz, te_in, te_out)[0]
+            roll["ez"] = _rollout_ce(model, crit, "zh", be, tz_in, tz_out)[0]
+    return t, mz, me, bz, be, roll
+
+
+def _combine_loss(t, roll, mz, me, bz, be, loss_kind, lam, abba_weight,
+                  obj, roll_w, tau=0.07, mu=1.0, gamma=0.2, align_on="bridge"):
+    """训练用的损失装配（单点）：`0.5·(mean_aa + α·mean_ab) + 对齐项 [+ roll_w·mean(rollout 项)]`。
+
+    ★ 抽成函数是为了让 `--genobj-selfcheck` 的 **N1（roll_w=0 ⇒ 与 tf 逐位相同）** 驱动**同一份表达式**，
+      而不是另写一遍（"判据写死了 ≠ 判据接上了线"）。
+    """
+    aa = [v for k, v in t.items() if k in ("zz", "ee")]        # AaBb（自映射）
+    ab = [v for k, v in t.items() if k in ("ze", "ez")]        # AbBa（互映射）
+    loss = (0.5 * (sum(aa) / max(len(aa), 1) + abba_weight * sum(ab) / max(len(ab), 1))
+            + DRV.align_extra(*((bz, be) if align_on == "bridge" else (mz, me)),
+                              loss_kind, lam, tau, mu, gamma))
+    if obj == "roll":
+        loss = loss + roll_w * (sum(roll.values()) / max(len(roll), 1))
+    return loss
 
 @torch.no_grad()
 @torch.no_grad()
@@ -106,7 +155,7 @@ def eval_model(model, pack, device, chunk: int = 256) -> dict:
     m_zh, m_en, b_zh, b_en = [], [], [], []
     for i in range(0, len(zs), chunk):
         zl, el = zs[i:i + chunk], es[i:i + chunk]
-        _, mz, me, bz, be = _terms(model, nn.CrossEntropyLoss(ignore_index=PAD), zl, el, ALL_MAPS, device)
+        _, mz, me, bz, be, _ = _terms(model, nn.CrossEntropyLoss(ignore_index=PAD), zl, el, ALL_MAPS, device)
         m_zh.append(mz.cpu()); m_en.append(me.cpu()); b_zh.append(bz.cpu()); b_en.append(be.cpu())
         tz_in, tz_out = make_pairs(zl, device)
         te_in, te_out = make_pairs(el, device)
@@ -242,11 +291,15 @@ def train_run(lam: float, seed: int, steps: int, maps: str, loss_kind: str, devi
               abba_weight: float = 1.0, bridge: str = "none", bridge_mid: int = 64,
               init_inputs: str = "", freeze_inputs: bool = False, init_outputs: bool = False,
               freeze_bridge: bool = False, align_on: str = "bridge",
-              tau: float = 0.07, mu: float = 1.0, gamma: float = 0.2) -> dict:
+              tau: float = 0.07, mu: float = 1.0, gamma: float = 0.2,
+              obj: str = "tf", roll_w: float = 0.5, gen_eval_n: int = 1000) -> dict:
     mapset = tuple(m for m in maps.split(",") if m)
     # ★ fail-closed 守卫：位置错位/取值非法必须**当场**报错，而不是跑完 8000 步再崩在保存上
     assert bridge in ("none", "parser", "dual"), f"bridge 非法：{bridge!r}"
     assert align_on in ("bridge", "input"), f"align_on 非法：{align_on!r}（该收到 'bridge'/'input'）"
+    assert obj in ("tf", "roll"), f"obj 非法：{obj!r}（该收到 'tf'/'roll'）"
+    assert 0.0 <= float(roll_w) <= 10.0, f"roll_w 非法：{roll_w!r}"
+    assert int(gen_eval_n) > 0, f"gen_eval_n 非法：{gen_eval_n!r}"
     for _nm, _v in (("freeze_inputs", freeze_inputs), ("init_outputs", init_outputs),
                     ("freeze_bridge", freeze_bridge), ("shared_out", shared_out)):
         assert isinstance(_v, bool), f"{_nm} 应为 bool，收到 {_v!r}"
@@ -291,15 +344,13 @@ def train_run(lam: float, seed: int, steps: int, maps: str, loss_kind: str, devi
         idx = order[ptr:ptr + bs]; ptr += bs
         zl = [pack["train_ids"][j][0] for j in idx]
         el = [pack["train_ids"][j][1] for j in idx]
-        t, mz, me, bz, be = _terms(model, crit, zl, el, mapset, device)
-        aa = [v for k, v in t.items() if k in ("zz", "ee")]        # AaBb（自映射）
-        ab = [v for k, v in t.items() if k in ("ze", "ez")]        # AbBa（互映射）
+        t, mz, me, bz, be, roll = _terms(model, crit, zl, el, mapset, device, obj=obj)
         # ★ 0.5·(mean_aa + α·mean_ab)：α 只调"翻译压力 / 重构压力"的比例，且 **α=1 时恰好等于
         #   `sum(四项)/4`**（第一轮的实现）⇒ 复用第一轮 α=1.0 的 run 合法。
         #   若写成 `mean_aa + α·mean_ab`，α=1 会变成原来的 **2 倍**（等于偷偷给 CE 加倍）—— 已避开。
-        loss = (0.5 * (sum(aa) / max(len(aa), 1) + abba_weight * sum(ab) / max(len(ab), 1))
-                + DRV.align_extra(*((bz, be) if align_on == "bridge" else (mz, me)),
-                                  loss_kind, lam, tau, mu, gamma))
+        #   ★ `obj=="roll"` 时由 `_combine_loss` 再加 `roll_w·mean(4 项 rollout CE)`（PREREG_GENOBJ §1）。
+        loss = _combine_loss(t, roll, mz, me, bz, be, loss_kind, lam, abba_weight,
+                             obj, roll_w, tau, mu, gamma, align_on)
         # ★ 对齐项加在哪一层由 --align-on 决定：bridge=t(m)（L3-m3c 的配置）· input=m（L3-m2 的位置）
         #   两者在"梯度能否穿透到输入卡"上不同 —— 见 PREREG_ALIGN_LOC.md 的 2×2 对照
         opt.zero_grad(set_to_none=True)
@@ -329,7 +380,7 @@ def train_run(lam: float, seed: int, steps: int, maps: str, loss_kind: str, devi
                     stopped = "收敛"; break
     ev = eval_model(model, pack, device)
     metrics = full_metrics(ev, pack, seed)
-    gen = gen_eval(model, pack, device)
+    gen = gen_eval(model, pack, device, n=int(gen_eval_n))
     log(f"[GEN] lam={lam} seed={seed} 贪心自回归(n={gen['gen_n']}) EM: 中→中 {gen['gen_em_zz']*100:.1f}% "
         f"英→英 {gen['gen_em_ee']*100:.1f}% 中→英 {gen['gen_em_ze']*100:.1f}% 英→中 {gen['gen_em_ez']*100:.1f}%")
     # ★ 载入标识必须进文件名：否则"同 bridge/同 seed 但载入不同 ckpt"的两次 run 会撞名互相覆盖（实测发生过）
@@ -341,6 +392,8 @@ def train_run(lam: float, seed: int, steps: int, maps: str, loss_kind: str, devi
            + ("" if abs(abba_weight - 1.0) < 1e-9 else f"_a{abba_weight}")
            + ("" if bridge == "none" else f"_{bridge}{bridge_mid}")
            + ("" if align_on == "bridge" else f"_ao-{align_on}")
+           # ★ `o-{obj}` 必须进 tag：否则 tf 臂与 roll 臂的 ckpt/json 会同名**静默互相覆盖**（PREREG_GENOBJ §7）
+           + f"_o-{obj}" + ("" if abs(roll_w - 0.5) < 1e-9 else f"_rw{roll_w}")
            + ("_frz" if freeze_inputs else "") + ("_io" if init_outputs else "")
            + ("_frzbr" if freeze_bridge else "") + init_lab)
     ck = LOGS / f"86g_ckpt_{tag}_l{lam}_s{seed}.pt"
@@ -349,6 +402,7 @@ def train_run(lam: float, seed: int, steps: int, maps: str, loss_kind: str, devi
     res = dict(lam=lam, seed=seed, steps=step, maps=list(mapset), loss_kind=loss_kind,
                shared_out=shared_out, abba_weight=abba_weight, bridge=bridge,
                bridge_mid=bridge_mid, align_on=align_on,
+               obj=obj, roll_w=roll_w, gen_eval_n=int(gen_eval_n),
                init_inputs=str(init_inputs), init_outputs=init_outputs,
                freeze_bridge=freeze_bridge, frozen=frozen, tau=tau,
                stopped=stopped, step_time_s=step_time,
@@ -455,6 +509,75 @@ def tables() -> None:
               f"{r['gen']['gen_em_zz']*100:.1f}%/{r['gen']['gen_em_ee']*100:.1f}% |")
 
 
+def genobj_selfcheck() -> None:
+    """`--obj roll` 的仪表自检 N1/N2/N4/N5/N6（CPU、合成数据、不需要语料缓存）。
+
+    ★ 为什么这几条必须存在（PREREG_GENOBJ §2）：N1 抓"新通路其实没接上"，N2 抓"pass 2 误用金标"，
+      **N4 抓"r_in 首列没接 BOS / 移位错"、N5 抓"pass 1 漏写 no_grad"**（这两条 N1/N2 都抓不住），
+      **N6 抓"两臂全局 RNG 消耗不一致"**（dropout 随机流分叉 ⇒ 违反 R34）。
+    """
+    dev = torch.device("cpu")
+    torch.manual_seed(20261012)
+    model = MZ.build(1234, False, "parser", 64).to(dev)
+    crit = nn.CrossEntropyLoss(ignore_index=PAD)
+    maps = ("AaBb", "AbBa")
+    g = torch.Generator().manual_seed(7)
+    zl = [torch.randint(5, VOCAB - 1, (17,), generator=g).tolist() for _ in range(6)]
+    el = [torch.randint(5, VOCAB - 1, (19,), generator=g).tolist() for _ in range(6)]
+    ok = True
+
+    # ---- N4 / N5：单批输入契约与梯度截断（直接调 _rollout_ce 拿 r_in / pred / lg1）----
+    t, _mz, _me, bz, _be, _ = _terms(model, crit, zl, el, maps, dev, obj="tf")
+    tz_in, tz_out = make_pairs(zl, dev)
+    _ce, r_in, pred, lg1 = _rollout_ce(model, crit, "zh", bz, tz_in, tz_out)
+    n4 = bool((r_in[:, 0] == BOS).all()) and bool((r_in[:, 1:] == pred[:, :-1]).all())
+    n5 = (lg1.grad_fn is None) and (not pred.requires_grad)
+    log(f"[N4] r_in 首列=BOS 且逐位移位对齐: {n4}（r_in[0,:1]={int(r_in[0, 0])} BOS={BOS}）")
+    log(f"[N5] lg1.grad_fn is None={lg1.grad_fn is None} / pred.requires_grad={bool(pred.requires_grad)} ⇒ {n5}")
+    ok = ok and n4 and n5
+
+    # ---- N2：pass 2 的输入**不是金标**（结构性、确定性）。
+    #   ★ 订正（2026-10-12，本自检第一次跑时发现）：原写"初始化时 roll CE 严格大于 tf CE"**无判别力** ——
+    #     初始化近均匀（CE≈ln V≈9.36 nats），两个前缀给出的 CE 只差 ~0.04 nats，会被 dropout 噪声翻号
+    #     （实测 ez 项 tf=9.3638 > roll=9.3250）。改为直接查张量：`r_in` 必须**不等于** `t_in`。
+    #     "误用金标"由 N4（`r_in[:,1:] == pred[:,:-1]`）与 N2（`r_in != t_in`）合起来钉死。
+    diff_frac = float((r_in != tz_in).float().mean())
+    n2 = diff_frac >= 0.5
+    log(f"[N2] r_in ≠ t_in 的位置占比 = {diff_frac:.3f}（应 ≥0.5 ⇒ 输入是模型自己的预测而不是金标）⇒ {n2}")
+    ok = ok and n2
+    _, _, _, _, _, roll_terms = _terms(model, crit, zl, el, maps, dev, obj="roll")
+    for k in sorted(t):
+        log(f"[N2-读数·不进门] {k}: tf={float(t[k].detach()):.4f} roll={float(roll_terms[k].detach()):.4f} "
+            f"（初始化近均匀 ⇒ 该差无判别力，只作参考）")
+
+    # ---- N1：roll_w=0 与 tf 在**同批同 RNG 状态**下 loss 逐位相同 ----
+    def _loss(obj: str, roll_w: float) -> float:
+        st = torch.get_rng_state()
+        tt, mmz, mme, bbz, bbe, rr = _terms(model, crit, zl, el, maps, dev, obj=obj)
+        val = float(_combine_loss(tt, rr, mmz, mme, bbz, bbe, "none", 0.0, 1.0, obj, roll_w))
+        torch.set_rng_state(st)
+        return val
+    l_tf, l_r0 = _loss("tf", 0.5), _loss("roll", 0.0)
+    n1 = abs(l_tf - l_r0) <= 1e-6
+    log(f"[N1] tf loss={l_tf:.8f} | roll(w=0) loss={l_r0:.8f} | max|Δ|={abs(l_tf - l_r0):.3e} ⇒ {n1}")
+    ok = ok and n1
+
+    # ---- N6：两臂各走一步之后，全局 RNG 状态逐位相同 ----
+    torch.manual_seed(1234)
+    _terms(model, crit, zl, el, maps, dev, obj="tf")
+    st_tf = torch.get_rng_state().clone()
+    torch.manual_seed(1234)
+    _terms(model, crit, zl, el, maps, dev, obj="roll")
+    st_roll = torch.get_rng_state().clone()
+    n6 = bool(torch.equal(st_tf, st_roll))
+    log(f"[N6] tf 臂与 roll 臂一步后全局 RNG 逐位相同: {n6}")
+    ok = ok and n6
+
+    log(f"[GENOBJ-SELFCHECK] {'OK' if ok else 'FAIL'}（N1/N2/N4/N5/N6 五条）")
+    if not ok:
+        sys.exit(9)
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--prepare", action="store_true")
@@ -484,6 +607,12 @@ def main() -> None:
                     help="AbBa（互映射）两项的权重 α；1.0 = 与两项均值等价（见 PREREG §7）")
     ap.add_argument("--early-stop", action="store_true",
                     help="默认关：跑满 --steps（早停判据曾误触，见 train_run 注释）")
+    ap.add_argument("--obj", default="tf", choices=["tf", "roll"],
+                    help="输出卡训练目标：tf=现状 4 项 teacher-forced CE；roll=再加 roll_w·mean(4 项 rollout CE)（PREREG_GENOBJ.md）")
+    ap.add_argument("--roll-w", type=float, default=0.5, help="rollout 项权重（仅 --obj roll 生效；默认 0.5）")
+    ap.add_argument("--gen-eval-n", type=int, default=1000, help="自由生成评测样本数（gen_eval 的 n；PREREG_GENOBJ §3）")
+    ap.add_argument("--genobj-selfcheck", action="store_true",
+                    help="N1/N2/N4/N5/N6 仪表自检（CPU、合成数据，不需要语料缓存）")
     args = ap.parse_args()
     dev = args.device if (args.device != "cuda" or torch.cuda.is_available()) else "cpu"
     if dev != args.device:
@@ -501,6 +630,8 @@ def main() -> None:
         tables()
     elif args.verdict:
         verdict()
+    elif args.genobj_selfcheck:
+        genobj_selfcheck()
     elif args.run:
         lam, seed = float(args.run[0]), int(args.run[1])
         train_run(lam, seed, args.steps, args.maps, args.loss, dev, args.bs,
@@ -509,7 +640,8 @@ def main() -> None:
                   abba_weight=args.abba_weight, bridge=args.bridge, bridge_mid=args.bridge_mid,
                   align_on=args.align_on, init_inputs=args.init_inputs,
                   freeze_inputs=args.freeze_inputs, init_outputs=args.init_outputs,
-                  freeze_bridge=args.freeze_bridge)
+                  freeze_bridge=args.freeze_bridge,
+                  obj=args.obj, roll_w=args.roll_w, gen_eval_n=args.gen_eval_n)
     else:
         ap.print_help()
 
