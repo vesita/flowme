@@ -1,6 +1,6 @@
 # REPORT_ZH_EN —— L3-m2「中英模因锚定」第一版（真句人工对照）
 
-> ⚠️ **口径警告（2026-10-12）**：本报告由 `stages/86g_zh_en.py` 产出，当时**评测未切 `model.eval()`**（dropout 开）⇒ 绝对读数偏低；同一 ckpt（v0/臂A s1234）修正后：**自由生成 EM 65.0/70.5% → 75.5/88.5%**（同为 n=200）、**char 92.18% → 94.40%**、**衔接 Δ 0.6181 → 0.6636**、**AUROC 0.9922 → 0.9942**。同 run 内的相对比较方向不变。详见 `methodology/measurement.md §12`。
+> ⚠️ **口径**：本报告数字产自旧评测口径（评测未切 `eval()`、CE 未屏蔽 PAD）⇒ 绝对值偏低。修正值见 `methodology/measurement.md §12`。
 
 > 规格/判据的家 = [`PREREG_ZH_EN.md`](PREREG_ZH_EN.md)（**跑前写死**）；数据层 = [`data_zh_en.py`](data_zh_en.py)；
 > 实现 = [`model_zh_en.py`](model_zh_en.py) + `stages/86g_zh_en.py`。
