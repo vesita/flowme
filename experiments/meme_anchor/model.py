@@ -25,7 +25,7 @@ import torch.nn.functional as F
 
 from data import IMG_SHAPE, PAD, VOCAB
 
-D, FF, NHEAD, SLOTS, DROPOUT, MAXLEN = 128, 512, 4, 16, 0.1, 128
+D, FF, NHEAD, SLOTS, DROPOUT, MAXLEN = 128, 512, 4, 16, 0.1, 160   # MAXLEN 160：L3-m2 英文上限 140 字（pe 为非持久 buffer ⇒ 旧 ckpt 不受影响，L≤128 时逐位相同）
 YOLO_GRID = (4, 4)                      # 4×4 = 16 槽（与 SLOTS 一致）
 POOL = 2                                # ★ 订正 8：进 encoder 前把特征图池化 2×（读字分辨率不变）
 
