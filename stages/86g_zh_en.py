@@ -1,0 +1,419 @@
+#!/usr/bin/env python3
+"""S86g · L3-m2「中英模因锚定」驱动：4 张卡 + AaBb/AbBa 映射（口径见 `PREREG_ZH_EN.md`）。
+
+    --prepare   建语料缓存            --smoke     自检（S1–S5）
+    --run LAM SEED [--maps AaBb,AbBa] [--loss none|infonce] [--steps N] [--eval-every N]
+    --tables    报告表格              --verdict   按 PREREG §3 出判词（相对 λ=0 基线）
+"""
+from __future__ import annotations
+
+import argparse
+import importlib.util
+import json
+import math
+import sys
+import time
+from pathlib import Path
+
+import numpy as np
+import torch
+import torch.nn as nn
+
+ROOT = Path("/home/vesita/coding/my/flowme")
+sys.path.insert(0, str(ROOT / "experiments" / "meme_anchor"))
+import data as D          # noqa: E402
+import data_zh_en as DZ   # noqa: E402
+import measure as MS      # noqa: E402
+import model_zh_en as MZ  # noqa: E402
+from model import make_pairs   # noqa: E402
+
+_spec = importlib.util.spec_from_file_location("m1drv", ROOT / "stages" / "86_meme_anchor.py")
+DRV = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(DRV)          # 复用 align_extra / slot_matrix / d_slot（同一份实现）
+
+VOCAB, BOS, EOS, PAD = D.VOCAB, D.BOS, D.EOS, D.PAD
+LOGS = ROOT / "logs"
+TRAIN_N, TEST_N, SPLIT_SEED = 40000, 2245, 20261011
+BS_DEFAULT, STEPS_DEFAULT, EVAL_EVERY = 32, 8000, 1000
+ALL_MAPS = ("AaBb", "AbBa")
+
+
+def log(msg: str) -> None:
+    print(msg, flush=True)
+
+
+def js(d: dict) -> dict:
+    """与 L3-m1 用**同一份**实现（含"丢掉逐样本张量 `delta_i`"的处理）—— R47：一个事实一个实现。"""
+    return DRV.js(d)
+
+
+_PACK: dict | None = None
+
+
+def get_pack() -> dict:
+    global _PACK
+    if _PACK is None:
+        pairs = DZ.load_pairs()
+        g = torch.Generator().manual_seed(SPLIT_SEED)
+        pairs = [pairs[i] for i in torch.randperm(len(pairs), generator=g).tolist()]
+        train = pairs[:TRAIN_N]
+        test = pairs[TRAIN_N:TRAIN_N + TEST_N]
+        tk = D.load_tokenizer()
+        enc = lambda s: tk.encode(s).ids                                    # noqa: E731
+        _PACK = dict(train=train, test=test,
+                     train_ids=[(enc(z), enc(e)) for z, e in train],
+                     test_ids=[(enc(z), enc(e)) for z, e in test])
+    return _PACK
+
+
+def pad_ids(ids_list: list[list[int]], device) -> torch.Tensor:
+    L = max(len(s) for s in ids_list)
+    out = torch.full((len(ids_list), L), PAD, dtype=torch.long)
+    for i, s in enumerate(ids_list):
+        out[i, :len(s)] = torch.tensor(s)
+    return out.to(device)
+
+
+def _terms(model, crit, z_list, e_list, maps, device) -> tuple[torch.Tensor, dict]:
+    """按映射集合算各项 CE。返回 (各项 CE 字典, 两个模因)。"""
+    mz = model.meme_zh(pad_ids(z_list, device))
+    me = model.meme_en(pad_ids(e_list, device))
+    tz_in, tz_out = make_pairs(z_list, device)
+    te_in, te_out = make_pairs(e_list, device)
+    t: dict[str, torch.Tensor] = {}
+    if "AaBb" in maps:                                    # 自映射：中→中、英→英
+        t["zz"] = crit(model.logits("zh", mz, tz_in).reshape(-1, VOCAB), tz_out.reshape(-1))
+        t["ee"] = crit(model.logits("en", me, te_in).reshape(-1, VOCAB), te_out.reshape(-1))
+    if "AbBa" in maps:                                    # 互映射：中→英、英→中（金标=配对句）
+        t["ze"] = crit(model.logits("en", mz, te_in).reshape(-1, VOCAB), te_out.reshape(-1))
+        t["ez"] = crit(model.logits("zh", me, tz_in).reshape(-1, VOCAB), tz_out.reshape(-1))
+    return t, mz, me
+
+
+@torch.no_grad()
+def eval_model(model, pack, device, chunk: int = 256) -> dict:
+    """held-out 上评 4 条映射 + 模因统计（分块以控显存）。"""
+    zs = [p[0] for p in pack["test_ids"]]
+    es = [p[1] for p in pack["test_ids"]]
+    acc: dict[str, list] = {k: [] for k in ("ce_zz", "ce_ee", "ce_ze", "ce_ez",
+                                           "char_zz", "char_ee", "char_ze", "char_ez",
+                                           "exact_zz", "exact_ee", "exact_ze", "exact_ez")}
+    m_zh, m_en = [], []
+    for i in range(0, len(zs), chunk):
+        zl, el = zs[i:i + chunk], es[i:i + chunk]
+        t, mz, me = _terms(model, nn.CrossEntropyLoss(ignore_index=PAD),
+                           zl, el, ALL_MAPS, device)
+        m_zh.append(mz.cpu()); m_en.append(me.cpu())
+        tz_in, tz_out = make_pairs(zl, device)
+        te_in, te_out = make_pairs(el, device)
+        logs = {"zz": (model.logits("zh", mz, tz_in), tz_out),
+                "ee": (model.logits("en", me, te_in), te_out),
+                "ze": (model.logits("en", mz, te_in), te_out),
+                "ez": (model.logits("zh", me, tz_in), tz_out)}
+        for nm, (lg, tgt) in logs.items():
+            m = tgt != PAD
+            pred = lg.argmax(-1)
+            acc[f"ce_{nm}"].append(float(nn.functional.cross_entropy(
+                lg.reshape(-1, VOCAB), tgt.reshape(-1)).item()))
+            acc[f"char_{nm}"].append(float(((pred == tgt) & m).sum()) / max(int(m.sum()), 1))
+            acc[f"exact_{nm}"].append(float((((pred == tgt) | ~m).all(1)).float().mean()))
+    out = {k: float(np.mean([x for x in v if x == x])) for k, v in acc.items()}
+    T, I = torch.cat(m_zh), torch.cat(m_en)
+    out["m_zh"], out["m_en"] = T, I
+    out["spread_zh"] = float(T.mean(1).std(dim=0).mean())
+    out["spread_en"] = float(I.mean(1).std(dim=0).mean())
+    return out
+
+
+def full_metrics(ev: dict, pack: dict, seed: int) -> dict:
+    T, I = ev["m_zh"], ev["m_en"]
+    zh_s = [p[0] for p in pack["test"]]
+    en_s = [p[1] for p in pack["test"]]
+    pT, pI = MS.pooled(T), MS.pooled(I)
+    S = MS.cosmat(pT, pI)
+    rep_pool = MS.score_report(S, "pooled")
+    rep_slot = MS.score_report(DRV.slot_matrix(T, I), "slot")
+    cka = MS.cka_linear(pT, pI)
+    cka_m, cka_se = MS.cka_perm_null(pT, pI, 50, seed)
+    lin_id, lin_map = MS.linmap(pT, pI)
+    _, lin_map_rand = MS.linmap(pT, pI, derange=True)
+    rep_shuf = MS.score_report(DRV.slot_matrix(MS.shuffle_slots(T, seed + 1),
+                                               MS.shuffle_slots(I, seed + 2)), "slot_shuffled")
+    # 地板：随机模因 · 计数类（中英各自的计数特征互比）· 词袋（上界参考）
+    n = pT.size(0)
+    rep_rand = MS.score_report(MS.cosmat(MS.pooled(MS.floor_random(n, seed + 3)),
+                                         MS.pooled(MS.floor_random(n, seed + 4))), "floor_random")
+    cz, ce = MS.floor_counts(zh_s), MS.floor_counts(en_s)
+    nz = cz / cz.norm(dim=1, keepdim=True).clamp_min(1e-12)
+    ne = ce / ce.norm(dim=1, keepdim=True).clamp_min(1e-12)
+    rep_cnt = MS.score_report(MS.cosmat(nz, ne), "floor_counts")
+    bz = MS.floor_bag_of_chars([p[0] for p in pack["test_ids"]])
+    be = MS.floor_bag_of_chars([p[1] for p in pack["test_ids"]])
+    bz = bz / bz.norm(dim=1, keepdim=True).clamp_min(1e-12)
+    be = be / be.norm(dim=1, keepdim=True).clamp_min(1e-12)
+    rep_bag = MS.score_report(MS.cosmat(bz, be), "reference_bag_of_chars")
+    # M8 长度匹配：按**英文长度桶**（宽 10）取负样本
+    m8 = MS.length_matched_delta(S, [len(e) // 10 for e in en_s])
+    drop = rep_slot["delta"] - rep_shuf["delta"]
+    drop_se = math.sqrt(rep_slot["delta_se"] ** 2 + rep_shuf["delta_se"] ** 2)
+    # 行中心化的 AUROC 与阈值
+    Sc = S - S.mean(1, keepdim=True)
+    pos = Sc.diagonal()
+    off = Sc[~torch.eye(n, dtype=torch.bool)]
+    au = MS.auroc_rank(pos, off)
+    thr = MS.youden_threshold(pos, off)
+    # 繁/简子集各自的口径
+    subsets = {}
+    for nm, marker in (("simp", DZ.SIMP), ("trad", DZ.TRAD)):
+        ix = [i for i, z in enumerate(zh_s)
+              if any(c in marker for c in z) and not any(c in (DZ.TRAD if nm == "simp" else DZ.SIMP) for c in z)]
+        if len(ix) >= 50:
+            sub = S[torch.tensor(ix)][:, torch.tensor(ix)]
+            st = js(MS.pair_stats(sub))
+            subsets[nm] = dict(n_sub=len(ix), **{k: v for k, v in st.items() if k != "n"})
+    return dict(pooled=js(rep_pool), slot=js(rep_slot), slot_shuffled=js(rep_shuf),
+                cka=cka, cka_perm=cka_m, cka_perm_se=cka_se, cka_delta=cka - cka_m,
+                lin_identity=js(lin_id), lin_mapped=js(lin_map), lin_mapped_rand=js(lin_map_rand),
+                floor_random=js(rep_rand), floor_counts=js(rep_cnt), reference_bag=js(rep_bag),
+                m8_length_matched=js(m8),
+                m3=dict(delta_slot=rep_slot["delta"], delta_shuffled=rep_shuf["delta"],
+                        drop=drop, drop_se=drop_se, pass_drop=bool(drop >= max(2 * drop_se, 0.01))),
+                surface_gate=bool(rep_pool["delta"] >= rep_cnt["delta"] + max(2 * rep_cnt["delta_se"], 0.01)),
+                auroc_centered=au, thr_centered=js(thr), subsets=subsets,
+                ctrl_zh_zh_diff_content=float((MS.cosmat(pT, pT) * (1 - torch.eye(n))).sum() /
+                                              max(n * (n - 1), 1)))
+
+
+@torch.no_grad()
+def gen_eval(model, pack, device, n: int = 200, bs: int = 50, maxlen: int = 160) -> dict:
+    """贪心自回归：4 条映射各自的 EM / 字级准确率（不给任何目标前缀）。
+
+    ★ 目标直接用 `pack["test_ids"]` 里的 **id**（早先版本每样本都重新 load_tokenizer ⇒ 慢到不可用）。
+    """
+    ids = pack["test_ids"][:n]
+    out: dict[str, float] = {}
+    for nm, (src_ix, gold_ix, lang) in {"zz": (0, 0, "zh"), "ee": (1, 1, "en"),
+                                        "ze": (0, 1, "en"), "ez": (1, 0, "zh")}.items():
+        em = cor = tot = 0
+        for i in range(0, len(ids), bs):
+            part = ids[i:i + bs]
+            sl = [p[src_ix] for p in part]
+            gl = [p[gold_ix] for p in part]
+            meme = (model.meme_zh(pad_ids(sl, device)) if src_ix == 0
+                    else model.meme_en(pad_ids(sl, device)))
+            cur = torch.full((len(sl), 1), BOS, dtype=torch.long, device=device)
+            done = torch.zeros(len(sl), dtype=torch.bool, device=device)
+            outs: list[list[int]] = [[] for _ in sl]
+            for _ in range(maxlen):
+                nxt = model.logits(lang, meme, cur)[:, -1].argmax(-1)
+                for r in range(len(sl)):
+                    if not done[r]:
+                        if int(nxt[r]) == EOS or len(outs[r]) >= 150:
+                            done[r] = True
+                        else:
+                            outs[r].append(int(nxt[r]))
+                if bool(done.all()):
+                    break
+                cur = torch.cat([cur, nxt.unsqueeze(1)], dim=1)
+            for r, g in enumerate(gl):
+                em += int(outs[r] == list(g))
+                cor += sum(1 for a, b in zip(outs[r], g) if a == b)
+                tot += len(g)
+        out[f"gen_em_{nm}"] = em / max(len(ids), 1)
+        out[f"gen_char_{nm}"] = cor / max(tot, 1)
+    out["gen_n"] = len(ids)
+    return out
+
+
+def train_run(lam: float, seed: int, steps: int, maps: str, loss_kind: str, device: str,
+              bs: int, eval_every: int, shared_out: bool = False,
+              tau: float = 0.07, mu: float = 1.0, gamma: float = 0.2) -> dict:
+    mapset = tuple(m for m in maps.split(",") if m)
+    pack = get_pack()
+    model = MZ.build(seed, shared_out).to(device)
+    npar = model.n_params()
+    log(f"[M2] run lam={lam} seed={seed} steps={steps} maps={mapset} loss={loss_kind} "
+        f"bs={bs} shared_out={shared_out} params={npar} 总={sum(npar.values())}")
+    opt = torch.optim.AdamW(model.parameters(), lr=1e-3, weight_decay=0.01)
+    crit = nn.CrossEntropyLoss(ignore_index=PAD)
+    g = torch.Generator().manual_seed(seed)
+    order = torch.randperm(len(pack["train_ids"]), generator=g).tolist()
+    ptr, snaps, t0 = 0, [], time.time()
+    step_time, stopped = float("nan"), "上限步数"
+    for step in range(1, steps + 1):
+        if ptr + bs > len(order):
+            order = torch.randperm(len(pack["train_ids"]), generator=g).tolist(); ptr = 0
+        idx = order[ptr:ptr + bs]; ptr += bs
+        zl = [pack["train_ids"][j][0] for j in idx]
+        el = [pack["train_ids"][j][1] for j in idx]
+        t, mz, me = _terms(model, crit, zl, el, mapset, device)
+        loss = sum(t.values()) / len(t) + DRV.align_extra(mz, me, loss_kind, lam, tau, mu, gamma)
+        opt.zero_grad(set_to_none=True)
+        loss.backward()
+        nn.utils.clip_grad_norm_(model.parameters(), 1.0)
+        opt.step()
+        if step == 20:
+            step_time = (time.time() - t0) / 20
+            log(f"[SPEED] lam={lam} seed={seed} 前 20 步 {step_time:.3f} s/step "
+                f"⇒ {steps} 步预计 {step_time*steps/60:.1f} min")
+        if step % eval_every == 0 or step == steps:
+            ev = eval_model(model, pack, device)
+            snap = dict(step=step, **{k: ev[k] for k in ev if k.startswith(("ce_", "char_", "exact_"))},
+                        spread_zh=ev["spread_zh"], spread_en=ev["spread_en"])
+            snaps.append(snap)
+            log(f"[SNAP] lam={lam} seed={seed} step={step} 中→中 {snap['char_zz']*100:.1f}% "
+                f"英→英 {snap['char_ee']*100:.1f}% 中→英 {snap['char_ze']*100:.1f}% "
+                f"英→中 {snap['char_ez']*100:.1f}% 分化 {snap['spread_zh']:.3f}/{snap['spread_en']:.3f} "
+                f"用时 {(time.time()-t0)/60:.1f}min")
+            if len(snaps) >= 3:
+                # 收敛判据：**四项 CE 之和**（自映射 + 互映射都算，臂之间才可比）
+                tot = lambda s: sum(v for k, v in s.items() if k.startswith("ce_"))   # noqa: E731
+                a, b, c = tot(snaps[-1]), tot(snaps[-2]), tot(snaps[-3])
+                if (b - a) / max(b, 1e-9) < 0.01 and (c - b) / max(c, 1e-9) < 0.01:
+                    stopped = "收敛"; break
+    ev = eval_model(model, pack, device)
+    metrics = full_metrics(ev, pack, seed)
+    gen = gen_eval(model, pack, device)
+    log(f"[GEN] lam={lam} seed={seed} 贪心自回归(n={gen['gen_n']}) EM: 中→中 {gen['gen_em_zz']*100:.1f}% "
+        f"英→英 {gen['gen_em_ee']*100:.1f}% 中→英 {gen['gen_em_ze']*100:.1f}% 英→中 {gen['gen_em_ez']*100:.1f}%")
+    tag = f"{loss_kind}_{'_'.join(mapset)}" + ("_shared" if shared_out else "")
+    ck = LOGS / f"86g_ckpt_{tag}_l{lam}_s{seed}.pt"
+    torch.save(dict(state=model.state_dict(), seed=seed, lam=lam, maps=mapset,
+                    loss_kind=loss_kind, steps=step, shared_out=shared_out), ck)
+    res = dict(lam=lam, seed=seed, steps=step, maps=list(mapset), loss_kind=loss_kind,
+               shared_out=shared_out, tau=tau, stopped=stopped, step_time_s=step_time,
+               wall_min=(time.time() - t0) / 60, n_params=npar,
+               final={k: ev[k] for k in ev if k.startswith(("ce_", "char_", "exact_"))},
+               final_spread=dict(zh=ev["spread_zh"], en=ev["spread_en"]),
+               gen=gen, metrics=metrics, snaps=snaps)
+    (LOGS / f"86g_result_{tag}_l{lam}_s{seed}.json").write_text(
+        json.dumps(res, ensure_ascii=False), encoding="utf-8")
+    log(f"[RUN-FINAL] lam={lam} seed={seed} 中→中 {ev['char_zz']*100:.2f}% 英→英 {ev['char_ee']*100:.2f}% "
+        f"中→英 {ev['char_ze']*100:.2f}% 英→中 {ev['char_ez']*100:.2f}% | Δ={metrics['pooled']['delta']:+.4f}"
+        f"±{metrics['pooled']['delta_se']:.4f} 长度匹配Δ={metrics['m8_length_matched']['delta']:+.4f} "
+        f"| {stopped} | 墙钟 {(time.time()-t0)/60:.1f}min")
+    return res
+
+
+def verdict() -> None:
+    """Q1–Q4（PREREG §3）：相对 λ=0 基线（`--maps AaBb,--loss none`）。"""
+    import glob
+    runs = [json.loads(Path(f).read_text(encoding="utf-8")) for f in glob.glob(str(LOGS / "86g_result_*.json"))]
+    base = [r for r in runs if r["loss_kind"] == "none" and float(r["lam"]) == 0.0]
+    cand = [r for r in runs if r["loss_kind"] != "none"]
+    if not base or not cand:
+        log(f"[VERDICT] 读数不完整：基线 {len(base)} 个 / 候选 {len(cand)} 个 ⇒ 按 PREREG 不许出判词"); return
+    def mu(rs, path):
+        vals = []
+        for r in rs:
+            x = r
+            for k in path:
+                x = x[k]
+            vals.append(float(x))
+        return float(np.mean(vals)), float(np.std(vals, ddof=1) / math.sqrt(len(vals))) if len(vals) > 1 else float("nan"), vals
+    rows = []
+    for nm, path, margin, ratio in (
+            ("Q1a 池化 Δ", ("metrics", "pooled", "delta"), None, None),
+            ("Q1b 长度匹配 Δ", ("metrics", "m8_length_matched", "delta"), None, None),
+            ("Q2a 中→中字准", ("final", "char_zz"), -0.05, None),
+            ("Q2b 英→英字准", ("final", "char_ee"), -0.05, None),
+            ("Q3 分化度(中)", ("final_spread", "zh"), None, 0.8),
+            ("Q4a 生成EM 中→中", ("gen", "gen_em_zz"), -0.05, None),
+            ("Q4b 生成EM 英→英", ("gen", "gen_em_ee"), -0.05, None)):
+        bm, bs, bv = mu(base, path)
+        cm, cs, cv = mu(cand, path)
+        if nm.startswith("Q1"):
+            ok = cm >= bm + 2 * cs and all(v > bm for v in cv)
+        elif ratio is not None:
+            ok = cm >= bm * ratio
+        else:
+            ok = cm >= bm + margin
+        rows.append((nm, bm, cm, ok, cv))
+    amb, amc = mu(base, ("final", "char_ze")), None
+    log(f"[VERDICT] 基线 λ=0（{len(base)} run）vs 候选（{len(cand)} run）")
+    for nm, bm, cm, ok, cv in rows:
+        log(f"[VERDICT-ROW] {nm:<16} 基线 {bm:+.4f} → 候选 {cm:+.4f}  {'✅' if ok else '❌'}  候选逐 seed={[round(v,4) for v in cv]}")
+    allok = all(r[3] for r in rows)
+    log(f"[VERDICT] {'✅ Q1∧Q2∧Q3∧Q4 全过 ⇒ 中英锚定成立，阈值可交付' if allok else '❌ 未全过 ⇒ 按上面卡住的那条报读数'}")
+
+
+def tables() -> None:
+    import glob
+    rows = [json.loads(Path(f).read_text(encoding="utf-8")) for f in sorted(glob.glob(str(LOGS / "86g_result_*.json")))]
+    if not rows:
+        log("没有 86g 结果"); return
+    print("| 损失 | maps | λ | seed | 步 | 中→中 | 英→英 | 中→英 | 英→中 | Δ池化 | Δ长度匹配 | 生成EM 中→中/英→英 |")
+    print("|---|---|---|---|---|---|---|---|---|---|---|---|")
+    for r in rows:
+        f, m = r["final"], r["metrics"]
+        print(f"| {r['loss_kind']} | {'+'.join(r['maps'])} | {r['lam']} | {r['seed']} | {r['steps']} | "
+              f"{f['char_zz']*100:.1f}% | {f['char_ee']*100:.1f}% | {f['char_ze']*100:.1f}% | {f['char_ez']*100:.1f}% | "
+              f"{m['pooled']['delta']:+.4f} | {m['m8_length_matched']['delta']:+.4f} | "
+              f"{r['gen']['gen_em_zz']*100:.1f}%/{r['gen']['gen_em_ee']*100:.1f}% |")
+
+
+def main() -> None:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--prepare", action="store_true")
+    ap.add_argument("--smoke", action="store_true")
+    ap.add_argument("--tables", action="store_true")
+    ap.add_argument("--verdict", action="store_true")
+    ap.add_argument("--run", nargs=2, metavar=("LAM", "SEED"))
+    ap.add_argument("--maps", default="AaBb,AbBa")
+    ap.add_argument("--loss", default="none", choices=["none", "align", "infonce", "infonce_var"])
+    ap.add_argument("--steps", type=int, default=STEPS_DEFAULT)
+    ap.add_argument("--eval-every", type=int, default=EVAL_EVERY)
+    ap.add_argument("--bs", type=int, default=BS_DEFAULT)
+    ap.add_argument("--device", default="cuda")
+    ap.add_argument("--shared-out", action="store_true")
+    args = ap.parse_args()
+    dev = args.device if (args.device != "cuda" or torch.cuda.is_available()) else "cpu"
+    if dev != args.device:
+        log(f"[WARN] cuda 不可用 ⇒ 回落 {dev}")
+
+    if args.prepare:
+        st = DZ.build()
+        log(f"[PREP] 链接 {st['links']} ⇒ 保留 {st['kept']} 对；丢弃 {st['drop']}")
+        log(f"[PREP] 分词器往返：{DZ.build_roundtrip_check()}")
+        pack = get_pack()
+        log(f"[PREP] train={len(pack['train'])} held-out={len(pack['test'])}（seed={SPLIT_SEED}）")
+    elif args.smoke:
+        smoke(dev)
+    elif args.tables:
+        tables()
+    elif args.verdict:
+        verdict()
+    elif args.run:
+        lam, seed = float(args.run[0]), int(args.run[1])
+        train_run(lam, seed, args.steps, args.maps, args.loss, dev, args.bs,
+                  args.eval_every, args.shared_out)
+    else:
+        ap.print_help()
+
+
+def smoke(dev: str) -> None:
+    """S1–S5 自检（与 L3-m1 同精神；缺一即作废）。"""
+    pack = get_pack()
+    tk = D.load_tokenizer()
+    z0, e0 = pack["test"][0]
+    log(f"[S1] 语料首条：中 {z0!r} / 英 {e0!r}")
+    log(f"[S2] 逐字往返：{'✅' if all(tk.decode(tk.encode(s).ids) == s for s in (z0, e0)) else '★失败'}")
+    tr = {z for z, _ in pack["train"]}
+    te = {z for z, _ in pack["test"]}
+    log(f"[S3] train ∩ held-out（中文）= {len(tr & te)}（应 0）；分母 train={len(tr)} test={len(te)}")
+    m = MZ.build(1234).to(dev).eval()          # ★ eval()：关掉 dropout，否则 S4 测的是 dropout 噪声
+    z_ids = pad_ids([pack["test_ids"][0][0]], dev)
+    with torch.no_grad():
+        a = m.meme_zh(z_ids)
+        b = m.meme_zh(z_ids)
+    log(f"[S4] 同进程同批两次前向 max|Δ| = {float((a-b).abs().max()):.3e}（应 0）")
+    m2 = MZ.build(1234)
+    log(f"[S5] 同 seed 两次构造 max|Δθ| = "
+        f"{max(float((p1-p2).abs().max()) for p1, p2 in zip(m.state_dict().values(), m2.state_dict().values())):.3e}（应 0）")
+    with torch.no_grad():
+        mm = MS.cosmat(MS.pooled(MS.floor_random(64, 7)), MS.pooled(MS.floor_random(64, 8)))
+    log(f"[S6] 度量非退化：随机模因余弦矩阵非对角 std = {float(mm[~torch.eye(64,dtype=torch.bool)].std()):.4f}（应 >0）")
+
+
+if __name__ == "__main__":
+    main()
