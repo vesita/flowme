@@ -240,6 +240,7 @@ def gen_eval(model, pack, device, n: int = 200, bs: int = 50, maxlen: int = 160)
 def train_run(lam: float, seed: int, steps: int, maps: str, loss_kind: str, device: str,
               bs: int, eval_every: int, shared_out: bool = False, early_stop: bool = False,
               abba_weight: float = 1.0, bridge: str = "none", bridge_mid: int = 64,
+              align_on: str = "bridge",
               init_inputs: str = "", freeze_inputs: bool = False, init_outputs: bool = False,
               freeze_bridge: bool = False,
               tau: float = 0.07, mu: float = 1.0, gamma: float = 0.2) -> dict:
@@ -248,7 +249,7 @@ def train_run(lam: float, seed: int, steps: int, maps: str, loss_kind: str, devi
     model = MZ.build(seed, shared_out, bridge, bridge_mid).to(device)
     npar = model.n_params()
     log(f"[M2] run lam={lam} seed={seed} steps={steps} maps={mapset} loss={loss_kind} "
-        f"abba_w={abba_weight} bridge={bridge}(mid={bridge_mid}) bs={bs} shared_out={shared_out} "
+        f"abba_w={abba_weight} bridge={bridge}(mid={bridge_mid}) align_on={align_on} bs={bs} shared_out={shared_out} "
         f"params={npar} 总={sum(npar.values())}")
     frozen = []
     if init_inputs:
@@ -291,7 +292,10 @@ def train_run(lam: float, seed: int, steps: int, maps: str, loss_kind: str, devi
         #   `sum(四项)/4`**（第一轮的实现）⇒ 复用第一轮 α=1.0 的 run 合法。
         #   若写成 `mean_aa + α·mean_ab`，α=1 会变成原来的 **2 倍**（等于偷偷给 CE 加倍）—— 已避开。
         loss = (0.5 * (sum(aa) / max(len(aa), 1) + abba_weight * sum(ab) / max(len(ab), 1))
-                + DRV.align_extra(bz, be, loss_kind, lam, tau, mu, gamma))   # ★ 对齐项作用于**衔接处**
+                + DRV.align_extra(*((bz, be) if align_on == "bridge" else (mz, me)),
+                                  loss_kind, lam, tau, mu, gamma))
+        # ★ 对齐项加在哪一层由 --align-on 决定：bridge=t(m)（L3-m3c 的配置）· input=m（L3-m2 的位置）
+        #   两者在"梯度能否穿透到输入卡"上不同 —— 见 PREREG_ALIGN_LOC.md 的 2×2 对照
         opt.zero_grad(set_to_none=True)
         loss.backward()
         nn.utils.clip_grad_norm_(model.parameters(), 1.0)
@@ -330,6 +334,7 @@ def train_run(lam: float, seed: int, steps: int, maps: str, loss_kind: str, devi
     tag = (f"{loss_kind}_{'_'.join(mapset)}" + ("_shared" if shared_out else "")
            + ("" if abs(abba_weight - 1.0) < 1e-9 else f"_a{abba_weight}")
            + ("" if bridge == "none" else f"_{bridge}{bridge_mid}")
+           + ("" if align_on == "bridge" else f"_ao-{align_on}")
            + ("_frz" if freeze_inputs else "") + ("_io" if init_outputs else "")
            + ("_frzbr" if freeze_bridge else "") + init_lab)
     ck = LOGS / f"86g_ckpt_{tag}_l{lam}_s{seed}.pt"
@@ -337,7 +342,8 @@ def train_run(lam: float, seed: int, steps: int, maps: str, loss_kind: str, devi
                     loss_kind=loss_kind, steps=step, shared_out=shared_out), ck)
     res = dict(lam=lam, seed=seed, steps=step, maps=list(mapset), loss_kind=loss_kind,
                shared_out=shared_out, abba_weight=abba_weight, bridge=bridge,
-               bridge_mid=bridge_mid, init_inputs=str(init_inputs), init_outputs=init_outputs,
+               bridge_mid=bridge_mid, align_on=align_on,
+               init_inputs=str(init_inputs), init_outputs=init_outputs,
                freeze_bridge=freeze_bridge, frozen=frozen, tau=tau,
                stopped=stopped, step_time_s=step_time,
                wall_min=(time.time() - t0) / 60, n_params=npar,
@@ -462,6 +468,8 @@ def main() -> None:
     ap.add_argument("--bridge-mid", type=int, default=64, help="parser 卡的瓶颈维度 d_mid（<128，§13.2）")
     ap.add_argument("--init-inputs", default="", help="从该 ckpt 载入 zh_in/en_in（配合 --freeze-inputs）")
     ap.add_argument("--freeze-inputs", action="store_true", help="冻结 zh_in/en_in（只训 parser 与输出卡）")
+    ap.add_argument("--align-on", default="bridge", choices=["bridge", "input"],
+                    help="对齐项加在哪一层：bridge=t(m)（默认）· input=m（压力直接落在输入卡上）")
     ap.add_argument("--freeze-bridge", action="store_true",
                     help="冻结解析卡（臂 IV：随机初始化后不可训，同尺寸对照）")
     ap.add_argument("--init-outputs", action="store_true",
@@ -492,7 +500,7 @@ def main() -> None:
         train_run(lam, seed, args.steps, args.maps, args.loss, dev, args.bs,
                   args.eval_every, args.shared_out, args.early_stop, args.abba_weight,
                   args.bridge, args.bridge_mid, args.init_inputs, args.freeze_inputs,
-                  args.init_outputs, args.freeze_bridge)
+                  args.init_outputs, args.freeze_bridge, args.align_on)
     else:
         ap.print_help()
 
