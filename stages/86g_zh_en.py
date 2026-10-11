@@ -463,6 +463,8 @@ def train_run(lam: float, seed: int, steps: int, maps: str, loss_kind: str, devi
            + ("" if align_on == "bridge" else f"_ao-{align_on}")
            # ★ `o-{obj}` 必须进 tag：否则 tf 臂与 roll 臂的 ckpt/json 会同名**静默互相覆盖**（PREREG_GENOBJ §7）
            + f"_o-{obj}" + ("" if abs(roll_w - 0.5) < 1e-9 else f"_rw{roll_w}")
+           # ★ `st{steps}` 必须进 tag：否则**短跑探针会覆盖同配置的长跑产物**（实测发生过：H7 的 200 步扫描覆盖掉 H2 的 8000 步 ckpt/json）
+           + f"_st{steps}"
            + ("_frz" if freeze_inputs else "") + ("_io" if init_outputs else "")
            + ("_frzbr" if freeze_bridge else "") + init_lab)
     ck = LOGS / f"86g_ckpt_{tag}_l{lam}_s{seed}.pt"

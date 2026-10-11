@@ -45,6 +45,24 @@ def load_runs() -> list[dict]:
     return out
 
 
+def load_reeval(path: str) -> dict:
+    """★ 统一口径读数（`logs/genobj_reeval.json`）：把 8 个 ckpt 用**同一套评测**（`eval()` + `chunk=64` + `n=1000`）重测的结果。
+
+    为什么要它：原 run 的 JSON 里，**6 个是旧口径**（评测未切 `eval()`、chunk=256）、**2 个是重跑的新口径** ⇒ 直接比较会混口径。
+    H2 的**官方判词以本文件为准**（`REPORT_GENOBJ §7`）。
+    """
+    d = json.loads(Path(path).read_text(encoding="utf-8"))
+    tab: dict = {}
+    for k, v in d.items():
+        o, s = k.split("#")
+        tab[(o, int(s))] = dict(
+            gen=dict(v["gen"]), final=dict(v["final"]),
+            metrics={"bridge": {"pooled": {"delta": v["bridge"]["delta"]},
+                                "auroc_centered": v["bridge"]["auroc"]}},
+            steps=STEPS, seed=int(s), obj=o)
+    return tab
+
+
 def pick(runs: list[dict], steps: int = STEPS) -> dict:
     """筛出本试验的两臂：bridge=parser ∧ frozen ∧ 载入 α0.5 输入卡 ∧ obj∈{tf,roll} ∧ steps 匹配。"""
     tab: dict = {}
@@ -215,9 +233,15 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--selfcheck", action="store_true")
     ap.add_argument("--steps", type=int, default=STEPS)
+    ap.add_argument("--from-reeval", default="", metavar="JSON",
+                    help="读统一口径重测读数（logs/genobj_reeval.json）；默认读 logs/86g_result_*.json")
     args = ap.parse_args()
     if args.selfcheck:
         selfcheck()
+        return
+    if args.from_reeval:
+        print(f"[GENOBJ] 数据源 = 统一口径重测 {args.from_reeval}")
+        report(load_reeval(args.from_reeval))
         return
     report(pick(load_runs(), steps=args.steps))
 

@@ -72,15 +72,18 @@
 
 - **缺陷**：§1 的 8 个 run 由 `stages/86g_zh_en.py` 产出，当时 `eval_model` / `gen_eval` **没有把模型切到 `eval()`**
   （训练循环结束时模型停在 `train()`），而 `model.py:57,62` 的 transformer 层**带 dropout** ⇒ **评测全程 dropout 开**（正是 R39 禁止的）。
-- **重测**（同样 8 个 ckpt、同一批 test 子集、`--eval-chunk 64`、`gen n=1000`）：
+- **重测**（**8/8 个 ckpt**、同一批 test 子集、`--eval-chunk 64`、`gen n=1000`；判词表用 `stages/86m_genobj_verdict.py --from-reeval logs/genobj_reeval.json`）：
+  ★ 其中 tf/1234 与 roll/1234 的原产物曾被 H7 的 200 步探针**同名覆盖**（tag 未含 `steps`）⇒ 已用同配方重跑、tag 已加 `_st{steps}`（见 `DEVLOG`）。
 
 | 量 | §1 旧（dropout 开） | **重测（`eval()`）** |
 |---|---|---|
-| 自由生成宏平均 EM（tf / roll） | 65.56% / 68.05% | **81.89% / 82.48%** |
-| 逐 seed 配对 Δ | +3.30 / +2.15 / +2.05 / +2.45 ⇒ **Δ=+2.49pp**（Δ/SE≈8.9） | +0.40 / +0.65 / +0.80 / +0.50 ⇒ **Δ=+0.59pp**（`SE_paired=0.09pp`、**Δ/SE≈6.7**、4/4 同号） |
-| teacher-forced char 中→中（tf 4 seed） | 91.94–92.25% | **93.87–94.39%** |
+| 自由生成宏平均 EM（tf / roll） | 65.56% / 68.05% | **82.64% / 83.36%** |
+| 逐 seed 配对 Δ（宏平均） | +3.30 / +2.15 / +2.05 / +2.45 ⇒ **Δ=+2.49pp**（Δ/SE≈8.9） | **+0.95 / +0.65 / +0.80 / +0.50 ⇒ Δ=+0.73pp**（`SE_paired=0.10pp`、**Δ/SE=7.5**、4/4 同号） |
+| teacher-forced char 中→中（tf 4 seed） | 91.94–92.25% | **94.25–94.52%** |
+| 衔接 Δ（tf 4 seed） | 0.6049–0.6173 | **0.6551–0.6601** |
+| 桥接 AUROC（tf 4 seed） | 0.9920–0.9925 | **0.9939–0.9946** |
 
-- **判词不变**：`G1 ∧ G2 ∧ G3 ∧ G4` ⇒ **分支一「成立」**；但**效应量从 +2.49pp 修正为 +0.59pp**（R37：口径变更**新旧并列**）。
+- **判词不变**：`G1 ∧ G2 ∧ G3 ∧ G4` ⇒ **分支一「成立」**；但**效应量从 +2.49pp 修正为 +0.73pp**（R37：口径变更**新旧并列**）。
 - ★ **§1/§2 保留作留痕**（旧口径），**引用本试验一律用 §7 的数**。
 - 波及范围（本 driver 产出的全部读数）与另两条口径缺陷（CE 未屏蔽 PAD、评测峰值随 chunk）见
   [`methodology/measurement.md §12`](../../methodology/measurement.md) 与 [`../scale_axis/REPORT_STAGE0.md`](../scale_axis/REPORT_STAGE0.md)；
