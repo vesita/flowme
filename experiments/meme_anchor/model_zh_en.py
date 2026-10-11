@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""L3-m2 中英模因锚定：**4 张卡**（中入 / 英入 / 中出 / 英出）+ **AaBb / AbBa 映射**。
+"""L3-m2/L3-m3 中英模因：输入卡（中入/英入）+ 输出卡（中出/英出）+ 可选的 **parser 卡 t**（语言解析卡）。
 
-    AaBb（自映射）= 中→中、英→英（重构）        AbBa（互映射）= 中→英、英→中（翻译）
-    金标来自**平行语料**（Tatoeba）：互映射的目标就是配对句的另一半。
+    AaBb（自映射）= 中→中、英→英        AbBa（互映射）= 中→英、英→中
+    ★ 插入 t 后就是用户 2026-10-11 的写法：**Ata Btb Atb Bta**（t 在输入模因与输出卡之间，两语言共用）。
 
 ★ 为什么是**两个输出卡**而不是一个共享卡（`PREREG_ZH_EN.md` §2）：
   共享卡与"同内容两路模因应相似"**直接冲突** —— 若 `m_zh ≈ m_en`，同一个确定性解码器必须既出中文又出英文，
@@ -14,24 +14,56 @@ from __future__ import annotations
 import torch
 import torch.nn as nn
 
-from model import TextInputCard, TextOutputCard
+from model import D, DROPOUT, TextInputCard, TextOutputCard
+
+
+class ParserCard(nn.Module):
+    """**parser 卡 t**（用户 2026-10-11 命名）：模因 `[b,16,128]` → 模因 `[b,16,128]`（两种语言**共用同一张**）。
+
+    - 卡内结构 = **自注意力 + 逐位置 FFN**（`MEME_FRAMEWORK.md §5.1` 的硬要求）；
+    - 带**容量瓶颈** `d_mid < d`（`§13.2`：强制路由必须与瓶颈配对，否则 t 会**退化成恒等**）；
+    - 输出 **残差 + LayerNorm**：t 是"改写模因"，不是"替换模因"。
+    """
+
+    def __init__(self, mid: int = 64, layers: int = 2, nhead: int = 4, ff: int = 256):
+        super().__init__()
+        assert mid < D, "t 必须有容量瓶颈（§13.2）"
+        self.proj_in = nn.Linear(D, mid)
+        self.layers = nn.ModuleList([
+            nn.TransformerEncoderLayer(mid, nhead, ff, DROPOUT, batch_first=True, norm_first=True)
+            for _ in range(layers)])
+        self.proj_out = nn.Linear(mid, D)
+        self.norm = nn.LayerNorm(D)
+
+    def forward(self, m: torch.Tensor) -> torch.Tensor:
+        x = self.proj_in(m)
+        for layer in self.layers:
+            x = layer(x)
+        return self.norm(m + self.proj_out(x))
 
 
 class ZHENModel(nn.Module):
-    def __init__(self, shared_out: bool = False):
+    def __init__(self, shared_out: bool = False, bridge: str = "none", bridge_mid: int = 64):
         super().__init__()
+        assert bridge in ("none", "parser"), bridge
         self.shared_out = bool(shared_out)
+        self.bridge_kind = bridge
         self.zh_in = TextInputCard()
         self.en_in = TextInputCard()
         self.zh_out = TextOutputCard()
-        # `shared_out=True` 只用于对照（论文口径外的变体）：两路共用一个出卡
+        # `shared_out=True` 只用于对照（口径外的变体）：两路共用一个出卡
         self.en_out = self.zh_out if self.shared_out else TextOutputCard()
+        self.bridge: ParserCard | None = ParserCard(bridge_mid) if bridge == "parser" else None
 
     def meme_zh(self, ids: torch.Tensor) -> torch.Tensor:
         return self.zh_in(ids)
 
     def meme_en(self, ids: torch.Tensor) -> torch.Tensor:
         return self.en_in(ids)
+
+    def apply_bridge(self, m: torch.Tensor) -> torch.Tensor:
+        """把输入模因送过 t（`bridge="none"` 时是恒等 ⇒ 与 L3-m2 的行为逐位一致）。"""
+        return m if self.bridge is None else self.bridge(m)
 
     def out_card(self, lang: str) -> TextOutputCard:
         assert lang in ("zh", "en"), lang
@@ -45,10 +77,12 @@ class ZHENModel(nn.Module):
              "en_in": sum(p.numel() for p in self.en_in.parameters()),
              "zh_out": sum(p.numel() for p in self.zh_out.parameters())}
         d["en_out"] = 0 if self.shared_out else sum(p.numel() for p in self.en_out.parameters())
+        d["bridge"] = 0 if self.bridge is None else sum(p.numel() for p in self.bridge.parameters())
         return d
 
 
-def build(seed: int, shared_out: bool = False) -> ZHENModel:
+def build(seed: int, shared_out: bool = False, bridge: str = "none",
+          bridge_mid: int = 64) -> ZHENModel:
     """★ 先播种再构造（`L3_PLAN.md` §9.7：保证同 seed 的构造逐位可复现）。"""
     torch.manual_seed(int(seed))
-    return ZHENModel(shared_out)
+    return ZHENModel(shared_out, bridge, bridge_mid)

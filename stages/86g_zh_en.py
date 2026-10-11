@@ -74,115 +74,126 @@ def pad_ids(ids_list: list[list[int]], device) -> torch.Tensor:
     return out.to(device)
 
 
-def _terms(model, crit, z_list, e_list, maps, device) -> tuple[torch.Tensor, dict]:
-    """按映射集合算各项 CE。返回 (各项 CE 字典, 两个模因)。"""
+def _terms(model, crit, z_list, e_list, maps, device) -> tuple[dict, torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor]:
+    """按映射集合算各项 CE。返回 (各项 CE, 输入模因 mz/me, **衔接模因** bz/be)。
+
+    ★ 所有输出卡读的都是**衔接处**的模因 `bz/be = t(mz/me)`（`bridge="none"` 时 t 是恒等 ⇒ 与 L3-m2 逐位一致）。
+       用户 2026-10-11 的写法 Ata/Btb/Atb/Bta 就是"输入卡 → t → 输出卡"，t 两语言共用。
+    """
     mz = model.meme_zh(pad_ids(z_list, device))
     me = model.meme_en(pad_ids(e_list, device))
+    bz, be = model.apply_bridge(mz), model.apply_bridge(me)
     tz_in, tz_out = make_pairs(z_list, device)
     te_in, te_out = make_pairs(e_list, device)
     t: dict[str, torch.Tensor] = {}
     if "AaBb" in maps:                                    # 自映射：中→中、英→英
-        t["zz"] = crit(model.logits("zh", mz, tz_in).reshape(-1, VOCAB), tz_out.reshape(-1))
-        t["ee"] = crit(model.logits("en", me, te_in).reshape(-1, VOCAB), te_out.reshape(-1))
+        t["zz"] = crit(model.logits("zh", bz, tz_in).reshape(-1, VOCAB), tz_out.reshape(-1))
+        t["ee"] = crit(model.logits("en", be, te_in).reshape(-1, VOCAB), te_out.reshape(-1))
     if "AbBa" in maps:                                    # 互映射：中→英、英→中（金标=配对句）
-        t["ze"] = crit(model.logits("en", mz, te_in).reshape(-1, VOCAB), te_out.reshape(-1))
-        t["ez"] = crit(model.logits("zh", me, tz_in).reshape(-1, VOCAB), tz_out.reshape(-1))
-    return t, mz, me
-
+        t["ze"] = crit(model.logits("en", bz, te_in).reshape(-1, VOCAB), te_out.reshape(-1))
+        t["ez"] = crit(model.logits("zh", be, tz_in).reshape(-1, VOCAB), tz_out.reshape(-1))
+    return t, mz, me, bz, be
 
 @torch.no_grad()
+@torch.no_grad()
 def eval_model(model, pack, device, chunk: int = 256) -> dict:
-    """held-out 上评 4 条映射 + 模因统计（分块以控显存）。"""
+    """held-out 上评 4 条映射 + **两个衔接点**的模因：输入侧 `m_*`、衔接侧 `b_* = t(m_*)`。"""
     zs = [p[0] for p in pack["test_ids"]]
     es = [p[1] for p in pack["test_ids"]]
-    acc: dict[str, list] = {k: [] for k in ("ce_zz", "ce_ee", "ce_ze", "ce_ez",
-                                           "char_zz", "char_ee", "char_ze", "char_ez",
-                                           "exact_zz", "exact_ee", "exact_ze", "exact_ez")}
-    m_zh, m_en = [], []
+    keys = ("ce_zz", "ce_ee", "ce_ze", "ce_ez", "char_zz", "char_ee", "char_ze", "char_ez",
+            "exact_zz", "exact_ee", "exact_ze", "exact_ez")
+    acc: dict[str, list] = {k: [] for k in keys}
+    m_zh, m_en, b_zh, b_en = [], [], [], []
     for i in range(0, len(zs), chunk):
         zl, el = zs[i:i + chunk], es[i:i + chunk]
-        t, mz, me = _terms(model, nn.CrossEntropyLoss(ignore_index=PAD),
-                           zl, el, ALL_MAPS, device)
-        m_zh.append(mz.cpu()); m_en.append(me.cpu())
+        _, mz, me, bz, be = _terms(model, nn.CrossEntropyLoss(ignore_index=PAD), zl, el, ALL_MAPS, device)
+        m_zh.append(mz.cpu()); m_en.append(me.cpu()); b_zh.append(bz.cpu()); b_en.append(be.cpu())
         tz_in, tz_out = make_pairs(zl, device)
         te_in, te_out = make_pairs(el, device)
-        logs = {"zz": (model.logits("zh", mz, tz_in), tz_out),
-                "ee": (model.logits("en", me, te_in), te_out),
-                "ze": (model.logits("en", mz, te_in), te_out),
-                "ez": (model.logits("zh", me, tz_in), tz_out)}
+        logs = {"zz": (model.logits("zh", bz, tz_in), tz_out),
+                "ee": (model.logits("en", be, te_in), te_out),
+                "ze": (model.logits("en", bz, te_in), te_out),
+                "ez": (model.logits("zh", be, tz_in), tz_out)}
         for nm, (lg, tgt) in logs.items():
-            m = tgt != PAD
+            mk = tgt != PAD
             pred = lg.argmax(-1)
             acc[f"ce_{nm}"].append(float(nn.functional.cross_entropy(
                 lg.reshape(-1, VOCAB), tgt.reshape(-1)).item()))
-            acc[f"char_{nm}"].append(float(((pred == tgt) & m).sum()) / max(int(m.sum()), 1))
-            acc[f"exact_{nm}"].append(float((((pred == tgt) | ~m).all(1)).float().mean()))
+            acc[f"char_{nm}"].append(float(((pred == tgt) & mk).sum()) / max(int(mk.sum()), 1))
+            acc[f"exact_{nm}"].append(float((((pred == tgt) | ~mk).all(1)).float().mean()))
     out = {k: float(np.mean([x for x in v if x == x])) for k, v in acc.items()}
-    T, I = torch.cat(m_zh), torch.cat(m_en)
-    out["m_zh"], out["m_en"] = T, I
-    out["spread_zh"] = float(T.mean(1).std(dim=0).mean())
-    out["spread_en"] = float(I.mean(1).std(dim=0).mean())
+    out["m_zh"], out["m_en"] = torch.cat(m_zh), torch.cat(m_en)
+    out["b_zh"], out["b_en"] = torch.cat(b_zh), torch.cat(b_en)
+    # ★ 分化度按**衔接处**算（那是"输出衔接"的模因；输入侧的分化度另有读数）
+    out["spread_zh"] = float(out["b_zh"].mean(1).std(dim=0).mean())
+    out["spread_en"] = float(out["b_en"].mean(1).std(dim=0).mean())
+    out["spread_in_zh"] = float(out["m_zh"].mean(1).std(dim=0).mean())
+    out["spread_in_en"] = float(out["m_en"].mean(1).std(dim=0).mean())
     return out
 
-
-def full_metrics(ev: dict, pack: dict, seed: int) -> dict:
-    T, I = ev["m_zh"], ev["m_en"]
+def _junction(A, B, pack, seed: int) -> dict:
+    """**一个衔接点**上的全套口径：Δ / 长度匹配(M8) / 逐槽+M3 / CKA / 线性映射 / 地板 / AUROC+阈值 / 繁简子集。"""
     zh_s = [p[0] for p in pack["test"]]
     en_s = [p[1] for p in pack["test"]]
-    pT, pI = MS.pooled(T), MS.pooled(I)
-    S = MS.cosmat(pT, pI)
+    zh_i = [p[0] for p in pack["test_ids"]]
+    en_i = [p[1] for p in pack["test_ids"]]
+    pA, pB = MS.pooled(A), MS.pooled(B)
+    S = MS.cosmat(pA, pB)
     rep_pool = MS.score_report(S, "pooled")
-    rep_slot = MS.score_report(DRV.slot_matrix(T, I), "slot")
-    cka = MS.cka_linear(pT, pI)
-    cka_m, cka_se = MS.cka_perm_null(pT, pI, 50, seed)
-    lin_id, lin_map = MS.linmap(pT, pI)
-    _, lin_map_rand = MS.linmap(pT, pI, derange=True)
-    rep_shuf = MS.score_report(DRV.slot_matrix(MS.shuffle_slots(T, seed + 1),
-                                               MS.shuffle_slots(I, seed + 2)), "slot_shuffled")
-    # 地板：随机模因 · 计数类（中英各自的计数特征互比）· 词袋（上界参考）
-    n = pT.size(0)
+    rep_slot = MS.score_report(DRV.slot_matrix(A, B), "slot")
+    cka = MS.cka_linear(pA, pB)
+    cka_m, cka_se = MS.cka_perm_null(pA, pB, 50, seed)
+    lin_id, lin_map = MS.linmap(pA, pB)
+    _, lin_map_rand = MS.linmap(pA, pB, derange=True)
+    rep_shuf = MS.score_report(DRV.slot_matrix(MS.shuffle_slots(A, seed + 1),
+                                               MS.shuffle_slots(B, seed + 2)), "slot_shuffled")
+    n = pA.size(0)
     rep_rand = MS.score_report(MS.cosmat(MS.pooled(MS.floor_random(n, seed + 3)),
                                          MS.pooled(MS.floor_random(n, seed + 4))), "floor_random")
     cz, ce = MS.floor_counts(zh_s), MS.floor_counts(en_s)
     nz = cz / cz.norm(dim=1, keepdim=True).clamp_min(1e-12)
     ne = ce / ce.norm(dim=1, keepdim=True).clamp_min(1e-12)
     rep_cnt = MS.score_report(MS.cosmat(nz, ne), "floor_counts")
-    bz = MS.floor_bag_of_chars([p[0] for p in pack["test_ids"]])
-    be = MS.floor_bag_of_chars([p[1] for p in pack["test_ids"]])
+    bz = MS.floor_bag_of_chars(zh_i)
+    be = MS.floor_bag_of_chars(en_i)
     bz = bz / bz.norm(dim=1, keepdim=True).clamp_min(1e-12)
     be = be / be.norm(dim=1, keepdim=True).clamp_min(1e-12)
     rep_bag = MS.score_report(MS.cosmat(bz, be), "reference_bag_of_chars")
-    # M8 长度匹配：按**英文长度桶**（宽 10）取负样本
-    m8 = MS.length_matched_delta(S, [len(e) // 10 for e in en_s])
+    m8 = MS.length_matched_delta(S, [len(e) // 10 for e in en_s])       # 按英文长度桶匹配负样本
     drop = rep_slot["delta"] - rep_shuf["delta"]
     drop_se = math.sqrt(rep_slot["delta_se"] ** 2 + rep_shuf["delta_se"] ** 2)
-    # 行中心化的 AUROC 与阈值
-    Sc = S - S.mean(1, keepdim=True)
-    pos = Sc.diagonal()
+    Sc = S - S.mean(1, keepdim=True)                                     # 行中心化（原始余弦不可用）
     off = Sc[~torch.eye(n, dtype=torch.bool)]
-    au = MS.auroc_rank(pos, off)
-    thr = MS.youden_threshold(pos, off)
-    # 繁/简子集各自的口径
+    au = MS.auroc_rank(Sc.diagonal(), off)
+    thr = MS.youden_threshold(Sc.diagonal(), off)
     subsets = {}
     for nm, marker in (("simp", DZ.SIMP), ("trad", DZ.TRAD)):
-        ix = [i for i, z in enumerate(zh_s)
-              if any(c in marker for c in z) and not any(c in (DZ.TRAD if nm == "simp" else DZ.SIMP) for c in z)]
+        other = DZ.TRAD if nm == "simp" else DZ.SIMP
+        ix = [i for i, z in enumerate(zh_s) if any(c in marker for c in z) and not any(c in other for c in z)]
         if len(ix) >= 50:
-            sub = S[torch.tensor(ix)][:, torch.tensor(ix)]
-            st = js(MS.pair_stats(sub))
+            st = js(MS.pair_stats(S[torch.tensor(ix)][:, torch.tensor(ix)]))
             subsets[nm] = dict(n_sub=len(ix), **{k: v for k, v in st.items() if k != "n"})
     return dict(pooled=js(rep_pool), slot=js(rep_slot), slot_shuffled=js(rep_shuf),
                 cka=cka, cka_perm=cka_m, cka_perm_se=cka_se, cka_delta=cka - cka_m,
                 lin_identity=js(lin_id), lin_mapped=js(lin_map), lin_mapped_rand=js(lin_map_rand),
                 floor_random=js(rep_rand), floor_counts=js(rep_cnt), reference_bag=js(rep_bag),
                 m8_length_matched=js(m8),
-                m3=dict(delta_slot=rep_slot["delta"], delta_shuffled=rep_shuf["delta"],
-                        drop=drop, drop_se=drop_se, pass_drop=bool(drop >= max(2 * drop_se, 0.01))),
+                m3=dict(delta_slot=rep_slot["delta"], delta_shuffled=rep_shuf["delta"], drop=drop,
+                        drop_se=drop_se, pass_drop=bool(drop >= max(2 * drop_se, 0.01))),
                 surface_gate=bool(rep_pool["delta"] >= rep_cnt["delta"] + max(2 * rep_cnt["delta_se"], 0.01)),
                 auroc_centered=au, thr_centered=js(thr), subsets=subsets,
-                ctrl_zh_zh_diff_content=float((MS.cosmat(pT, pT) * (1 - torch.eye(n))).sum() /
+                ctrl_zh_zh_diff_content=float((MS.cosmat(pA, pA) * (1 - torch.eye(n))).sum() /
                                               max(n * (n - 1), 1)))
 
+
+def full_metrics(ev: dict, pack: dict, seed: int) -> dict:
+    """★ **两个衔接点**各算一遍：
+    `input` = 输入卡的输出模因（冻结/未冻结都一样测）；`bridge` = t 的输出（用户说的"输出衔接"）。
+    """
+    out = {"input": _junction(ev["m_zh"], ev["m_en"], pack, seed)}
+    if "b_zh" in ev:
+        out["bridge"] = _junction(ev["b_zh"], ev["b_en"], pack, seed + 100)
+    return out
 
 @torch.no_grad()
 def gen_eval(model, pack, device, n: int = 200, bs: int = 50, maxlen: int = 160) -> dict:
@@ -201,6 +212,7 @@ def gen_eval(model, pack, device, n: int = 200, bs: int = 50, maxlen: int = 160)
             gl = [p[gold_ix] for p in part]
             meme = (model.meme_zh(pad_ids(sl, device)) if src_ix == 0
                     else model.meme_en(pad_ids(sl, device)))
+            meme = model.apply_bridge(meme)          # ★ 输出卡读的是衔接处的模因
             cur = torch.full((len(sl), 1), BOS, dtype=torch.long, device=device)
             done = torch.zeros(len(sl), dtype=torch.bool, device=device)
             outs: list[list[int]] = [[] for _ in sl]
@@ -227,15 +239,31 @@ def gen_eval(model, pack, device, n: int = 200, bs: int = 50, maxlen: int = 160)
 
 def train_run(lam: float, seed: int, steps: int, maps: str, loss_kind: str, device: str,
               bs: int, eval_every: int, shared_out: bool = False, early_stop: bool = False,
-              abba_weight: float = 1.0,
+              abba_weight: float = 1.0, bridge: str = "none", bridge_mid: int = 64,
+              init_inputs: str = "", freeze_inputs: bool = False, init_outputs: bool = False,
               tau: float = 0.07, mu: float = 1.0, gamma: float = 0.2) -> dict:
     mapset = tuple(m for m in maps.split(",") if m)
     pack = get_pack()
-    model = MZ.build(seed, shared_out).to(device)
+    model = MZ.build(seed, shared_out, bridge, bridge_mid).to(device)
     npar = model.n_params()
     log(f"[M2] run lam={lam} seed={seed} steps={steps} maps={mapset} loss={loss_kind} "
-        f"abba_w={abba_weight} bs={bs} shared_out={shared_out} params={npar} 总={sum(npar.values())}")
-    opt = torch.optim.AdamW(model.parameters(), lr=1e-3, weight_decay=0.01)
+        f"abba_w={abba_weight} bridge={bridge}(mid={bridge_mid}) bs={bs} shared_out={shared_out} "
+        f"params={npar} 总={sum(npar.values())}")
+    frozen = []
+    if init_inputs:
+        blob = torch.load(init_inputs, map_location="cpu", weights_only=False)
+        pref = ("zh_in.", "en_in.") + (("zh_out.", "en_out.") if init_outputs else ())
+        sd = {k: v for k, v in blob["state"].items() if k.startswith(pref)}
+        miss, unexp = model.load_state_dict(sd, strict=False)
+        log(f"[M2] 载入输入卡 {init_inputs}：{len(sd)} 张量（missing={len(miss)} unexpected={len(unexp)}）")
+    if freeze_inputs:
+        for nm in ("zh_in", "en_in"):
+            for prm in getattr(model, nm).parameters():
+                prm.requires_grad_(False)
+        frozen = ["zh_in", "en_in"]
+        log(f"[M2] 已冻结：{frozen}（可训参数 {sum(p.numel() for p in model.parameters() if p.requires_grad)}）")
+    opt = torch.optim.AdamW([p for p in model.parameters() if p.requires_grad],
+                            lr=1e-3, weight_decay=0.01)
     crit = nn.CrossEntropyLoss(ignore_index=PAD)
     g = torch.Generator().manual_seed(seed)
     order = torch.randperm(len(pack["train_ids"]), generator=g).tolist()
@@ -247,14 +275,14 @@ def train_run(lam: float, seed: int, steps: int, maps: str, loss_kind: str, devi
         idx = order[ptr:ptr + bs]; ptr += bs
         zl = [pack["train_ids"][j][0] for j in idx]
         el = [pack["train_ids"][j][1] for j in idx]
-        t, mz, me = _terms(model, crit, zl, el, mapset, device)
+        t, mz, me, bz, be = _terms(model, crit, zl, el, mapset, device)
         aa = [v for k, v in t.items() if k in ("zz", "ee")]        # AaBb（自映射）
         ab = [v for k, v in t.items() if k in ("ze", "ez")]        # AbBa（互映射）
         # ★ 0.5·(mean_aa + α·mean_ab)：α 只调"翻译压力 / 重构压力"的比例，且 **α=1 时恰好等于
         #   `sum(四项)/4`**（第一轮的实现）⇒ 复用第一轮 α=1.0 的 run 合法。
         #   若写成 `mean_aa + α·mean_ab`，α=1 会变成原来的 **2 倍**（等于偷偷给 CE 加倍）—— 已避开。
         loss = (0.5 * (sum(aa) / max(len(aa), 1) + abba_weight * sum(ab) / max(len(ab), 1))
-                + DRV.align_extra(mz, me, loss_kind, lam, tau, mu, gamma))
+                + DRV.align_extra(bz, be, loss_kind, lam, tau, mu, gamma))   # ★ 对齐项作用于**衔接处**
         opt.zero_grad(set_to_none=True)
         loss.backward()
         nn.utils.clip_grad_norm_(model.parameters(), 1.0)
@@ -286,22 +314,30 @@ def train_run(lam: float, seed: int, steps: int, maps: str, loss_kind: str, devi
     log(f"[GEN] lam={lam} seed={seed} 贪心自回归(n={gen['gen_n']}) EM: 中→中 {gen['gen_em_zz']*100:.1f}% "
         f"英→英 {gen['gen_em_ee']*100:.1f}% 中→英 {gen['gen_em_ze']*100:.1f}% 英→中 {gen['gen_em_ez']*100:.1f}%")
     tag = (f"{loss_kind}_{'_'.join(mapset)}" + ("_shared" if shared_out else "")
-           + ("" if abs(abba_weight - 1.0) < 1e-9 else f"_a{abba_weight}"))
+           + ("" if abs(abba_weight - 1.0) < 1e-9 else f"_a{abba_weight}")
+           + ("" if bridge == "none" else f"_{bridge}{bridge_mid}")
+           + ("_frz" if freeze_inputs else "") + ("_io" if init_outputs else ""))
     ck = LOGS / f"86g_ckpt_{tag}_l{lam}_s{seed}.pt"
     torch.save(dict(state=model.state_dict(), seed=seed, lam=lam, maps=mapset,
                     loss_kind=loss_kind, steps=step, shared_out=shared_out), ck)
     res = dict(lam=lam, seed=seed, steps=step, maps=list(mapset), loss_kind=loss_kind,
-               shared_out=shared_out, abba_weight=abba_weight, tau=tau,
+               shared_out=shared_out, abba_weight=abba_weight, bridge=bridge,
+               bridge_mid=bridge_mid, init_inputs=str(init_inputs), init_outputs=init_outputs,
+               frozen=frozen, tau=tau,
                stopped=stopped, step_time_s=step_time,
                wall_min=(time.time() - t0) / 60, n_params=npar,
                final={k: ev[k] for k in ev if k.startswith(("ce_", "char_", "exact_"))},
-               final_spread=dict(zh=ev["spread_zh"], en=ev["spread_en"]),
+               final_spread=dict(zh=ev["spread_zh"], en=ev["spread_en"],
+                                 in_zh=ev["spread_in_zh"], in_en=ev["spread_in_en"]),
                gen=gen, metrics=metrics, snaps=snaps)
     (LOGS / f"86g_result_{tag}_l{lam}_s{seed}.json").write_text(
         json.dumps(res, ensure_ascii=False), encoding="utf-8")
     log(f"[RUN-FINAL] lam={lam} seed={seed} 中→中 {ev['char_zz']*100:.2f}% 英→英 {ev['char_ee']*100:.2f}% "
-        f"中→英 {ev['char_ze']*100:.2f}% 英→中 {ev['char_ez']*100:.2f}% | Δ={metrics['pooled']['delta']:+.4f}"
-        f"±{metrics['pooled']['delta_se']:.4f} 长度匹配Δ={metrics['m8_length_matched']['delta']:+.4f} "
+        f"中→英 {ev['char_ze']*100:.2f}% 英→中 {ev['char_ez']*100:.2f}% | "
+        f"Δ输入侧={metrics['input']['pooled']['delta']:+.4f} "
+        f"**Δ衔接={metrics['bridge']['pooled']['delta']:+.4f}**"
+        f"±{metrics['bridge']['pooled']['delta_se']:.4f} "
+        f"长度匹配Δ(衔接)={metrics['bridge']['m8_length_matched']['delta']:+.4f} "
         f"| {stopped} | 墙钟 {(time.time()-t0)/60:.1f}min")
     return res
 
@@ -317,8 +353,10 @@ def verdict() -> None:
     groups: dict[str, list] = {}
     for r in runs:
         aw = float(r.get("abba_weight", 1.0))
-        groups.setdefault(f"{r['loss_kind']}|{'+'.join(r['maps'])}|α={aw}", []).append(r)
-    base_key = "none|AaBb|α=1.0"      # α 只作用于 AbBa 项 ⇒ 基线（只 AaBb）与 α 无关
+        groups.setdefault(f"{r['loss_kind']}|{'+'.join(r['maps'])}|α={aw}"
+                          f"|bridge={r.get('bridge','none')}|frz={bool(r.get('frozen'))}"
+                          f"|io={bool(r.get('init_outputs'))}", []).append(r)
+    base_key = "none|AaBb|α=1.0|bridge=none|frz=False|io=False"      # α 只作用于 AbBa 项 ⇒ 基线（只 AaBb）与 α 无关
     if base_key not in groups:
         log(f"[VERDICT] 缺基线（{base_key}）⇒ 按 PREREG 不许出判词。现有组: {sorted(groups)}"); return
 
@@ -341,8 +379,8 @@ def verdict() -> None:
             continue
         rows = []
         for nm, path, margin, ratio in (
-                ("Q1a 池化 Δ", ("metrics", "pooled", "delta"), None, None),
-                ("Q1b 长度匹配 Δ", ("metrics", "m8_length_matched", "delta"), None, None),
+                ("Q1a 池化 Δ(衔接)", ("metrics", "bridge", "pooled", "delta"), None, None),
+                ("Q1b 长度匹配 Δ(衔接)", ("metrics", "bridge", "m8_length_matched", "delta"), None, None),
                 ("Q2a 中→中字准", ("final", "char_zz"), -0.05, None),
                 ("Q2b 英→英字准", ("final", "char_ee"), -0.05, None),
                 ("Q3 分化度(中)", ("final_spread", "zh"), None, 0.8),
@@ -375,13 +413,18 @@ def tables() -> None:
     rows = [json.loads(Path(f).read_text(encoding="utf-8")) for f in sorted(glob.glob(str(LOGS / "86g_result_*.json")))]
     if not rows:
         log("没有 86g 结果"); return
-    print("| 损失 | maps | λ | seed | 步 | 中→中 | 英→英 | 中→英 | 英→中 | Δ池化 | Δ长度匹配 | 生成EM 中→中/英→英 |")
+    print("| 损失 | maps | α | bridge | 冻结 | seed | 步 | 中→中 | 英→英 | 中→英 | 英→中 | "
+          "Δ输入侧 | **Δ衔接** | Δ长度匹配(衔接) | 生成EM 中→中/英→英 |")
     print("|---|---|---|---|---|---|---|---|---|---|---|---|")
     for r in rows:
         f, m = r["final"], r["metrics"]
-        print(f"| {r['loss_kind']} | {'+'.join(r['maps'])} | {r['lam']} | {r['seed']} | {r['steps']} | "
+        br = m.get("bridge") or m["input"]
+        inp = m.get("input", br)
+        print(f"| {r['loss_kind']} | {'+'.join(r['maps'])} | {r.get('abba_weight',1.0)} | "
+              f"{r.get('bridge','none')} | {'是' if r.get('frozen') else '否'} | {r['seed']} | {r['steps']} | "
               f"{f['char_zz']*100:.1f}% | {f['char_ee']*100:.1f}% | {f['char_ze']*100:.1f}% | {f['char_ez']*100:.1f}% | "
-              f"{m['pooled']['delta']:+.4f} | {m['m8_length_matched']['delta']:+.4f} | "
+              f"{inp['pooled']['delta']:+.4f} | **{br['pooled']['delta']:+.4f}** | "
+              f"{br['m8_length_matched']['delta']:+.4f} | "
               f"{r['gen']['gen_em_zz']*100:.1f}%/{r['gen']['gen_em_ee']*100:.1f}% |")
 
 
@@ -399,6 +442,13 @@ def main() -> None:
     ap.add_argument("--bs", type=int, default=BS_DEFAULT)
     ap.add_argument("--device", default="cuda")
     ap.add_argument("--shared-out", action="store_true")
+    ap.add_argument("--bridge", default="none", choices=["none", "parser"],
+                    help="插入 parser 卡 t（语言解析卡）：输入模因 → t → 输出卡（Ata/Btb/Atb/Bta）")
+    ap.add_argument("--bridge-mid", type=int, default=64, help="parser 卡的瓶颈维度 d_mid（<128，§13.2）")
+    ap.add_argument("--init-inputs", default="", help="从该 ckpt 载入 zh_in/en_in（配合 --freeze-inputs）")
+    ap.add_argument("--freeze-inputs", action="store_true", help="冻结 zh_in/en_in（只训 parser 与输出卡）")
+    ap.add_argument("--init-outputs", action="store_true",
+                    help="同时载入 zh_out/en_out（让『有/无 parser』两臂只差 parser 一处）")
     ap.add_argument("--abba-weight", type=float, default=1.0,
                     help="AbBa（互映射）两项的权重 α；1.0 = 与两项均值等价（见 PREREG §7）")
     ap.add_argument("--early-stop", action="store_true",
@@ -423,7 +473,9 @@ def main() -> None:
     elif args.run:
         lam, seed = float(args.run[0]), int(args.run[1])
         train_run(lam, seed, args.steps, args.maps, args.loss, dev, args.bs,
-                  args.eval_every, args.shared_out, args.early_stop, args.abba_weight)
+                  args.eval_every, args.shared_out, args.early_stop, args.abba_weight,
+                  args.bridge, args.bridge_mid, args.init_inputs, args.freeze_inputs,
+                  args.init_outputs)
     else:
         ap.print_help()
 
