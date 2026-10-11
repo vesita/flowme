@@ -29,11 +29,24 @@ ARMS = {"B 基线 λ=0": [("none", 0.0, 1234), ("none", 0.0, 5678)],
 Q2_MARGIN, Q4_MARGIN, Q3_RATIO, Q1_SE = 0.05, 0.05, 0.8, 2.0
 
 
+def _resolve(prefix: str, kind: str, lam: float, seed: int, ext: str) -> Path:
+    """先找带损失标记的文件，再退回不带标记的。
+
+    ★ 基线（λ=0）那两 run 是**主档期**跑的，当时还没有 `--loss` ⇒ 文件名是 `86_result_detr_l0.0_s1234.json`
+      （不带 `_none`）；候选（infonce）则带 `_infonce`。两种命名都要能解析到。
+    """
+    cands = [f"_{kind}", ""] if kind != "align" else [""]
+    for tag in cands:
+        p = LOGS / f"{prefix}{tag}_l{lam}_s{seed}.{ext}"
+        if p.exists():
+            return p
+    raise FileNotFoundError(f"找不到 {prefix}_l{lam}_s{seed}.{ext}（试过 tag={cands}）")
+
+
 def load(kind: str, lam: float, seed: int, device: str) -> dict:
-    tag = "" if kind == "align" else f"_{kind}"
-    rj = json.loads((LOGS / f"86_result_detr{tag}_l{lam}_s{seed}.json").read_text(encoding="utf-8"))
+    rj = json.loads(_resolve("86_result_detr", kind, lam, seed, "json").read_text(encoding="utf-8"))
     m, s = rj["metrics"], rj["snaps"][-1]
-    blob = torch.load(LOGS / f"86_ckpt_detr{tag}_l{lam}_s{seed}.pt", map_location="cpu",
+    blob = torch.load(_resolve("86_ckpt_detr", kind, lam, seed, "pt"), map_location="cpu",
                       weights_only=False)
     model = DRV.MD.build(blob["seed"], blob["vision_arch"])
     model.load_state_dict(blob["state"])
