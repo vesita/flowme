@@ -29,5 +29,9 @@ done
 for S in 1234 5678; do
   run noparser_a05 none "logs/86g_ckpt_none_AaBb_AbBa_a0.5_l0.0_s${S}.pt" "$S"
 done
-run parser_a00 parser "logs/86g_ckpt_none_AaBb_AbBa_l0.0_s1234.pt" 1234
+# 臂 I s1234 重跑：早先它与臂 III 撞名被覆盖（tag 已修，不会再撞）
+run parser_a05 parser "logs/86g_ckpt_none_AaBb_AbBa_a0.5_l0.0_s1234.pt" 1234
+# ★ 臂 III 要的是 **α=0（纯重构）** 的 v0：文件名是 `..._none_AaBb_l0.0_s1234.pt`
+#   （早先误写成 `..._none_AaBb_AbBa_l0.0_s1234.pt` = α=1.0，输入侧 Δ=+0.1917 而不是 ≈0 —— 已修）
+run parser_a00 parser "logs/86g_ckpt_none_AaBb_l0.0_s1234.pt" 1234
 echo "[M3-DONE] $(date -Is)"

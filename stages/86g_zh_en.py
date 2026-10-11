@@ -313,6 +313,11 @@ def train_run(lam: float, seed: int, steps: int, maps: str, loss_kind: str, devi
     gen = gen_eval(model, pack, device)
     log(f"[GEN] lam={lam} seed={seed} 贪心自回归(n={gen['gen_n']}) EM: 中→中 {gen['gen_em_zz']*100:.1f}% "
         f"英→英 {gen['gen_em_ee']*100:.1f}% 中→英 {gen['gen_em_ze']*100:.1f}% 英→中 {gen['gen_em_ez']*100:.1f}%")
+    # ★ 载入标识必须进文件名：否则"同 bridge/同 seed 但载入不同 ckpt"的两次 run 会撞名互相覆盖（实测发生过）
+    init_lab = ""
+    if init_inputs:
+        import re as _re
+        init_lab = "_i-" + _re.sub(r"_l[0-9.]+_s\d+$", "", Path(init_inputs).stem).replace("86g_ckpt_", "")
     tag = (f"{loss_kind}_{'_'.join(mapset)}" + ("_shared" if shared_out else "")
            + ("" if abs(abba_weight - 1.0) < 1e-9 else f"_a{abba_weight}")
            + ("" if bridge == "none" else f"_{bridge}{bridge_mid}")
