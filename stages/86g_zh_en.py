@@ -321,7 +321,7 @@ def train_run(lam: float, seed: int, steps: int, maps: str, loss_kind: str, devi
     tag = (f"{loss_kind}_{'_'.join(mapset)}" + ("_shared" if shared_out else "")
            + ("" if abs(abba_weight - 1.0) < 1e-9 else f"_a{abba_weight}")
            + ("" if bridge == "none" else f"_{bridge}{bridge_mid}")
-           + ("_frz" if freeze_inputs else "") + ("_io" if init_outputs else ""))
+           + ("_frz" if freeze_inputs else "") + ("_io" if init_outputs else "") + init_lab)
     ck = LOGS / f"86g_ckpt_{tag}_l{lam}_s{seed}.pt"
     torch.save(dict(state=model.state_dict(), seed=seed, lam=lam, maps=mapset,
                     loss_kind=loss_kind, steps=step, shared_out=shared_out), ck)
