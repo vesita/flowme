@@ -282,12 +282,18 @@ def gen_eval(model, ids_list, imgs, device, n: int = 200, bs: int = 50, maxlen: 
 
 def train_run(lam: float, seed: int, steps: int, vision_arch: str, device: str,
               bs: int, eval_every: int, loss_kind: str = "align",
-              tau: float = 0.07, mu: float = 1.0, gamma: float = 0.2) -> dict:
+              tau: float = 0.07, mu: float = 1.0, gamma: float = 0.2,
+              mode: str = "joint") -> dict:
+    """`mode="joint"` = 两条路都训（主档）；`mode="image"` = **只训图片卡 + 共享输出卡**（诊断用）。
+
+    ★ `mode="image"` 时**跳过文本路**（省一半算力），且**跨模态项无定义** ⇒ 该配置下 `--loss` 只应给 `none`。
+      这是 `PREREG_SEEDSTAB.md` 臂①：用来判"图片路的平台是它自己造成的、还是与文本路共适应造成的"。
+    """
     pack = get_pack()
     model = MD.build(seed, vision_arch).to(device)
     npar = model.n_params()
     log(f"[M1] run lam={lam} seed={seed} steps={steps} arch={vision_arch} device={device} "
-        f"bs={bs} loss={loss_kind} tau={tau} mu={mu} gamma={gamma} params={npar} 总={sum(npar.values())}")
+        f"bs={bs} loss={loss_kind} mode={mode} tau={tau} mu={mu} gamma={gamma} params={npar} 总={sum(npar.values())}")
     opt = torch.optim.AdamW(model.parameters(), lr=1e-3, weight_decay=0.01)
     crit = nn.CrossEntropyLoss(ignore_index=PAD)
     g = torch.Generator().manual_seed(seed)
@@ -310,13 +316,20 @@ def train_run(lam: float, seed: int, steps: int, vision_arch: str, device: str,
         tgt_in, tgt_out = MD.make_pairs(chunk, device)
         im = img_batch(pack["train_img"], idx, device)
 
-        mt = model.meme_text(ids)
-        mi = model.meme_image(im)
-        lt = model.logits(mt, tgt_in)
-        lv = model.logits(mi, tgt_in)
-        ce_t = crit(lt.reshape(-1, VOCAB), tgt_out.reshape(-1))
-        ce_v = crit(lv.reshape(-1, VOCAB), tgt_out.reshape(-1))
-        loss = ce_t + ce_v + align_extra(mt, mi, loss_kind, lam, tau, mu, gamma)
+        if mode == "image":
+            mi = model.meme_image(im)
+            lv = model.logits(mi, tgt_in)
+            ce_v = crit(lv.reshape(-1, VOCAB), tgt_out.reshape(-1))
+            ce_t = torch.zeros((), device=device)
+            loss = ce_v
+        else:
+            mt = model.meme_text(ids)
+            mi = model.meme_image(im)
+            lt = model.logits(mt, tgt_in)
+            lv = model.logits(mi, tgt_in)
+            ce_t = crit(lt.reshape(-1, VOCAB), tgt_out.reshape(-1))
+            ce_v = crit(lv.reshape(-1, VOCAB), tgt_out.reshape(-1))
+            loss = ce_t + ce_v + align_extra(mt, mi, loss_kind, lam, tau, mu, gamma)
 
         opt.zero_grad(set_to_none=True)
         loss.backward()
@@ -360,13 +373,13 @@ def train_run(lam: float, seed: int, steps: int, vision_arch: str, device: str,
     log(f"[GEN] lam={lam} seed={seed} 贪心自回归（n={gen['gen_n']}）EM: 文本 {gen['gen_em_text']*100:.1f}% · "
         f"图片 {gen['gen_em_image']*100:.1f}% | 字准: 文本 {gen['gen_char_acc_text']*100:.1f}% · "
         f"图片 {gen['gen_char_acc_image']*100:.1f}%")
-    # ★ 文件名带"损失形状"标记（否则 infonce 与 infonce_var 同 lam/同 seed 会互相覆盖）
-    tag = "" if loss_kind == "align" else f"_{loss_kind}"
+    # ★ 文件名带"损失形状/模式"标记（否则 infonce 与 infonce_var、joint 与 image 会互相覆盖）
+    tag = ("" if loss_kind == "align" else f"_{loss_kind}") + ("" if mode == "joint" else f"_{mode}")
     ck = LOGS / f"86_ckpt_{vision_arch}{tag}_l{lam}_s{seed}.pt"
     torch.save({"state": model.state_dict(), "lam": lam, "seed": seed,
                 "vision_arch": vision_arch, "steps": steps}, ck)
     res = dict(lam=lam, seed=seed, steps=steps, vision_arch=vision_arch, bs=bs,
-               loss_kind=loss_kind, tau=tau, mu=mu, gamma=gamma,
+               loss_kind=loss_kind, mode=mode, tau=tau, mu=mu, gamma=gamma,
                stopped=stopped, step_time_s=step_time, wall_min=(time.time() - t0) / 60,
                params=npar, ckpt=str(ck), ckpt_sha16=sha16(ck), snaps=snaps,
                final=dict(ce_t=ev["ce_t"], ce_v=ev["ce_v"], char_acc_t=ev["char_acc_t"],
@@ -708,6 +721,8 @@ def main() -> None:
     ap.add_argument("--loss", default="align",
                     choices=["none", "align", "infonce", "infonce_var"],
                     help="对齐/对比项形状（见 PREREG_SHAPE.md §1）")
+    ap.add_argument("--mode", default="joint", choices=["joint", "image"],
+                    help="joint=两条路都训；image=只训图片卡+输出卡（诊断，见 PREREG_SEEDSTAB.md）")
     ap.add_argument("--tau", type=float, default=0.07, help="InfoNCE 温度")
     ap.add_argument("--mu", type=float, default=1.0, help="方差项权重")
     ap.add_argument("--gamma", type=float, default=0.2, help="方差项目标标准差")
@@ -732,7 +747,7 @@ def main() -> None:
     elif args.run:
         lam, seed = float(args.run[0]), int(args.run[1])
         train_run(lam, seed, args.steps, args.vision_arch, dev, args.bs, args.eval_every,
-                  args.loss, args.tau, args.mu, args.gamma)
+                  args.loss, args.tau, args.mu, args.gamma, args.mode)
     elif args.verdict:
         verdict()
     elif args.tables:
