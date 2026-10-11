@@ -227,13 +227,14 @@ def gen_eval(model, pack, device, n: int = 200, bs: int = 50, maxlen: int = 160)
 
 def train_run(lam: float, seed: int, steps: int, maps: str, loss_kind: str, device: str,
               bs: int, eval_every: int, shared_out: bool = False, early_stop: bool = False,
+              abba_weight: float = 1.0,
               tau: float = 0.07, mu: float = 1.0, gamma: float = 0.2) -> dict:
     mapset = tuple(m for m in maps.split(",") if m)
     pack = get_pack()
     model = MZ.build(seed, shared_out).to(device)
     npar = model.n_params()
     log(f"[M2] run lam={lam} seed={seed} steps={steps} maps={mapset} loss={loss_kind} "
-        f"bs={bs} shared_out={shared_out} params={npar} 总={sum(npar.values())}")
+        f"abba_w={abba_weight} bs={bs} shared_out={shared_out} params={npar} 总={sum(npar.values())}")
     opt = torch.optim.AdamW(model.parameters(), lr=1e-3, weight_decay=0.01)
     crit = nn.CrossEntropyLoss(ignore_index=PAD)
     g = torch.Generator().manual_seed(seed)
@@ -247,7 +248,13 @@ def train_run(lam: float, seed: int, steps: int, maps: str, loss_kind: str, devi
         zl = [pack["train_ids"][j][0] for j in idx]
         el = [pack["train_ids"][j][1] for j in idx]
         t, mz, me = _terms(model, crit, zl, el, mapset, device)
-        loss = sum(t.values()) / len(t) + DRV.align_extra(mz, me, loss_kind, lam, tau, mu, gamma)
+        aa = [v for k, v in t.items() if k in ("zz", "ee")]        # AaBb（自映射）
+        ab = [v for k, v in t.items() if k in ("ze", "ez")]        # AbBa（互映射）
+        # ★ 0.5·(mean_aa + α·mean_ab)：α 只调"翻译压力 / 重构压力"的比例，且 **α=1 时恰好等于
+        #   `sum(四项)/4`**（第一轮的实现）⇒ 复用第一轮 α=1.0 的 run 合法。
+        #   若写成 `mean_aa + α·mean_ab`，α=1 会变成原来的 **2 倍**（等于偷偷给 CE 加倍）—— 已避开。
+        loss = (0.5 * (sum(aa) / max(len(aa), 1) + abba_weight * sum(ab) / max(len(ab), 1))
+                + DRV.align_extra(mz, me, loss_kind, lam, tau, mu, gamma))
         opt.zero_grad(set_to_none=True)
         loss.backward()
         nn.utils.clip_grad_norm_(model.parameters(), 1.0)
@@ -278,12 +285,14 @@ def train_run(lam: float, seed: int, steps: int, maps: str, loss_kind: str, devi
     gen = gen_eval(model, pack, device)
     log(f"[GEN] lam={lam} seed={seed} 贪心自回归(n={gen['gen_n']}) EM: 中→中 {gen['gen_em_zz']*100:.1f}% "
         f"英→英 {gen['gen_em_ee']*100:.1f}% 中→英 {gen['gen_em_ze']*100:.1f}% 英→中 {gen['gen_em_ez']*100:.1f}%")
-    tag = f"{loss_kind}_{'_'.join(mapset)}" + ("_shared" if shared_out else "")
+    tag = (f"{loss_kind}_{'_'.join(mapset)}" + ("_shared" if shared_out else "")
+           + ("" if abs(abba_weight - 1.0) < 1e-9 else f"_a{abba_weight}"))
     ck = LOGS / f"86g_ckpt_{tag}_l{lam}_s{seed}.pt"
     torch.save(dict(state=model.state_dict(), seed=seed, lam=lam, maps=mapset,
                     loss_kind=loss_kind, steps=step, shared_out=shared_out), ck)
     res = dict(lam=lam, seed=seed, steps=step, maps=list(mapset), loss_kind=loss_kind,
-               shared_out=shared_out, tau=tau, stopped=stopped, step_time_s=step_time,
+               shared_out=shared_out, abba_weight=abba_weight, tau=tau,
+               stopped=stopped, step_time_s=step_time,
                wall_min=(time.time() - t0) / 60, n_params=npar,
                final={k: ev[k] for k in ev if k.startswith(("ce_", "char_", "exact_"))},
                final_spread=dict(zh=ev["spread_zh"], en=ev["spread_en"]),
@@ -307,8 +316,9 @@ def verdict() -> None:
     runs = [json.loads(Path(f).read_text(encoding="utf-8")) for f in glob.glob(str(LOGS / "86g_result_*.json"))]
     groups: dict[str, list] = {}
     for r in runs:
-        groups.setdefault(f"{r['loss_kind']}|{'+'.join(r['maps'])}", []).append(r)
-    base_key = "none|AaBb"
+        aw = float(r.get("abba_weight", 1.0))
+        groups.setdefault(f"{r['loss_kind']}|{'+'.join(r['maps'])}|α={aw}", []).append(r)
+    base_key = "none|AaBb|α=1.0"      # α 只作用于 AbBa 项 ⇒ 基线（只 AaBb）与 α 无关
     if base_key not in groups:
         log(f"[VERDICT] 缺基线（{base_key}）⇒ 按 PREREG 不许出判词。现有组: {sorted(groups)}"); return
 
@@ -389,6 +399,8 @@ def main() -> None:
     ap.add_argument("--bs", type=int, default=BS_DEFAULT)
     ap.add_argument("--device", default="cuda")
     ap.add_argument("--shared-out", action="store_true")
+    ap.add_argument("--abba-weight", type=float, default=1.0,
+                    help="AbBa（互映射）两项的权重 α；1.0 = 与两项均值等价（见 PREREG §7）")
     ap.add_argument("--early-stop", action="store_true",
                     help="默认关：跑满 --steps（早停判据曾误触，见 train_run 注释）")
     args = ap.parse_args()
@@ -411,7 +423,7 @@ def main() -> None:
     elif args.run:
         lam, seed = float(args.run[0]), int(args.run[1])
         train_run(lam, seed, args.steps, args.maps, args.loss, dev, args.bs,
-                  args.eval_every, args.shared_out, args.early_stop)
+                  args.eval_every, args.shared_out, args.early_stop, args.abba_weight)
     else:
         ap.print_help()
 
