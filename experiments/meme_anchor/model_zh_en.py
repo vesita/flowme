@@ -45,7 +45,7 @@ class ParserCard(nn.Module):
 class ZHENModel(nn.Module):
     def __init__(self, shared_out: bool = False, bridge: str = "none", bridge_mid: int = 64):
         super().__init__()
-        assert bridge in ("none", "parser"), bridge
+        assert bridge in ("none", "parser", "dual"), bridge
         self.shared_out = bool(shared_out)
         self.bridge_kind = bridge
         self.zh_in = TextInputCard()
@@ -53,7 +53,12 @@ class ZHENModel(nn.Module):
         self.zh_out = TextOutputCard()
         # `shared_out=True` 只用于对照（口径外的变体）：两路共用一个出卡
         self.en_out = self.zh_out if self.shared_out else TextOutputCard()
+        # bridge="parser"：**一张共享**的解析卡（两语言都过它）
+        # bridge="dual"  ：**两条不共享**的 adapter（中/英各一张，同单卡尺寸）—— 控制臂 V：
+        #                  用来分离"共享"与"额外容量"（见 PREREG_PARSER_CTRL.md §1）
         self.bridge: ParserCard | None = ParserCard(bridge_mid) if bridge == "parser" else None
+        self.bridge_zh: ParserCard | None = ParserCard(bridge_mid) if bridge == "dual" else None
+        self.bridge_en: ParserCard | None = ParserCard(bridge_mid) if bridge == "dual" else None
 
     def meme_zh(self, ids: torch.Tensor) -> torch.Tensor:
         return self.zh_in(ids)
@@ -61,9 +66,16 @@ class ZHENModel(nn.Module):
     def meme_en(self, ids: torch.Tensor) -> torch.Tensor:
         return self.en_in(ids)
 
-    def apply_bridge(self, m: torch.Tensor) -> torch.Tensor:
-        """把输入模因送过 t（`bridge="none"` 时是恒等 ⇒ 与 L3-m2 的行为逐位一致）。"""
-        return m if self.bridge is None else self.bridge(m)
+    def apply_bridge(self, m: torch.Tensor, lang: str) -> torch.Tensor:
+        """把输入模因送过解析卡；`bridge="none"` 时是恒等 ⇒ 与 L3-m2 的行为逐位一致。
+
+        `lang` 只在 `bridge="dual"`（不共享）时用到。
+        """
+        if self.bridge is not None:                      # 共享
+            return self.bridge(m)
+        if self.bridge_zh is not None:                   # 不共享：按语言选卡
+            return (self.bridge_zh if lang == "zh" else self.bridge_en)(m)
+        return m
 
     def out_card(self, lang: str) -> TextOutputCard:
         assert lang in ("zh", "en"), lang
@@ -77,7 +89,10 @@ class ZHENModel(nn.Module):
              "en_in": sum(p.numel() for p in self.en_in.parameters()),
              "zh_out": sum(p.numel() for p in self.zh_out.parameters())}
         d["en_out"] = 0 if self.shared_out else sum(p.numel() for p in self.en_out.parameters())
-        d["bridge"] = 0 if self.bridge is None else sum(p.numel() for p in self.bridge.parameters())
+        d["bridge"] = 0
+        for c in (self.bridge, self.bridge_zh, self.bridge_en):
+            if c is not None:
+                d["bridge"] += sum(p.numel() for p in c.parameters())
         return d
 
 

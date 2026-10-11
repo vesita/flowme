@@ -82,7 +82,7 @@ def _terms(model, crit, z_list, e_list, maps, device) -> tuple[dict, torch.Tenso
     """
     mz = model.meme_zh(pad_ids(z_list, device))
     me = model.meme_en(pad_ids(e_list, device))
-    bz, be = model.apply_bridge(mz), model.apply_bridge(me)
+    bz, be = model.apply_bridge(mz, "zh"), model.apply_bridge(me, "en")
     tz_in, tz_out = make_pairs(z_list, device)
     te_in, te_out = make_pairs(e_list, device)
     t: dict[str, torch.Tensor] = {}
@@ -212,7 +212,7 @@ def gen_eval(model, pack, device, n: int = 200, bs: int = 50, maxlen: int = 160)
             gl = [p[gold_ix] for p in part]
             meme = (model.meme_zh(pad_ids(sl, device)) if src_ix == 0
                     else model.meme_en(pad_ids(sl, device)))
-            meme = model.apply_bridge(meme)          # ★ 输出卡读的是衔接处的模因
+            meme = model.apply_bridge(meme, "zh" if src_ix == 0 else "en")   # ★ 输出卡读衔接处模因
             cur = torch.full((len(sl), 1), BOS, dtype=torch.long, device=device)
             done = torch.zeros(len(sl), dtype=torch.bool, device=device)
             outs: list[list[int]] = [[] for _ in sl]
@@ -241,6 +241,7 @@ def train_run(lam: float, seed: int, steps: int, maps: str, loss_kind: str, devi
               bs: int, eval_every: int, shared_out: bool = False, early_stop: bool = False,
               abba_weight: float = 1.0, bridge: str = "none", bridge_mid: int = 64,
               init_inputs: str = "", freeze_inputs: bool = False, init_outputs: bool = False,
+              freeze_bridge: bool = False,
               tau: float = 0.07, mu: float = 1.0, gamma: float = 0.2) -> dict:
     mapset = tuple(m for m in maps.split(",") if m)
     pack = get_pack()
@@ -261,6 +262,14 @@ def train_run(lam: float, seed: int, steps: int, maps: str, loss_kind: str, devi
             for prm in getattr(model, nm).parameters():
                 prm.requires_grad_(False)
         frozen = ["zh_in", "en_in"]
+    if freeze_bridge:                       # 臂 IV：随机初始化后**冻结**解析卡（同尺寸、不可训）
+        for nm in ("bridge", "bridge_zh", "bridge_en"):
+            c = getattr(model, nm, None)
+            if c is not None:
+                for prm in c.parameters():
+                    prm.requires_grad_(False)
+                frozen.append(nm)
+    if frozen:
         log(f"[M2] 已冻结：{frozen}（可训参数 {sum(p.numel() for p in model.parameters() if p.requires_grad)}）")
     opt = torch.optim.AdamW([p for p in model.parameters() if p.requires_grad],
                             lr=1e-3, weight_decay=0.01)
@@ -321,14 +330,15 @@ def train_run(lam: float, seed: int, steps: int, maps: str, loss_kind: str, devi
     tag = (f"{loss_kind}_{'_'.join(mapset)}" + ("_shared" if shared_out else "")
            + ("" if abs(abba_weight - 1.0) < 1e-9 else f"_a{abba_weight}")
            + ("" if bridge == "none" else f"_{bridge}{bridge_mid}")
-           + ("_frz" if freeze_inputs else "") + ("_io" if init_outputs else "") + init_lab)
+           + ("_frz" if freeze_inputs else "") + ("_io" if init_outputs else "")
+           + ("_frzbr" if freeze_bridge else "") + init_lab)
     ck = LOGS / f"86g_ckpt_{tag}_l{lam}_s{seed}.pt"
     torch.save(dict(state=model.state_dict(), seed=seed, lam=lam, maps=mapset,
                     loss_kind=loss_kind, steps=step, shared_out=shared_out), ck)
     res = dict(lam=lam, seed=seed, steps=step, maps=list(mapset), loss_kind=loss_kind,
                shared_out=shared_out, abba_weight=abba_weight, bridge=bridge,
                bridge_mid=bridge_mid, init_inputs=str(init_inputs), init_outputs=init_outputs,
-               frozen=frozen, tau=tau,
+               freeze_bridge=freeze_bridge, frozen=frozen, tau=tau,
                stopped=stopped, step_time_s=step_time,
                wall_min=(time.time() - t0) / 60, n_params=npar,
                final={k: ev[k] for k in ev if k.startswith(("ce_", "char_", "exact_"))},
@@ -447,11 +457,13 @@ def main() -> None:
     ap.add_argument("--bs", type=int, default=BS_DEFAULT)
     ap.add_argument("--device", default="cuda")
     ap.add_argument("--shared-out", action="store_true")
-    ap.add_argument("--bridge", default="none", choices=["none", "parser"],
+    ap.add_argument("--bridge", default="none", choices=["none", "parser", "dual"],
                     help="插入 parser 卡 t（语言解析卡）：输入模因 → t → 输出卡（Ata/Btb/Atb/Bta）")
     ap.add_argument("--bridge-mid", type=int, default=64, help="parser 卡的瓶颈维度 d_mid（<128，§13.2）")
     ap.add_argument("--init-inputs", default="", help="从该 ckpt 载入 zh_in/en_in（配合 --freeze-inputs）")
     ap.add_argument("--freeze-inputs", action="store_true", help="冻结 zh_in/en_in（只训 parser 与输出卡）")
+    ap.add_argument("--freeze-bridge", action="store_true",
+                    help="冻结解析卡（臂 IV：随机初始化后不可训，同尺寸对照）")
     ap.add_argument("--init-outputs", action="store_true",
                     help="同时载入 zh_out/en_out（让『有/无 parser』两臂只差 parser 一处）")
     ap.add_argument("--abba-weight", type=float, default=1.0,
@@ -480,7 +492,7 @@ def main() -> None:
         train_run(lam, seed, args.steps, args.maps, args.loss, dev, args.bs,
                   args.eval_every, args.shared_out, args.early_stop, args.abba_weight,
                   args.bridge, args.bridge_mid, args.init_inputs, args.freeze_inputs,
-                  args.init_outputs)
+                  args.init_outputs, args.freeze_bridge)
     else:
         ap.print_help()
 
