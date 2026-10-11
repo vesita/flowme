@@ -333,7 +333,7 @@ def train_run(lam: float, seed: int, steps: int, maps: str, loss_kind: str, devi
               freeze_bridge: bool = False, align_on: str = "bridge",
               tau: float = 0.07, mu: float = 1.0, gamma: float = 0.2,
               obj: str = "tf", roll_w: float = 0.5, gen_eval_n: int = 1000,
-              eval_chunk: int = 64) -> dict:
+              eval_chunk: int = 64, accum: int = 1) -> dict:
     mapset = tuple(m for m in maps.split(",") if m)
     # ★ fail-closed 守卫：位置错位/取值非法必须**当场**报错，而不是跑完 8000 步再崩在保存上
     assert bridge in ("none", "parser", "dual"), f"bridge 非法：{bridge!r}"
@@ -344,6 +344,7 @@ def train_run(lam: float, seed: int, steps: int, maps: str, loss_kind: str, devi
     # ★ eval 峰值对 chunk **线性**（≈14 + 23.1×chunk MiB；chunk=256 时 5.9 GB，在 8G 卡上吃满整卡）
     #   ⇒ 默认降到 64；结果与 chunk 无关（CE 分块平均、char 分块计数），只是评测稍慢。
     assert 1 <= int(eval_chunk) <= 1024, f"eval_chunk 非法：{eval_chunk!r}"
+    assert 1 <= int(accum) <= 64, f"accum 非法：{accum!r}（梯度累积步数，1 = 不累积）"
     for _nm, _v in (("freeze_inputs", freeze_inputs), ("init_outputs", init_outputs),
                     ("freeze_bridge", freeze_bridge), ("shared_out", shared_out)):
         assert isinstance(_v, bool), f"{_nm} 应为 bool，收到 {_v!r}"
@@ -390,23 +391,28 @@ def train_run(lam: float, seed: int, steps: int, maps: str, loss_kind: str, devi
     step_time, stopped = float("nan"), "上限步数"
     peak_eval_mib = 0.0          # ★ 评测峰值单独累计（评测发生在循环内，不能混进训练峰值 —— 见下）
     peak_train_mib = 0.0         # ★ 训练峰值逐步取 max（原因见循环内注释）
+    accum = max(1, int(accum))
     for step in range(1, steps + 1):
-        if ptr + bs > len(order):
-            order = torch.randperm(len(pack["train_ids"]), generator=g).tolist(); ptr = 0
-        idx = order[ptr:ptr + bs]; ptr += bs
-        zl = [pack["train_ids"][j][0] for j in idx]
-        el = [pack["train_ids"][j][1] for j in idx]
-        t, mz, me, bz, be, roll = _terms(model, crit, zl, el, mapset, device, obj=obj)
-        # ★ 0.5·(mean_aa + α·mean_ab)：α 只调"翻译压力 / 重构压力"的比例，且 **α=1 时恰好等于
-        #   `sum(四项)/4`**（第一轮的实现）⇒ 复用第一轮 α=1.0 的 run 合法。
-        #   若写成 `mean_aa + α·mean_ab`，α=1 会变成原来的 **2 倍**（等于偷偷给 CE 加倍）—— 已避开。
-        #   ★ `obj=="roll"` 时由 `_combine_loss` 再加 `roll_w·mean(4 项 rollout CE)`（PREREG_GENOBJ §1）。
-        loss = _combine_loss(t, roll, mz, me, bz, be, loss_kind, lam, abba_weight,
-                             obj, roll_w, tau, mu, gamma, align_on)
-        # ★ 对齐项加在哪一层由 --align-on 决定：bridge=t(m)（L3-m3c 的配置）· input=m（L3-m2 的位置）
-        #   两者在"梯度能否穿透到输入卡"上不同 —— 见 PREREG_ALIGN_LOC.md 的 2×2 对照
+        # ★ 梯度累积（`--accum`）：一次 opt.step() 前跑 `accum` 个 micro-batch，loss 除以 accum
+        #   ⇒ 与"把 batch 放大 accum 倍"同量级的梯度，但**峰值激活只按 micro-batch 计**。
+        #   这是"降显存"最直接的一根杠杆（H7 规模轴的前置）；数据序仍由同一个 randperm 消费，逐位可复现。
         opt.zero_grad(set_to_none=True)
-        loss.backward()
+        for _k in range(accum):
+            if ptr + bs > len(order):
+                order = torch.randperm(len(pack["train_ids"]), generator=g).tolist(); ptr = 0
+            idx = order[ptr:ptr + bs]; ptr += bs
+            zl = [pack["train_ids"][j][0] for j in idx]
+            el = [pack["train_ids"][j][1] for j in idx]
+            t, mz, me, bz, be, roll = _terms(model, crit, zl, el, mapset, device, obj=obj)
+            # ★ 0.5·(mean_aa + α·mean_ab)：α 只调"翻译压力 / 重构压力"的比例，且 **α=1 时恰好等于
+            #   `sum(四项)/4`**（第一轮的实现）⇒ 复用第一轮 α=1.0 的 run 合法。
+            #   若写成 `mean_aa + α·mean_ab`，α=1 会变成原来的 **2 倍**（等于偷偷给 CE 加倍）—— 已避开。
+            #   ★ `obj=="roll"` 时由 `_combine_loss` 再加 `roll_w·mean(4 项 rollout CE)`（PREREG_GENOBJ §1）。
+            loss = _combine_loss(t, roll, mz, me, bz, be, loss_kind, lam, abba_weight,
+                                 obj, roll_w, tau, mu, gamma, align_on) / accum
+            # ★ 对齐项加在哪一层由 --align-on 决定：bridge=t(m)（L3-m3c 的配置）· input=m（L3-m2 的位置）
+            #   两者在"梯度能否穿透到输入卡"上不同 —— 见 PREREG_ALIGN_LOC.md 的 2×2 对照
+            loss.backward()
         nn.utils.clip_grad_norm_(model.parameters(), 1.0)
         opt.step()
         # ★ 训练峰值必须**在循环内逐步取 max**：评测发生在循环里、且评测后要复位峰值统计，
@@ -464,7 +470,7 @@ def train_run(lam: float, seed: int, steps: int, maps: str, loss_kind: str, devi
            # ★ `o-{obj}` 必须进 tag：否则 tf 臂与 roll 臂的 ckpt/json 会同名**静默互相覆盖**（PREREG_GENOBJ §7）
            + f"_o-{obj}" + ("" if abs(roll_w - 0.5) < 1e-9 else f"_rw{roll_w}")
            # ★ `st{steps}` 必须进 tag：否则**短跑探针会覆盖同配置的长跑产物**（实测发生过：H7 的 200 步扫描覆盖掉 H2 的 8000 步 ckpt/json）
-           + f"_st{steps}"
+           + f"_st{steps}" + ("" if accum == 1 else f"_ac{accum}")
            + ("_frz" if freeze_inputs else "") + ("_io" if init_outputs else "")
            + ("_frzbr" if freeze_bridge else "") + init_lab)
     ck = LOGS / f"86g_ckpt_{tag}_l{lam}_s{seed}.pt"
@@ -473,7 +479,7 @@ def train_run(lam: float, seed: int, steps: int, maps: str, loss_kind: str, devi
     res = dict(lam=lam, seed=seed, steps=step, maps=list(mapset), loss_kind=loss_kind,
                shared_out=shared_out, abba_weight=abba_weight, bridge=bridge,
                bridge_mid=bridge_mid, align_on=align_on,
-               obj=obj, roll_w=roll_w, gen_eval_n=int(gen_eval_n),
+               obj=obj, roll_w=roll_w, gen_eval_n=int(gen_eval_n), accum=int(accum),
                mem=dict(params_mib=mem_params_mib, params_trainable=n_tr, params_total=n_all,
                         peak_train_mib=peak_train_mib, peak_eval_mib=peak_eval_mib,
                         peak_gen_mib=peak_gen_mib),
@@ -687,6 +693,8 @@ def main() -> None:
     ap.add_argument("--gen-eval-n", type=int, default=1000, help="自由生成评测样本数（gen_eval 的 n；PREREG_GENOBJ §3）")
     ap.add_argument("--eval-chunk", type=int, default=64,
                     help="teacher-forced 评测的分块大小；峰值≈14+23.1×chunk MiB（8G 卡上默认 64，结果与 chunk 无关）")
+    ap.add_argument("--accum", type=int, default=1,
+                    help="梯度累积步数（1=不累积）。峰值激活按 micro-batch(--bs) 计，梯度按 --bs×accum 计 ⇒ 用更小显存等效更大 batch")
     ap.add_argument("--genobj-selfcheck", action="store_true",
                     help="N1/N2/N4/N5/N6 仪表自检（CPU、合成数据，不需要语料缓存）")
     args = ap.parse_args()
@@ -718,7 +726,7 @@ def main() -> None:
                   freeze_inputs=args.freeze_inputs, init_outputs=args.init_outputs,
                   freeze_bridge=args.freeze_bridge,
                   obj=args.obj, roll_w=args.roll_w, gen_eval_n=args.gen_eval_n,
-                  eval_chunk=args.eval_chunk)
+                  eval_chunk=args.eval_chunk, accum=args.accum)
     else:
         ap.print_help()
 
