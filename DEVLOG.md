@@ -4,6 +4,33 @@
 > 方法与纪律见 `methodology/RULES.md`；现状与结论见 `PROJECT_STATE.md`；绝对数字口径见 `METRICS.md`。
 > 引用证据时只引**已入库**的文件或提交号（R32：未入库的 `logs/*.log` 不可核实）。
 
+## 2026-10-11 深夜 · H2 生成目标轴：**预注册写完、判据被独立复核打回（5 必改）** —— 未开跑
+
+**这一轮只做了一件事：把「自由生成必须被当目标训练」变成一份可判的预注册，并在开跑前请另一个单元复核它。**
+
+- 预注册 = [`experiments/meme_anchor/PREREG_GENOBJ.md`](experiments/meme_anchor/PREREG_GENOBJ.md)：两臂 **T**（现状 4 项 teacher-forced CE）
+  vs **R**（`L_tf + 0.5·mean(4 项 rollout CE)`，rollout = 用模型自己的 argmax 当后续输入、stop-gradient）。
+  ★ 两臂**梯度步数与数据量相同**，R 只多一次 `no_grad` 前向 ⇒ 不是算力对照问题。
+- **独立复核（只读单元）判 BLOCKED**，5 条必改里两条是我原设计真有的坑：
+  ① `gen_eval` 固化 n=200 ⇒ 二项 SE≈3.4pp、真实效应 3.5pp 时联合功效仅 35–50%；
+  ② 三分支有逻辑真空（`1SE<Δ<2SE`、以及"G1 过但 G2/G3 破"都没分支）；
+  ③ G5 拿**单臂 SE** 当配对门槛（口径错 + 与 G1 循环）；
+  ④ N1/N2 **抓不住**两个实现 bug（pass1 漏 `no_grad`、`r_in` 首列没接 BOS）；
+  ⑤ 驱动 tag 缺 `--obj` ⇒ 两臂产物同名静默覆盖。
+  两条建议改也采纳了：G2/G3 门槛改噪声带口径（不再拍死 2pp/0.02/0.03）；**pass1 必须 `eval()`、pass2 必须 `fork_rng()`**
+  —— 否则 R 臂多出的前向会消耗 dropout RNG，两臂从第 2 步起随机流分叉（违反 R34）。
+- **预注册已按 5+2 条改完**（新增 N4/N5/N6 自检、G1 宏平均 + `n_eval=1000`、G5 改配对 SE、五分支判决、G1-ext 预注册扩展规则）。
+- ★ **本轮的教训不是"判据写错了"，而是"判据写死了 ≠ 判据是对的"** —— 复核抓出的两条（功效、随机流分叉）都不是跑出来能看出来的，
+  只会以"没测出差异"和"两臂结果莫名不同"的形式浪费一轮 GPU。
+
+**产物与状态**：
+- 新文件：`experiments/meme_anchor/PREREG_GENOBJ.md`（判据的家）· `experiments/meme_anchor/runs_genobj.sh`（8 run 跑批，含 fail-closed 预检与跑后 `[RUN-FINAL]` 核验）· `stages/86m_genobj_verdict.py`（判据表 + R48 假结果四档自检，实测退出码 0）。
+- **未做**：驱动尚未加 `--obj`；判据表还是复核前的三分支版本；v0 输入卡只有 s1234/s5678 两个 seed（n=4 需补 s9012/s3456）。
+  ★ **首个实现单元（gemini）空收尾、零产物** —— 实测 `git diff stages/86g_zh_en.py` 为空、`--obj` 计数 0 ⇒ **重启后必须重做这一步，不要等它**。
+- **下一步（重启后按此顺序）**：① 驱动加 `--obj/--roll-w` + tag 加 `o-{obj}` + `--gen-eval-n=1000` + N4–N6 自检；
+  ② 判据表升到五分支/宏平均/G1-ext/噪声带门槛，`--selfcheck` 扩到五分支+带内档；③ 补 2 个 α=0.5 输入卡（各 ~11 min，配方见 PREREG §1）；
+  ④ `systemd-run --user --unit=flowme_genobj --collect experiments/meme_anchor/runs_genobj.sh`（8 run，~90–120 min + 评测）；⑤ 判词进 `REPORT_GENOBJ.md` 与 `PROJECT_STATE.md`。
+
 ## 2026-10-11 更夜 · L3-m3d：2×2 对照**推翻了我自己上一轮的归因** —— 代价来自"输入卡可训"，不是"压力位置"
 
 **为什么会怀疑自己**：L3-m3c 说"把压力从输入卡挪到衔接处就不伤还原了"，但它与 L3-m2 之间**同时**差了两件事
