@@ -55,7 +55,7 @@ def main() -> None:
         print(f"| {x['kind']} λ={x['lam']} | {'✅' if p1 else '❌'} ({x['auroc']:.4f}) | "
               f"{'✅' if p2 else '❌'} ({x['spread_v']:.3f}) | "
               f"{'✅' if p3 else '❌'} (V {x['acc_v']*100:.1f}% / T {x['acc_t']*100:.1f}%) | "
-              f"**{'✅ 值得全量重训' if (p1 and p2 and p3) else '❌'}** |")
+              f"**{'—（基线）' if x['kind']=='none' else ('✅ 值得全量重训' if (p1 and p2 and p3) else '❌')}** |")
     print("\n★ 单 seed / 3000 步 / 权重一次拍定 ⇒ **只判方向**（PREREG_SHAPE §3/§5），不得写成『某配置更强』。")
 
 
