@@ -74,6 +74,17 @@ def pad_ids(ids_list: list[list[int]], device) -> torch.Tensor:
     return out.to(device)
 
 
+def _peak_mib(device) -> float:
+    """当前 CUDA 峰值显存（MiB）；CPU 或不可用时返回 nan。
+
+    ★ 用途（用户 2026-10-12 强调的"卡片化第三条目标"）：每个 run 都自带显存口径，
+      这样"降显存 / 按需加载 ⇒ 等效提升参数量"这条目标不会在结论里漂掉（`MEME_FRAMEWORK §1.1`）。
+    """
+    if str(device).startswith("cuda") and torch.cuda.is_available():
+        return float(torch.cuda.max_memory_allocated()) / 2 ** 20
+    return float("nan")
+
+
 def _rollout_ce(model, crit, lang, meme, t_in, t_out):
     """rollout CE：用**模型自己的 argmax** 当后续位置的输入（stop-gradient），CE 照算。
 
@@ -334,6 +345,12 @@ def train_run(lam: float, seed: int, steps: int, maps: str, loss_kind: str, devi
     opt = torch.optim.AdamW([p for p in model.parameters() if p.requires_grad],
                             lr=1e-3, weight_decay=0.01)
     crit = nn.CrossEntropyLoss(ignore_index=PAD)
+    # ★ 显存账（`MEME_FRAMEWORK §1.1` 第三条目标）：参数占用 + 训练/评测/生成三段峰值
+    mem_params_mib = sum(p.numel() * p.element_size() for p in model.parameters()) / 2 ** 20
+    n_tr = sum(p.numel() for p in model.parameters() if p.requires_grad)
+    n_all = sum(p.numel() for p in model.parameters())
+    if str(device).startswith("cuda"):
+        torch.cuda.reset_peak_memory_stats()
     g = torch.Generator().manual_seed(seed)
     order = torch.randperm(len(pack["train_ids"]), generator=g).tolist()
     ptr, snaps, t0 = 0, [], time.time()
@@ -378,9 +395,18 @@ def train_run(lam: float, seed: int, steps: int, maps: str, loss_kind: str, devi
                 slow = lambda x, y: 0.0 <= (x - y) / max(x, 1e-9) < 0.01            # noqa: E731
                 if slow(tot(snaps[-2]), tot(snaps[-1])) and slow(tot(snaps[-3]), tot(snaps[-2])):
                     stopped = "收敛"; break
+    peak_train_mib = _peak_mib(device)
+    if str(device).startswith("cuda"):
+        torch.cuda.reset_peak_memory_stats()
     ev = eval_model(model, pack, device)
+    peak_eval_mib = _peak_mib(device)
     metrics = full_metrics(ev, pack, seed)
+    if str(device).startswith("cuda"):
+        torch.cuda.reset_peak_memory_stats()
     gen = gen_eval(model, pack, device, n=int(gen_eval_n))
+    peak_gen_mib = _peak_mib(device)
+    log(f"[MEM] 参数 {mem_params_mib:.1f} MiB（可训 {n_tr} / 总 {n_all}）· "
+        f"峰值 训练 {peak_train_mib:.1f} / 评测 {peak_eval_mib:.1f} / 生成 {peak_gen_mib:.1f} MiB")
     log(f"[GEN] lam={lam} seed={seed} 贪心自回归(n={gen['gen_n']}) EM: 中→中 {gen['gen_em_zz']*100:.1f}% "
         f"英→英 {gen['gen_em_ee']*100:.1f}% 中→英 {gen['gen_em_ze']*100:.1f}% 英→中 {gen['gen_em_ez']*100:.1f}%")
     # ★ 载入标识必须进文件名：否则"同 bridge/同 seed 但载入不同 ckpt"的两次 run 会撞名互相覆盖（实测发生过）
@@ -403,6 +429,9 @@ def train_run(lam: float, seed: int, steps: int, maps: str, loss_kind: str, devi
                shared_out=shared_out, abba_weight=abba_weight, bridge=bridge,
                bridge_mid=bridge_mid, align_on=align_on,
                obj=obj, roll_w=roll_w, gen_eval_n=int(gen_eval_n),
+               mem=dict(params_mib=mem_params_mib, params_trainable=n_tr, params_total=n_all,
+                        peak_train_mib=peak_train_mib, peak_eval_mib=peak_eval_mib,
+                        peak_gen_mib=peak_gen_mib),
                init_inputs=str(init_inputs), init_outputs=init_outputs,
                freeze_bridge=freeze_bridge, frozen=frozen, tau=tau,
                stopped=stopped, step_time_s=step_time,
