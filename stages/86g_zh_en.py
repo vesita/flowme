@@ -240,11 +240,17 @@ def gen_eval(model, pack, device, n: int = 200, bs: int = 50, maxlen: int = 160)
 def train_run(lam: float, seed: int, steps: int, maps: str, loss_kind: str, device: str,
               bs: int, eval_every: int, shared_out: bool = False, early_stop: bool = False,
               abba_weight: float = 1.0, bridge: str = "none", bridge_mid: int = 64,
-              align_on: str = "bridge",
               init_inputs: str = "", freeze_inputs: bool = False, init_outputs: bool = False,
-              freeze_bridge: bool = False,
+              freeze_bridge: bool = False, align_on: str = "bridge",
               tau: float = 0.07, mu: float = 1.0, gamma: float = 0.2) -> dict:
     mapset = tuple(m for m in maps.split(",") if m)
+    # ★ fail-closed 守卫：位置错位/取值非法必须**当场**报错，而不是跑完 8000 步再崩在保存上
+    assert bridge in ("none", "parser", "dual"), f"bridge 非法：{bridge!r}"
+    assert align_on in ("bridge", "input"), f"align_on 非法：{align_on!r}（该收到 'bridge'/'input'）"
+    for _nm, _v in (("freeze_inputs", freeze_inputs), ("init_outputs", init_outputs),
+                    ("freeze_bridge", freeze_bridge), ("shared_out", shared_out)):
+        assert isinstance(_v, bool), f"{_nm} 应为 bool，收到 {_v!r}"
+    assert not init_inputs or Path(str(init_inputs)).is_file(), f"init_inputs 不是文件：{init_inputs!r}"
     pack = get_pack()
     model = MZ.build(seed, shared_out, bridge, bridge_mid).to(device)
     npar = model.n_params()
@@ -499,8 +505,11 @@ def main() -> None:
         lam, seed = float(args.run[0]), int(args.run[1])
         train_run(lam, seed, args.steps, args.maps, args.loss, dev, args.bs,
                   args.eval_every, args.shared_out, args.early_stop, args.abba_weight,
-                  args.bridge, args.bridge_mid, args.init_inputs, args.freeze_inputs,
-                  args.init_outputs, args.freeze_bridge, args.align_on)
+                  shared_out=args.shared_out, early_stop=args.early_stop,
+                  abba_weight=args.abba_weight, bridge=args.bridge, bridge_mid=args.bridge_mid,
+                  align_on=args.align_on, init_inputs=args.init_inputs,
+                  freeze_inputs=args.freeze_inputs, init_outputs=args.init_outputs,
+                  freeze_bridge=args.freeze_bridge)
     else:
         ap.print_help()
 
