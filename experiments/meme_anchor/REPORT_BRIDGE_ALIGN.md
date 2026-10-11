@@ -1,5 +1,7 @@
 # REPORT_BRIDGE_ALIGN —— L3-m3c：**在衔接处施加对齐压力** ⇒ 锐判据与不伤还原**可以同时拿到**
 
+> ⚠️ **口径警告（2026-10-12）**：本报告由 `stages/86g_zh_en.py` 产出，当时**评测未切 `model.eval()`**（dropout 开）⇒ 绝对读数偏低；同一 ckpt 修正后**自由生成 EM +11~22pp**、**衔接 Δ 0.618→0.481**、**AUROC 0.992→0.975**。同 run 内的相对比较方向不变。详见 `methodology/measurement.md §12`。
+
 > 规格/判据的家 = [`PREREG_BRIDGE_ALIGN.md`](PREREG_BRIDGE_ALIGN.md)（**跑前写死**）；
 > 实现复用 `stages/86g_zh_en.py`（`--bridge parser` + `--loss infonce`，对齐项作用于**衔接处**）+ `stages/86j_bridge_align.py`（判据表）。
 > 运行 2026-10-11 晚；8000 步；★ 引用须带"8000 步 / 冻结 α0.5 输入 / Tatoeba"。

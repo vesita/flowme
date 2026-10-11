@@ -67,3 +67,21 @@
 - v0 配方（`REPORT_BRIDGE_ALIGN §4`）原先只有 4 项 teacher-forced CE；本试验给出**第五项**：`+0.5·mean(4 项 rollout CE)`。
   ★ 是否把 rollout 写进「v0 定义」需用户点头（v0 是锚定基线，改了要重新记版本）；**不动** `MEME_FRAMEWORK §1/§2`。
 - 与 `§4` 的双目标对照：**重构**（已有）· **预测**（仍缺，H1）· **生成**（本试验补上）⇒ 三个压力里现在有两个半。
+
+## 7. ★★ 口径变更（同日）：**评测漏了 `model.eval()`** ⇒ §1/§2 的绝对读数作废，判词按**重测**更新
+
+- **缺陷**：§1 的 8 个 run 由 `stages/86g_zh_en.py` 产出，当时 `eval_model` / `gen_eval` **没有把模型切到 `eval()`**
+  （训练循环结束时模型停在 `train()`），而 `model.py:57,62` 的 transformer 层**带 dropout** ⇒ **评测全程 dropout 开**（正是 R39 禁止的）。
+- **重测**（同样 8 个 ckpt、同一批 test 子集、`--eval-chunk 64`、`gen n=1000`）：
+
+| 量 | §1 旧（dropout 开） | **重测（`eval()`）** |
+|---|---|---|
+| 自由生成宏平均 EM（tf / roll） | 65.56% / 68.05% | **81.89% / 82.48%** |
+| 逐 seed 配对 Δ | +3.30 / +2.15 / +2.05 / +2.45 ⇒ **Δ=+2.49pp**（Δ/SE≈8.9） | +0.40 / +0.65 / +0.80 / +0.50 ⇒ **Δ=+0.59pp**（`SE_paired=0.09pp`、**Δ/SE≈6.7**、4/4 同号） |
+| teacher-forced char 中→中（tf 4 seed） | 91.94–92.25% | **93.87–94.39%** |
+
+- **判词不变**：`G1 ∧ G2 ∧ G3 ∧ G4` ⇒ **分支一「成立」**；但**效应量从 +2.49pp 修正为 +0.59pp**（R37：口径变更**新旧并列**）。
+- ★ **§1/§2 保留作留痕**（旧口径），**引用本试验一律用 §7 的数**。
+- 波及范围（本 driver 产出的全部读数）与另两条口径缺陷（CE 未屏蔽 PAD、评测峰值随 chunk）见
+  [`methodology/measurement.md §12`](../../methodology/measurement.md) 与 [`../scale_axis/REPORT_STAGE0.md`](../scale_axis/REPORT_STAGE0.md)；
+  原始重测读数：`logs/genobj_reeval.json`。

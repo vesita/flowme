@@ -1,5 +1,7 @@
 # REPORT_ALIGN_LOC —— L3-m3d：代价的真正原因是 **「输入卡可训」**，不是「对齐压力加在哪一层」
 
+> ⚠️ **口径警告（2026-10-12）**：本报告由 `stages/86g_zh_en.py` 产出，当时**评测未切 `model.eval()`**（dropout 开）⇒ 绝对读数偏低；同一 ckpt 修正后**自由生成 EM +11~22pp**、**衔接 Δ 0.618→0.481**、**AUROC 0.992→0.975**。同 run 内的相对比较方向不变。详见 `methodology/measurement.md §12`。
+
 > 规格/判据的家 = [`PREREG_ALIGN_LOC.md`](PREREG_ALIGN_LOC.md)（**跑前写死 2×2 + 三分支判决**）；
 > 实现 = `stages/86g_zh_en.py --align-on {bridge,input}` + `stages/86k_align_loc.py`（判据表，已按 R48 用伪造结果预演四分支）。
 > 运行 2026-10-11 21:07；8000 步；λ=0.3；四卡都从 α=0.5 的 v0 载入；都带适配卡。

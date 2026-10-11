@@ -157,12 +157,26 @@ def _combine_loss(t, roll, mz, me, bz, be, loss_kind, lam, abba_weight,
 @torch.no_grad()
 @torch.no_grad()
 def eval_model(model, pack, device, chunk: int = 256) -> dict:
-    """held-out 上评 4 条映射 + **两个衔接点**的模因：输入侧 `m_*`、衔接侧 `b_* = t(m_*)`。"""
+    """held-out 上评 4 条映射 + **两个衔接点**的模因：输入侧 `m_*`、衔接侧 `b_* = t(m_*)`。
+
+    ★ 口径订正（2026-10-12，H7 Stage 0 实测发现）：
+      ① **CE 必须屏蔽 PAD** —— 旧版用 `cross_entropy` 的默认 `ignore_index=-100`，而 `PAD=0` ⇒ **PAD 位置被算进 CE**；
+         实测同一个 ckpt：`ce_zz` 在 `chunk=256` 时 **20.86** nats、`chunk=16` 时 **14.75** nats（差 6.1）——根因是
+         **批内最大长度随 chunk 变** ⇒ padding 占比变。**旧口径的 CE 只在"同 chunk"内可比**（历史 run 都是 256，故历史比较自洽）。
+      ② **char / exact 改成全局计数**（不再"逐 chunk 求比再平均"，那也有 ~3e-3 的 chunk 依赖）。
+    """
     zs = [p[0] for p in pack["test_ids"]]
     es = [p[1] for p in pack["test_ids"]]
-    keys = ("ce_zz", "ce_ee", "ce_ze", "ce_ez", "char_zz", "char_ee", "char_ze", "char_ez",
-            "exact_zz", "exact_ee", "exact_ze", "exact_ez")
-    acc: dict[str, list] = {k: [] for k in keys}
+    # ★ R39：评测前必须显式 eval() —— 训练循环里模型停在 train()，dropout 会静默污染读数（本文件此前漏了这一步）
+    was_training = model.training
+    model.eval()
+    maps4 = ("zz", "ee", "ze", "ez")
+    ce_sum = {k: 0.0 for k in maps4}
+    ce_n = {k: 0 for k in maps4}
+    cor = {k: 0 for k in maps4}
+    tok = {k: 0 for k in maps4}
+    exact_s = {k: 0.0 for k in maps4}
+    seq_n = 0
     m_zh, m_en, b_zh, b_en = [], [], [], []
     for i in range(0, len(zs), chunk):
         zl, el = zs[i:i + chunk], es[i:i + chunk]
@@ -174,14 +188,22 @@ def eval_model(model, pack, device, chunk: int = 256) -> dict:
                 "ee": (model.logits("en", be, te_in), te_out),
                 "ze": (model.logits("en", bz, te_in), te_out),
                 "ez": (model.logits("zh", be, tz_in), tz_out)}
+        seq_n += len(zl)
         for nm, (lg, tgt) in logs.items():
             mk = tgt != PAD
             pred = lg.argmax(-1)
-            acc[f"ce_{nm}"].append(float(nn.functional.cross_entropy(
-                lg.reshape(-1, VOCAB), tgt.reshape(-1)).item()))
-            acc[f"char_{nm}"].append(float(((pred == tgt) & mk).sum()) / max(int(mk.sum()), 1))
-            acc[f"exact_{nm}"].append(float((((pred == tgt) | ~mk).all(1)).float().mean()))
-    out = {k: float(np.mean([x for x in v if x == x])) for k, v in acc.items()}
+            n_tok = int(mk.sum())
+            ce_sum[nm] += float(nn.functional.cross_entropy(
+                lg.reshape(-1, VOCAB), tgt.reshape(-1), ignore_index=PAD).item()) * n_tok
+            ce_n[nm] += n_tok
+            cor[nm] += int(((pred == tgt) & mk).sum())
+            tok[nm] += n_tok
+            exact_s[nm] += float((((pred == tgt) | ~mk).all(1)).float().sum())
+    out: dict[str, float] = {}
+    for nm in maps4:
+        out[f"ce_{nm}"] = ce_sum[nm] / max(ce_n[nm], 1)
+        out[f"char_{nm}"] = cor[nm] / max(tok[nm], 1)
+        out[f"exact_{nm}"] = exact_s[nm] / max(seq_n, 1)
     out["m_zh"], out["m_en"] = torch.cat(m_zh), torch.cat(m_en)
     out["b_zh"], out["b_en"] = torch.cat(b_zh), torch.cat(b_en)
     # ★ 分化度按**衔接处**算（那是"输出衔接"的模因；输入侧的分化度另有读数）
@@ -189,6 +211,8 @@ def eval_model(model, pack, device, chunk: int = 256) -> dict:
     out["spread_en"] = float(out["b_en"].mean(1).std(dim=0).mean())
     out["spread_in_zh"] = float(out["m_zh"].mean(1).std(dim=0).mean())
     out["spread_in_en"] = float(out["m_en"].mean(1).std(dim=0).mean())
+    if was_training:                       # 还原调用方的模式（本函数不该改变调用方的状态）
+        model.train()
     return out
 
 def _junction(A, B, pack, seed: int) -> dict:
@@ -262,6 +286,9 @@ def gen_eval(model, pack, device, n: int = 200, bs: int = 50, maxlen: int = 160)
     ★ 目标直接用 `pack["test_ids"]` 里的 **id**（早先版本每样本都重新 load_tokenizer ⇒ 慢到不可用）。
     """
     ids = pack["test_ids"][:n]
+    # ★ R39：生成评测同样必须 eval()（否则 dropout 让贪心解码逐步抖动）
+    was_training = model.training
+    model.eval()
     out: dict[str, float] = {}
     for nm, (src_ix, gold_ix, lang) in {"zz": (0, 0, "zh"), "ee": (1, 1, "en"),
                                         "ze": (0, 1, "en"), "ez": (1, 0, "zh")}.items():
@@ -294,6 +321,8 @@ def gen_eval(model, pack, device, n: int = 200, bs: int = 50, maxlen: int = 160)
         out[f"gen_em_{nm}"] = em / max(len(ids), 1)
         out[f"gen_char_{nm}"] = cor / max(tot, 1)
     out["gen_n"] = len(ids)
+    if was_training:
+        model.train()
     return out
 
 
@@ -303,7 +332,8 @@ def train_run(lam: float, seed: int, steps: int, maps: str, loss_kind: str, devi
               init_inputs: str = "", freeze_inputs: bool = False, init_outputs: bool = False,
               freeze_bridge: bool = False, align_on: str = "bridge",
               tau: float = 0.07, mu: float = 1.0, gamma: float = 0.2,
-              obj: str = "tf", roll_w: float = 0.5, gen_eval_n: int = 1000) -> dict:
+              obj: str = "tf", roll_w: float = 0.5, gen_eval_n: int = 1000,
+              eval_chunk: int = 64) -> dict:
     mapset = tuple(m for m in maps.split(",") if m)
     # ★ fail-closed 守卫：位置错位/取值非法必须**当场**报错，而不是跑完 8000 步再崩在保存上
     assert bridge in ("none", "parser", "dual"), f"bridge 非法：{bridge!r}"
@@ -311,6 +341,9 @@ def train_run(lam: float, seed: int, steps: int, maps: str, loss_kind: str, devi
     assert obj in ("tf", "roll"), f"obj 非法：{obj!r}（该收到 'tf'/'roll'）"
     assert 0.0 <= float(roll_w) <= 10.0, f"roll_w 非法：{roll_w!r}"
     assert int(gen_eval_n) > 0, f"gen_eval_n 非法：{gen_eval_n!r}"
+    # ★ eval 峰值对 chunk **线性**（≈14 + 23.1×chunk MiB；chunk=256 时 5.9 GB，在 8G 卡上吃满整卡）
+    #   ⇒ 默认降到 64；结果与 chunk 无关（CE 分块平均、char 分块计数），只是评测稍慢。
+    assert 1 <= int(eval_chunk) <= 1024, f"eval_chunk 非法：{eval_chunk!r}"
     for _nm, _v in (("freeze_inputs", freeze_inputs), ("init_outputs", init_outputs),
                     ("freeze_bridge", freeze_bridge), ("shared_out", shared_out)):
         assert isinstance(_v, bool), f"{_nm} 应为 bool，收到 {_v!r}"
@@ -355,6 +388,8 @@ def train_run(lam: float, seed: int, steps: int, maps: str, loss_kind: str, devi
     order = torch.randperm(len(pack["train_ids"]), generator=g).tolist()
     ptr, snaps, t0 = 0, [], time.time()
     step_time, stopped = float("nan"), "上限步数"
+    peak_eval_mib = 0.0          # ★ 评测峰值单独累计（评测发生在循环内，不能混进训练峰值 —— 见下）
+    peak_train_mib = 0.0         # ★ 训练峰值逐步取 max（原因见循环内注释）
     for step in range(1, steps + 1):
         if ptr + bs > len(order):
             order = torch.randperm(len(pack["train_ids"]), generator=g).tolist(); ptr = 0
@@ -374,12 +409,20 @@ def train_run(lam: float, seed: int, steps: int, maps: str, loss_kind: str, devi
         loss.backward()
         nn.utils.clip_grad_norm_(model.parameters(), 1.0)
         opt.step()
+        # ★ 训练峰值必须**在循环内逐步取 max**：评测发生在循环里、且评测后要复位峰值统计，
+        #   若只在循环结束读一次，读到的是"最后一次评测之后"的当前分配（实测教训：那样 bs=8/16/32 都报 162 MiB）
+        peak_train_mib = max(peak_train_mib, _peak_mib(device))
         if step == 20:
             step_time = (time.time() - t0) / 20
             log(f"[SPEED] lam={lam} seed={seed} 前 20 步 {step_time:.3f} s/step "
                 f"⇒ {steps} 步预计 {step_time*steps/60:.1f} min")
         if step % eval_every == 0 or step == steps:
-            ev = eval_model(model, pack, device)
+            ev = eval_model(model, pack, device, chunk=int(eval_chunk))
+            # ★ 评测峰值单独读走，然后**立刻复位**，否则后面读到的"训练峰值"其实是评测峰值
+            #   （实测教训：不这么做时 bs=8/16/32 的"训练峰值"都=6018 MiB，与 batch 无关 = 假指标）
+            peak_eval_mib = max(peak_eval_mib, _peak_mib(device))
+            if str(device).startswith("cuda"):
+                torch.cuda.reset_peak_memory_stats()
             snap = dict(step=step, **{k: ev[k] for k in ev if k.startswith(("ce_", "char_", "exact_"))},
                         spread_zh=ev["spread_zh"], spread_en=ev["spread_en"])
             snaps.append(snap)
@@ -395,11 +438,11 @@ def train_run(lam: float, seed: int, steps: int, maps: str, loss_kind: str, devi
                 slow = lambda x, y: 0.0 <= (x - y) / max(x, 1e-9) < 0.01            # noqa: E731
                 if slow(tot(snaps[-2]), tot(snaps[-1])) and slow(tot(snaps[-3]), tot(snaps[-2])):
                     stopped = "收敛"; break
-    peak_train_mib = _peak_mib(device)
+    peak_train_mib = max(peak_train_mib, _peak_mib(device))
     if str(device).startswith("cuda"):
         torch.cuda.reset_peak_memory_stats()
-    ev = eval_model(model, pack, device)
-    peak_eval_mib = _peak_mib(device)
+    ev = eval_model(model, pack, device, chunk=int(eval_chunk))
+    peak_eval_mib = max(peak_eval_mib, _peak_mib(device))
     metrics = full_metrics(ev, pack, seed)
     if str(device).startswith("cuda"):
         torch.cuda.reset_peak_memory_stats()
@@ -640,6 +683,8 @@ def main() -> None:
                     help="输出卡训练目标：tf=现状 4 项 teacher-forced CE；roll=再加 roll_w·mean(4 项 rollout CE)（PREREG_GENOBJ.md）")
     ap.add_argument("--roll-w", type=float, default=0.5, help="rollout 项权重（仅 --obj roll 生效；默认 0.5）")
     ap.add_argument("--gen-eval-n", type=int, default=1000, help="自由生成评测样本数（gen_eval 的 n；PREREG_GENOBJ §3）")
+    ap.add_argument("--eval-chunk", type=int, default=64,
+                    help="teacher-forced 评测的分块大小；峰值≈14+23.1×chunk MiB（8G 卡上默认 64，结果与 chunk 无关）")
     ap.add_argument("--genobj-selfcheck", action="store_true",
                     help="N1/N2/N4/N5/N6 仪表自检（CPU、合成数据，不需要语料缓存）")
     args = ap.parse_args()
@@ -670,7 +715,8 @@ def main() -> None:
                   align_on=args.align_on, init_inputs=args.init_inputs,
                   freeze_inputs=args.freeze_inputs, init_outputs=args.init_outputs,
                   freeze_bridge=args.freeze_bridge,
-                  obj=args.obj, roll_w=args.roll_w, gen_eval_n=args.gen_eval_n)
+                  obj=args.obj, roll_w=args.roll_w, gen_eval_n=args.gen_eval_n,
+                  eval_chunk=args.eval_chunk)
     else:
         ap.print_help()
 

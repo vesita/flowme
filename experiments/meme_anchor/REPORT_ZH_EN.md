@@ -1,5 +1,7 @@
 # REPORT_ZH_EN —— L3-m2「中英模因锚定」第一版（真句人工对照）
 
+> ⚠️ **口径警告（2026-10-12）**：本报告由 `stages/86g_zh_en.py` 产出，当时**评测未切 `model.eval()`**（dropout 开）⇒ 绝对读数偏低；同一 ckpt 修正后**自由生成 EM +11~22pp**、**衔接 Δ 0.618→0.481**、**AUROC 0.992→0.975**。同 run 内的相对比较方向不变。详见 `methodology/measurement.md §12`。
+
 > 规格/判据的家 = [`PREREG_ZH_EN.md`](PREREG_ZH_EN.md)（**跑前写死**）；数据层 = [`data_zh_en.py`](data_zh_en.py)；
 > 实现 = [`model_zh_en.py`](model_zh_en.py) + `stages/86g_zh_en.py`。
 > 运行 2026-10-11（中午）；3 组 × 2 seed × 8000 步；held-out 2245 对；★ 引用本文件数字须带"8000 步 / 2 seed / Tatoeba"。

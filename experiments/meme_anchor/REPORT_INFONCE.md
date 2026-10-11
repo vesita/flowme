@@ -1,5 +1,7 @@
 # REPORT_INFONCE —— 全量重训：对比式对齐（λ_nce=0.1）vs 基线（λ=0）@10000 步 · 2 seed
 
+> ⚠️ **口径警告（2026-10-12）**：本报告由 `stages/86g_zh_en.py` 产出，当时**评测未切 `model.eval()`**（dropout 开）⇒ 绝对读数偏低；同一 ckpt 修正后**自由生成 EM +11~22pp**、**衔接 Δ 0.618→0.481**、**AUROC 0.992→0.975**。同 run 内的相对比较方向不变。详见 `methodology/measurement.md §12`。
+
 > 规格与判据的唯一真相源 = [`PREREG_INFONCE.md`](PREREG_INFONCE.md)（**跑前写死**）。
 > 本文件报**读数与判词**。前置：探针（`PREREG_SHAPE.md`，单 seed/3000 步）指出"提现有损失的权重"方向错、
 > 换"吸引+排斥"（InfoNCE）方向对。本试验把它放大到**主档同规格 + 2 seed**。
