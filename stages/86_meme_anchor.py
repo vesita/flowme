@@ -39,6 +39,8 @@ EVAL_EVERY_DEFAULT = 500
 PRIMARY_ARCH = "detr"          # 主档（PREREG 订正 2 / 订正 8）：只有它参与判词；yolo 只作附加臂
 PRIMARY_SEEDS = (1234, 5678)   # ★ 订正 12：判词**只认预注册的 2 个 seed** —— 补救轮（seed 9012）等后补臂
                                #   与主档同 arch/同 λ ⇒ 不按 seed 过滤会把它们当主档臂、判词不可复现。
+PRIMARY_LAMS = (0.0, 0.5, 2.0)  # ★ 订正 14：同样只认预注册的 3 个 λ（否则 0.1 等新形状会挤进主档判词）
+PRIMARY_LOSS = "align"          # ★ 主档用的是 "align"；对比式/其它形状一律算"非主档读数"
 
 
 def log(msg: str) -> None:
@@ -236,6 +238,48 @@ def align_extra(mt: torch.Tensor, mi: torch.Tensor, loss_kind: str, lam: float,
     return out
 
 
+@torch.no_grad()
+def gen_eval(model, ids_list, imgs, device, n: int = 200, bs: int = 50, maxlen: int = 64) -> dict:
+    """**真还原**（贪心自回归，不给任何目标前缀）：held-out 前 `n` 句，两条路各算 EM 与字级准确率。
+
+    ★ 只在**最终评估**调用一次（每步迭代一次解码，比 teacher forcing 贵 ~60×）；
+    ★ 与 `eval_model` 的区别：这里是模型自己往下写 ⇒ 用于 `PREREG_INFONCE.md` 的 **Q4**。
+    """
+    model.eval()
+    idx = list(range(min(n, len(ids_list))))
+    out: dict = {}
+    for path in ("text", "image"):
+        em = cor = tot = 0
+        for i in range(0, len(idx), bs):
+            js = idx[i:i + bs]
+            chunk = [ids_list[j] for j in js]
+            meme = (model.meme_text(pad_ids(chunk, device)) if path == "text"
+                    else model.meme_image(img_batch(imgs, js, device)))
+            cur = torch.full((len(chunk), 1), BOS, dtype=torch.long, device=device)
+            done = torch.zeros(len(chunk), dtype=torch.bool, device=device)
+            outs: list[list[int]] = [[] for _ in chunk]
+            for _ in range(maxlen):
+                nxt = model.logits(meme, cur)[:, -1].argmax(-1)
+                for r in range(len(chunk)):
+                    if not done[r]:
+                        if int(nxt[r]) == EOS or len(outs[r]) >= 60:
+                            done[r] = True
+                        else:
+                            outs[r].append(int(nxt[r]))
+                if bool(done.all()):
+                    break
+                cur = torch.cat([cur, nxt.unsqueeze(1)], dim=1)
+            for r, gold in enumerate(chunk):
+                pred = outs[r]
+                em += int(pred == list(gold))
+                cor += sum(1 for a, b in zip(pred, gold) if a == b)
+                tot += len(gold)
+        out[f"gen_em_{path}"] = em / max(len(idx), 1)
+        out[f"gen_char_acc_{path}"] = cor / max(tot, 1)
+    out["gen_n"] = len(idx)
+    return out
+
+
 def train_run(lam: float, seed: int, steps: int, vision_arch: str, device: str,
               bs: int, eval_every: int, loss_kind: str = "align",
               tau: float = 0.07, mu: float = 1.0, gamma: float = 0.2) -> dict:
@@ -312,6 +356,10 @@ def train_run(lam: float, seed: int, steps: int, vision_arch: str, device: str,
     ev = eval_model(model, pack["test_ids"], pack["test_img"], device)
     ev["m_I_src"] = torch.as_tensor(np.asarray(pack["test_img"]))
     metrics = full_metrics(ev, pack, seed)
+    gen = gen_eval(model, pack["test_ids"], pack["test_img"], device)     # ★ Q4：真还原（贪心）
+    log(f"[GEN] lam={lam} seed={seed} 贪心自回归（n={gen['gen_n']}）EM: 文本 {gen['gen_em_text']*100:.1f}% · "
+        f"图片 {gen['gen_em_image']*100:.1f}% | 字准: 文本 {gen['gen_char_acc_text']*100:.1f}% · "
+        f"图片 {gen['gen_char_acc_image']*100:.1f}%")
     # ★ 文件名带"损失形状"标记（否则 infonce 与 infonce_var 同 lam/同 seed 会互相覆盖）
     tag = "" if loss_kind == "align" else f"_{loss_kind}"
     ck = LOGS / f"86_ckpt_{vision_arch}{tag}_l{lam}_s{seed}.pt"
@@ -323,6 +371,7 @@ def train_run(lam: float, seed: int, steps: int, vision_arch: str, device: str,
                params=npar, ckpt=str(ck), ckpt_sha16=sha16(ck), snaps=snaps,
                final=dict(ce_t=ev["ce_t"], ce_v=ev["ce_v"], char_acc_t=ev["char_acc_t"],
                           char_acc_v=ev["char_acc_v"], exact_t=ev["exact_t"], exact_v=ev["exact_v"]),
+               gen=gen,
                metrics=metrics)
     (LOGS / f"86_result_{vision_arch}{tag}_l{lam}_s{seed}.json").write_text(
         json.dumps(js(res), ensure_ascii=False, indent=1), encoding="utf-8")
@@ -447,7 +496,9 @@ def verdict() -> dict:
         raise SystemExit("没有 86_result_*.json")
     all_runs = [json.loads(f.read_text(encoding="utf-8")) for f in files]
     runs = [r for r in all_runs if r.get("vision_arch") == PRIMARY_ARCH
-            and int(r.get("seed", -1)) in PRIMARY_SEEDS]
+            and int(r.get("seed", -1)) in PRIMARY_SEEDS
+            and float(r.get("lam", -1)) in PRIMARY_LAMS
+            and r.get("loss_kind", PRIMARY_LOSS) == PRIMARY_LOSS]
     skipped = [r for r in all_runs if r not in runs]
     if skipped:
         log(f"[VERDICT] 非主档读数（不参与判词）："
