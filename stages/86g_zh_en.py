@@ -504,7 +504,7 @@ def main() -> None:
     elif args.run:
         lam, seed = float(args.run[0]), int(args.run[1])
         train_run(lam, seed, args.steps, args.maps, args.loss, dev, args.bs,
-                  args.eval_every, args.shared_out, args.early_stop, args.abba_weight,
+                  args.eval_every,
                   shared_out=args.shared_out, early_stop=args.early_stop,
                   abba_weight=args.abba_weight, bridge=args.bridge, bridge_mid=args.bridge_mid,
                   align_on=args.align_on, init_inputs=args.init_inputs,
