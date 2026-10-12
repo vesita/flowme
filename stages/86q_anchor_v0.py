@@ -171,15 +171,19 @@ def write_snapshot(path: Path, payload: dict) -> str:
 
 
 # ------------------------------------------------------------------ 契约 / sha
-def build_contract(tok_path: Path, pairs_path: Path) -> dict:
-    """契约 = 全部契约常量（家：meme_anchor model.py/data.py）+ 分词器与数据版的 sha。"""
+def build_contract(tok_path: Path, pairs_path: Path, slots: int = SLOTS) -> dict:
+    """契约 = 全部契约常量（家：meme_anchor model.py/data.py）+ 分词器与数据版的 sha。
+
+    ★ `slots` 必须由调用方给（`--slots`）：L3-t2 起模因槽数是自变量，`model.py` 的模块常量
+      `SLOTS=16` 只是**默认值** —— 拿它去锚 n=4 的卡会把契约写成 16（**假账**，会让 manifest 与权重的形状对不上）。
+    """
     if not tok_path.is_file():
         fail(f"分词器文件缺失：{norm_path(tok_path)}（fail-closed）")
     if not pairs_path.is_file():
         fail(f"pairs 数据缺失：{norm_path(pairs_path)}（fail-closed）")
     return {
         "BOS": BOS, "D": D, "EOS": EOS, "FF": FF, "MAXLEN": MAXLEN, "NHEAD": NHEAD,
-        "PAD": PAD, "SLOTS": SLOTS, "UNK": UNK, "VOCAB": VOCAB,
+        "PAD": PAD, "SLOTS": int(slots), "UNK": UNK, "VOCAB": VOCAB,
         "pairs": norm_path(pairs_path),
         "pairs_count": count_lines(pairs_path),
         "pairs_sha256": file_sha256(pairs_path),
@@ -459,12 +463,18 @@ def cmd_anchor(args: argparse.Namespace) -> None:
     else:
         pairs = DEFAULT_PAIRS
 
-    contract = build_contract(tok_path=tok, pairs_path=pairs)
+    contract = build_contract(tok_path=tok, pairs_path=pairs, slots=int(args.slots))
     contract_sha = canonical_sha(contract)
     entries: list[dict] = []
     blobs: list[dict] = []
     for i, p in enumerate(ck_paths):
         blob = load_ckpt(p, label=f"--anchor ckpt[{i}]")
+        # ★ fail-closed：ckpt 的槽头形状必须与 --slots 一致（否则 manifest 的契约是假账）
+        q = blob["state"].get("zh_in.slots.q")
+        if q is None:
+            fail(f"--anchor ckpt[{i}] {norm_path(p)}: 缺 zh_in.slots.q（fail-closed）")
+        if int(q.shape[0]) != int(args.slots):
+            fail(f"--anchor ckpt[{i}] {norm_path(p)}: 槽头形状不符 —— ckpt {tuple(q.shape)} vs --slots {args.slots}（fail-closed）")
         blobs.append(blob)
         entries.append(card_entry(ckpt_norm=norm_path(p), contract_sha=contract_sha,
                                   blob=blob, label=f"--anchor ckpt[{i}] {norm_path(p)}",
@@ -530,7 +540,7 @@ def cmd_verify(args: argparse.Namespace) -> None:
     pairs = resolve_path(str(contract["pairs"]), bases=(mp.parent,))
     if pairs is None:
         fail(f"contract.pairs: 文件不存在 {contract['pairs']}（fail-closed）")
-    got = build_contract(tok_path=tok, pairs_path=pairs)
+    got = build_contract(tok_path=tok, pairs_path=pairs, slots=int(contract["SLOTS"]))
     for k in sorted(set(got) | set(contract)):
         if k not in contract:
             fail(f"contract.{k}: manifest 缺该字段（重算有值 {got[k]!r}）")
@@ -603,7 +613,8 @@ def cmd_load_check(args: argparse.Namespace) -> None:
     if dev.type == "cuda" and not torch.cuda.is_available():
         fail(f"--device {args.device}: CUDA 不可用（fail-closed）", code=2)
     torch.manual_seed(int(e["seed"]))          # 构造期播种（L3_PLAN §9.7：同 seed 构造可复现）
-    model = MZ.build(seed=int(e["seed"])).to(dev)
+    n_slots = int(man["contract"]["SLOTS"])    # ★ 槽数取自 manifest 的契约（L3-t2 起是自变量）
+    model = MZ.build(seed=int(e["seed"]), n_slots=n_slots).to(dev)
     model.zh_in.load_state_dict(prefixed_state(sub, ("zh_in.",)), strict=True)
     model.en_in.load_state_dict(prefixed_state(sub, ("en_in.",)), strict=True)
     # all 模式：输出卡（MV 接口侧另一半）一并加载
@@ -681,6 +692,9 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--ckpts", default="", help="逗号分隔的 ckpt 列表（--anchor 用）")
     ap.add_argument("--out", default="", help="锚定输出目录（值不入 manifest，保证逐位可复现）")
     ap.add_argument("--note", default="", help="写进 manifest.notes 的自由文本（允许为空）")
+    ap.add_argument("--slots", type=int, default=SLOTS,
+                    help="模因槽数（--anchor 用；默认 16=model.py 的 SLOTS）。★ L3-t2 起槽数是自变量："
+                         "锚 n=4 的卡必须传 --slots 4，否则契约写成 16（假账）且会 fail-closed")
     ap.add_argument("--tokenizer", default="", help="分词器路径（默认 logs/86_tokenizer/char_tokenizer.json）")
     ap.add_argument("--pairs", default="", help="pairs.jsonl 路径（默认 logs/86_cache_zhen/pairs.jsonl）")
     ap.add_argument("--cards", choices=(SCOPE_INPUT, SCOPE_ALL), default=None,
