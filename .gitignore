@@ -21,20 +21,13 @@ checkpoints/
 
 # 训练中间产物
 out/
-logs/*
 *.log
-# 过程日志不入库（可重建、体积大：实测 .log 合计 2.6M）。因此：关键数字必须复述进
-# REPORT / results.json / 提交信息 —— 日志没有版本控制，随时会丢。
-#
-# 但【结论性产物】必须入库（它们是"结果"而不是"过程"）：逐点原始数字 / 账本报告 / 摘要。
-# 体积实测：*.jsonl 132K + *.txt 72K ⇒ 完全可追踪。
-# 依据：FRESH_VIEW 审计发现"判决只存在于提交信息里"、且提交信息引用的 logs/ 行号无法核实。
-!logs/*.jsonl
-!logs/*.json
-!logs/*.txt
-!logs/*_report.txt
-!logs/*_ledger*.json
-!logs/*_summary*.json
+# ★ 类别规则（用户 2026-10-12 定）：**日志与原始产物一律不入库**；进仓库的只有**分析结论**
+#   （`REPORT.md` / `PREREG.md` / `PROJECT_STATE.md` / `methodology/` / `DEVLOG.md`）。
+#   不按尺寸、不按扩展名挑 —— 一个"看起来是结论的小 json"会随手长大，也会诱导别人拿原始产物
+#   当结论提交；结论该由人写进 REPORT，日志替代不了它。
+#   依据：`methodology/RULES.md` R32 与 `AGENTS.md §2`（同一个家，不许两处说法不一致）。
+logs/
 # 权重与 ckpt 继续忽略（logs/*.pt 合计 1.2G）
 
 # 其他常见模型权重格式
@@ -68,9 +61,7 @@ experiments/**/results/*
 !experiments/**/results/ecriteria.json
 # 注：REPORT.md / PREREG.md / 实验代码都在实验根目录，不受影响；结论要写在那里。
 
-# 各实验目录下的 logs/ 同样是【过程日志】（实测 876K / 192 文件，183 个 .log）⇒ 不入库；
-# 只保留结论性产物（*.json 摘要 / *.done 完成标记）。
-# 依据：上面 `logs/*` 只忽略仓库根的 logs/，会误放开 experiments/*/logs/。
-experiments/*/logs/*
-!experiments/*/logs/*.json
-!experiments/*/logs/*.done
+# 各实验目录下的 logs/ 同理：**一律不入库**（自检 / 完成标记都由 `run_all.sh` 当场生成）。
+# 依据：上面的 `logs/` 只匹配仓库根，`experiments/*/logs/` 要单独写；不放开任何例外，
+# 因为"小完成标记"和"原始日志"在同一个目录里，按扩展名挑必然越挑越多。
+experiments/*/logs/
