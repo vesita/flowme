@@ -361,11 +361,13 @@ def floors(drv, pack, device: str, init_ckpt: Path | None) -> dict:
         top = out["lang_top"]["zh" if gold_of[nm] == 0 else "en"]
         tot = sum(len(g) for g in gold)
         out["freq_char"][nm] = sum(g.count(top) for g in gold) / max(tot, 1)
-    # step-0：冻结输入卡 + **未训**输出卡（teacher-forced char）
+    # step-0：**只灌冻结的输入卡**、输出卡保持随机初始化（teacher-forced char）——这是"语言模型先验 + 边界"的白拿分
     out["step0_char"] = {}
     if init_ckpt is not None and Path(init_ckpt).exists():
         blob = torch.load(init_ckpt, map_location="cpu", weights_only=False)
-        m, _ = load_model(drv, init_ckpt, "none", 64, device)
+        m = drv.MZ.build(int(blob["seed"]), False, "none", 64).to(device)
+        sd = {k: v for k, v in blob["state"].items() if k.startswith(("zh_in.", "en_in."))}
+        m.load_state_dict(sd, strict=False)          # ★ 只灌输入卡：输出卡保持随机
         acc, _em, glob = per_item_tf(drv, m, pack, device)
         out["step0_char"] = {k: round(glob[k], 6) for k in MAPS4}
     out["copy_tr"] = (out["copy_em"]["ze"] + out["copy_em"]["ez"]) / 2
@@ -599,12 +601,16 @@ def main() -> int:
             st = paired(metrics["C64"][sd]["tr_macro"], mb["tr_macro"])
             deq = s["contrasts"]["C64-B"]["delta_eq"]
             dmin = s["contrasts"]["C64-B"]["delta_min"]
-            if st["delta"] >= -deq:
-                tag = "未测出掉分"
-            elif st["delta"] >= dmin:
+            # ★ 标签口径按 PREREG §4 D 臂**逐条**判（旧版先判"≥ −δ_eq ⇒ 未测出掉分"，会把
+            #   `D−C64 ≥ +δ_eq`（捷径反而更好）误标成"未测出掉分" —— 文本与代码不一致，已修）
+            if st["delta"] >= deq:
                 tag = "捷径反而更好"
-            else:
+            elif st["delta"] >= -deq:
+                tag = "未测出掉分"
+            elif st["delta"] >= -dmin:
                 tag = "带内（补 seed 再判）"
+            else:
+                tag = "掉分"
             darm[str(sd)] = dict(delta=st["delta"], se=st["se"], delta_eq=deq, tag=tag)
             print(f"    s{sd}: D−C64 = {st['delta']*100:+.2f}pp ± {st['se']*100:.2f}pp（δ_eq={deq*100:.2f}）⇒ {tag}")
         payload["d_arm"] = darm
