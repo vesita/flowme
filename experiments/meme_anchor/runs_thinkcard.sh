@@ -151,4 +151,5 @@ done
 "$PY" stages/86p_thinkcard_verdict.py --n6-check --seeds "$(IFS=,; echo "${SEEDS[*]}")" || { echo "[TC] 核验失败：N6" >&2; fail=1; }
 [ "$fail" = 0 ] || exit 7
 echo "[TC-DONE] 臂×seed 全部完成并通过核验（slots=$SLOTS）$(date -Is)"
-echo "[TC-NEXT] 出判词：  .venv/bin/python stages/86p_thinkcard_verdict.py --n $SLOTS --ref-a16 $REF_A16 --seeds $(IFS=,; echo "${SEEDS[*]}")"
+echo "[TC-NEXT] 出判词：  .venv/bin/python stages/86p_thinkcard_verdict.py --n $SLOTS --ref-a16 $REF_A16 --seeds $(IFS=,; echo "${SEEDS[*]}") --out logs/86p_thinkcard_verdict_n${SLOTS}.json"
+echo "[TC-NEXT] ★ 必须传 --out（按 n 分文件）：默认 --out 会覆盖另一档的判词落盘（2026-10-12 踩过一次）"

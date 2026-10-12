@@ -70,9 +70,12 @@ def load_driver():
     return m
 
 
-def load_model(drv, ckpt: Path, bridge: str, mid: int, device: str):
+def load_model(drv, ckpt: Path, bridge: str, mid: int, device: str, n_slots: int = 16):
+    """★ `n_slots` 必须透传给 `MZ.build`：L3-t2 的 ckpt 是 `[b, n, 128]`，
+    少了这一项会在 `load_state_dict` 上因 `slots.q` 形状不符而崩（2026-10-12 实测：判据表与 N12 探针都栽在这）。"""
     blob = torch.load(ckpt, map_location="cpu", weights_only=False)
-    model = drv.MZ.build(int(blob["seed"]), bool(blob.get("shared_out", False)), bridge, mid).to(device)
+    model = drv.MZ.build(int(blob["seed"]), bool(blob.get("shared_out", False)), bridge, mid,
+                         n_slots=int(n_slots)).to(device)
     model.load_state_dict(blob["state"], strict=True)
     return model, blob
 
@@ -167,7 +170,7 @@ def evaluate_run(drv, pack, arm: str, seed: int, device: str, gen_n: int, bypass
                  n: int = 16) -> dict:
     rj, ck = run_paths(arm, seed, n=n)
     bridge, mid = ARMS[arm]
-    model, blob = load_model(drv, ck, bridge, mid, device)
+    model, blob = load_model(drv, ck, bridge, mid, device, n_slots=n)
     model.bypass_bridge = bool(bypass)
     acc, em, char_global = per_item_tf(drv, model, pack, device)
     gen = per_item_gen(drv, model, pack, device, n=gen_n)
@@ -413,8 +416,9 @@ def bottleneck_gate(a_mean: float | None, ref_a16: float | None, contrasts: dict
     return dict(ok=ok, na=False, why=why, a_n4=a_mean, ref_a16=ref_a16, dmin=dmin, drop=drop)
 
 
-def floors(drv, pack, device: str, init_ckpt: Path | None) -> dict:
-    """地板：copy（输出=输入）逐映射 EM · freq（**逐语言**恒出最高频字符）char · step-0（冻结输入+未训输出）。"""
+def floors(drv, pack, device: str, init_ckpt: Path | None, n_slots: int = 16) -> dict:
+    """地板：copy（输出=输入）逐映射 EM · freq（**逐语言**恒出最高频字符）char · step-0（冻结输入+未训输出）。
+    `n_slots` 透传给建模型处（n=4 时模因是 `[b,4,128]`）。"""
     from collections import Counter
     zs = [p[0] for p in pack["test_ids"]]
     es = [p[1] for p in pack["test_ids"]]
@@ -437,7 +441,7 @@ def floors(drv, pack, device: str, init_ckpt: Path | None) -> dict:
     out["step0_char"] = {}
     if init_ckpt is not None and Path(init_ckpt).exists():
         blob = torch.load(init_ckpt, map_location="cpu", weights_only=False)
-        m = drv.MZ.build(int(blob["seed"]), False, "none", 64).to(device)
+        m = drv.MZ.build(int(blob["seed"]), False, "none", 64, n_slots=int(n_slots)).to(device)
         sd = {k: v for k, v in blob["state"].items() if k.startswith(("zh_in.", "en_in."))}
         m.load_state_dict(sd, strict=False)          # ★ 只灌输入卡：输出卡保持随机
         acc, _em, glob = per_item_tf(drv, m, pack, device)
@@ -547,7 +551,7 @@ def n11_probe(drv, pack, seeds, device, max_items: int = 0, out: str = "logs/86p
         if not ck.exists():
             print(f"[N11] s{s} 缺 n=16 的 A 臂 ckpt：{ck.name} ⇒ 缺产物（读数不完备），先补再跑仪表")
             continue
-        model, _blob = load_model(drv, ck, *ARMS["A"], device)
+        model, _blob = load_model(drv, ck, *ARMS["A"], device, n_slots=16)   # ★ N11 固定用 n=16 的既有 A 臂
         row = {}
         for var, lab in variants:
             r = tf_char_variant(drv, model, pack, device, var, max_items=max_items)
@@ -582,7 +586,7 @@ def n12_probe(drv, pack, seeds, device, max_items: int = 0, out: str = "logs/86p
                 print(f"[N12] {arm}/s{s} 缺 ckpt：{ck.name} ⇒ 跳过（缺产物须先补）")
                 bad = True
                 continue
-            model, _blob = load_model(drv, ck, *ARMS[arm], device)
+            model, _blob = load_model(drv, ck, *ARMS[arm], device, n_slots=n)
             row = {}
             for var, lab in variants:
                 r = tf_char_variant(drv, model, pack, device, var, max_items=max_items)
@@ -836,7 +840,7 @@ def main() -> int:
     init_ckpt = None
     if metrics.get("A") and seeds[0] in metrics["A"]:
         init_ckpt = Path(str(metrics["A"][seeds[0]]["json"].get("init_inputs", "")))
-    fl = floors(drv, pack, dev, init_ckpt)
+    fl = floors(drv, pack, dev, init_ckpt, n_slots=a.n)
     manip_ok, manip_why = manipulation_gate(metrics, seeds, complete)
     res_chk = resolution_check(metrics, seeds, fl, complete)
     s = build_summary(metrics, seeds, complete, problems, manip_ok, manip_why, res_chk)
