@@ -1,0 +1,26 @@
+# E4 独立证据账本（device=cpu）
+文件 83 → 唯一权重 64；两两逐参数比较 2633 对
+同一权重: 14_ckpt_add_1d_seed1234.pt == 19_ckpt_add_1d_nores_seed1234.pt
+同一权重: 14_ckpt_add_1d_seed5678.pt == 19_ckpt_add_1d_nores_seed5678.pt
+同一权重: 14_ckpt_add_2d_seed1234.pt == 15_ckpt_add2d_k1_seed1234.pt == 19_ckpt_add_2d_nores_seed1234.pt
+同一权重: 14_ckpt_add_3d_seed1234.pt == 15_ckpt_add3d_k1_seed1234.pt == 19_ckpt_add_3d_nores_seed1234.pt
+同一权重: 14_ckpt_add_3d_seed5678.pt == 15_ckpt_add3d_k1_seed5678.pt == 19_ckpt_add_3d_nores_seed5678.pt
+同一权重: 14_ckpt_mul_2d_seed1234.pt == 19_ckpt_mul_2d_nores_seed1234.pt
+同一权重: 14_ckpt_sub_2d_seed1234.pt == 19_ckpt_sub_2d_nores_seed1234.pt
+同一权重: 15_ckpt_add2d_k1_seed5678.pt == 19_ckpt_add_2d_nores_seed5678.pt
+同一权重: 15_ckpt_add3d_always_k1_seed1234.pt == 19_ckpt_add_3d_res_seed1234.pt == 20_ckpt_add3d_nopos_seed1234.pt == 22_ckpt_add_3d_A_seed1234.pt == 25_ckpt_e2e_seed1234.pt
+同一权重: 15_ckpt_add3d_always_k1_seed5678.pt == 19_ckpt_add_3d_res_seed5678.pt == 20_ckpt_add3d_nopos_seed5678.pt == 22_ckpt_add_3d_A_seed5678.pt == 25_ckpt_e2e_seed5678.pt
+K1 n_files=6 n_unique=4 残差必要性·『S15 与 S19 两次独立复现』
+K2 n_files=10 n_unique=10 S22 五臂卡内结构对照（A/B/C/D/E ×2 seed）
+K3 n_files=10 n_unique=10 S25 单卡四臂+randall（e2e/anchor/randtgt/alt/randall ×2 seed）
+K4 n_files=20 n_unique=20 S19 五桶 × res/nores（20 run，桶普遍性）
+K5 n_files=23 n_unique=18 S30 ρ(PR,EM) / ρ(集中度,EM)
+K6 n_files=6 n_unique=6 S31 SEEN/UNSEEN 残差效应（add_3d res/nores + 28_e2e6000）
+K7 n_files=2 n_unique=1 S22-A『逐位复现』S19-res（当作独立互证）
+K8 n_files=4 n_unique=4 S25 锚点增益（臂2 anchor vs 臂3 randtgt，+27.0/+9.4pp）
+K9 n_files=4 n_unique=4 S13 容量/步数不是瓶颈（d×2.3、步数×2）
+K10 n_files=2 n_unique=2 S22-A 集中度（前20% 41.2/41.5%）
+n23_all: {"PR-conc": -0.1254, "PR-EM": 0.5617, "conc-EM": 0.0907}
+n18_dedup: {"PR-conc": -0.1352, "PR-EM": 0.5748, "conc-EM": -0.0464}
+无法判定: [] | 覆写: {'15_ckpt_add3d_k1_seed1234.pt': ['52861f8d597dc143', '81958d90434a5205']}
+墙钟=8.4s

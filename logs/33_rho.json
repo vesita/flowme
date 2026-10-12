@@ -1,0 +1,329 @@
+{
+ "available": true,
+ "n23_all": {
+  "PR-conc": {
+   "n": 23,
+   "rho": -0.12543381259295983,
+   "p": 0.5684927374364034
+  },
+  "PR-EM": {
+   "n": 23,
+   "rho": 0.5617253346554287,
+   "p": 0.0052821877391149834
+  },
+  "conc-EM": {
+   "n": 23,
+   "rho": 0.09072880515617252,
+   "p": 0.6805550031364843
+  },
+  "PR-conc|EM>=20%": {
+   "n": 16,
+   "rho": -0.12000000000000001,
+   "p": 0.6580051210127768
+  },
+  "PR-conc|EM<5%": {
+   "n": 5,
+   "rho": 0.36842105263157904,
+   "p": 0.5417509057946895
+  }
+ },
+ "n18_dedup": {
+  "PR-conc": {
+   "n": 18,
+   "rho": -0.13519091847265222,
+   "p": 0.5927498112228585
+  },
+  "PR-EM": {
+   "n": 18,
+   "rho": 0.5748194014447885,
+   "p": 0.012581956389329603
+  },
+  "conc-EM": {
+   "n": 18,
+   "rho": -0.04643962848297213,
+   "p": 0.8548139516870751
+  },
+  "PR-conc|EM>=20%": {
+   "n": 13,
+   "rho": 0.021978021978021976,
+   "p": 0.9431862416608071
+  },
+  "PR-conc|EM<5%": {
+   "n": 4,
+   "rho": 0.39999999999999997,
+   "p": 0.6
+  }
+ },
+ "reported": {
+  "PR_conc": -0.135,
+  "PR_EM": 0.575,
+  "conc_EM": -0.046
+ },
+ "tag2weight": {
+  "S14/add_1d/1234": "W11",
+  "S14/add_1d/5678": "W12",
+  "S14/add_2d/1234": "W13",
+  "S14/add_3d/1234": "W14",
+  "S14/add_3d/5678": "W15",
+  "S14/sub_2d/1234": "W17",
+  "S14/mul_2d/1234": "W16",
+  "S19/add_1d/res/1234": "W35",
+  "S19/add_2d/res/1234": "W37",
+  "S19/add_3d/res/1234": "W21",
+  "S19/sub_2d/res/5678": "W44",
+  "S19/mul_2d/res/5678": "W41",
+  "S19/add_1d/nores/1234": "W11",
+  "S19/add_3d/nores/1234": "W14",
+  "S19/add_3d/nores/5678": "W15",
+  "S20/add3d/pos/1234": "W45",
+  "S20/add3d/nopos/1234": "W21",
+  "S20/add3d/pos/5678": "W46",
+  "S25/e2e/1234": "W21",
+  "S25/anchor/1234": "W57",
+  "S25/alt/5678": "W56",
+  "S25/randtgt/1234": "W61",
+  "S25/randall/1234": "W59"
+ },
+ "dup_map": {
+  "W11": [
+   "S14/add_1d/1234",
+   "S19/add_1d/nores/1234"
+  ],
+  "W14": [
+   "S14/add_3d/1234",
+   "S19/add_3d/nores/1234"
+  ],
+  "W15": [
+   "S14/add_3d/5678",
+   "S19/add_3d/nores/5678"
+  ],
+  "W21": [
+   "S19/add_3d/res/1234",
+   "S20/add3d/nopos/1234",
+   "S25/e2e/1234"
+  ]
+ },
+ "conc_recheck_maxabs": 0.0,
+ "ledger": [
+  {
+   "id": "K1",
+   "name": "残差必要性·『S15 与 S19 两次独立复现』",
+   "n_files": 6,
+   "n_missing": 0,
+   "n_unique_weights": 4,
+   "weight_ids": [
+    "W14",
+    "W15",
+    "W21",
+    "W22"
+   ],
+   "per_seed": {
+    "1234": 2,
+    "5678": 2
+   },
+   "missing": []
+  },
+  {
+   "id": "K2",
+   "name": "S22 五臂卡内结构对照（A/B/C/D/E ×2 seed）",
+   "n_files": 10,
+   "n_missing": 0,
+   "n_unique_weights": 10,
+   "weight_ids": [
+    "W21",
+    "W22",
+    "W47",
+    "W48",
+    "W49",
+    "W50",
+    "W51",
+    "W52",
+    "W53",
+    "W54"
+   ],
+   "per_seed": {
+    "1234": 5,
+    "5678": 5
+   },
+   "missing": []
+  },
+  {
+   "id": "K3",
+   "name": "S25 单卡四臂+randall（e2e/anchor/randtgt/alt/randall ×2 seed）",
+   "n_files": 10,
+   "n_missing": 0,
+   "n_unique_weights": 10,
+   "weight_ids": [
+    "W21",
+    "W22",
+    "W55",
+    "W56",
+    "W57",
+    "W58",
+    "W59",
+    "W60",
+    "W61",
+    "W62"
+   ],
+   "per_seed": {
+    "1234": 5,
+    "5678": 5
+   },
+   "missing": []
+  },
+  {
+   "id": "K4",
+   "name": "S19 五桶 × res/nores（20 run，桶普遍性）",
+   "n_files": 20,
+   "n_missing": 0,
+   "n_unique_weights": 20,
+   "weight_ids": [
+    "W11",
+    "W12",
+    "W13",
+    "W14",
+    "W15",
+    "W16",
+    "W17",
+    "W18",
+    "W21",
+    "W22",
+    "W35",
+    "W36",
+    "W37",
+    "W38",
+    "W39",
+    "W40",
+    "W41",
+    "W42",
+    "W43",
+    "W44"
+   ],
+   "per_seed": {
+    "1234": 10,
+    "5678": 10
+   },
+   "missing": []
+  },
+  {
+   "id": "K5",
+   "name": "S30 ρ(PR,EM) / ρ(集中度,EM)",
+   "n_files": 23,
+   "n_missing": 0,
+   "n_unique_weights": 18,
+   "weight_ids": [
+    "W11",
+    "W12",
+    "W13",
+    "W14",
+    "W15",
+    "W16",
+    "W17",
+    "W21",
+    "W35",
+    "W37",
+    "W41",
+    "W44",
+    "W45",
+    "W46",
+    "W56",
+    "W57",
+    "W59",
+    "W61"
+   ],
+   "per_seed": {
+    "1234": 12,
+    "5678": 6
+   },
+   "missing": []
+  },
+  {
+   "id": "K6",
+   "name": "S31 SEEN/UNSEEN 残差效应（add_3d res/nores + 28_e2e6000）",
+   "n_files": 6,
+   "n_missing": 0,
+   "n_unique_weights": 6,
+   "weight_ids": [
+    "W14",
+    "W15",
+    "W21",
+    "W22",
+    "W63",
+    "W64"
+   ],
+   "per_seed": {
+    "1234": 3,
+    "5678": 3
+   },
+   "missing": []
+  },
+  {
+   "id": "K7",
+   "name": "S22-A『逐位复现』S19-res（当作独立互证）",
+   "n_files": 2,
+   "n_missing": 0,
+   "n_unique_weights": 1,
+   "weight_ids": [
+    "W21"
+   ],
+   "per_seed": {
+    "1234": 1,
+    "5678": 0
+   },
+   "missing": []
+  },
+  {
+   "id": "K8",
+   "name": "S25 锚点增益（臂2 anchor vs 臂3 randtgt，+27.0/+9.4pp）",
+   "n_files": 4,
+   "n_missing": 0,
+   "n_unique_weights": 4,
+   "weight_ids": [
+    "W57",
+    "W58",
+    "W61",
+    "W62"
+   ],
+   "per_seed": {
+    "1234": 2,
+    "5678": 2
+   },
+   "missing": []
+  },
+  {
+   "id": "K9",
+   "name": "S13 容量/步数不是瓶颈（d×2.3、步数×2）",
+   "n_files": 4,
+   "n_missing": 0,
+   "n_unique_weights": 4,
+   "weight_ids": [
+    "W07",
+    "W08",
+    "W09",
+    "W10"
+   ],
+   "per_seed": {
+    "1234": 2,
+    "5678": 2
+   },
+   "missing": []
+  },
+  {
+   "id": "K10",
+   "name": "S22-A 集中度（前20% 41.2/41.5%）",
+   "n_files": 2,
+   "n_missing": 0,
+   "n_unique_weights": 2,
+   "weight_ids": [
+    "W21",
+    "W22"
+   ],
+   "per_seed": {
+    "1234": 1,
+    "5678": 1
+   },
+   "missing": []
+  }
+ ],
+ "wall_s": 8.39635705947876
+}

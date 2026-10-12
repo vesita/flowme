@@ -1,0 +1,96 @@
+10月 07 22:00:20 pico systemd[1115]: Started [systemd-run] /usr/bin/uv run --no-sync python stages/09_textgen_gsm8k.py.
+10月 07 22:00:20 pico uv[39168]: warning: Found both a `uv.toml` file and a `[tool.uv]` section in an adjacent `pyproject.toml`. The following fields from `[tool.uv]` will be ignored in favor of the `uv.toml` file:
+10月 07 22:00:20 pico uv[39168]: - index
+10月 07 22:00:21 pico uv[39172]: /opt/amdgpu/share/libdrm/amdgpu.ids: No such file or directory
+10月 07 22:00:26 pico uv[39172]: device: cuda AMD Radeon Graphics
+10月 07 22:00:29 pico uv[39172]: [DATA] blocks=7396 parsed=7394 bad=2 records=3867 | split 9:1 train=3480 test=387 (seed42) | trunc=7269 (187.98%) dropped=3527 | span_mismatch=0 nonadditive=0 | test有gold(EM分母)=385
+10月 07 22:00:29 pico uv[39172]: [TOK] WordLevel V=8192 PAD=131 EOS=128 | import /home/vesita/coding/my/nanoSeek/training/dialogue_stream.py
+10月 07 22:00:30 pico uv[39172]: Traceback (most recent call last):
+10月 07 22:00:30 pico uv[39172]:   File "/home/vesita/coding/my/flowme/stages/09_textgen_gsm8k.py", line 389, in <module>
+10月 07 22:00:30 pico uv[39172]:     _loss = masked_ce(probe_model, train[:BATCH])
+10月 07 22:00:30 pico uv[39172]:             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+10月 07 22:00:30 pico uv[39172]:   File "/home/vesita/coding/my/flowme/stages/09_textgen_gsm8k.py", line 212, in masked_ce
+10月 07 22:00:30 pico uv[39172]:     logits = model.logits(ids)
+10月 07 22:00:30 pico uv[39172]:              ^^^^^^^^^^^^^^^^^
+10月 07 22:00:30 pico uv[39172]:   File "/home/vesita/coding/my/flowme/stages/09_textgen_gsm8k.py", line 184, in logits
+10月 07 22:00:30 pico uv[39172]:     h = self.in_enc(x, src_mask=m)
+10月 07 22:00:30 pico uv[39172]:         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+10月 07 22:00:30 pico uv[39172]:   File "/home/vesita/coding/my/flowme/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+10月 07 22:00:30 pico uv[39172]:     return self._call_impl(*args, **kwargs)
+10月 07 22:00:30 pico uv[39172]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+10月 07 22:00:30 pico uv[39172]:   File "/home/vesita/coding/my/flowme/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+10月 07 22:00:30 pico uv[39172]:     return forward_call(*args, **kwargs)
+10月 07 22:00:30 pico uv[39172]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+10月 07 22:00:30 pico uv[39172]:   File "/home/vesita/coding/my/flowme/.venv/lib/python3.12/site-packages/torch/nn/modules/transformer.py", line 928, in forward
+10月 07 22:00:30 pico uv[39172]:     x = x + self._sa_block(
+10月 07 22:00:30 pico uv[39172]:             ^^^^^^^^^^^^^^^
+10月 07 22:00:30 pico uv[39172]:   File "/home/vesita/coding/my/flowme/.venv/lib/python3.12/site-packages/torch/nn/modules/transformer.py", line 949, in _sa_block
+10月 07 22:00:30 pico uv[39172]:     x = self.self_attn(
+10月 07 22:00:30 pico uv[39172]:         ^^^^^^^^^^^^^^^
+10月 07 22:00:30 pico uv[39172]:   File "/home/vesita/coding/my/flowme/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+10月 07 22:00:30 pico uv[39172]:     return self._call_impl(*args, **kwargs)
+10月 07 22:00:30 pico uv[39172]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+10月 07 22:00:30 pico uv[39172]:   File "/home/vesita/coding/my/flowme/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+10月 07 22:00:30 pico uv[39172]:     return forward_call(*args, **kwargs)
+10月 07 22:00:30 pico uv[39172]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+10月 07 22:00:30 pico uv[39172]:   File "/home/vesita/coding/my/flowme/.venv/lib/python3.12/site-packages/torch/nn/modules/activation.py", line 1488, in forward
+10月 07 22:00:30 pico uv[39172]:     attn_output, attn_output_weights = F.multi_head_attention_forward(
+10月 07 22:00:30 pico uv[39172]:                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+10月 07 22:00:30 pico uv[39172]:   File "/home/vesita/coding/my/flowme/.venv/lib/python3.12/site-packages/torch/nn/functional.py", line 6348, in multi_head_attention_forward
+10月 07 22:00:30 pico uv[39172]:     raise RuntimeError(
+10月 07 22:00:30 pico uv[39172]: RuntimeError: The shape of the 3D attn_mask is torch.Size([32, 256, 256]), but should be (128, 256, 256).
+10月 07 22:00:31 pico systemd[1115]: s09-textgen.service: Main process exited, code=exited, status=1/FAILURE
+10月 07 22:00:31 pico systemd[1115]: s09-textgen.service: Failed with result 'exit-code'.
+10月 07 22:00:31 pico systemd[1115]: s09-textgen.service: Consumed 12.261s CPU time over 11.218s wall clock time, 1.4G memory peak.
+10月 07 22:01:40 pico systemd[1115]: Started [systemd-run] /usr/bin/uv run --no-sync python stages/09_textgen_gsm8k.py.
+10月 07 22:01:40 pico uv[39453]: warning: Found both a `uv.toml` file and a `[tool.uv]` section in an adjacent `pyproject.toml`. The following fields from `[tool.uv]` will be ignored in favor of the `uv.toml` file:
+10月 07 22:01:40 pico uv[39453]: - index
+10月 07 22:01:41 pico uv[39457]: /opt/amdgpu/share/libdrm/amdgpu.ids: No such file or directory
+10月 07 22:01:45 pico uv[39457]: device: cuda AMD Radeon Graphics
+10月 07 22:01:49 pico uv[39457]: [DATA] blocks=7396 parsed=7394 bad=2 records=3867 | split 9:1 train=3480 test=387 (seed42) | trunc=7269 (187.98%) dropped=3527 | span_mismatch=0 nonadditive=0 | test有gold(EM分母)=385
+10月 07 22:01:49 pico uv[39457]: [TOK] WordLevel V=8192 PAD=131 EOS=128 | import /home/vesita/coding/my/nanoSeek/training/dialogue_stream.py
+10月 07 22:01:55 pico uv[39457]: [GATE A] step20 grad is not None 计数 {'输入卡': 13, '思维卡': 12, '输出卡': 2} / 参数总数 {'输入卡': 13, '思维卡': 12, '输出卡': 2} => PASS 全>0
+10月 07 22:03:39 pico uv[39457]:   [train] seed=1234 identity=False step=500/3000 loss=1.5880 elapsed=108s
+10月 07 22:05:27 pico uv[39457]:   [train] seed=1234 identity=False step=1000/3000 loss=1.3913 elapsed=217s
+10月 07 22:07:16 pico uv[39457]:   [train] seed=1234 identity=False step=1500/3000 loss=1.2777 elapsed=325s
+10月 07 22:07:35 pico systemd[1115]: Stopping [systemd-run] /usr/bin/uv run --no-sync python stages/09_textgen_gsm8k.py...
+10月 07 22:07:35 pico systemd[1115]: s09-textgen.service: Main process exited, code=exited, status=143/n/a
+10月 07 22:07:35 pico systemd[1115]: s09-textgen.service: Failed with result 'exit-code'.
+10月 07 22:07:35 pico systemd[1115]: Stopped [systemd-run] /usr/bin/uv run --no-sync python stages/09_textgen_gsm8k.py.
+10月 07 22:07:35 pico systemd[1115]: s09-textgen.service: Consumed 11min 28.733s CPU time over 5min 54.965s wall clock time, 1.4G memory peak.
+10月 07 22:08:32 pico systemd[1115]: Started [systemd-run] /usr/bin/uv run --no-sync python stages/09_textgen_gsm8k.py.
+10月 07 22:08:32 pico uv[41301]: warning: Found both a `uv.toml` file and a `[tool.uv]` section in an adjacent `pyproject.toml`. The following fields from `[tool.uv]` will be ignored in favor of the `uv.toml` file:
+10月 07 22:08:32 pico uv[41301]: - index
+10月 07 22:08:33 pico uv[41305]: /opt/amdgpu/share/libdrm/amdgpu.ids: No such file or directory
+10月 07 22:08:38 pico uv[41305]: device: cuda AMD Radeon Graphics
+10月 07 22:08:46 pico uv[41305]: [DATA] blocks=7396 parsed=7394 bad=2 records=7389 | split 9:1 train=6650 test=739 (seed42) | 任一截断(弹头或截目标)=7264/7394 (98.2%) | dropped=5
+10月 07 22:08:46 pico uv[41305]: [TRUNC] prompt弹头=5595/7394 (75.7%) 弹出句数=12225 | 目标截断(保尾含####行)=7193/7394 (97.3%) | 任一截断样本合计见下 | 丢弃=5 窗口溢出=23
+10月 07 22:08:46 pico uv[41305]: [SPAN] span_mismatch=0 nonadditive=0 | test有gold(EM分母)=739
+10月 07 22:08:46 pico uv[41305]: [TOK] WordLevel V=8192 PAD=131 EOS=128 | import /home/vesita/coding/my/nanoSeek/training/dialogue_stream.py
+10月 07 22:08:51 pico uv[41305]: [GATE A] step20 grad is not None 计数 {'输入卡': 13, '思维卡': 12, '输出卡': 2} / 参数总数 {'输入卡': 13, '思维卡': 12, '输出卡': 2} => PASS 全>0
+10月 07 22:10:35 pico uv[41305]:   [train] seed=1234 identity=False step=500/3000 loss=1.3801 elapsed=108s
+10月 07 22:12:23 pico uv[41305]:   [train] seed=1234 identity=False step=1000/3000 loss=1.2607 elapsed=216s
+10月 07 22:14:11 pico uv[41305]:   [train] seed=1234 identity=False step=1500/3000 loss=1.0798 elapsed=324s
+10月 07 22:15:59 pico uv[41305]:   [train] seed=1234 identity=False step=2000/3000 loss=1.1804 elapsed=431s
+10月 07 22:17:47 pico uv[41305]:   [train] seed=1234 identity=False step=2500/3000 loss=1.1477 elapsed=539s
+10月 07 22:19:34 pico uv[41305]:   [train] seed=1234 identity=False step=3000/3000 loss=0.9584 elapsed=647s
+10月 07 22:19:34 pico uv[41305]: [GATE C] ①复制prompt尾部: 配对CE=15.5883±0.0171 nats  EM=0.00%±0.00 (n=739)
+10月 07 22:19:34 pico uv[41305]: [GATE C] ②最常见####答案: 配对CE=10.4186±0.0316 nats  EM=1.89%±0.50 (n=739)
+10月 07 22:19:34 pico uv[41305]: [GATE C] ③最常出现token: 配对CE=14.5091±0.0271 nats  EM=0.00%±0.00 (n=739)
+10月 07 22:19:35 pico uv[41305]: Traceback (most recent call last):
+10月 07 22:19:35 pico uv[41305]:   File "/home/vesita/coding/my/flowme/stages/09_textgen_gsm8k.py", line 463, in <module>
+10月 07 22:19:35 pico uv[41305]:     em_s1 = greedy_em(model_s1, test)
+10月 07 22:19:35 pico uv[41305]:             ^^^^^^^^^^^^^^^^^^^^^^^^^
+10月 07 22:19:35 pico uv[41305]:   File "/home/vesita/coding/my/flowme/.venv/lib/python3.12/site-packages/torch/utils/_contextlib.py", line 120, in decorate_context
+10月 07 22:19:35 pico uv[41305]:     return func(*args, **kwargs)
+10月 07 22:19:35 pico uv[41305]:            ^^^^^^^^^^^^^^^^^^^^^
+10月 07 22:19:35 pico uv[41305]:   File "/home/vesita/coding/my/flowme/stages/09_textgen_gsm8k.py", line 341, in greedy_em
+10月 07 22:19:35 pico uv[41305]:     logits = model.logits(ids)
+10月 07 22:19:35 pico uv[41305]:              ^^^^^^^^^^^^^^^^^
+10月 07 22:19:35 pico uv[41305]:   File "/home/vesita/coding/my/flowme/stages/09_textgen_gsm8k.py", line 226, in logits
+10月 07 22:19:35 pico uv[41305]:     x = self.emb(ids) + self.pe[:n].unsqueeze(0)
+10月 07 22:19:35 pico uv[41305]:         ~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~
+10月 07 22:19:35 pico uv[41305]: RuntimeError: The size of tensor a (257) must match the size of tensor b (256) at non-singleton dimension 1
+10月 07 22:19:37 pico systemd[1115]: s09-textgen.service: Main process exited, code=exited, status=1/FAILURE
+10月 07 22:19:37 pico systemd[1115]: s09-textgen.service: Failed with result 'exit-code'.
+10月 07 22:19:37 pico systemd[1115]: s09-textgen.service: Consumed 21min 31.300s CPU time over 11min 4.489s wall clock time, 1.4G memory peak.

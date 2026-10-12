@@ -1,0 +1,22 @@
+=== FULL PYTEST ===
+- index
+........................................................................ [ 57%]
+......................................................                   [100%]
+126 passed in 13.68s
+
+=== RUFF on my files ===
+   |
+help: Organize imports
+   |
+26 | import re
+   -
+27 | from collections import Counter
+   |
+
+Found 2 errors.
+[*] 2 fixable with the `--fix` option.
+
+=== RUFF whole tree ===
+
+Found 226 errors.
+[*] 151 fixable with the `--fix` option (24 hidden fixes can be enabled with the `--unsafe-fixes` option).

@@ -1,0 +1,50 @@
+# E7 证据账本更新（device=cpu，E4 基线 83→64）
+文件 115 → ★唯一权重 86；可加载 115；逐参比较 4309 对；结构分组 7
+新增同一权重组 4；扩大 2；E4 基线保留 8
+NEW 同一权重: 25_ckpt_anchor_seed1234.pt == 34_ckpt_frozen6000_seed1234.pt
+NEW 同一权重: 25_ckpt_anchor_seed5678.pt == 34_ckpt_frozen6000_seed5678.pt
+NEW 同一权重: 28_ckpt_e2e6000_seed1234.pt == 36_ckpt_A_s6000_seed1234.pt == 36_ckpt_res_s6000_seed1234.pt == 37_ckpt_w1_s6000_seed1234.pt
+NEW 同一权重: 28_ckpt_e2e6000_seed5678.pt == 36_ckpt_A_s6000_seed5678.pt == 36_ckpt_res_s6000_seed5678.pt == 37_ckpt_w1_s6000_seed5678.pt
+EXP 同一权重: 15_ckpt_add3d_always_k1_seed1234.pt == 19_ckpt_add_3d_res_seed1234.pt == 20_ckpt_add3d_nopos_seed1234.pt == 22_ckpt_add_3d_A_seed1234.pt == 25_ckpt_e2e_seed1234.pt == 34_ckpt_e2e3000_seed1234.pt
+EXP 同一权重: 15_ckpt_add3d_always_k1_seed5678.pt == 19_ckpt_add_3d_res_seed5678.pt == 20_ckpt_add3d_nopos_seed5678.pt == 22_ckpt_add_3d_A_seed5678.pt == 25_ckpt_e2e_seed5678.pt == 34_ckpt_e2e3000_seed5678.pt
+① n_files=10 ★n_unique=10 卡内结构不可替代（E6 @6000，B/C/D/E 各 2 seed vs A）
+② n_files=4 ★n_unique=4 残差在饱和点失效（E6 nores vs res @6000）
+③ n_files=8 ★n_unique=8 卡边界零增量（E1 构造性证明 + 统计对照）
+④ n_files=4 ★n_unique=4 单卡更好被推翻（E5 frozen@6000 vs e2e@6000）
+⑤ n_files=6 ★n_unique=6 loss 加权（S37 w1/w3/w10 @6000）
+定价①: 独立n=10 同号=True ⇒ 强 | B/C/D/E 对 A 的 Δ 在 2 seed 上全部同号（大幅更低）
+定价②: 独立n=4 同号=False ⇒ 不可判 | Δ(res−nores) 随 seed 翻号 ⇒ 未过 2 seed 同号
+定价③: 独立n=8 同号=True ⇒ 中 | 零增量只由构造性逐位恒等（n=1 证明）支撑；统计对照 cards≥mono 并非零
+定价④: 独立n=4 同号=True ⇒ 中 | frozen−e2e 均 ≤−2SE，2 seed 同号 ⇒ 单卡更好被推翻
+定价⑤: 独立n=6 同号=False ⇒ 不可判 | S37 自判 6/6 臂 @4500→6000 仍在升 ⇒ 未饱和，R35 结论不可下；且方向随 seed 翻转
+逐对 37_ckpt_w1_s6000_seed1234.pt vs 36_ckpt_res_s6000_seed1234.pt: 同一权重（max|Δ|=0） max|Δ|=0.000e+00
+逐对 37_ckpt_w1_s6000_seed5678.pt vs 36_ckpt_res_s6000_seed5678.pt: 同一权重（max|Δ|=0） max|Δ|=0.000e+00
+逐对 36_ckpt_A_s6000_seed1234.pt vs 36_ckpt_res_s6000_seed1234.pt: 同一权重（max|Δ|=0） max|Δ|=0.000e+00
+逐对 36_ckpt_A_s6000_seed5678.pt vs 36_ckpt_res_s6000_seed5678.pt: 同一权重（max|Δ|=0） max|Δ|=0.000e+00
+逐对 36_ckpt_res_s6000_seed1234.pt vs 19_ckpt_add_3d_res_seed1234.pt: 不同权重 max|Δ|=4.932e-01
+逐对 36_ckpt_A_s6000_seed5678.pt vs 19_ckpt_add_3d_res_seed5678.pt: 不同权重 max|Δ|=4.152e-01
+逐对 36_ckpt_A_s6000_seed1234.pt vs 22_ckpt_add_3d_A_seed1234.pt: 不同权重 max|Δ|=4.932e-01
+逐对 36_ckpt_A_s6000_seed5678.pt vs 22_ckpt_add_3d_A_seed5678.pt: 不同权重 max|Δ|=4.152e-01
+逐对 36_ckpt_res_s6000_seed1234.pt vs 25_ckpt_e2e_seed1234.pt: 不同权重 max|Δ|=4.932e-01
+逐对 36_ckpt_A_s6000_seed5678.pt vs 25_ckpt_e2e_seed5678.pt: 不同权重 max|Δ|=4.152e-01
+逐对 35_ckpt_cards_s6000_seed1234.pt vs 36_ckpt_res_s6000_seed1234.pt: 不同权重 max|Δ|=5.796e-01
+逐对 35_ckpt_cards_s6000_seed5678.pt vs 36_ckpt_res_s6000_seed5678.pt: 不同权重 max|Δ|=6.295e-01
+逐对 35_ckpt_cards_s3000_seed1234.pt vs 19_ckpt_add_3d_res_seed1234.pt: 不同权重 max|Δ|=3.625e-01
+逐对 35_ckpt_cards_s3000_seed5678.pt vs 19_ckpt_add_3d_res_seed5678.pt: 不同权重 max|Δ|=3.489e-01
+逐对 37_ckpt_w1_s6000_seed1234.pt vs 37_ckpt_w3_s6000_seed1234.pt: 不同权重 max|Δ|=6.414e-01
+逐对 37_ckpt_w1_s6000_seed1234.pt vs 37_ckpt_w10_s6000_seed1234.pt: 不同权重 max|Δ|=7.186e-01
+逐对 37_ckpt_w3_s6000_seed1234.pt vs 37_ckpt_w10_s6000_seed1234.pt: 不同权重 max|Δ|=7.097e-01
+逐对 37_ckpt_w3_s6000_seed1234.pt vs 35_ckpt_cards_s6000_seed1234.pt: 不同权重 max|Δ|=7.448e-01
+逐对 37_ckpt_w10_s6000_seed1234.pt vs 35_ckpt_cards_s6000_seed1234.pt: 不同权重 max|Δ|=8.150e-01
+逐对 37_ckpt_w3_s6000_seed5678.pt vs 35_ckpt_cards_s6000_seed5678.pt: 不同权重 max|Δ|=8.337e-01
+逐对 37_ckpt_w10_s6000_seed5678.pt vs 35_ckpt_cards_s6000_seed5678.pt: 不同权重 max|Δ|=7.039e-01
+逐对 37_ckpt_w3_s6000_seed1234.pt vs 35_ckpt_mono_s6000_seed1234.pt: 结构不可比（键集/形状不同）⇒不同权重
+逐对 37_ckpt_w10_s6000_seed1234.pt vs 35_ckpt_mono_s6000_seed1234.pt: 结构不可比（键集/形状不同）⇒不同权重
+逐对 37_ckpt_w10_s6000_seed5678.pt vs 35_ckpt_mono_s6000_seed5678.pt: 结构不可比（键集/形状不同）⇒不同权重
+逐对 35_ckpt_cards_s6000_seed1234.pt vs 35_ckpt_mono_s6000_seed1234.pt: 结构不可比（键集/形状不同）⇒不同权重
+逐对 35_ckpt_cards_s6000_seed5678.pt vs 35_ckpt_mono_s6000_seed5678.pt: 结构不可比（键集/形状不同）⇒不同权重
+逐对 34_ckpt_frozen6000_seed1234.pt vs 28_ckpt_e2e6000_seed1234.pt: 不同权重 max|Δ|=4.932e-01
+逐对 34_ckpt_frozen6000_seed5678.pt vs 28_ckpt_e2e6000_seed5678.pt: 不同权重 max|Δ|=4.474e-01
+无法判定/诚实清单: 读不了=0 覆写={'15_ckpt_add3d_k1_seed1234.pt': ['52861f8d597dc143', '81958d90434a5205']} 结构不可比=5 结论缺文件={}
+日志提及但磁盘缺失: []
+墙钟=267.5s
