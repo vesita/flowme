@@ -20,6 +20,10 @@ SLOTS="${TC_SLOTS:-16}"
 SEEDS=("$@")
 [ -z "${SEEDS[0]:-}" ] && SEEDS=(1234 5678 9012 3456)
 NSUF=""; [ "$SLOTS" = "16" ] || NSUF="_n${SLOTS}"
+# ★ 档〇 的参照：**n=16 的 A 臂主指标**（口径 = 逐样本宏平均，与判据表 `--n` 族一致）
+#   家 = L3-t1 的判据表落盘（逐 seed 60.4898/60.1101/60.4323/60.4013 ⇒ 均值 60.3584%）
+#   ★ 别与 token 加权口径（58.38%）混用 —— 那是另一个量（REPORT_THINKCARD §2.1 两栏并列）。
+REF_A16="${TC_REF_A16:-0.603584}"
 
 # 臂表：名字 | bridge | mid | ff
 ARMS=("A:none:64:256" "B:parser:128:256" "C64:parser:64:256" "C32:parser:32:256")
@@ -44,6 +48,13 @@ echo "[TC] 预检 start $(date -Is)（slots=$SLOTS steps=$STEPS seeds=${SEEDS[*]
 CUDA_VISIBLE_DEVICES="" "$PY" -m pytest tests/test_slots_config.py -q >/tmp/tc_n9.log 2>&1 \
   || { echo "[TC] 预检失败：N9 槽数契约（详见 /tmp/tc_n9.log）" >&2; tail -5 /tmp/tc_n9.log >&2; exit 10; }
 tail -1 /tmp/tc_n9.log
+
+# --- P0③：判据表接口必须真的支持 n 维与档〇 参照（否则"写了没接线"）
+for FLAG in --n --ref-a16 --n11-probe --n12-probe; do
+  "$PY" stages/86p_thinkcard_verdict.py --help 2>&1 | grep -q -- "$FLAG" \
+    || { echo "[TC] 预检失败：86p 缺 $FLAG（前置门 P0③ 未过）" >&2; exit 12; }
+done
+echo "[TC] P0③ 通过：86p 支持 --n/--ref-a16/--n11-probe/--n12-probe"
 
 # --- N5：R48 假结果逐档驱动真实 verdict()
 "$PY" stages/86p_thinkcard_verdict.py --selfcheck >/tmp/tc_n5.log 2>&1 \
@@ -140,3 +151,4 @@ done
 "$PY" stages/86p_thinkcard_verdict.py --n6-check --seeds "$(IFS=,; echo "${SEEDS[*]}")" || { echo "[TC] 核验失败：N6" >&2; fail=1; }
 [ "$fail" = 0 ] || exit 7
 echo "[TC-DONE] 臂×seed 全部完成并通过核验（slots=$SLOTS）$(date -Is)"
+echo "[TC-NEXT] 出判词：  .venv/bin/python stages/86p_thinkcard_verdict.py --n $SLOTS --ref-a16 $REF_A16 --seeds $(IFS=,; echo "${SEEDS[*]}")"
