@@ -8,10 +8,10 @@
   · `yolo`：YOLO 式 —— 特征图 **自适应池到固定空间网格**（默认 4×4 = 16 格），每格一个槽（空间序）
 ★ 只借架构，不借 DETR 的集合匹配损失（每个槽没有独立目标）。
 
-形状契约（本试验自己钉，不接 `cards/`）：
-    ids [b,L] ──T_in──▶ meme [b,16,128]
-    img [b,1,88,584] ──V_in──▶ meme [b,16,128]
-    meme [b,16,128] + tgt_in [b,Lt] ──Out──▶ logits [b,Lt,8192]
+形状契约（本试验自己钉，不接 `cards/`；`n` = 槽数，**文本路可配、图片路固定 16**）：
+    ids [b,L] ──T_in──▶ meme [b,n,128]        # n = n_slots，默认 SLOTS=16
+    img [b,1,88,584] ──V_in──▶ meme [b,16,128]   # YOLO 网格 4×4 与 16 绑定 ⇒ 不配
+    meme [b,n,128] + tgt_in [b,Lt] ──Out──▶ logits [b,Lt,8192]
 
 ★ 初始化必须发生在 `torch.manual_seed(seed)` **之后**（`L3_PLAN.md` §9.7）。
 """
@@ -64,11 +64,15 @@ def decoder_layer() -> nn.TransformerDecoderLayer:
 
 
 class QuerySlots(nn.Module):
-    """DETR 式 16 槽头：可学 query 的「自注意力 + 交叉注意力」decoder。"""
+    """DETR 式槽头：可学 query 的「自注意力 + 交叉注意力」decoder。
 
-    def __init__(self, n_layers: int = 2):
+    `n_slots` = 槽数（默认 = 模块常量 `SLOTS`=16）。`n=SLOTS` 时 `q` 的**形状、构造顺序与
+    RNG 消耗与改动前逐位相同**（`tests/test_slots_config.py` (a)）。
+    """
+
+    def __init__(self, n_layers: int = 2, n_slots: int = SLOTS):
         super().__init__()
-        self.q = nn.Parameter(torch.randn(SLOTS, D) * 0.02)
+        self.q = nn.Parameter(torch.randn(n_slots, D) * 0.02)
         self.layers = nn.ModuleList([decoder_layer() for _ in range(n_layers)])
         self.ln = nn.LayerNorm(D)
 
@@ -101,13 +105,13 @@ def text_encoder() -> tuple[nn.Embedding, nn.ModuleList]:
 
 
 class TextInputCard(nn.Module):
-    """char ids [b,L] → 模因 [b,16,128]。"""
+    """char ids [b,L] → 模因 [b,n_slots,128]（默认 `n_slots`=16 = `SLOTS`）。"""
 
-    def __init__(self):
+    def __init__(self, n_slots: int = SLOTS):
         super().__init__()
         self.emb, self.layers = text_encoder()
         self.register_buffer("pe", sin_pe(MAXLEN, D), persistent=False)
-        self.slots = QuerySlots(2)
+        self.slots = QuerySlots(2, n_slots)
 
     def forward(self, ids: torch.Tensor) -> torch.Tensor:
         L = ids.size(1)

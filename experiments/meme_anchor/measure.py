@@ -168,7 +168,7 @@ def score_report(S: torch.Tensor, tag: str) -> dict:
 
 # --------------------------------------------------------------------------- 顺序自检 / 地板
 def shuffle_slots(M: torch.Tensor, seed: int) -> torch.Tensor:
-    """M3：逐样本独立随机置换 16 个槽（两路用不同 seed ⇒ 置换不同）。"""
+    """M3：逐样本独立随机置换**全部槽**（槽数取自 `M.size(1)` ⇒ 对槽数 n 泛化；两路用不同 seed ⇒ 置换不同）。"""
     g = torch.Generator().manual_seed(seed)
     M = _cpu(M).clone()
     for i in range(M.size(0)):
@@ -176,9 +176,14 @@ def shuffle_slots(M: torch.Tensor, seed: int) -> torch.Tensor:
     return M
 
 
-def floor_random(n: int, seed: int, shape=(16, 128)) -> torch.Tensor:
+def floor_random(n: int, seed: int, slots: int = 16, d: int = 128) -> torch.Tensor:
+    """地板①：同形随机模因 `[n, slots, d]`（默认 = 16 槽 × 128 维 = 默认模因的形状）。
+
+    ★ 槽数是可配轴（PREREG_SLOTN）⇒ **槽数非 16 的调用方必须显式传 `slots`**，
+      否则随机地板与被测模因不同形（`stages/86g_zh_en.py` 的 `_junction` 传 `model.n_slots`）。
+    """
     g = torch.Generator().manual_seed(seed)
-    return torch.randn(n, *shape, generator=g)
+    return torch.randn(n, int(slots), int(d), generator=g)
 
 
 def floor_bag_of_chars(ids_list: list[list[int]], n_vocab: int = 8192) -> torch.Tensor:

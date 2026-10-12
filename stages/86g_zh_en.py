@@ -215,12 +215,19 @@ def eval_model(model, pack, device, chunk: int = 256) -> dict:
         model.train()
     return out
 
-def _junction(A, B, pack, seed: int) -> dict:
-    """**一个衔接点**上的全套口径：Δ / 长度匹配(M8) / 逐槽+M3 / CKA / 线性映射 / 地板 / AUROC+阈值 / 繁简子集。"""
+def _junction(A, B, pack, seed: int, n_slots: int = 16) -> dict:
+    """**一个衔接点**上的全套口径：Δ / 长度匹配(M8) / 逐槽+M3 / CKA / 线性映射 / 地板 / AUROC+阈值 / 繁简子集。
+
+    `n_slots` = 被测模因的槽数（调用方传 `model.n_slots`）：随机地板必须与模因**同形**，
+    否则 n≠16 时地板是另一个形状的随机数（PREREG_SLOTN N10）。
+    """
     zh_s = [p[0] for p in pack["test"]]
     en_s = [p[1] for p in pack["test"]]
     zh_i = [p[0] for p in pack["test_ids"]]
     en_i = [p[1] for p in pack["test_ids"]]
+    slots = int(n_slots)
+    assert int(A.size(1)) == slots == int(B.size(1)), (
+        f"模因槽数与 n_slots 不符：A={int(A.size(1))} B={int(B.size(1))} n_slots={slots}")
     pA, pB = MS.pooled(A), MS.pooled(B)
     S = MS.cosmat(pA, pB)
     rep_pool = MS.score_report(S, "pooled")
@@ -232,8 +239,9 @@ def _junction(A, B, pack, seed: int) -> dict:
     rep_shuf = MS.score_report(DRV.slot_matrix(MS.shuffle_slots(A, seed + 1),
                                                MS.shuffle_slots(B, seed + 2)), "slot_shuffled")
     n = pA.size(0)
-    rep_rand = MS.score_report(MS.cosmat(MS.pooled(MS.floor_random(n, seed + 3)),
-                                         MS.pooled(MS.floor_random(n, seed + 4))), "floor_random")
+    d_mem = int(A.size(2))                                   # 与模因同形（86n 的 --d 也跟着走）
+    rep_rand = MS.score_report(MS.cosmat(MS.pooled(MS.floor_random(n, seed + 3, slots, d_mem)),
+                                         MS.pooled(MS.floor_random(n, seed + 4, slots, d_mem))), "floor_random")
     cz, ce = MS.floor_counts(zh_s), MS.floor_counts(en_s)
     nz = cz / cz.norm(dim=1, keepdim=True).clamp_min(1e-12)
     ne = ce / ce.norm(dim=1, keepdim=True).clamp_min(1e-12)
@@ -270,13 +278,15 @@ def _junction(A, B, pack, seed: int) -> dict:
                                               max(n * (n - 1), 1)))
 
 
-def full_metrics(ev: dict, pack: dict, seed: int) -> dict:
+def full_metrics(ev: dict, pack: dict, seed: int, n_slots: int = 16) -> dict:
     """★ **两个衔接点**各算一遍：
     `input` = 输入卡的输出模因（冻结/未冻结都一样测）；`bridge` = t 的输出（用户说的"输出衔接"）。
+
+    `n_slots` 只透传给 `_junction`（随机地板与逐槽口径的形状），默认 16 = 与改动前同一份读数。
     """
-    out = {"input": _junction(ev["m_zh"], ev["m_en"], pack, seed)}
+    out = {"input": _junction(ev["m_zh"], ev["m_en"], pack, seed, n_slots=n_slots)}
     if "b_zh" in ev:
-        out["bridge"] = _junction(ev["b_zh"], ev["b_en"], pack, seed + 100)
+        out["bridge"] = _junction(ev["b_zh"], ev["b_en"], pack, seed + 100, n_slots=n_slots)
     return out
 
 @torch.no_grad()
@@ -326,6 +336,55 @@ def gen_eval(model, pack, device, n: int = 200, bs: int = 50, maxlen: int = 160)
     return out
 
 
+def build_tag(*, loss_kind: str, mapset, shared_out: bool, abba_weight: float, bridge: str,
+              bridge_mid: int, bridge_ff: int, align_on: str, obj: str, roll_w: float,
+              steps: int, accum: int, freeze_inputs: bool, init_outputs: bool,
+              freeze_bridge: bool, init_lab: str, n_slots: int) -> str:
+    """产物 tag（ckpt 与 result JSON 共用）—— 全部维度都在这里，**一处漏写 = 同名静默覆盖**。
+
+    ★ 抽成函数是为了让 `n≠16` 的命名规则能被**不训练**就测到（`tests/test_slots_config.py`）：
+      槽数只在 `n_slots != 16` 时进 tag ⇒ **n=16 的产物名与既有产物逐字符相同**（否则同名互相覆盖）。
+    """
+    return (f"{loss_kind}_{'_'.join(mapset)}" + ("_shared" if shared_out else "")
+            + ("" if abs(abba_weight - 1.0) < 1e-9 else f"_a{abba_weight}")
+            + ("" if int(n_slots) == 16 else f"_n{int(n_slots)}")
+            + ("" if bridge == "none" else f"_{bridge}{bridge_mid}")
+            # ★ `ff{ff}` 必须进 tag（E1 参数对齐臂）：否则 E1（mid=64, ff=960）与 C64（mid=64, ff=256）**同名静默覆盖**
+            + ("" if int(bridge_ff) == 256 else f"_ff{bridge_ff}")
+            + ("" if align_on == "bridge" else f"_ao-{align_on}")
+            # ★ `o-{obj}` 必须进 tag：否则 tf 臂与 roll 臂的 ckpt/json 会同名**静默互相覆盖**（PREREG_GENOBJ §7）
+            + f"_o-{obj}" + ("" if abs(roll_w - 0.5) < 1e-9 else f"_rw{roll_w}")
+            # ★ `st{steps}` 必须进 tag：否则**短跑探针会覆盖同配置的长跑产物**（实测发生过：H7 的 200 步扫描覆盖掉 H2 的 8000 步 ckpt/json）
+            + f"_st{steps}" + ("" if accum == 1 else f"_ac{accum}")
+            + ("_frz" if freeze_inputs else "") + ("_io" if init_outputs else "")
+            + ("_frzbr" if freeze_bridge else "") + init_lab)
+
+
+def _check_init_slots(blob: dict, n_slots: int) -> None:
+    """★ fail-closed：`--init-inputs` 的 ckpt 槽头必须与当前 `n_slots` 同形（PREREG_SLOTN **N9**）。
+
+    两种会**静默退化成"用随机槽训练"**的情形都必须当场退出：
+      ① **形状不符**（如 16 槽 ckpt 配 `--slots 4`）；
+      ② ckpt 里有该输入卡却**缺 `slots.q`** —— `load_state_dict(strict=False)` 对缺键只记一笔 missing
+         （形状不符则由 PyTorch 抛 size mismatch），两种都应在**读语料/开训之前**就报清楚。
+    """
+    st = blob.get("state", {})
+    want = int(n_slots)
+    bad: list[str] = []
+    for key in ("zh_in.slots.q", "en_in.slots.q"):
+        card = key.split(".", 1)[0] + "."
+        if not any(k.startswith(card) for k in st):
+            continue                           # ckpt 不含该输入卡：与旧行为一致，交给后面的 missing 报告
+        if key not in st:
+            bad.append(f"缺 {key}（{card}* 在、槽头不在 ⇒ 会退化成随机槽）")
+            continue
+        got = tuple(int(x) for x in st[key].shape)
+        if got[0] != want:
+            bad.append(f"{key} 形状不符：ckpt {got} vs 当前 --slots {want}")
+    if bad:
+        raise SystemExit("[M2][FATAL] 槽头契约不符（fail-closed，禁止静默跳过）： " + "；".join(bad))
+
+
 def train_run(lam: float, seed: int, steps: int, maps: str, loss_kind: str, device: str,
               bs: int, eval_every: int, shared_out: bool = False, early_stop: bool = False,
               abba_weight: float = 1.0, bridge: str = "none", bridge_mid: int = 64,
@@ -334,7 +393,7 @@ def train_run(lam: float, seed: int, steps: int, maps: str, loss_kind: str, devi
               freeze_bridge: bool = False, align_on: str = "bridge",
               tau: float = 0.07, mu: float = 1.0, gamma: float = 0.2,
               obj: str = "tf", roll_w: float = 0.5, gen_eval_n: int = 1000,
-              eval_chunk: int = 64, accum: int = 1) -> dict:
+              eval_chunk: int = 64, accum: int = 1, n_slots: int = 16) -> dict:
     mapset = tuple(m for m in maps.split(",") if m)
     # ★ fail-closed 守卫：位置错位/取值非法必须**当场**报错，而不是跑完 8000 步再崩在保存上
     assert bridge in ("none", "parser", "dual"), f"bridge 非法：{bridge!r}"
@@ -347,19 +406,25 @@ def train_run(lam: float, seed: int, steps: int, maps: str, loss_kind: str, devi
     #   ⇒ 默认降到 64；结果与 chunk 无关（CE 分块平均、char 分块计数），只是评测稍慢。
     assert 1 <= int(eval_chunk) <= 1024, f"eval_chunk 非法：{eval_chunk!r}"
     assert 1 <= int(accum) <= 64, f"accum 非法：{accum!r}（梯度累积步数，1 = 不累积）"
+    # ★ 槽数（PREREG_SLOTN 的自变量）：默认 16 = `model.SLOTS`；n=16 时产物名与读数逐位同旧
+    assert int(n_slots) > 0, f"n_slots 非法：{n_slots!r}（槽数，必须是正整数，默认 16）"
     for _nm, _v in (("freeze_inputs", freeze_inputs), ("init_outputs", init_outputs),
                     ("freeze_bridge", freeze_bridge), ("shared_out", shared_out)):
         assert isinstance(_v, bool), f"{_nm} 应为 bool，收到 {_v!r}"
     assert not init_inputs or Path(str(init_inputs)).is_file(), f"init_inputs 不是文件：{init_inputs!r}"
+    # ★ fail-closed（PREREG_SLOTN N9）：**先**查槽头形状再谈其它（在读语料/建模型之前就挡住）——
+    #   槽数对不上时若放行，`load_state_dict(strict=False)` 的 missing 只会记一笔 ⇒ 变成"用随机槽训练"。
+    blob = torch.load(init_inputs, map_location="cpu", weights_only=False) if init_inputs else None
+    if blob is not None:
+        _check_init_slots(blob, n_slots)
     pack = get_pack()
-    model = MZ.build(seed, shared_out, bridge, bridge_mid, bridge_ff).to(device)
+    model = MZ.build(seed, shared_out, bridge, bridge_mid, bridge_ff, n_slots=n_slots).to(device)
     npar = model.n_params()
     log(f"[M2] run lam={lam} seed={seed} steps={steps} maps={mapset} loss={loss_kind} "
         f"abba_w={abba_weight} bridge={bridge}(mid={bridge_mid},ff={bridge_ff}) align_on={align_on} bs={bs} shared_out={shared_out} "
-        f"params={npar} 总={sum(npar.values())}")
+        f"params={npar} 总={sum(npar.values())} slots={int(n_slots)}")
     frozen = []
     if init_inputs:
-        blob = torch.load(init_inputs, map_location="cpu", weights_only=False)
         pref = ("zh_in.", "en_in.") + (("zh_out.", "en_out.") if init_outputs else ())
         sd = {k: v for k, v in blob["state"].items() if k.startswith(pref)}
         miss, unexp = model.load_state_dict(sd, strict=False)
@@ -451,7 +516,7 @@ def train_run(lam: float, seed: int, steps: int, maps: str, loss_kind: str, devi
         torch.cuda.reset_peak_memory_stats()
     ev = eval_model(model, pack, device, chunk=int(eval_chunk))
     peak_eval_mib = max(peak_eval_mib, _peak_mib(device))
-    metrics = full_metrics(ev, pack, seed)
+    metrics = full_metrics(ev, pack, seed, n_slots=model.n_slots)
     if str(device).startswith("cuda"):
         torch.cuda.reset_peak_memory_stats()
     gen = gen_eval(model, pack, device, n=int(gen_eval_n))
@@ -465,18 +530,12 @@ def train_run(lam: float, seed: int, steps: int, maps: str, loss_kind: str, devi
     if init_inputs:
         import re as _re
         init_lab = "_i-" + _re.sub(r"_l[0-9.]+_s\d+$", "", Path(init_inputs).stem).replace("86g_ckpt_", "")
-    tag = (f"{loss_kind}_{'_'.join(mapset)}" + ("_shared" if shared_out else "")
-           + ("" if abs(abba_weight - 1.0) < 1e-9 else f"_a{abba_weight}")
-           + ("" if bridge == "none" else f"_{bridge}{bridge_mid}")
-           # ★ `ff{ff}` 必须进 tag（E1 参数对齐臂）：否则 E1（mid=64, ff=960）与 C64（mid=64, ff=256）**同名静默覆盖**
-           + ("" if int(bridge_ff) == 256 else f"_ff{bridge_ff}")
-           + ("" if align_on == "bridge" else f"_ao-{align_on}")
-           # ★ `o-{obj}` 必须进 tag：否则 tf 臂与 roll 臂的 ckpt/json 会同名**静默互相覆盖**（PREREG_GENOBJ §7）
-           + f"_o-{obj}" + ("" if abs(roll_w - 0.5) < 1e-9 else f"_rw{roll_w}")
-           # ★ `st{steps}` 必须进 tag：否则**短跑探针会覆盖同配置的长跑产物**（实测发生过：H7 的 200 步扫描覆盖掉 H2 的 8000 步 ckpt/json）
-           + f"_st{steps}" + ("" if accum == 1 else f"_ac{accum}")
-           + ("_frz" if freeze_inputs else "") + ("_io" if init_outputs else "")
-           + ("_frzbr" if freeze_bridge else "") + init_lab)
+    tag = build_tag(loss_kind=loss_kind, mapset=mapset, shared_out=shared_out,
+                    abba_weight=abba_weight, bridge=bridge, bridge_mid=bridge_mid,
+                    bridge_ff=bridge_ff, align_on=align_on, obj=obj, roll_w=roll_w,
+                    steps=steps, accum=accum, freeze_inputs=freeze_inputs,
+                    init_outputs=init_outputs, freeze_bridge=freeze_bridge,
+                    init_lab=init_lab, n_slots=n_slots)
     ck = LOGS / f"86g_ckpt_{tag}_l{lam}_s{seed}.pt"
     torch.save(dict(state=model.state_dict(), seed=seed, lam=lam, maps=mapset,
                     loss_kind=loss_kind, steps=step, shared_out=shared_out), ck)
@@ -484,6 +543,7 @@ def train_run(lam: float, seed: int, steps: int, maps: str, loss_kind: str, devi
                shared_out=shared_out, abba_weight=abba_weight, bridge=bridge,
                bridge_mid=bridge_mid, bridge_ff=int(bridge_ff), align_on=align_on,
                obj=obj, roll_w=roll_w, gen_eval_n=int(gen_eval_n), accum=int(accum),
+               n_slots=int(n_slots),
                mem=dict(params_mib=mem_params_mib, params_trainable=n_tr, params_total=n_all,
                         peak_train_mib=peak_train_mib, peak_eval_mib=peak_eval_mib,
                         peak_gen_mib=peak_gen_mib),
@@ -520,8 +580,10 @@ def verdict() -> None:
         aw = float(r.get("abba_weight", 1.0))
         groups.setdefault(f"{r['loss_kind']}|{'+'.join(r['maps'])}|α={aw}"
                           f"|bridge={r.get('bridge','none')}|frz={bool(r.get('frozen'))}"
-                          f"|io={bool(r.get('init_outputs'))}", []).append(r)
-    base_key = "none|AaBb|α=1.0|bridge=none|frz=False|io=False"      # α 只作用于 AbBa 项 ⇒ 基线（只 AaBb）与 α 无关
+                          f"|io={bool(r.get('init_outputs'))}"
+                          # ★ 槽数必须进分组键（L3-t2 的 n 轴）：否则 n=4 与 n=16 会**混进同一组**算出假对比
+                          f"|n={int(r.get('n_slots', 16))}", []).append(r)
+    base_key = "none|AaBb|α=1.0|bridge=none|frz=False|io=False|n=16"      # α 只作用于 AbBa 项 ⇒ 基线（只 AaBb）与 α 无关
     if base_key not in groups:
         log(f"[VERDICT] 缺基线（{base_key}）⇒ 按 PREREG 不许出判词。现有组: {sorted(groups)}"); return
 
@@ -578,15 +640,15 @@ def tables() -> None:
     rows = [json.loads(Path(f).read_text(encoding="utf-8")) for f in sorted(glob.glob(str(LOGS / "86g_result_*.json")))]
     if not rows:
         log("没有 86g 结果"); return
-    print("| 损失 | maps | α | bridge | 冻结 | seed | 步 | 中→中 | 英→英 | 中→英 | 英→中 | "
+    print("| 损失 | maps | α | bridge | n | 冻结 | seed | 步 | 中→中 | 英→英 | 中→英 | 英→中 | "
           "Δ输入侧 | **Δ衔接** | Δ长度匹配(衔接) | 生成EM 中→中/英→英 |")
-    print("|---|---|---|---|---|---|---|---|---|---|---|---|")
+    print("|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|")
     for r in rows:
         f, m = r["final"], r["metrics"]
         br = m.get("bridge") or m["input"]
         inp = m.get("input", br)
         print(f"| {r['loss_kind']} | {'+'.join(r['maps'])} | {r.get('abba_weight',1.0)} | "
-              f"{r.get('bridge','none')} | {'是' if r.get('frozen') else '否'} | {r['seed']} | {r['steps']} | "
+              f"{r.get('bridge','none')} | {int(r.get('n_slots', 16))} | {'是' if r.get('frozen') else '否'} | {r['seed']} | {r['steps']} | "
               f"{f['char_zz']*100:.1f}% | {f['char_ee']*100:.1f}% | {f['char_ze']*100:.1f}% | {f['char_ez']*100:.1f}% | "
               f"{inp['pooled']['delta']:+.4f} | **{br['pooled']['delta']:+.4f}** | "
               f"{br['m8_length_matched']['delta']:+.4f} | "
@@ -683,6 +745,9 @@ def main() -> None:
                     help="parser 卡的 FF 宽度（默认 256）。★ 只用于 PREREG_THINKCARD §4 的**参数对齐臂 E1**；"
                          "非 256 时进 tag `_ff{ff}`（否则与 C64 同名静默覆盖）")
     ap.add_argument("--init-inputs", default="", help="从该 ckpt 载入 zh_in/en_in（配合 --freeze-inputs）")
+    ap.add_argument("--slots", type=int, default=16,
+                    help="模因槽数 n（默认 16 = `model.SLOTS`）。≠16 时产物 tag 追加 `_n{n}`、result JSON 记 `n_slots`；"
+                         "★ 槽数不同的 ckpt 互不兼容 —— `--init-inputs` 形状不符会 fail-closed 退出（N9）")
     ap.add_argument("--freeze-inputs", action="store_true", help="冻结 zh_in/en_in（只训 parser 与输出卡）")
     ap.add_argument("--align-on", default="bridge", choices=["bridge", "input"],
                     help="对齐项加在哪一层：bridge=t(m)（默认）· input=m（压力直接落在输入卡上）")
@@ -734,7 +799,7 @@ def main() -> None:
                   freeze_inputs=args.freeze_inputs, init_outputs=args.init_outputs,
                   freeze_bridge=args.freeze_bridge,
                   obj=args.obj, roll_w=args.roll_w, gen_eval_n=args.gen_eval_n,
-                  eval_chunk=args.eval_chunk, accum=args.accum)
+                  eval_chunk=args.eval_chunk, accum=args.accum, n_slots=args.slots)
     else:
         ap.print_help()
 

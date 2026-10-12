@@ -14,11 +14,11 @@ from __future__ import annotations
 import torch
 import torch.nn as nn
 
-from model import D, DROPOUT, TextInputCard, TextOutputCard
+from model import D, DROPOUT, SLOTS, TextInputCard, TextOutputCard
 
 
 class ParserCard(nn.Module):
-    """**parser 卡 t**（用户 2026-10-11 命名）：模因 `[b,16,128]` → 模因 `[b,16,128]`（两种语言**共用同一张**）。
+    """**parser 卡 t**（用户 2026-10-11 命名）：模因 `[b,n,128]` → 模因 `[b,n,128]`（两种语言**共用同一张**）。
 
     - 卡内结构 = **自注意力 + 逐位置 FFN**（`MEME_FRAMEWORK.md §5.1` 的硬要求）；
     - 带**容量瓶颈** `d_mid < d`（`§13.2`：强制路由必须与瓶颈配对，否则 t 会**退化成恒等**）；
@@ -46,14 +46,17 @@ class ParserCard(nn.Module):
 
 class ZHENModel(nn.Module):
     def __init__(self, shared_out: bool = False, bridge: str = "none", bridge_mid: int = 64,
-                 bridge_ff: int = 256):
+                 bridge_ff: int = 256, n_slots: int = SLOTS):
         super().__init__()
         assert bridge in ("none", "parser", "dual"), bridge
+        # ★ 槽数 n（PREREG_SLOTN 的自变量）：`n=SLOTS=16` 时与改动前**逐位相同**；n<16 是**新契约**
+        assert int(n_slots) > 0, f"n_slots 必须为正整数：{n_slots!r}"
+        self.n_slots = int(n_slots)
         self.shared_out = bool(shared_out)
         self.bridge_kind = bridge
         self.bridge_ff = int(bridge_ff)
-        self.zh_in = TextInputCard()
-        self.en_in = TextInputCard()
+        self.zh_in = TextInputCard(self.n_slots)
+        self.en_in = TextInputCard(self.n_slots)
         self.zh_out = TextOutputCard()
         # `shared_out=True` 只用于对照（口径外的变体）：两路共用一个出卡
         self.en_out = self.zh_out if self.shared_out else TextOutputCard()
@@ -106,7 +109,7 @@ class ZHENModel(nn.Module):
 
 
 def build(seed: int, shared_out: bool = False, bridge: str = "none",
-          bridge_mid: int = 64, bridge_ff: int = 256) -> ZHENModel:
+          bridge_mid: int = 64, bridge_ff: int = 256, n_slots: int = SLOTS) -> ZHENModel:
     """★ 先播种再构造（`L3_PLAN.md` §9.7：保证同 seed 的构造逐位可复现）。"""
     torch.manual_seed(int(seed))
-    return ZHENModel(shared_out, bridge, bridge_mid, bridge_ff)
+    return ZHENModel(shared_out, bridge, bridge_mid, bridge_ff, n_slots=n_slots)
