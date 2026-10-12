@@ -2,7 +2,7 @@
 
 判据与规格见 `PREREG.md` §1（数据与切分）与 §2（渲染规格）——本文件是它们的实现，不许在这里发明新规则。
 
-只读 `nanoSeek/data/chinese/clean_v3/*.txt` 与 `.../char_tokenizer.json`；只写 `logs/86_cache/`。
+只读 `nanoSeek/data/chinese/clean_v3/*.txt` 与 `logs/86_tokenizer/char_tokenizer.json`；只写 `logs/86_cache/`。
 """
 from __future__ import annotations
 
@@ -17,7 +17,12 @@ import numpy as np
 ROOT = Path("/home/vesita/coding/my/flowme")
 NANOSEEK = Path("/home/vesita/coding/my/nanoSeek/data/chinese")
 CORPUS = [NANOSEEK / "clean_v3" / "wikipedia_cn.txt", NANOSEEK / "clean_v3" / "c4_zh.txt"]
-TOKENIZER = NANOSEEK / "char_tokenizer.json"
+# ★ 词表改由本仓库持有（2026-10-12，本机 = noxy/RTX 5060）：nanoSeek 的 `char_tokenizer.json` 不入库、本机没有，
+#   而它是 nanoSeek 自己 `train.bin` 的依赖 ⇒ **不在那边重建**。本文件由 nanoSeek 自带实现的同一构建器生成
+#   （`data/chinese/train_tokenizer.py` 的 `build_char_wordlevel`，规格 `hanzi_top=7808`；重建命令与 sha256 见
+#   `logs/86_tokenizer/`）。默认档 `hanzi_top=4400` 在本机只保留 32026 对中英配对 < 本线规格 `TRAIN_N+TEST_N=42245`，
+#   7808 档保留 46636 对 ⇒ 取 7808。★ 特殊符 id 与本文契约逐位一致（128 `<eos>` / 129 `<unk>` / 131 `<pad>` / 132 `<bos>`）。
+TOKENIZER = ROOT / "logs" / "86_tokenizer" / "char_tokenizer.json"
 CACHE = ROOT / "logs" / "86_cache"
 
 # PREREG §2 渲染规格（写死）

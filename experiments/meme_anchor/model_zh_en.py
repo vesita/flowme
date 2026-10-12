@@ -27,7 +27,9 @@ class ParserCard(nn.Module):
 
     def __init__(self, mid: int = 64, layers: int = 2, nhead: int = 4, ff: int = 256):
         super().__init__()
-        assert mid < D, "t 必须有容量瓶颈（§13.2）"
+        # ★ `mid == D` 只用于 §13.2 的**对照臂**（"强制经过卡、但**无**容量瓶颈"）；
+        #   凡是作为配置交付的卡都必须 `mid < D`（默认 64）。
+        assert 0 < mid <= D, f"mid 必须在 (0, D] 内：{mid}"
         self.proj_in = nn.Linear(D, mid)
         self.layers = nn.ModuleList([
             nn.TransformerEncoderLayer(mid, nhead, ff, DROPOUT, batch_first=True, norm_first=True)
@@ -43,11 +45,13 @@ class ParserCard(nn.Module):
 
 
 class ZHENModel(nn.Module):
-    def __init__(self, shared_out: bool = False, bridge: str = "none", bridge_mid: int = 64):
+    def __init__(self, shared_out: bool = False, bridge: str = "none", bridge_mid: int = 64,
+                 bridge_ff: int = 256):
         super().__init__()
         assert bridge in ("none", "parser", "dual"), bridge
         self.shared_out = bool(shared_out)
         self.bridge_kind = bridge
+        self.bridge_ff = int(bridge_ff)
         self.zh_in = TextInputCard()
         self.en_in = TextInputCard()
         self.zh_out = TextOutputCard()
@@ -56,9 +60,12 @@ class ZHENModel(nn.Module):
         # bridge="parser"：**一张共享**的解析卡（两语言都过它）
         # bridge="dual"  ：**两条不共享**的 adapter（中/英各一张，同单卡尺寸）—— 控制臂 V：
         #                  用来分离"共享"与"额外容量"（见 PREREG_PARSER_CTRL.md §1）
-        self.bridge: ParserCard | None = ParserCard(bridge_mid) if bridge == "parser" else None
-        self.bridge_zh: ParserCard | None = ParserCard(bridge_mid) if bridge == "dual" else None
-        self.bridge_en: ParserCard | None = ParserCard(bridge_mid) if bridge == "dual" else None
+        self.bridge: ParserCard | None = ParserCard(bridge_mid, ff=bridge_ff) if bridge == "parser" else None
+        self.bridge_zh: ParserCard | None = ParserCard(bridge_mid, ff=bridge_ff) if bridge == "dual" else None
+        self.bridge_en: ParserCard | None = ParserCard(bridge_mid, ff=bridge_ff) if bridge == "dual" else None
+        # ★ **推理期捷径开关**（`MEME_FRAMEWORK §13`：训练强制全路径 / 推理允许捷径，判据手写）。
+        #   只在**离线分析**里置 True（`stages/86p_thinkcard_verdict.py` 的 D 臂）；训练路径永远 False。
+        self.bypass_bridge = False
 
     def meme_zh(self, ids: torch.Tensor) -> torch.Tensor:
         return self.zh_in(ids)
@@ -71,6 +78,8 @@ class ZHENModel(nn.Module):
 
         `lang` 只在 `bridge="dual"`（不共享）时用到。
         """
+        if self.bypass_bridge:                           # 推理期捷径（手写判据）：直接跳过卡
+            return m
         if self.bridge is not None:                      # 共享
             return self.bridge(m)
         if self.bridge_zh is not None:                   # 不共享：按语言选卡
@@ -97,7 +106,7 @@ class ZHENModel(nn.Module):
 
 
 def build(seed: int, shared_out: bool = False, bridge: str = "none",
-          bridge_mid: int = 64) -> ZHENModel:
+          bridge_mid: int = 64, bridge_ff: int = 256) -> ZHENModel:
     """★ 先播种再构造（`L3_PLAN.md` §9.7：保证同 seed 的构造逐位可复现）。"""
     torch.manual_seed(int(seed))
-    return ZHENModel(shared_out, bridge, bridge_mid)
+    return ZHENModel(shared_out, bridge, bridge_mid, bridge_ff)

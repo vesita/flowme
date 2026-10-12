@@ -329,6 +329,7 @@ def gen_eval(model, pack, device, n: int = 200, bs: int = 50, maxlen: int = 160)
 def train_run(lam: float, seed: int, steps: int, maps: str, loss_kind: str, device: str,
               bs: int, eval_every: int, shared_out: bool = False, early_stop: bool = False,
               abba_weight: float = 1.0, bridge: str = "none", bridge_mid: int = 64,
+              bridge_ff: int = 256,
               init_inputs: str = "", freeze_inputs: bool = False, init_outputs: bool = False,
               freeze_bridge: bool = False, align_on: str = "bridge",
               tau: float = 0.07, mu: float = 1.0, gamma: float = 0.2,
@@ -337,6 +338,7 @@ def train_run(lam: float, seed: int, steps: int, maps: str, loss_kind: str, devi
     mapset = tuple(m for m in maps.split(",") if m)
     # ★ fail-closed 守卫：位置错位/取值非法必须**当场**报错，而不是跑完 8000 步再崩在保存上
     assert bridge in ("none", "parser", "dual"), f"bridge 非法：{bridge!r}"
+    assert 8 <= int(bridge_ff) <= 4096, f"bridge_ff 非法：{bridge_ff!r}（FF 宽度，默认 256）"
     assert align_on in ("bridge", "input"), f"align_on 非法：{align_on!r}（该收到 'bridge'/'input'）"
     assert obj in ("tf", "roll"), f"obj 非法：{obj!r}（该收到 'tf'/'roll'）"
     assert 0.0 <= float(roll_w) <= 10.0, f"roll_w 非法：{roll_w!r}"
@@ -350,10 +352,10 @@ def train_run(lam: float, seed: int, steps: int, maps: str, loss_kind: str, devi
         assert isinstance(_v, bool), f"{_nm} 应为 bool，收到 {_v!r}"
     assert not init_inputs or Path(str(init_inputs)).is_file(), f"init_inputs 不是文件：{init_inputs!r}"
     pack = get_pack()
-    model = MZ.build(seed, shared_out, bridge, bridge_mid).to(device)
+    model = MZ.build(seed, shared_out, bridge, bridge_mid, bridge_ff).to(device)
     npar = model.n_params()
     log(f"[M2] run lam={lam} seed={seed} steps={steps} maps={mapset} loss={loss_kind} "
-        f"abba_w={abba_weight} bridge={bridge}(mid={bridge_mid}) align_on={align_on} bs={bs} shared_out={shared_out} "
+        f"abba_w={abba_weight} bridge={bridge}(mid={bridge_mid},ff={bridge_ff}) align_on={align_on} bs={bs} shared_out={shared_out} "
         f"params={npar} 总={sum(npar.values())}")
     frozen = []
     if init_inputs:
@@ -466,6 +468,8 @@ def train_run(lam: float, seed: int, steps: int, maps: str, loss_kind: str, devi
     tag = (f"{loss_kind}_{'_'.join(mapset)}" + ("_shared" if shared_out else "")
            + ("" if abs(abba_weight - 1.0) < 1e-9 else f"_a{abba_weight}")
            + ("" if bridge == "none" else f"_{bridge}{bridge_mid}")
+           # ★ `ff{ff}` 必须进 tag（E1 参数对齐臂）：否则 E1（mid=64, ff=960）与 C64（mid=64, ff=256）**同名静默覆盖**
+           + ("" if int(bridge_ff) == 256 else f"_ff{bridge_ff}")
            + ("" if align_on == "bridge" else f"_ao-{align_on}")
            # ★ `o-{obj}` 必须进 tag：否则 tf 臂与 roll 臂的 ckpt/json 会同名**静默互相覆盖**（PREREG_GENOBJ §7）
            + f"_o-{obj}" + ("" if abs(roll_w - 0.5) < 1e-9 else f"_rw{roll_w}")
@@ -478,7 +482,7 @@ def train_run(lam: float, seed: int, steps: int, maps: str, loss_kind: str, devi
                     loss_kind=loss_kind, steps=step, shared_out=shared_out), ck)
     res = dict(lam=lam, seed=seed, steps=step, maps=list(mapset), loss_kind=loss_kind,
                shared_out=shared_out, abba_weight=abba_weight, bridge=bridge,
-               bridge_mid=bridge_mid, align_on=align_on,
+               bridge_mid=bridge_mid, bridge_ff=int(bridge_ff), align_on=align_on,
                obj=obj, roll_w=roll_w, gen_eval_n=int(gen_eval_n), accum=int(accum),
                mem=dict(params_mib=mem_params_mib, params_trainable=n_tr, params_total=n_all,
                         peak_train_mib=peak_train_mib, peak_eval_mib=peak_eval_mib,
@@ -675,6 +679,9 @@ def main() -> None:
     ap.add_argument("--bridge", default="none", choices=["none", "parser", "dual"],
                     help="插入 parser 卡 t（语言解析卡）：输入模因 → t → 输出卡（Ata/Btb/Atb/Bta）")
     ap.add_argument("--bridge-mid", type=int, default=64, help="parser 卡的瓶颈维度 d_mid（<128，§13.2）")
+    ap.add_argument("--bridge-ff", type=int, default=256,
+                    help="parser 卡的 FF 宽度（默认 256）。★ 只用于 PREREG_THINKCARD §4 的**参数对齐臂 E1**；"
+                         "非 256 时进 tag `_ff{ff}`（否则与 C64 同名静默覆盖）")
     ap.add_argument("--init-inputs", default="", help="从该 ckpt 载入 zh_in/en_in（配合 --freeze-inputs）")
     ap.add_argument("--freeze-inputs", action="store_true", help="冻结 zh_in/en_in（只训 parser 与输出卡）")
     ap.add_argument("--align-on", default="bridge", choices=["bridge", "input"],
@@ -722,6 +729,7 @@ def main() -> None:
                   args.eval_every,
                   shared_out=args.shared_out, early_stop=args.early_stop,
                   abba_weight=args.abba_weight, bridge=args.bridge, bridge_mid=args.bridge_mid,
+                  bridge_ff=args.bridge_ff,
                   align_on=args.align_on, init_inputs=args.init_inputs,
                   freeze_inputs=args.freeze_inputs, init_outputs=args.init_outputs,
                   freeze_bridge=args.freeze_bridge,
