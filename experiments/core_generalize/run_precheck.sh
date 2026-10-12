@@ -2,7 +2,7 @@
 # core_generalize 阶段 A：hold-out 可学性预检（PRE-idiom / PRE-ownership × 2 seed）
 # 只写 experiments/core_generalize/ 与 logs/（本目录下）
 set -u
-cd /home/vesita/coding/my/DTSeek
+cd /home/vesita/coding/my/flowme
 export PYTHONUNBUFFERED=1 HSA_OVERRIDE_GFX_VERSION=10.3.0
 E=experiments/core_generalize
 mkdir -p "$E/logs" "$E/cores"

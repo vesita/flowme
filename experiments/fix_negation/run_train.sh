@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 # P19 重训：在**线上核**上冻结核只训头（配方见 PREREG_TRAIN.md §2，顺序写死）
 # 用法：systemd-run --user --unit=dtseek-fixneg-r1 --collect \
-#   --property=WorkingDirectory=/home/vesita/coding/my/DTSeek \
+#   --property=WorkingDirectory=/home/vesita/coding/my/flowme \
 #   --setenv=HSA_OVERRIDE_GFX_VERSION=10.3.0 --setenv=PYTHONUNBUFFERED=1 \
 #   /usr/bin/bash experiments/fix_negation/run_train.sh r1
 # 绝不用 setsid nohup；GPU 忙就排队；产物只写 experiments/fix_negation/cards/。
 set -euo pipefail
-cd /home/vesita/coding/my/DTSeek
+cd /home/vesita/coding/my/flowme
 EXP=experiments/fix_negation
 LOG=$EXP/logs
 OUTD=$EXP/cards

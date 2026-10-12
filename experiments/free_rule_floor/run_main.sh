@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 # free_rule_floor 主跑：selfcheck + F0 复现臂 A/U/UP × 2 seed（PREREG §5）
 # 用法：systemd-run --user --unit=dtseek-frf1 --collect \
-#   --property=WorkingDirectory=/home/vesita/coding/my/DTSeek \
+#   --property=WorkingDirectory=/home/vesita/coding/my/flowme \
 #   --setenv=HSA_OVERRIDE_GFX_VERSION=10.3.0 --setenv=PYTHONUNBUFFERED=1 \
 #   /usr/bin/bash experiments/free_rule_floor/run_main.sh
 set -euo pipefail
-cd /home/vesita/coding/my/DTSeek
+cd /home/vesita/coding/my/flowme
 EXP=experiments/free_rule_floor
 LOG=$EXP/logs
 mkdir -p "$LOG"

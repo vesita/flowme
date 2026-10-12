@@ -2,7 +2,7 @@
 # two_channel_head：四臂 × 2 seed + 随机标签对照 + 计时对照 + 老卡 W5（PREREG §3/§4）
 # 用 systemd-run --user 启动（绝不 setsid nohup &），日志全部落本目录 logs/
 set -uo pipefail
-cd /home/vesita/coding/my/DTSeek
+cd /home/vesita/coding/my/flowme
 HERE=experiments/two_channel_head
 LOG=$HERE/logs
 mkdir -p "$LOG"

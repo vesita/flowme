@@ -1,7 +1,7 @@
 #!/bin/bash
 # 阶段 B：P4 温启动联合臂（control 口径，2 seed）+ 联合产物在三集上的附带评测。
 set -euo pipefail
-cd /home/vesita/coding/my/DTSeek
+cd /home/vesita/coding/my/flowme
 EX=experiments/anchored_select
 mkdir -p "$EX/cards" "$EX/results"
 

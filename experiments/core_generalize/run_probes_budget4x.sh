@@ -5,7 +5,7 @@
 #   ② idiom 上 C1 落后，是「学得慢」还是「表示被单任务训练训坏」？
 # 产物写 probes_budget4x/（**不进** analyze.py 的主表与 P1/P2/P3）。
 set -u
-cd /home/vesita/coding/my/DTSeek
+cd /home/vesita/coding/my/flowme
 export PYTHONUNBUFFERED=1 HSA_OVERRIDE_GFX_VERSION=10.3.0
 E=experiments/core_generalize
 mkdir -p "$E/logs" "$E/probes_budget4x"

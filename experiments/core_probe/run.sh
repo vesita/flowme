@@ -5,7 +5,7 @@
 # 日志：experiments/core_probe/logs/<phase>.log；产物：experiments/core_probe/results/*.json
 # 只读：checkpoints/、experiments/*/cache|data、src/、training/；只写本目录。
 set -uo pipefail
-cd /home/vesita/coding/my/DTSeek
+cd /home/vesita/coding/my/flowme
 export PYTHONUNBUFFERED=1
 export HSA_OVERRIDE_GFX_VERSION=10.3.0
 

@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 # free_rule_floor 对照跑：新臂 N × 2 seed + 负对照 U-rand × 2 seed（PREREG §1/§2）
 # 用法：systemd-run --user --unit=dtseek-frf2 --collect \
-#   --property=WorkingDirectory=/home/vesita/coding/my/DTSeek \
+#   --property=WorkingDirectory=/home/vesita/coding/my/flowme \
 #   --setenv=HSA_OVERRIDE_GFX_VERSION=10.3.0 --setenv=PYTHONUNBUFFERED=1 \
 #   /usr/bin/bash experiments/free_rule_floor/run_n.sh
 set -euo pipefail
-cd /home/vesita/coding/my/DTSeek
+cd /home/vesita/coding/my/flowme
 EXP=experiments/free_rule_floor
 LOG=$EXP/logs
 mkdir -p "$LOG"

@@ -1,7 +1,7 @@
 #!/bin/bash
 # P21 训练驱动：参数为 "arm:seed:rand" 三元组（rand=0/1），顺序执行；日志同时落 logs/。
 set -euo pipefail
-cd /home/vesita/coding/my/DTSeek
+cd /home/vesita/coding/my/flowme
 LOG="logs/p21-train-$(date +%H%M%S)-$$.log"
 mkdir -p logs
 exec > >(tee -a "$LOG") 2>&1

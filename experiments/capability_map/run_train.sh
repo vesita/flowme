@@ -2,7 +2,7 @@
 # 能力筛查 第 2 步：4 老卡 × {frozen, bypass} × {42,43} = 16 跑
 # （negation 两档复用 experiments/additivity/cards/ 里同配方同 seed 的 ckpt，不重跑）
 set -u
-cd /home/vesita/coding/my/DTSeek
+cd /home/vesita/coding/my/flowme
 export PYTHONUNBUFFERED=1 HSA_OVERRIDE_GFX_VERSION=10.3.0
 CARDS=experiments/capability_map/cards
 T=experiments/capability_map/train_cards.py

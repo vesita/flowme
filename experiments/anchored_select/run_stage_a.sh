@@ -2,7 +2,7 @@
 # 锚定候选打标 —— 阶段 A：只训头主臂（2 seed）+ 随机标签对照（2 seed），逐个训练后立刻评测。
 # 只写 experiments/anchored_select/ 与 logs/anchored_stageA.log。
 set -euo pipefail
-cd /home/vesita/coding/my/DTSeek
+cd /home/vesita/coding/my/flowme
 EX=experiments/anchored_select
 mkdir -p "$EX/cards" "$EX/results"
 

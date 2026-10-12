@@ -2,7 +2,7 @@
 # core_keep：保真档 F（先跑，验脚本）→ J0~J3 × seed{42,43} → 统一评测
 # 只写 experiments/core_keep/ 与 logs/corekeep_*；不碰 src/ training/ tests/ dev-notes/
 set -u
-cd /home/vesita/coding/my/DTSeek
+cd /home/vesita/coding/my/flowme
 export PYTHONUNBUFFERED=1 HSA_OVERRIDE_GFX_VERSION=10.3.0
 CARDS=experiments/core_keep/cards
 mkdir -p "$CARDS"

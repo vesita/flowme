@@ -1,6 +1,6 @@
 # core_generalize 原始命令 / unit / 日志对照
 
-工作目录 `/home/vesita/coding/my/DTSeek`。所有长跑均用 `systemd-run --user`，
+工作目录 `/home/vesita/coding/my/flowme`。所有长跑均用 `systemd-run --user`，
 带 `PYTHONUNBUFFERED=1` 与 `HSA_OVERRIDE_GFX_VERSION=10.3.0`；**没有杀过任何别人的进程**。
 
 ## 数据准备（前台一次性，约 40 s；sentiment 等 5 份从 capability_map cache 只读复用）
@@ -20,7 +20,7 @@ uv run python -u experiments/core_generalize/prepare.py
 
 ```bash
 systemd-run --user --unit=dtseek-cg-smoke --collect \
-  --property=WorkingDirectory=/home/vesita/coding/my/DTSeek \
+  --property=WorkingDirectory=/home/vesita/coding/my/flowme \
   --setenv=HSA_OVERRIDE_GFX_VERSION=10.3.0 --setenv=PYTHONUNBUFFERED=1 \
   /usr/bin/uv run python -u experiments/core_generalize/train_core_arm.py \
   --arm C1 --seed 42 --epochs 1 --steps-per-epoch 4 \
@@ -32,7 +32,7 @@ systemd-run --user --unit=dtseek-cg-smoke --collect \
 
 ```bash
 systemd-run --user --unit=dtseek-cg-pre --collect \
-  --property=WorkingDirectory=/home/vesita/coding/my/DTSeek \
+  --property=WorkingDirectory=/home/vesita/coding/my/flowme \
   --setenv=HSA_OVERRIDE_GFX_VERSION=10.3.0 --setenv=PYTHONUNBUFFERED=1 \
   /usr/bin/bash experiments/core_generalize/run_precheck.sh
 ```
@@ -43,7 +43,7 @@ systemd-run --user --unit=dtseek-cg-pre --collect \
 
 ```bash
 systemd-run --user --unit=dtseek-cg-cores --collect \
-  --property=WorkingDirectory=/home/vesita/coding/my/DTSeek \
+  --property=WorkingDirectory=/home/vesita/coding/my/flowme \
   --setenv=HSA_OVERRIDE_GFX_VERSION=10.3.0 --setenv=PYTHONUNBUFFERED=1 \
   /usr/bin/bash experiments/core_generalize/run_cores.sh
 ```
@@ -54,7 +54,7 @@ systemd-run --user --unit=dtseek-cg-cores --collect \
 
 ```bash
 systemd-run --user --unit=dtseek-cg-probes --collect \
-  --property=WorkingDirectory=/home/vesita/coding/my/DTSeek \
+  --property=WorkingDirectory=/home/vesita/coding/my/flowme \
   --setenv=HSA_OVERRIDE_GFX_VERSION=10.3.0 --setenv=PYTHONUNBUFFERED=1 \
   /usr/bin/bash experiments/core_generalize/run_probes.sh
 ```

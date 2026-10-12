@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # P4 三臂全量训练（2 seed）+ 随机标签负对照；由 systemd-run 单元启动。
 set -u
-cd /home/vesita/coding/my/DTSeek || exit 1
+cd /home/vesita/coding/my/flowme || exit 1
 export PYTHONDONTWRITEBYTECODE=1 HSA_OVERRIDE_GFX_VERSION=10.3.0 PYTHONUNBUFFERED=1
 mkdir -p experiments/funcword_minpair/logs
 L=experiments/funcword_minpair/logs

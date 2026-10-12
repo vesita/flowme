@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # 探索续（仍是 exploratory，不参与判定）：判"步数/学习率"是不是瓶颈。
 set -u
-cd /home/vesita/coding/my/DTSeek
+cd /home/vesita/coding/my/flowme
 export PYTHONUNBUFFERED=1
 export HSA_OVERRIDE_GFX_VERSION=10.3.0
 rc=0

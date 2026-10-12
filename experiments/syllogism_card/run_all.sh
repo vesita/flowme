@@ -2,7 +2,7 @@
 # syllogism_card 全量：3 臂 × 2 seed + 随机标签对照（T / TA）
 # 先排队等他人训练结束（最多 2h），绝不杀他人进程。
 set -e
-cd /home/vesita/coding/my/DTSeek
+cd /home/vesita/coding/my/flowme
 LOG=experiments/syllogism_card/logs/train.log
 mkdir -p experiments/syllogism_card/logs
 echo "=== start $(date -Is) ===" >> "$LOG"

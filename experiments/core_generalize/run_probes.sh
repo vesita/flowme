@@ -2,7 +2,7 @@
 # core_generalize 阶段 C：探针头训练（核冻结，唯一变量=核）。
 # 需要 holdouts.txt（可学性预检后写：每行一个有效 hold-out）。
 set -u
-cd /home/vesita/coding/my/DTSeek
+cd /home/vesita/coding/my/flowme
 export PYTHONUNBUFFERED=1 HSA_OVERRIDE_GFX_VERSION=10.3.0
 E=experiments/core_generalize
 mkdir -p "$E/logs" "$E/probes"

@@ -2,7 +2,7 @@
 # P7 训练全量：3 臂 × 2 seed + MASK 随机标签负对照 × 2 seed（PREREG §6）。
 # 由 systemd-run --user --unit=sm7-train 启动（PREREG §8 运行清单）。
 set -u
-cd /home/vesita/coding/my/DTSeek
+cd /home/vesita/coding/my/flowme
 export PYTHONUNBUFFERED=1
 export HSA_OVERRIDE_GFX_VERSION=10.3.0
 

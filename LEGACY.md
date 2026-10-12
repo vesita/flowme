@@ -79,7 +79,7 @@ DTSeek/
 
 权重不入库，clone 后先跑一次多任务训练：
 ```bash
-cd /home/vesita/coding/my/DTSeek
+cd /home/vesita/coding/my/flowme
 uv sync
 uv run python training/train_multitask.py
 ```

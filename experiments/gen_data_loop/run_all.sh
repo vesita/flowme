@@ -2,11 +2,11 @@
 # Phase 2：D4 两臂对照训练 + 评测（PREREG_PHASE2.md §8 运行清单）。
 # 由 systemd-run --user --unit=dtseek-genphase2 启动（会话重启不掉）。
 set -u
-cd /home/vesita/coding/my/DTSeek
+cd /home/vesita/coding/my/flowme
 export PYTHONUNBUFFERED=1
 export HSA_OVERRIDE_GFX_VERSION=10.3.0
 
-PY=/home/vesita/coding/my/DTSeek/.venv/bin/python
+PY=/home/vesita/coding/my/flowme/.venv/bin/python
 TR="experiments/gen_data_loop/run_card.py"
 EV="experiments/gen_data_loop/eval_card.py"
 CARDS=experiments/gen_data_loop/cards

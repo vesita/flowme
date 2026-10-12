@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # P7 收敛档（PREREG rev.B 敏感性，单列，不替换主表）：steps=8000。
 set -u
-cd /home/vesita/coding/my/DTSeek
+cd /home/vesita/coding/my/flowme
 export PYTHONUNBUFFERED=1
 export HSA_OVERRIDE_GFX_VERSION=10.3.0
 rc=0

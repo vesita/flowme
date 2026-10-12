@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # 收尾：补跑 s43 老卡复核（前一次因 bypass.py 的子模块递归 bug 失败，已修）+ 探索臂。
 set -u
-cd /home/vesita/coding/my/DTSeek
+cd /home/vesita/coding/my/flowme
 export PYTHONUNBUFFERED=1
 export HSA_OVERRIDE_GFX_VERSION=10.3.0
 echo "[tail] $(date +%T) start oldcard_s43(rerun)"

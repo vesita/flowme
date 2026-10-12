@@ -3,7 +3,7 @@
 # 全部可用」，只有 M1(类型)+M3(槽型) 的臂才可能判「有效」⇒ 补跑 U(−role) × 2 seed + 分析。
 # （补跑决定在看到主表之后，理由是跑前写死的 B5 门槛；门槛本身不放宽，见 REPORT。）
 set -euo pipefail
-cd /home/vesita/coding/my/DTSeek
+cd /home/vesita/coding/my/flowme
 EXP=experiments/bag_modules
 LOG=$EXP/logs
 mkdir -p "$LOG"

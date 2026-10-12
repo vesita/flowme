@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # P4 评测批次：12 个模型（3 臂 × 2 seed × {真标签, 随机标签}）
 set -u
-cd /home/vesita/coding/my/DTSeek || exit 1
+cd /home/vesita/coding/my/flowme || exit 1
 export PYTHONDONTWRITEBYTECODE=1 HSA_OVERRIDE_GFX_VERSION=10.3.0 PYTHONUNBUFFERED=1
 L=experiments/funcword_minpair/logs
 mkdir -p "$L"

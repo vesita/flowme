@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # core_generalize 阶段 B：四个核臂（C1/C3/C5 × seed{42,43} + C1x5 仅 seed42）
 set -u
-cd /home/vesita/coding/my/DTSeek
+cd /home/vesita/coding/my/flowme
 export PYTHONUNBUFFERED=1 HSA_OVERRIDE_GFX_VERSION=10.3.0
 E=experiments/core_generalize
 mkdir -p "$E/logs" "$E/cores"

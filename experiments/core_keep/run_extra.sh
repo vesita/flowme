@@ -2,7 +2,7 @@
 # core_keep 追加：λ_kd 升档阶梯（PREREG §4.1，s42 探索性）+ 复评
 # 必须在 run_all.sh 结束之后启动（避免与主跑抢 GPU / 抢同一份脚本）。
 set -u
-cd /home/vesita/coding/my/DTSeek
+cd /home/vesita/coding/my/flowme
 export PYTHONUNBUFFERED=1 HSA_OVERRIDE_GFX_VERSION=10.3.0
 CARDS=experiments/core_keep/cards
 rc_total=0

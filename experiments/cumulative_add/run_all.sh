@@ -10,7 +10,7 @@
 #   3) 链上 step1 → step2 → step3 × 2 seed（每步起点门禁）
 #   4) summarize.py → results.json
 set -u
-cd /home/vesita/coding/my/DTSeek
+cd /home/vesita/coding/my/flowme
 export PYTHONUNBUFFERED=1 HSA_OVERRIDE_GFX_VERSION=10.3.0
 CARDS=experiments/cumulative_add/cards
 mkdir -p "$CARDS" logs

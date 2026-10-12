@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 # bag_modules 全量跑（PREREG §5：4 臂 × 2 seed + 2 随机标签门禁 + 3 杀模块消融 ×2 seed）
 # 用法：systemd-run --user --unit=dtseek-bagmod --collect \
-#   --property=WorkingDirectory=/home/vesita/coding/my/DTSeek \
+#   --property=WorkingDirectory=/home/vesita/coding/my/flowme \
 #   --setenv=HSA_OVERRIDE_GFX_VERSION=10.3.0 --setenv=PYTHONUNBUFFERED=1 \
 #   /usr/bin/bash experiments/bag_modules/run_all.sh
 set -euo pipefail
-cd /home/vesita/coding/my/DTSeek
+cd /home/vesita/coding/my/flowme
 EXP=experiments/bag_modules
 LOG=$EXP/logs
 mkdir -p "$LOG"

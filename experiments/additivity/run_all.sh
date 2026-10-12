@@ -2,7 +2,7 @@
 # E-B 能力可加性：7 个训练跑 + 2 个老卡复核跑，逐个独立进程（PREREG.md 的运行清单）。
 # 由 systemd-run --user --unit=dtseek-additivity-byp 启动。
 set -u
-cd /home/vesita/coding/my/DTSeek
+cd /home/vesita/coding/my/flowme
 export PYTHONUNBUFFERED=1
 export HSA_OVERRIDE_GFX_VERSION=10.3.0
 

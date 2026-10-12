@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # 能力筛查 第 3-5 步：等训练跑完 → 探针 → 三档评测 → 汇总
 set -u
-cd /home/vesita/coding/my/DTSeek
+cd /home/vesita/coding/my/flowme
 export PYTHONUNBUFFERED=1 HSA_OVERRIDE_GFX_VERSION=10.3.0
 step() { echo "[capmap] $(date +%T) === $* ==="; }
 while systemctl --user is-active dtseek-capmap-train.service >/dev/null 2>&1; do sleep 5; done

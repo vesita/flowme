@@ -2,7 +2,7 @@
 # 价值观卡 阶段 1 —— 排队等 GPU → 主臂 2 seed + 随机标签对照 2 seed → 评测 → 汇总。
 # 只写 experiments/value_card/ 与 logs/value_card_stage1.log；不改 src/、不碰他人进程。
 set -euo pipefail
-cd /home/vesita/coding/my/DTSeek
+cd /home/vesita/coding/my/flowme
 EX=experiments/value_card
 mkdir -p "$EX/cards" "$EX/results" logs
 

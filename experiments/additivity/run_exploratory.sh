@@ -3,7 +3,7 @@
 # 秩/步数不够，还是插入点/优化本质不足。全部在主基座 base_encoder、seed 42。
 # 另含一个机制探针（训练好的旁路改了多少表征、关闸后指标掉不掉）。
 set -u
-cd /home/vesita/coding/my/DTSeek
+cd /home/vesita/coding/my/flowme
 export PYTHONUNBUFFERED=1
 export HSA_OVERRIDE_GFX_VERSION=10.3.0
 

@@ -2,7 +2,7 @@
 # P4 一键复现：PREREG → 构造 → 自检 → 12 次训练 → 12 次评测 → 汇总表 → verdict
 # 全部经 systemd-run 启动（绝不用 setsid nohup &）；每步有明确终点。
 set -u
-cd /home/vesita/coding/my/DTSeek || exit 1
+cd /home/vesita/coding/my/flowme || exit 1
 export PYTHONDONTWRITEBYTECODE=1 HSA_OVERRIDE_GFX_VERSION=10.3.0 PYTHONUNBUFFERED=1
 E=experiments/funcword_minpair
 L=$E/logs
@@ -31,7 +31,7 @@ echo "冒烟三臂全通"
 step "4 全量训练 12 次"
 rm -f "$L/train.done"
 systemd-run --user --unit=dtseek-fwmp-train --collect \
-  --property=WorkingDirectory=/home/vesita/coding/my/DTSeek \
+  --property=WorkingDirectory=/home/vesita/coding/my/flowme \
   --setenv=HSA_OVERRIDE_GFX_VERSION=10.3.0 --setenv=PYTHONUNBUFFERED=1 \
   /usr/bin/bash "$E/run_train.sh" || exit 1
 for i in $(seq 1 300); do [ -f "$L/train.done" ] && break; sleep 5; done
@@ -40,7 +40,7 @@ cat "$L/train.done" || { echo "训练未结束"; exit 1; }
 step "5 评测 12 次"
 rm -f "$L/eval.done"
 systemd-run --user --unit=dtseek-fwmp-eval --collect \
-  --property=WorkingDirectory=/home/vesita/coding/my/DTSeek \
+  --property=WorkingDirectory=/home/vesita/coding/my/flowme \
   --setenv=HSA_OVERRIDE_GFX_VERSION=10.3.0 --setenv=PYTHONUNBUFFERED=1 \
   /usr/bin/bash "$E/run_eval.sh" || exit 1
 for i in $(seq 1 300); do [ -f "$L/eval.done" ] && break; sleep 5; done
