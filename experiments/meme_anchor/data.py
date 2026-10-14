@@ -2,7 +2,12 @@
 
 判据与规格见 `PREREG.md` §1（数据与切分）与 §2（渲染规格）——本文件是它们的实现，不许在这里发明新规则。
 
-只读 `nanoSeek/data/chinese/clean_v3/*.txt` 与 `logs/86_tokenizer/char_tokenizer.json`；只写 `logs/86_cache/`。
+只读 `nanoSeek/data/chinese/clean_v3/*.txt` 与 `logs/86_tokenizer/char_tokenizer.json`；
+写缓存目录由 `M1_CACHE` 决定（默认 `logs/86_cache`；代用语料见 `stages/87_data_alt.py`）。
+
+★ 语料缓存目录可切（2026-10-14）：本机 `clean_v3/` 只有报告、**无语料**（`.gitignore:34` 整目录忽略），
+  故 `M1_CACHE=logs/87_cache` 指向代用语料。**切了必须把「语料代用」写进候选臂标签** ——
+  否则两臂可能读到不同语料而无人察觉（本项目把"静默变口径"列为事故）。
 """
 from __future__ import annotations
 
@@ -23,7 +28,7 @@ CORPUS = [NANOSEEK / "clean_v3" / "wikipedia_cn.txt", NANOSEEK / "clean_v3" / "c
 #   `logs/86_tokenizer/`）。默认档 `hanzi_top=4400` 在本机只保留 32026 对中英配对 < 本线规格 `TRAIN_N+TEST_N=42245`，
 #   7808 档保留 46636 对 ⇒ 取 7808。★ 特殊符 id 与本文契约逐位一致（128 `<eos>` / 129 `<unk>` / 131 `<pad>` / 132 `<bos>`）。
 TOKENIZER = ROOT / "logs" / "86_tokenizer" / "char_tokenizer.json"
-CACHE = ROOT / "logs" / "86_cache"
+CACHE = ROOT / os.environ.get("M1_CACHE", "logs/86_cache")
 
 # PREREG §2 渲染规格（写死）
 # ★ 订正 4（2026-10-11 01:4x，独立复核 P0-3 实测逼出）：旧版按 FONT_SIZE=24px 排行距，
